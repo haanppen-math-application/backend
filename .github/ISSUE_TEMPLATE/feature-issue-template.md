@@ -1,6 +1,6 @@
 ---
-name: 기능 구현
-about: "[기능 이름]"
+name: FEATURE ISSUE TEMPLATE
+about: 구현될 기능 작성을 위한 템플릿입니다.
 title: "[FEATURE]"
 labels: ''
 assignees: huhdy32
