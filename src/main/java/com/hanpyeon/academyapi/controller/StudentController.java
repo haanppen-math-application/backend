@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class StudentController {
-
     private final Logger LOGGER = LoggerFactory.getLogger("등록 테스트");
+
+
 
     @PostMapping("")
     public ResponseEntity<?> registerStudent(@Valid @RequestBody StudentRegisterRequestDto studentRegisterRequestDto){
