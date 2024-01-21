@@ -55,7 +55,9 @@ public class StudentControllerTest {
                 Arguments.of("Tom", null, "010101001"),
                 Arguments.of("Tom", 10, null),
                 Arguments.of("Heejong", 10, "0101010101ㅂㅈㄱㄷ"),
-                Arguments.of("Tom", 10, "ewfjnede")
+                Arguments.of("Tom", 10, "ewfjnede"),
+                Arguments.of("희종", 12, "10100101001"),
+                Arguments.of("희종", -1, "10100101001")
         );
     }
 
