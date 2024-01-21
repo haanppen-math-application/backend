@@ -20,8 +20,8 @@ public class StudentRegisterService {
     @Transactional
     public void registerUser(final StudentRegisterRequestDto registerDto) {
         if (repository.findMemberByPhoneNumber(registerDto.studentPhoneNumber()).isPresent()) {
-            logger.debug("이미 등록된 사용자입니다.");
-            throw new AlreadyRegisteredException();
+            logger.debug("이미 등록된 학생");
+            throw new AlreadyRegisteredException("이미 등록딘 학생입니다.");
         }
         repository.save(createMemberEntity(registerDto));
         logger.info(String.valueOf(repository.findMemberByPhoneNumber(registerDto.studentPhoneNumber())));
