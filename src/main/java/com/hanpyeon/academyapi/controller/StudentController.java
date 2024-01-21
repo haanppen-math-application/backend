@@ -10,11 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController()
+@RequestMapping("/api/students")
 public class StudentController {
-    private final Logger LOGGER = LoggerFactory.getLogger("등록 테스트");
+    private final Logger LOGGER = LoggerFactory.getLogger("학생 컨트롤러");
 
     StudentRegisterService registerService;
 
@@ -22,7 +24,7 @@ public class StudentController {
         this.registerService = registerService;
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?> registerStudent(@Valid @RequestBody StudentRegisterRequestDto studentRegisterRequestDto) {
         registerService.registerUser(studentRegisterRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();

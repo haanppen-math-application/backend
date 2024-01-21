@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(StudentController.class)
 public class StudentControllerTest {
-
+    private static final String BASE_URL = "/api/students";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -31,7 +31,7 @@ public class StudentControllerTest {
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
     void 학생등록_에러처리_테스트(String name, Integer grade, String phone) throws Exception {
-        mockMvc.perform(post("")
+        mockMvc.perform(post(BASE_URL)
                 .content(objectMapper.writeValueAsString(new StudentRegisterRequestDto(name, grade, phone)))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andExpect(status().isBadRequest());
@@ -40,7 +40,7 @@ public class StudentControllerTest {
     @ParameterizedTest
     @MethodSource("provideLegalArguments")
     void 학생등록_성공_테스트(String name, Integer grade, String phone) throws Exception {
-        mockMvc.perform(post("")
+        mockMvc.perform(post(BASE_URL)
                 .content(objectMapper.writeValueAsString(new StudentRegisterRequestDto(name, grade, phone)))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andExpect(status().isCreated());

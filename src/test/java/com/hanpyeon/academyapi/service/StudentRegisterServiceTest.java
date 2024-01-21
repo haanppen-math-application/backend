@@ -44,8 +44,6 @@ public class StudentRegisterServiceTest {
     @MethodSource("provideRegisterRequest")
     void 사용자등록_성공_테스트(StudentRegisterRequestDto requestDto) {
         String phoneNumber = requestDto.studentPhoneNumber();
-        Member member = createMember(requestDto);
-
         Mockito.when(userRepository.findMemberByPhoneNumber(phoneNumber)).thenReturn(Optional.empty());
 
         Assertions.assertThatCode(() -> {
