@@ -2,11 +2,14 @@ package com.hanpyeon.academyapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.dto.StudentRegisterRequestDto;
+import com.hanpyeon.academyapi.service.StudentRegisterService;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,6 +25,8 @@ public class StudentControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @MockBean
+    StudentRegisterService studentRegisterService;
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
@@ -36,18 +41,20 @@ public class StudentControllerTest {
     @MethodSource("provideLegalArguments")
     void 학생등록_성공_테스트(String name, Integer grade, String phone) throws Exception {
         mockMvc.perform(post("")
-                        .content(objectMapper.writeValueAsString(new StudentRegisterRequestDto(name, grade, phone)))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isCreated());
+                .content(objectMapper.writeValueAsString(new StudentRegisterRequestDto(name, grade, phone)))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andExpect(status().isCreated());
     }
+
     public static Stream<Arguments> provideLegalArguments() {
         return Stream.of(
                 Arguments.of("희종", 0, "102010021"),
-                Arguments.of("희종", 0, "102010021"),
+                Arguments.of("희종", 0, "1020110021"),
                 Arguments.of("희종", 0, "01012345678"),
                 Arguments.of("TOM", 11, "102010021")
         );
     }
+
     public static Stream<Arguments> provideIllegalArguments() {
         return Stream.of(
                 Arguments.of(null, null, null),
@@ -60,5 +67,4 @@ public class StudentControllerTest {
                 Arguments.of("희종", -1, "10100101001")
         );
     }
-
 }
