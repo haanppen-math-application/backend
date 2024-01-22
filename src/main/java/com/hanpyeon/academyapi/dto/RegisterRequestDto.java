@@ -1,14 +1,15 @@
 package com.hanpyeon.academyapi.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record RegisterRequestDto(
         @NotBlank
         String userName,
         @NotBlank
         String userPhoneNumber,
-        String grade,
+        Integer grade,
         String password
 ) {
 }
