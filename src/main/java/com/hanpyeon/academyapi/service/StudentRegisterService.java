@@ -7,30 +7,47 @@ import com.hanpyeon.academyapi.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.function.Function;
 
 @Service
 public class StudentRegisterService {
     private final Logger logger = LoggerFactory.getLogger("STUDENT_REGISTER_SERVICE");
     private final UserRepository repository;
-    public StudentRegisterService(final UserRepository repository) {
+    private final PasswordHandler passwordHandler;
+
+    public StudentRegisterService(UserRepository repository, PasswordHandler passwordHandler) {
         this.repository = repository;
+        this.passwordHandler = passwordHandler;
     }
 
     @Transactional
-    public void registerUser(final StudentRegisterRequestDto registerDto) {
-        if (repository.findMemberByPhoneNumber(registerDto.studentPhoneNumber()).isPresent()) {
-            logger.debug("이미 등록된 학생");
-            throw new AlreadyRegisteredException("이미 등록딘 학생입니다.");
-        }
-        repository.save(createMemberEntity(registerDto));
-        logger.info(String.valueOf(repository.findMemberByPhoneNumber(registerDto.studentPhoneNumber())));
+    public void registerMember(@Validated final StudentRegisterRequestDto requestDto) {
+        validateRegisterRequest(requestDto);
+
+        String encodedPassword = passwordHandler.getEncodedPassword(requestDto.password());
+        Member member = createMember(requestDto, encodedPassword);
+
+        repository.save(member);
+        logger.info(member.toString());
     }
-    private Member createMemberEntity(final StudentRegisterRequestDto registerDto) {
+
+    private void validateRegisterRequest(final StudentRegisterRequestDto requestDto) {
+        if (repository.findMemberByPhoneNumber(requestDto.studentPhoneNumber()).isPresent()) {
+            logger.debug("이미 등록된 사용자(전화번호) 입니다.");
+            throw new AlreadyRegisteredException("이미 등록된 전화번호 입니다.");
+        }
+    }
+
+    private Member createMember(final StudentRegisterRequestDto requestDto, String encodedPassword) {
         return Member.builder()
-                .userName(registerDto.studentName())
-                .grade(registerDto.studentGrade())
-                .phoneNumber(registerDto.studentPhoneNumber())
+                .memberName(requestDto.studentName())
+                .password(encodedPassword)
+                .grade(requestDto.studentGrade())
+                .phoneNumber(requestDto.studentPhoneNumber())
                 .build();
     }
 }
