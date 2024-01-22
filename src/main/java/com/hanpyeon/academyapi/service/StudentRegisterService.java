@@ -17,26 +17,22 @@ import java.util.function.Function;
 public class StudentRegisterService {
     private final Logger logger = LoggerFactory.getLogger("STUDENT_REGISTER_SERVICE");
     private final UserRepository repository;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordHandler passwordHandler;
 
-    public StudentRegisterService(final UserRepository repository, final PasswordEncoder passwordEncoder) {
+    public StudentRegisterService(UserRepository repository, PasswordHandler passwordHandler) {
         this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
+        this.passwordHandler = passwordHandler;
     }
 
     @Transactional
     public void registerMember(@Validated final StudentRegisterRequestDto requestDto) {
         validateRegisterRequest(requestDto);
-        Member member = createMember(requestDto, getProperPasswordProcess(requestDto));
+
+        String encodedPassword = passwordHandler.getEncodedPassword(requestDto.password());
+        Member member = createMember(requestDto, encodedPassword);
+
         repository.save(member);
         logger.info(member.toString());
-    }
-
-    private Function<String, String> getProperPasswordProcess(final StudentRegisterRequestDto requestDto) {
-        if (requestDto.password() == null || requestDto.password().isBlank()) {
-            return (str) -> passwordEncoder.encode("0000");
-        }
-        return (str) -> passwordEncoder.encode(str);
     }
 
     private void validateRegisterRequest(final StudentRegisterRequestDto requestDto) {
@@ -46,10 +42,10 @@ public class StudentRegisterService {
         }
     }
 
-    private Member createMember(final StudentRegisterRequestDto requestDto, final Function<String, String> function) {
+    private Member createMember(final StudentRegisterRequestDto requestDto, String encodedPassword) {
         return Member.builder()
                 .memberName(requestDto.studentName())
-                .password(function.apply(requestDto.password()))
+                .password(encodedPassword)
                 .grade(requestDto.studentGrade())
                 .phoneNumber(requestDto.studentPhoneNumber())
                 .build();
