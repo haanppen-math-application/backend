@@ -33,8 +33,9 @@ public class StudentRegisterService {
         Member member;
         if (!requestDto.password().isBlank()) {
             member = processPassword(requestDto, (str) -> passwordEncoder.encode(str));
+        }else {
+            member = processPassword(requestDto, (str) -> str);
         }
-        member = processPassword(requestDto, (str) -> str);
         repository.save(member);
     }
     private Member processPassword(final StudentRegisterRequestDto requestDto, Function<String, String> function) {
