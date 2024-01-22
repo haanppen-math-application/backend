@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Range;
 public record StudentRegisterRequestDto(
         @NotBlank String studentName,
         @NotNull @Range(min = 0, max = 11) Integer studentGrade,
-        @NotBlank @Pattern(regexp = "^[0-9]+$") String studentPhoneNumber
+        @NotBlank @Pattern(regexp = "^[0-9]+$") String studentPhoneNumber,
+        String password
 ) {
 }
