@@ -19,31 +19,34 @@ public class StudentRegisterService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-    public StudentRegisterService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public StudentRegisterService(final UserRepository repository, final PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     public void registerMember(@Validated final StudentRegisterRequestDto requestDto) {
-        validateMember(requestDto);
+        validateRegisterRequest(requestDto);
         Member member = createMember(requestDto, getProperPasswordProcess(requestDto));
         repository.save(member);
+        logger.info(member.toString());
     }
-    private Function<String, String> getProperPasswordProcess(StudentRegisterRequestDto requestDto) {
-        if (!requestDto.password().isBlank()) {
-            return (str) -> passwordEncoder.encode(str);
-        }else {
-            return (str) -> str;
+
+    private Function<String, String> getProperPasswordProcess(final StudentRegisterRequestDto requestDto) {
+        if (requestDto.password() == null || requestDto.password().isBlank()) {
+            return (str) -> passwordEncoder.encode("0000");
         }
+        return (str) -> passwordEncoder.encode(str);
     }
-    private void validateMember(final StudentRegisterRequestDto requestDto) {
+
+    private void validateRegisterRequest(final StudentRegisterRequestDto requestDto) {
         if (repository.findMemberByPhoneNumber(requestDto.studentPhoneNumber()).isPresent()) {
             logger.debug("이미 등록된 사용자(전화번호) 입니다.");
             throw new AlreadyRegisteredException("이미 등록된 전화번호 입니다.");
         }
     }
-    private Member createMember(final StudentRegisterRequestDto requestDto, Function<String, String> function) {
+
+    private Member createMember(final StudentRegisterRequestDto requestDto, final Function<String, String> function) {
         return Member.builder()
                 .memberName(requestDto.studentName())
                 .password(function.apply(requestDto.password()))
