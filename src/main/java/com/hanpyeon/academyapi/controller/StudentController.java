@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.controller;
 
+import com.hanpyeon.academyapi.dto.RegisterRequestDto;
 import com.hanpyeon.academyapi.dto.StudentRegisterRequestDto;
 import com.hanpyeon.academyapi.service.StudentRegisterService;
 import jakarta.validation.Valid;
@@ -17,14 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
     private final Logger LOGGER = LoggerFactory.getLogger("학생 컨트롤러");
 
-    StudentRegisterService registerService;
+    private final StudentRegisterService registerService;
 
-    public StudentController(StudentRegisterService registerService) {
+    public StudentController(final StudentRegisterService registerService) {
         this.registerService = registerService;
     }
 
     @PostMapping
-    public ResponseEntity<?> registerStudent(@Valid @RequestBody StudentRegisterRequestDto studentRegisterRequestDto) {
+    public ResponseEntity<?> registerStudent(@Valid @RequestBody final RegisterRequestDto requestDto) {
+        StudentRegisterRequestDto studentRegisterRequestDto = StudentRegisterRequestDto.builder()
+                .studentName(requestDto.userName())
+                .studentGrade(requestDto.grade())
+                .studentPhoneNumber(requestDto.userPhoneNumber())
+                .studentPassword(requestDto.password())
+                .build();
         registerService.registerMember(studentRegisterRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
