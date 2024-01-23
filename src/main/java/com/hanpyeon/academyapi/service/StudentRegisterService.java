@@ -7,11 +7,8 @@ import com.hanpyeon.academyapi.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.function.Function;
 
 @Service
 public class StudentRegisterService {
@@ -28,7 +25,7 @@ public class StudentRegisterService {
     public void registerMember(@Validated final StudentRegisterRequestDto requestDto) {
         validateRegisterRequest(requestDto);
 
-        String encodedPassword = passwordHandler.getEncodedPassword(requestDto.password());
+        String encodedPassword = passwordHandler.getEncodedPassword(requestDto.studentPassword());
         Member member = createMember(requestDto, encodedPassword);
 
         repository.save(member);
