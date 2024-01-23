@@ -31,8 +31,9 @@ public class StudentRegisterServiceTest {
     @Mock
     PasswordHandler passwordHandler;
     StudentRegisterService studentRegisterService;
+
     @BeforeEach
-    void initStudentRegisterService(){
+    void initStudentRegisterService() {
         this.studentRegisterService = new StudentRegisterService(userRepository, passwordHandler);
     }
 
@@ -45,9 +46,11 @@ public class StudentRegisterServiceTest {
         Mockito.when(userRepository.findMemberByPhoneNumber(phoneNumber)).thenReturn(Optional.ofNullable(member));
 
         Assertions.assertThatThrownBy(() -> {
-            studentRegisterService.registerMember(requestDto);}
+                    studentRegisterService.registerMember(requestDto);
+                }
         ).isInstanceOf(AlreadyRegisteredException.class);
     }
+
     @ParameterizedTest
     @MethodSource("provideRegisterRequest")
     void 사용자등록_성공_테스트(StudentRegisterRequestDto requestDto) {
@@ -66,14 +69,22 @@ public class StudentRegisterServiceTest {
                 .grade(requestDto.studentGrade())
                 .build();
     }
+    private static StudentRegisterRequestDto createStudentRegisterRequestDto(String name, String phoneNumber, Integer grade, String password) {
+        return StudentRegisterRequestDto.builder()
+                .studentName(name)
+                .studentPhoneNumber(phoneNumber)
+                .studentGrade(grade)
+                .studentPassword(password)
+                .build();
+    }
 
 
     public static Stream<Arguments> provideRegisterRequest() {
         return Stream.of(
-                Arguments.of(new StudentRegisterRequestDto("Heejong", 10, "01099182281", "000")),
-                Arguments.of(new StudentRegisterRequestDto("Hee12", 11, "010991822281", "121")),
-                Arguments.of(new StudentRegisterRequestDto("Heejong", 10, "02109931822813", "124")),
-                Arguments.of(new StudentRegisterRequestDto("Heejong", 10, "120109918122281", ""))
+                Arguments.of(createStudentRegisterRequestDto("Heejong", "01099182281", 10, "000")),
+                Arguments.of(createStudentRegisterRequestDto("Hee12", "010991822281", 11, "121")),
+                Arguments.of(createStudentRegisterRequestDto("Heejong", "02109931822813", 10, "124")),
+                Arguments.of(createStudentRegisterRequestDto("Heejong", "120109918122281", 10, ""))
         );
     }
 }
