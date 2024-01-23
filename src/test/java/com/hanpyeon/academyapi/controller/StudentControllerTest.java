@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanpyeon.academyapi.dto.RegisterRequestDto;
 import com.hanpyeon.academyapi.dto.StudentRegisterRequestDto;
 import com.hanpyeon.academyapi.service.StudentRegisterService;
 import org.apache.catalina.security.SecurityConfig;
@@ -50,25 +51,32 @@ public class StudentControllerTest {
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
     void 학생등록_에러처리_테스트(String name, Integer grade, String phone, String password) throws Exception {
-        request(status().isBadRequest(), new StudentRegisterRequestDto(name, grade, phone, password));
+        request(status().isBadRequest(), createRequestDto(name, grade, phone, password));
     }
 
     @ParameterizedTest
     @MethodSource("provideLegalArguments")
     void 학생등록_성공_테스트(String name, Integer grade, String phone, String password) throws Exception {
-        request(status().isCreated(), new StudentRegisterRequestDto(name, grade, phone, password));
+        request(status().isCreated(), createRequestDto(name, grade, phone, password));
     }
 
-    public void request(ResultMatcher resultMatcher, StudentRegisterRequestDto requestDto) throws Exception {
+    private static RegisterRequestDto createRequestDto(String name, Integer grade, String phone, String password) {
+        return RegisterRequestDto.builder().userName(name)
+                .grade(grade)
+                .userPhoneNumber(phone)
+                .password(password)
+                .build();
+    }
+
+    private void request(ResultMatcher resultMatcher, RegisterRequestDto requestDto) throws Exception {
         mockMvc.perform(post(BASE_URL)
                 .content(objectMapper.writeValueAsString(requestDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .with(csrf())
         ).andExpect(resultMatcher);
-
     }
 
-    public static Stream<Arguments> provideLegalArguments() {
+    private static Stream<Arguments> provideLegalArguments() {
         return Stream.of(
                 Arguments.of("희종", 0, "102010021", null),
                 Arguments.of("희종", 0, "1020110021", null),
@@ -77,16 +85,16 @@ public class StudentControllerTest {
         );
     }
 
-    public static Stream<Arguments> provideIllegalArguments() {
+    private static Stream<Arguments> provideIllegalArguments() {
         return Stream.of(
                 Arguments.of(null, null, null, null),
                 Arguments.of(null, 10, "010101001", null),
-                Arguments.of("Tom", null, "010101001", null),
+                Arguments.of("Tom", null, null, "10100101001"),
                 Arguments.of("Tom", 10, null, null),
-                Arguments.of("Heejong", 10, "0101010101ㅂㅈㄱㄷ", null),
+                Arguments.of("Heejong", 10, "0101010101ㅂㅈㄱㅁㄷㄹㅈㄷ", null),
                 Arguments.of("Tom", 10, "ewfjnede", null),
                 Arguments.of("희종", 12, "10100101001", null),
-                Arguments.of("희종", -1, "10100101001", null)
+                Arguments.of("희종", -1, "10100101001", "10100101001")
         );
     }
 }
