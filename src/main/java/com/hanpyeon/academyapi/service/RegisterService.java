@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.service;
 
-import com.hanpyeon.academyapi.dto.StudentRegisterRequestDto;
+import com.hanpyeon.academyapi.dto.RegisterRequestDto;
 import com.hanpyeon.academyapi.entity.Member;
 import com.hanpyeon.academyapi.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.repository.UserRepository;
@@ -22,7 +22,7 @@ public class RegisterService {
     }
 
     @Transactional
-    public void registerMember(@Validated final StudentRegisterRequestDto requestDto) {
+    public void registerMember(@Validated final RegisterRequestDto requestDto) {
         validateRegisterRequest(requestDto);
 
         String encodedPassword = passwordHandler.getEncodedPassword(requestDto.password());
@@ -32,19 +32,19 @@ public class RegisterService {
         logger.info(member.toString());
     }
 
-    private void validateRegisterRequest(final StudentRegisterRequestDto requestDto) {
-        if (repository.findMemberByPhoneNumber(requestDto.studentPhoneNumber()).isPresent()) {
+    private void validateRegisterRequest(final RegisterRequestDto requestDto) {
+        if (repository.findMemberByPhoneNumber(requestDto.phoneNumber()).isPresent()) {
             logger.debug("이미 등록된 사용자(전화번호) 입니다.");
             throw new AlreadyRegisteredException("이미 등록된 전화번호 입니다.");
         }
     }
 
-    private Member createMember(final StudentRegisterRequestDto requestDto, String encodedPassword) {
+    private Member createMember(final RegisterRequestDto requestDto, String encodedPassword) {
         return Member.builder()
-                .memberName(requestDto.studentName())
+                .memberName(requestDto.name())
                 .password(encodedPassword)
-                .grade(requestDto.studentGrade())
-                .phoneNumber(requestDto.studentPhoneNumber())
+                .grade(requestDto.grade())
+                .phoneNumber(requestDto.phoneNumber())
                 .build();
     }
 }

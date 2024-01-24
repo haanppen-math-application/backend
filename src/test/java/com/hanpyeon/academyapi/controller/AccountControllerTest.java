@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.dto.StudentRegisterRequestDto;
+import com.hanpyeon.academyapi.dto.RegisterRequestDto;
 import com.hanpyeon.academyapi.service.RegisterService;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,16 +40,16 @@ public class AccountControllerTest {
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
     void 학생등록_에러처리_테스트(String name, Integer grade, String phone, String password) throws Exception {
-        request(status().isBadRequest(), new StudentRegisterRequestDto(name, grade, phone, password));
+        request(status().isBadRequest(), new RegisterRequestDto(name, grade, phone, password));
     }
 
     @ParameterizedTest
     @MethodSource("provideLegalArguments")
     void 학생등록_성공_테스트(String name, Integer grade, String phone, String password) throws Exception {
-        request(status().isCreated(), new StudentRegisterRequestDto(name, grade, phone, password));
+        request(status().isCreated(), new RegisterRequestDto(name, grade, phone, password));
     }
 
-    public void request(ResultMatcher resultMatcher, StudentRegisterRequestDto requestDto) throws Exception {
+    public void request(ResultMatcher resultMatcher, RegisterRequestDto requestDto) throws Exception {
         mockMvc.perform(post(BASE_URL)
                 .content(objectMapper.writeValueAsString(requestDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.controller;
 
-import com.hanpyeon.academyapi.dto.StudentRegisterRequestDto;
+import com.hanpyeon.academyapi.dto.RegisterRequestDto;
 import com.hanpyeon.academyapi.service.RegisterService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registerStudent(@Valid @RequestBody StudentRegisterRequestDto studentRegisterRequestDto) {
+    public ResponseEntity<?> registerStudent(@Valid @RequestBody RegisterRequestDto studentRegisterRequestDto) {
         registerService.registerMember(studentRegisterRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
