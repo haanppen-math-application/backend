@@ -24,8 +24,8 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registerStudent(@Valid @RequestBody RegisterRequestDto studentRegisterRequestDto) {
-        registerService.registerMember(studentRegisterRequestDto);
+    public ResponseEntity<?> registerStudent(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+        registerService.registerMember(registerRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
