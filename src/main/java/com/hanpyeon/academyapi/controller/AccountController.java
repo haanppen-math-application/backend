@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
-@RequestMapping("/api/students")
-public class StudentController {
-    private final Logger LOGGER = LoggerFactory.getLogger("학생 컨트롤러");
+@RequestMapping("/api/accounts")
+public class AccountController {
+    private final Logger LOGGER = LoggerFactory.getLogger("Account Controller");
 
     StudentRegisterService registerService;
 
-    public StudentController(StudentRegisterService registerService) {
+    public AccountController(StudentRegisterService registerService) {
         this.registerService = registerService;
     }
 
