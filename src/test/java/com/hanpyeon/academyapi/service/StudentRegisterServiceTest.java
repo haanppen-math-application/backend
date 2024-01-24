@@ -6,20 +6,13 @@ import com.hanpyeon.academyapi.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.ArgumentMatcher;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -30,10 +23,10 @@ public class StudentRegisterServiceTest {
     UserRepository userRepository;
     @Mock
     PasswordHandler passwordHandler;
-    StudentRegisterService studentRegisterService;
+    RegisterService studentRegisterService;
     @BeforeEach
     void initStudentRegisterService(){
-        this.studentRegisterService = new StudentRegisterService(userRepository, passwordHandler);
+        this.studentRegisterService = new RegisterService(userRepository, passwordHandler);
     }
 
     @ParameterizedTest

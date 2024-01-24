@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.dto.StudentRegisterRequestDto;
-import com.hanpyeon.academyapi.service.StudentRegisterService;
+import com.hanpyeon.academyapi.service.RegisterService;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -28,14 +28,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
 })
-public class StudentControllerTest {
-    private static final String BASE_URL = "/api/students";
+public class AccountControllerTest {
+    private static final String BASE_URL = "/api/accounts";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    StudentRegisterService studentRegisterService;
+    RegisterService studentRegisterService;
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")

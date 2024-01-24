@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.controller;
 
 import com.hanpyeon.academyapi.dto.StudentRegisterRequestDto;
-import com.hanpyeon.academyapi.service.StudentRegisterService;
+import com.hanpyeon.academyapi.service.RegisterService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
     private final Logger LOGGER = LoggerFactory.getLogger("Account Controller");
 
-    StudentRegisterService registerService;
+    RegisterService registerService;
 
-    public AccountController(StudentRegisterService registerService) {
+    public AccountController(RegisterService registerService) {
         this.registerService = registerService;
     }
 
