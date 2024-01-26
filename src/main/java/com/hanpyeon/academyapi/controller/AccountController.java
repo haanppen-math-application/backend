@@ -2,8 +2,10 @@ package com.hanpyeon.academyapi.controller;
 
 import com.hanpyeon.academyapi.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.dto.RegisterRequestDto;
+import com.hanpyeon.academyapi.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.service.RegisterService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,32 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
-@RestController()
+@RestController
+@AllArgsConstructor
 @RequestMapping("/api/accounts")
 public class AccountController {
     private final Logger LOGGER = LoggerFactory.getLogger("Account Controller");
 
     RegisterService registerService;
-
-    public AccountController(RegisterService registerService) {
-        this.registerService = registerService;
-    }
+    RegisterMapper registerMapper;
 
     @PostMapping
     public ResponseEntity<?> registerStudent(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
-        RegisterMemberDto memberDto = createRegisterMemberDto(registerRequestDto);
+        RegisterMemberDto memberDto = registerMapper.createRegisterMemberDto(registerRequestDto, LocalDateTime.now());
         registerService.register(memberDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    private RegisterMemberDto createRegisterMemberDto(RegisterRequestDto requestDto) {
-        return RegisterMemberDto.builder()
-                .name(requestDto.name())
-                .phoneNumber(requestDto.phoneNumber())
-                .grade(requestDto.grade())
-                .password(requestDto.password())
-                .role(requestDto.role())
-                .registerDate(LocalDateTime.now())
-                .build();
     }
 }

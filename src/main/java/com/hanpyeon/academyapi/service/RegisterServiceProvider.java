@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.service;
 import com.hanpyeon.academyapi.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.entity.Member;
 import com.hanpyeon.academyapi.exceptions.AlreadyRegisteredException;
+import com.hanpyeon.academyapi.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class RegisterServiceProvider {
 
     private final static Logger LOGGER = LoggerFactory.getLogger("RegisterCategoryChecker");
     private final MemberRepository repository;
+    private final RegisterMapper registerMapper;
     private final PasswordHandler passwordHandler;
 
     @Transactional
@@ -24,7 +26,7 @@ public class RegisterServiceProvider {
         validateRegisterRequest(registerMemberDto);
 
         String encodedPassword = passwordHandler.getEncodedPassword(registerMemberDto.password());
-        com.hanpyeon.academyapi.entity.Member member = createMember(registerMemberDto, encodedPassword);
+        Member member = registerMapper.createMemberEntity(registerMemberDto, encodedPassword);
 
         repository.save(member);
         LOGGER.info(member.toString());
@@ -35,14 +37,5 @@ public class RegisterServiceProvider {
             LOGGER.debug("이미 등록된 사용자(전화번호) 입니다.");
             throw new AlreadyRegisteredException("이미 등록된 전화번호 입니다.");
         }
-    }
-
-    private com.hanpyeon.academyapi.entity.Member createMember(final RegisterMemberDto registerMemberDto, String encodedPassword) {
-        return Member.builder()
-                .memberName(registerMemberDto.name())
-                .password(encodedPassword)
-                .grade(registerMemberDto.grade())
-                .phoneNumber(registerMemberDto.phoneNumber())
-                .build();
     }
 }
