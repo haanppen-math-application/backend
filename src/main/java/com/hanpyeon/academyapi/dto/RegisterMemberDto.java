@@ -15,7 +15,6 @@ public record RegisterMemberDto(
         @Range(min = 0, max = 11) Integer grade,
         @NotBlank @Pattern(regexp = "^[0-9]+$") String phoneNumber,
         @NotNull Role role,
-        @NotBlank LocalDateTime registerDate,
         String password
 ){
 }
