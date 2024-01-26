@@ -2,53 +2,55 @@ package com.hanpyeon.academyapi.entity;
 
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
+
     @Column(unique = true, nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)
     private String memberName;
+
     @Column(nullable = false)
     private String password;
+
     private Integer grade;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role userRole;
 
+    @Column(nullable = false)
+    private LocalDateTime localDateTime;
+
     @Builder
-    public Member(String phoneNumber, String memberName, String password, Integer grade, Role userRole) {
+    private Member(String phoneNumber, String memberName, String password, Integer grade, Role userRole, LocalDateTime localDateTime) {
         this.phoneNumber = phoneNumber;
         this.memberName = memberName;
         this.password = password;
         this.grade = grade;
         this.userRole = userRole;
+        this.localDateTime = localDateTime;
     }
 
     @Override
     public String toString() {
         return "Member{" +
-                "userId=" + memberId +
-                ", userName='" + memberName + '\'' +
+                "memberId=" + memberId +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", memberName='" + memberName + '\'' +
                 ", password='" + password + '\'' +
                 ", grade=" + grade +
                 ", userRole=" + userRole +
+                ", localDateTime=" + localDateTime +
                 '}';
-    }
-
-    @PrePersist
-    public void setDefaultValue(){
-        if (this.userRole == null) {
-            this.userRole = Role.ROLE_STUDENT;
-        }
     }
 
     public Member() {
