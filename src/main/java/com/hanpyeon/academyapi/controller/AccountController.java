@@ -27,8 +27,8 @@ public class AccountController {
     RegisterMapper registerMapper;
 
     @PostMapping
-    public ResponseEntity<?> registerStudent(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
-        RegisterMemberDto memberDto = registerMapper.createRegisterMemberDto(registerRequestDto, LocalDateTime.now());
+    public ResponseEntity<?> registerStudent(@Valid @RequestBody final RegisterRequestDto registerRequestDto) {
+        RegisterMemberDto memberDto = registerMapper.createRegisterMemberDto(registerRequestDto);
         registerService.register(memberDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
