@@ -2,7 +2,9 @@ package com.hanpyeon.academyapi.service;
 
 import com.hanpyeon.academyapi.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.security.Role;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TeacherMemberVerification implements MemberVerification {
     @Override
     public boolean supports(RegisterMemberDto memberDto) {
