@@ -29,7 +29,7 @@ public class RegisterServiceProvider {
         Member member = registerMapper.createMemberEntity(registerMemberDto, encodedPassword);
 
         repository.save(member);
-        LOGGER.info(member.toString());
+//        LOGGER.info(member.toString());
     }
 
     private void validateRegisterRequest(final RegisterMemberDto registerMemberDto) {

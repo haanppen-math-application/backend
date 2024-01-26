@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.dto.RegisterRequestDto;
+import com.hanpyeon.academyapi.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.service.RegisterService;
 import org.apache.catalina.security.SecurityConfig;
@@ -40,6 +41,8 @@ public class AccountControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     RegisterService studentRegisterService;
+    @MockBean
+    RegisterMapper registerMapper;
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
