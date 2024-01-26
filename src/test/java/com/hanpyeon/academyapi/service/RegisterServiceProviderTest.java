@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.repository.MemberRepository;
+import com.hanpyeon.academyapi.security.Role;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,8 +24,7 @@ public class RegisterServiceProviderTest {
     MemberRepository memberRepository;
     @Mock
     PasswordHandler passwordHandler;
-    @Mock
-    RegisterMapper registerMapper;
+    RegisterMapper registerMapper = new RegisterMapper();
     RegisterServiceProvider serviceProvider;
     @BeforeEach
     void initRegisterService(){
@@ -36,9 +36,10 @@ public class RegisterServiceProviderTest {
     void 이미_존재하는_사용자_실패_테스트(RegisterMemberDto requestDto) {
         String phoneNumber = requestDto.phoneNumber();
         Mockito.when(memberRepository.existsByPhoneNumber(phoneNumber)).thenReturn(true);
+        LocalDateTime localDateTime = LocalDateTime.now();
 
         Assertions.assertThatThrownBy(() -> {
-            serviceProvider.registerMember(requestDto);}
+            serviceProvider.registerMember(registerMapper.createMemberTotalDto(requestDto, localDateTime));}
         ).isInstanceOf(AlreadyRegisteredException.class);
     }
     @ParameterizedTest
@@ -46,29 +47,30 @@ public class RegisterServiceProviderTest {
     void 사용자등록_성공_테스트(RegisterMemberDto requestDto) {
         String phoneNumber = requestDto.phoneNumber();
         Mockito.when(memberRepository.existsByPhoneNumber(phoneNumber)).thenReturn(false);
+        LocalDateTime localDateTime = LocalDateTime.now();
 
         Assertions.assertThatCode(() -> {
-            serviceProvider.registerMember(requestDto);
+            serviceProvider.registerMember(registerMapper.createMemberTotalDto(requestDto, localDateTime));
         }).doesNotThrowAnyException();
     }
 
-    private static RegisterMemberDto createMemberDto(String name, Integer grade, String phoneNumber, String password) {
+    private static RegisterMemberDto createMemberDto(String name, Integer grade, String phoneNumber, String password, Role role) {
         return RegisterMemberDto.builder()
                 .name(name)
                 .grade(grade)
                 .phoneNumber(phoneNumber)
                 .password(password)
-                .registerDate(LocalDateTime.now())
+                .role(role)
                 .build();
     }
 
 
     public static Stream<Arguments> provideRegisterRequest() {
         return Stream.of(
-                Arguments.of(createMemberDto("Heejong", 10, "01099182281", "000")),
-                Arguments.of(createMemberDto("Hee12", 11, "010991822281", "121")),
-                Arguments.of(createMemberDto("Heejong", 10, "02109931822813", "124")),
-                Arguments.of(createMemberDto("Heejong", 10, "120109918122281", ""))
+                Arguments.of(createMemberDto("Heejong", 10, "01099182281", "000", Role.ROLE_STUDENT)),
+                Arguments.of(createMemberDto("Hee12", 11, "010991822281", "121", Role.ROLE_STUDENT)),
+                Arguments.of(createMemberDto("Heejong", 10, "02109931822813", "124", Role.ROLE_STUDENT)),
+                Arguments.of(createMemberDto("Heejong", 10, "120109918122281", "", Role.ROLE_STUDENT))
         );
     }
 }
