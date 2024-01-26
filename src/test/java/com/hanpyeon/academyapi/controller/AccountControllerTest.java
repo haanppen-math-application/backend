@@ -43,14 +43,14 @@ public class AccountControllerTest {
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
-    void 학생등록_에러처리_테스트(String name, Integer grade, String phone, Role role, String password) throws Exception {
-        request(status().isBadRequest(), createRequest(name, grade, phone, role, password));
+    void 학생등록_에러처리_테스트(RegisterRequestDto requestDto) throws Exception {
+        request(status().isBadRequest(), requestDto);
     }
 
     @ParameterizedTest
     @MethodSource("provideLegalArguments")
-    void 학생등록_성공_테스트(String name, Integer grade, String phone, Role role, String password) throws Exception {
-        request(status().isCreated(), createRequest(name, grade, phone, role, password));
+    void 학생등록_성공_테스트(RegisterRequestDto requestDto) throws Exception {
+        request(status().isCreated(), requestDto);
     }
 
     private void request(ResultMatcher resultMatcher, RegisterRequestDto requestDto) throws Exception {
@@ -62,29 +62,29 @@ public class AccountControllerTest {
         ).andExpect(resultMatcher);
     }
 
-    private RegisterRequestDto createRequest(String name, Integer grade, String phoneNumber, Role role, String password) {
+    private static RegisterRequestDto createRequest(String name, Integer grade, String phoneNumber, Role role, String password) {
         return new RegisterRequestDto(name, grade, phoneNumber, role, password);
     }
 
     public static Stream<Arguments> provideLegalArguments() {
         return Stream.of(
-                Arguments.of("희종", 0, "102010021", Role.ROLE_STUDENT, null),
-                Arguments.of("희종", 0, "1020110021", Role.ROLE_STUDENT, null),
-                Arguments.of("희종", 0, "01012345678", Role.ROLE_STUDENT, null),
-                Arguments.of("TOM", 11, "102010021", Role.ROLE_STUDENT, null)
+                Arguments.of(createRequest("희종", 0, "102010021", Role.ROLE_STUDENT, null)),
+                Arguments.of(createRequest("희종", 0, "1020110021", Role.ROLE_STUDENT, null)),
+                Arguments.of(createRequest("희종", 0, "01012345678", Role.ROLE_STUDENT, null)),
+                Arguments.of(createRequest("TOM", 11, "102010021", Role.ROLE_STUDENT, null))
         );
     }
 
     public static Stream<Arguments> provideIllegalArguments() {
         return Stream.of(
-                Arguments.of(null, null, null, null, null),
-                Arguments.of(null, 10, "010101001",Role.ROLE_STUDENT, null),
-                Arguments.of("Tom", null, "010101001",null, null),
-                Arguments.of("Tom", 10, null, null,null),
-                Arguments.of("Heejong", 10, "0101010101ㅂㅈㄱㄷ",null, null),
-                Arguments.of("Tom", 10, "ewfjnede",null, null),
-                Arguments.of("희종", 12, "10100101001", null,null),
-                Arguments.of("희종", -1, "10100101001", null,null)
+                Arguments.of(createRequest(null, null, null, null, null)),
+                Arguments.of(createRequest(null, 10, "010101001",Role.ROLE_STUDENT, null)),
+                Arguments.of(createRequest("Tom", null, "010101001",null, null)),
+                Arguments.of(createRequest("Tom", 10, null, null,null)),
+                Arguments.of(createRequest("Heejong", 10, "0101010101ㅂㅈㄱㄷ",null, null)),
+                Arguments.of(createRequest("Tom", 10, "ewfjnede",null, null)),
+                Arguments.of(createRequest("희종", 12, "10100101001", null,null)),
+                Arguments.of(createRequest("희종", -1, "10100101001", null,null))
         );
     }
 }
