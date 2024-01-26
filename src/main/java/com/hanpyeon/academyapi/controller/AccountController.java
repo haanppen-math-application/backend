@@ -39,6 +39,7 @@ public class AccountController {
                 .phoneNumber(requestDto.phoneNumber())
                 .grade(requestDto.grade())
                 .password(requestDto.password())
+                .role(requestDto.role())
                 .registerDate(LocalDateTime.now())
                 .build();
     }
