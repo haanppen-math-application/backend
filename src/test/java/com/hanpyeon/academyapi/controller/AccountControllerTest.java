@@ -46,13 +46,13 @@ public class AccountControllerTest {
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
-    void 옳은_요청_테스트(RegisterRequestDto requestDto) throws Exception {
+    void 잘못된_요청_테스트(RegisterRequestDto requestDto) throws Exception {
         request(status().isBadRequest(), requestDto);
     }
 
     @ParameterizedTest
     @MethodSource("provideLegalArguments")
-    void 잘못된_요청_테스트(RegisterRequestDto requestDto) throws Exception {
+    void 옳은_요청_테스트(RegisterRequestDto requestDto) throws Exception {
         request(status().isCreated(), requestDto);
     }
 
