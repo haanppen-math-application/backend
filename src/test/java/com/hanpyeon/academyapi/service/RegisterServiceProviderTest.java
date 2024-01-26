@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.service;
 
 import com.hanpyeon.academyapi.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.exceptions.AlreadyRegisteredException;
+import com.hanpyeon.academyapi.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,10 +23,12 @@ public class RegisterServiceProviderTest {
     MemberRepository memberRepository;
     @Mock
     PasswordHandler passwordHandler;
+    @Mock
+    RegisterMapper registerMapper;
     RegisterServiceProvider serviceProvider;
     @BeforeEach
     void initRegisterService(){
-        this.serviceProvider = new RegisterServiceProvider(memberRepository, passwordHandler);
+        this.serviceProvider = new RegisterServiceProvider(memberRepository, registerMapper, passwordHandler);
     }
 
     @ParameterizedTest
