@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.service;
+package com.hanpyeon.academyapi.account.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package com.hanpyeon.academyapi.exception;
+package com.hanpyeon.academyapi.advice;
 
-import com.hanpyeon.academyapi.dto.ExceptionResponseBody;
-import com.hanpyeon.academyapi.exceptions.AlreadyRegisteredException;
+import com.hanpyeon.academyapi.account.ExceptionResponseBody;
+import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

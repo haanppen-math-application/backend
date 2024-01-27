@@ -1,9 +1,9 @@
-package com.hanpyeon.academyapi.mapper;
+package com.hanpyeon.academyapi.account.mapper;
 
-import com.hanpyeon.academyapi.dto.RegisterMemberDto;
-import com.hanpyeon.academyapi.dto.RegisterMemberTotalDto;
-import com.hanpyeon.academyapi.dto.RegisterRequestDto;
-import com.hanpyeon.academyapi.entity.Member;
+import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
+import com.hanpyeon.academyapi.account.dto.RegisterMemberTotalDto;
+import com.hanpyeon.academyapi.account.dto.RegisterRequestDto;
+import com.hanpyeon.academyapi.account.entity.Member;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

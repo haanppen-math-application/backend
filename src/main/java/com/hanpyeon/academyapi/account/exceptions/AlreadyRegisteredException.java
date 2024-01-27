@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.exceptions;
+package com.hanpyeon.academyapi.account.exceptions;
 
 public class AlreadyRegisteredException extends RuntimeException{
     public AlreadyRegisteredException(String message) {

@@ -1,9 +1,11 @@
 package com.hanpyeon.academyapi.service;
 
-import com.hanpyeon.academyapi.dto.RegisterMemberDto;
-import com.hanpyeon.academyapi.exceptions.AlreadyRegisteredException;
-import com.hanpyeon.academyapi.mapper.RegisterMapper;
-import com.hanpyeon.academyapi.repository.MemberRepository;
+import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
+import com.hanpyeon.academyapi.account.service.PasswordHandler;
+import com.hanpyeon.academyapi.account.service.RegisterServiceProvider;
+import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
+import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.security.Role;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

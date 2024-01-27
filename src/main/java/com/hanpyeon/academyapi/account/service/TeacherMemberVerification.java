@@ -1,6 +1,6 @@
-package com.hanpyeon.academyapi.service;
+package com.hanpyeon.academyapi.account.service;
 
-import com.hanpyeon.academyapi.dto.RegisterMemberDto;
+import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.security.Role;
 import org.springframework.stereotype.Component;
 

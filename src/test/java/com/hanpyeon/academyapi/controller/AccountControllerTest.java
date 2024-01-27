@@ -1,10 +1,11 @@
 package com.hanpyeon.academyapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.dto.RegisterRequestDto;
-import com.hanpyeon.academyapi.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.controller.AccountController;
+import com.hanpyeon.academyapi.account.dto.RegisterRequestDto;
+import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.security.Role;
-import com.hanpyeon.academyapi.service.RegisterService;
+import com.hanpyeon.academyapi.account.service.RegisterService;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

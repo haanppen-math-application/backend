@@ -1,10 +1,10 @@
-package com.hanpyeon.academyapi.service;
+package com.hanpyeon.academyapi.account.service;
 
-import com.hanpyeon.academyapi.dto.RegisterMemberTotalDto;
-import com.hanpyeon.academyapi.entity.Member;
-import com.hanpyeon.academyapi.exceptions.AlreadyRegisteredException;
-import com.hanpyeon.academyapi.mapper.RegisterMapper;
-import com.hanpyeon.academyapi.repository.MemberRepository;
+import com.hanpyeon.academyapi.account.dto.RegisterMemberTotalDto;
+import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
+import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
