@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.entity;
+package com.hanpyeon.academyapi.account.entity;
 
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.*;

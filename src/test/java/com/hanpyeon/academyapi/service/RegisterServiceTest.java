@@ -1,8 +1,12 @@
 package com.hanpyeon.academyapi.service;
 
-import com.hanpyeon.academyapi.dto.RegisterMemberDto;
-import com.hanpyeon.academyapi.dto.RegisterMemberTotalDto;
-import com.hanpyeon.academyapi.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
+import com.hanpyeon.academyapi.account.dto.RegisterMemberTotalDto;
+import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.service.MemberVerification;
+import com.hanpyeon.academyapi.account.service.RegisterService;
+import com.hanpyeon.academyapi.account.service.RegisterServiceProvider;
+import com.hanpyeon.academyapi.account.service.TimeProvider;
 import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;

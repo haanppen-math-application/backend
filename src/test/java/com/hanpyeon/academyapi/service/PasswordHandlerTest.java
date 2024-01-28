@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.service;
 
+import com.hanpyeon.academyapi.account.service.PasswordHandler;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;

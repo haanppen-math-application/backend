@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.dto;
+package com.hanpyeon.academyapi.account;
 
 
 import java.util.List;

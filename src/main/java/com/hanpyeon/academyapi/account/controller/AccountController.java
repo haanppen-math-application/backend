@@ -1,9 +1,9 @@
-package com.hanpyeon.academyapi.controller;
+package com.hanpyeon.academyapi.account.controller;
 
-import com.hanpyeon.academyapi.dto.RegisterMemberDto;
-import com.hanpyeon.academyapi.dto.RegisterRequestDto;
-import com.hanpyeon.academyapi.mapper.RegisterMapper;
-import com.hanpyeon.academyapi.service.RegisterService;
+import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
+import com.hanpyeon.academyapi.account.dto.RegisterRequestDto;
+import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.service.RegisterService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
 
 @RestController
 @AllArgsConstructor
