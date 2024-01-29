@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.account.dto.RegisterMemberTotalDto;
+import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class RegisterService {
         verifications.stream()
                 .filter(memberVerification -> memberVerification.supports(memberDto))
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new)
+                .orElseThrow(() -> new NotSupportedMemberTypeException("처리할 수 없는 사용자 유형입니다."))
                 .checkFields(memberDto);
     }
 }
