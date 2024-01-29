@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.service;
 
 import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.account.dto.RegisterMemberTotalDto;
+import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.account.service.MemberVerification;
 import com.hanpyeon.academyapi.account.service.RegisterService;
@@ -49,7 +50,7 @@ class RegisterServiceTest {
     void 등록_유형별_테스트_실행(RegisterMemberDto memberDto) {
         try {
             registerService.register(memberDto);
-        } catch (IllegalArgumentException e) {
+        } catch (NotSupportedMemberTypeException e) {
         }
 
         Mockito.verify(strategy1).supports(memberDto);
