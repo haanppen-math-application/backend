@@ -1,9 +1,9 @@
 package com.hanpyeon.academyapi.security;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.hanpyeon.academyapi.account.mapper.RoleDeserializer;
 
-import java.util.Arrays;
-
+@JsonDeserialize(using = RoleDeserializer.class)
 public enum Role {
     ROLE_STUDENT("student"),
     ROLE_TEACHER("teacher"),
@@ -15,11 +15,7 @@ public enum Role {
 
     private final String identifier;
 
-    @JsonCreator
-    public static Role getProperRole(String identifier) {
-        return Arrays.stream(Role.values())
-                .filter(role -> role.identifier.equals(identifier))
-                .findAny()
-                .orElse(null);
+    public String getIdentifier() {
+        return identifier;
     }
 }
