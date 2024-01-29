@@ -3,5 +3,5 @@ package com.hanpyeon.academyapi.account;
 
 import java.util.List;
 
-public record FieldExceptionResponse(String errorCode, List<?> details) {
+public record ExceptionResponseBody(String errorCode, List<?> details) {
 }
