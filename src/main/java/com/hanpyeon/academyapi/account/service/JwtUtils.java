@@ -1,15 +1,14 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.security.Role;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.Optional;
+
 @Component
 public class JwtUtils {
     private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
@@ -32,18 +31,35 @@ public class JwtUtils {
                 .signWith(SECRET_KEY, SIGNATURE_ALGORITHM)
                 .compact();
     }
-
     // 필터 에러 전역처리
     public Claims parseToken(String token) {
         return jwtParser.parseClaimsJws(token).getBody();
     }
-    public Long getMemberId(Claims claims) {
-        return Long.parseLong(claims.getSubject());
+    public Optional<Long> getMemberId(Claims claims) {
+        try {
+            String subject = claims.getSubject();
+            Long memberId = Long.parseLong(subject);
+            return Optional.ofNullable(memberId);
+        } catch (NullPointerException exception) {
+            return Optional.empty();
+        } catch (NumberFormatException exception) {
+            return Optional.empty();
+        }
     }
-    public String getMemberName(Claims claims) {
-        return (String) claims.get(MEMBER_NAME);
+    public Optional<String> getMemberName(Claims claims) {
+        try {
+            return Optional.ofNullable(claims.get(MEMBER_NAME, String.class));
+        } catch (RequiredTypeException exception) {
+            return Optional.empty();
+        } catch (NullPointerException exception) {
+            return Optional.empty();
+        }
     }
-    public Role getMemberRole(Claims claims) {
-        return (Role) claims.get(MEMBER_ROLE);
+    public Optional<Role> getMemberRole(Claims claims) {
+        try {
+            return Optional.ofNullable(Role.valueOf(claims.get(MEMBER_ROLE, String.class)));
+        } catch (NullPointerException exception) {
+            return Optional.empty();
+        }
     }
 }
