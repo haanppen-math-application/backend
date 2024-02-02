@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.account.service;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.security.JwtUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,7 +44,7 @@ class LoginServiceTest {
     void 사용자_찾기_성공_테스트() {
         Mockito.when(memberRepository.findMemberByPhoneNumber(Mockito.anyString()))
                 .thenReturn(Optional.of(member));
-        Mockito.when(jwtUtils.generateToken(member.getMemberId(),member.getUserRole(), member.getMemberName())).thenReturn("12");
+        Mockito.when(jwtUtils.generateToken(member.getMemberId(), member.getUserRole(), member.getMemberName())).thenReturn("12");
         assertThat(loginService.provideJwt(Mockito.anyString())).isNotNull();
     }
 }

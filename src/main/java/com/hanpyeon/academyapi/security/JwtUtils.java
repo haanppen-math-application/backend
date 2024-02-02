@@ -1,6 +1,5 @@
-package com.hanpyeon.academyapi.account.service;
+package com.hanpyeon.academyapi.security;
 
-import com.hanpyeon.academyapi.security.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
@@ -31,10 +30,12 @@ public class JwtUtils {
                 .signWith(SECRET_KEY, SIGNATURE_ALGORITHM)
                 .compact();
     }
+
     // 필터 에러 전역처리
     public Claims parseToken(String token) {
         return jwtParser.parseClaimsJws(token).getBody();
     }
+
     public Optional<Long> getMemberId(Claims claims) {
         try {
             String subject = claims.getSubject();
@@ -46,6 +47,7 @@ public class JwtUtils {
             return Optional.empty();
         }
     }
+
     public Optional<String> getMemberName(Claims claims) {
         try {
             return Optional.ofNullable(claims.get(MEMBER_NAME, String.class));
@@ -55,6 +57,7 @@ public class JwtUtils {
             return Optional.empty();
         }
     }
+
     public Optional<Role> getMemberRole(Claims claims) {
         try {
             return Optional.ofNullable(Role.valueOf(claims.get(MEMBER_ROLE, String.class)));

@@ -1,6 +1,5 @@
-package com.hanpyeon.academyapi.account.service;
+package com.hanpyeon.academyapi.security;
 
-import com.hanpyeon.academyapi.security.Role;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,6 +42,6 @@ class JwtUtilsTest {
                 Arguments.of(null, Role.ROLE_MANAGER, "lqkwsmd"),
                 Arguments.of((long) 1, null, "lqkwsmd"),
                 Arguments.of((long) 1, Role.ROLE_MANAGER, null)
-                );
+        );
     }
 }

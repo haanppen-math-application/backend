@@ -1,6 +1,6 @@
-package com.hanpyeon.academyapi.service;
+package com.hanpyeon.academyapi.account.service;
 
-import com.hanpyeon.academyapi.account.service.PasswordHandler;
+import com.hanpyeon.academyapi.security.PasswordHandler;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,10 +23,12 @@ public class PasswordHandlerTest {
     @Mock
     PasswordEncoder passwordEncoder;
     private PasswordHandler passwordHandler;
+
     @BeforeEach
     void initPasswordHandler() {
         this.passwordHandler = new PasswordHandler(passwordEncoder);
     }
+
     @ParameterizedTest
     @MethodSource("provideIllegalPasswords")
     void 비밀번호_초기값_테스트(String inputPassword) {
@@ -35,6 +37,7 @@ public class PasswordHandlerTest {
         Assertions.assertThat(passwordHandler.getEncodedPassword(inputPassword)).isEqualTo(DEFAULT);
         Assertions.assertThat(passwordHandler.getEncodedPassword(null)).isEqualTo(DEFAULT);
     }
+
     @ParameterizedTest
     @MethodSource("provideLegalPasswords")
     void 비밀번호_사용자값_테스트(String inputPassword) {
@@ -51,6 +54,7 @@ public class PasswordHandlerTest {
                 Arguments.of("  \n")
         );
     }
+
     static Stream<Arguments> provideLegalPasswords() {
         return Stream.of(
                 Arguments.of("qwerwqer"),

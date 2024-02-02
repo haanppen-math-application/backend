@@ -1,17 +1,19 @@
-package com.hanpyeon.academyapi.account.service;
+package com.hanpyeon.academyapi.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 
-@Service
+@Component
 public class PasswordHandler {
     private static final String DEFAULT_PASSWORD = "0000";
     private final PasswordEncoder passwordEncoder;
+
     public PasswordHandler(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
-    public String getEncodedPassword(String password){
+
+    public String getEncodedPassword(String password) {
         if (password == null || password.isBlank()) {
             return passwordEncoder.encode(DEFAULT_PASSWORD);
         }

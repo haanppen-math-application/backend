@@ -1,11 +1,10 @@
-package com.hanpyeon.academyapi.service;
+package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
-import com.hanpyeon.academyapi.account.service.PasswordHandler;
-import com.hanpyeon.academyapi.account.service.RegisterServiceProvider;
 import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,8 +27,9 @@ public class RegisterServiceProviderTest {
     PasswordHandler passwordHandler;
     RegisterMapper registerMapper = new RegisterMapper();
     RegisterServiceProvider serviceProvider;
+
     @BeforeEach
-    void initRegisterService(){
+    void initRegisterService() {
         this.serviceProvider = new RegisterServiceProvider(memberRepository, registerMapper, passwordHandler);
     }
 
@@ -41,9 +41,11 @@ public class RegisterServiceProviderTest {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         Assertions.assertThatThrownBy(() -> {
-            serviceProvider.registerMember(registerMapper.createMemberTotalDto(requestDto, localDateTime));}
+                    serviceProvider.registerMember(registerMapper.createMemberTotalDto(requestDto, localDateTime));
+                }
         ).isInstanceOf(AlreadyRegisteredException.class);
     }
+
     @ParameterizedTest
     @MethodSource("provideRegisterRequest")
     void 사용자등록_성공_테스트(RegisterMemberDto requestDto) {

@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.account.dto.RegisterMemberTotalDto;
 import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.service.verify.MemberVerification;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

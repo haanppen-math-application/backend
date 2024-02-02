@@ -1,4 +1,4 @@
 package com.hanpyeon.academyapi.account.exceptions;
 
-public class NoSuchMemberException extends RuntimeException{
+public class NoSuchMemberException extends RuntimeException {
 }
