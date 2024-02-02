@@ -14,7 +14,7 @@ public class LoginService {
     private final JwtUtils jwtUtils;
 
     @PostMapping
-    public String provideJwt(String phoneNumber) {
+    public String provideJwt(final String phoneNumber) {
         return memberRepository.findMemberByPhoneNumber(phoneNumber).stream()
                 .findAny()
                 .map(member ->

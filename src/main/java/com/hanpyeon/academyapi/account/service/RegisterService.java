@@ -27,7 +27,7 @@ public class RegisterService {
         registerServiceProvider.registerMember(memberTotalDto);
     }
 
-    private void verify(RegisterMemberDto memberDto) {
+    private void verify(final RegisterMemberDto memberDto) {
         verifications.stream()
                 .filter(memberVerification -> memberVerification.supports(memberDto))
                 .findAny()

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TeacherMemberVerification implements MemberVerification {
     @Override
-    public boolean supports(RegisterMemberDto memberDto) {
+    public boolean supports(final RegisterMemberDto memberDto) {
         if (memberDto.role().equals(Role.ROLE_TEACHER)) {
             return true;
         }
@@ -15,6 +15,6 @@ public class TeacherMemberVerification implements MemberVerification {
     }
 
     @Override
-    public void checkFields(RegisterMemberDto memberDto) {
+    public void checkFields(final RegisterMemberDto memberDto) {
     }
 }

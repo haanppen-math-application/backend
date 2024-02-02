@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
     private final Logger LOGGER = LoggerFactory.getLogger("Account Controller");
 
-    RegisterService registerService;
-    RegisterMapper registerMapper;
+    private final RegisterService registerService;
+    private final RegisterMapper registerMapper;
 
     @PostMapping
     public ResponseEntity<?> registerStudent(@Valid @RequestBody final RegisterRequestDto registerRequestDto) {

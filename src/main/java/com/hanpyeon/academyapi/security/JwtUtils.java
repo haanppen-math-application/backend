@@ -19,7 +19,7 @@ public class JwtUtils {
             .setSigningKey(SECRET_KEY)
             .build();
 
-    public String generateToken(Long memberId, Role role, String name) {
+    public String generateToken(final Long memberId, final Role role, final String name) {
         Date time = new Date();
         return Jwts.builder()
                 .setSubject(String.valueOf(memberId))
@@ -32,11 +32,11 @@ public class JwtUtils {
     }
 
     // 필터 에러 전역처리
-    public Claims parseToken(String token) {
+    public Claims parseToken(final String token) {
         return jwtParser.parseClaimsJws(token).getBody();
     }
 
-    public Optional<Long> getMemberId(Claims claims) {
+    public Optional<Long> getMemberId(final Claims claims) {
         try {
             String subject = claims.getSubject();
             Long memberId = Long.parseLong(subject);
@@ -48,7 +48,7 @@ public class JwtUtils {
         }
     }
 
-    public Optional<String> getMemberName(Claims claims) {
+    public Optional<String> getMemberName(final Claims claims) {
         try {
             return Optional.ofNullable(claims.get(MEMBER_NAME, String.class));
         } catch (RequiredTypeException exception) {
@@ -58,7 +58,7 @@ public class JwtUtils {
         }
     }
 
-    public Optional<Role> getMemberRole(Claims claims) {
+    public Optional<Role> getMemberRole(final Claims claims) {
         try {
             return Optional.ofNullable(Role.valueOf(claims.get(MEMBER_ROLE, String.class)));
         } catch (NullPointerException exception) {

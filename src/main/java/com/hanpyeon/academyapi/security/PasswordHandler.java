@@ -9,11 +9,11 @@ public class PasswordHandler {
     private static final String DEFAULT_PASSWORD = "0000";
     private final PasswordEncoder passwordEncoder;
 
-    public PasswordHandler(PasswordEncoder passwordEncoder) {
+    public PasswordHandler(final PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String getEncodedPassword(String password) {
+    public String getEncodedPassword(final String password) {
         if (password == null || password.isBlank()) {
             return passwordEncoder.encode(DEFAULT_PASSWORD);
         }
