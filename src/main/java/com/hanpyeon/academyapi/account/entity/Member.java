@@ -3,10 +3,12 @@ package com.hanpyeon.academyapi.account.entity;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
