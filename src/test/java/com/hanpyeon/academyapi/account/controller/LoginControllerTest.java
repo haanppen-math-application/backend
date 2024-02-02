@@ -42,7 +42,7 @@ class LoginControllerTest {
     @ParameterizedTest
     @MethodSource("provideLegalRequest")
     void 로그인_형식_성공_테스트(Map<String, String> requestDto) throws Exception {
-        request(status().isCreated(), requestDto);
+        request(status().isOk(), requestDto);
     }
 
     @ParameterizedTest
