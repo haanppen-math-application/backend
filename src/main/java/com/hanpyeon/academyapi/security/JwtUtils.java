@@ -10,6 +10,8 @@ import java.util.Optional;
 
 @Component
 public class JwtUtils {
+    public static final String HEADER = "Authentication";
+    private final String TOKEN_TYPE = "Bearer";
     private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
     private final SecretKey SECRET_KEY = Keys.secretKeyFor(SIGNATURE_ALGORITHM);
     private final String MEMBER_NAME = "memberName";
@@ -21,7 +23,7 @@ public class JwtUtils {
 
     public String generateToken(final Long memberId, final Role role, final String name) {
         Date time = new Date();
-        return Jwts.builder()
+        return TOKEN_TYPE + " " + Jwts.builder()
                 .setSubject(String.valueOf(memberId))
                 .claim(MEMBER_NAME, name)
                 .claim(MEMBER_ROLE, role)
@@ -32,8 +34,12 @@ public class JwtUtils {
     }
 
     // 필터 에러 전역처리
-    public Claims parseToken(final String token) {
-        return jwtParser.parseClaimsJws(token).getBody();
+    public Claims parseToken(String bearerToken) {
+        if (!bearerToken.contains(TOKEN_TYPE)) {
+            throw new IllegalArgumentException();
+        }
+        bearerToken = bearerToken.replace(TOKEN_TYPE, "").trim();
+        return jwtParser.parseClaimsJws(bearerToken).getBody();
     }
 
     public Optional<Long> getMemberId(final Claims claims) {
