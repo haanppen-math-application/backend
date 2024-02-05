@@ -34,12 +34,12 @@ public class JwtUtils {
     }
 
     // 필터 에러 전역처리
-    public Claims parseToken(String bearerToken) {
-        if (!bearerToken.contains(TOKEN_TYPE)) {
+    public Claims parseToken(String authorizationHeader) {
+        if (!authorizationHeader.contains(TOKEN_TYPE)) {
             throw new IllegalArgumentException();
         }
-        bearerToken = bearerToken.replace(TOKEN_TYPE, "").trim();
-        return jwtParser.parseClaimsJws(bearerToken).getBody();
+        String token = authorizationHeader.replace(TOKEN_TYPE, "").trim();
+        return jwtParser.parseClaimsJws(token).getBody();
     }
 
     public Optional<Long> getMemberId(final Claims claims) {
