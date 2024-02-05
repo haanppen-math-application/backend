@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Component
 public class JwtUtils {
-    public static final String HEADER = "Authentication";
+    public static final String HEADER = "Authorization";
     private final String TOKEN_TYPE = "Bearer";
     private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
     private final SecretKey SECRET_KEY = Keys.secretKeyFor(SIGNATURE_ALGORITHM);
