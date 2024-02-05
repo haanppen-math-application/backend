@@ -39,9 +39,9 @@ class JwtUtilsTest {
     static Stream<Arguments> provideArguments() {
         return Stream.of(
                 Arguments.of(null, null, null),
-                Arguments.of(null, Role.ROLE_MANAGER, "lqkwsmd"),
+                Arguments.of(null, Role.MANAGER, "lqkwsmd"),
                 Arguments.of((long) 1, null, "lqkwsmd"),
-                Arguments.of((long) 1, Role.ROLE_MANAGER, null)
+                Arguments.of((long) 1, Role.MANAGER, null)
         );
     }
 }

@@ -97,10 +97,10 @@ class RegisterServiceTest {
 
     public static Stream<Arguments> provideRegisterRequest() {
         return Stream.of(
-                Arguments.of(createMemberDto("Heejong", 10, Role.ROLE_STUDENT, "01099182281", "000")),
-                Arguments.of(createMemberDto("Hee12", 11, Role.ROLE_TEACHER, "010991822281", "121")),
-                Arguments.of(createMemberDto("Heejong", 10, Role.ROLE_STUDENT, "02109931822813", "124")),
-                Arguments.of(createMemberDto("Heejong", 10, Role.ROLE_TEACHER, "120109918122281", ""))
+                Arguments.of(createMemberDto("Heejong", 10, Role.STUDENT, "01099182281", "000")),
+                Arguments.of(createMemberDto("Hee12", 11, Role.TEACHER, "010991822281", "121")),
+                Arguments.of(createMemberDto("Heejong", 10, Role.STUDENT, "02109931822813", "124")),
+                Arguments.of(createMemberDto("Heejong", 10, Role.TEACHER, "120109918122281", ""))
         );
     }
 }

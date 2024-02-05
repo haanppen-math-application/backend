@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class StudentMemberVerification implements MemberVerification {
     @Override
     public boolean supports(final RegisterMemberDto memberDto) {
-        if (memberDto.role().equals(Role.ROLE_STUDENT)) {
+        if (memberDto.role().equals(Role.STUDENT)) {
             return true;
         }
         return false;

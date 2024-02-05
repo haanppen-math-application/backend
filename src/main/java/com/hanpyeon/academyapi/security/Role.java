@@ -5,17 +5,23 @@ import com.hanpyeon.academyapi.account.mapper.RoleDeserializer;
 
 @JsonDeserialize(using = RoleDeserializer.class)
 public enum Role {
-    ROLE_STUDENT("student"),
-    ROLE_TEACHER("teacher"),
-    ROLE_MANAGER("manager");
+    STUDENT("student", "ROLE_STUDENT"),
+    TEACHER("teacher", "ROLE_TEACHER"),
+    MANAGER("manager", "ROLE_MANAGER");
 
-    Role(String identifier) {
+    Role(String identifier, String securityRole) {
         this.identifier = identifier;
+        this.securityRole = securityRole;
     }
 
     private final String identifier;
+    private final String securityRole;
 
     public String getIdentifier() {
         return identifier;
+    }
+
+    public String getSecurityRole() {
+        return securityRole;
     }
 }

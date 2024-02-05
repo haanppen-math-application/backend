@@ -33,21 +33,21 @@ class RoleDeserializerTest {
     void deserializeStudentTest() throws IOException {
         Mockito.when(jsonParser.getValueAsString()).thenReturn("student");
 
-        assertThat(deserializer.deserialize(jsonParser, context)).isEqualTo(Role.ROLE_STUDENT);
+        assertThat(deserializer.deserialize(jsonParser, context)).isEqualTo(Role.STUDENT);
     }
 
     @Test
     void deserializeTeacherTest() throws IOException {
         Mockito.when(jsonParser.getValueAsString()).thenReturn("teacher");
 
-        assertThat(deserializer.deserialize(jsonParser, context)).isEqualTo(Role.ROLE_TEACHER);
+        assertThat(deserializer.deserialize(jsonParser, context)).isEqualTo(Role.TEACHER);
     }
 
     @Test
     void deserializedManagerTest() throws IOException {
         Mockito.when(jsonParser.getValueAsString()).thenReturn("manager");
 
-        assertThat(deserializer.deserialize(jsonParser, context)).isEqualTo(Role.ROLE_MANAGER);
+        assertThat(deserializer.deserialize(jsonParser, context)).isEqualTo(Role.MANAGER);
     }
 
     @ParameterizedTest
