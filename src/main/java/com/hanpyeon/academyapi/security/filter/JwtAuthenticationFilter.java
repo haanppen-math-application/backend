@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader(JwtUtils.HEADER);
-        if (authorizationHeader != null && !authorizationHeader.isBlank()) {
+        if (authorizationHeader != null && !authorizationHeader.isBlank() && authorizationHeader.contains(JwtUtils.TOKEN_TYPE)) {
 
             Authentication authenticationToken = JwtAuthenticationToken.unauthenticated(authorizationHeader);
             Authentication authenticationResult = authenticationManager.authenticate(authenticationToken);
