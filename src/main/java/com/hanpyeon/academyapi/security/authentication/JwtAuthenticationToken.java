@@ -13,6 +13,9 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     private JwtAuthenticationToken(String token, MemberPrincipal memberPrincipal, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
+        if (token == null || token.isBlank()) {
+            throw new IllegalArgumentException("토큰 값은 null 일 수 없습니다." + token);
+        }
         this.token = token;
         this.principals = memberPrincipal;
     }
