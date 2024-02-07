@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.advice;
 
-import com.hanpyeon.academyapi.account.ExceptionResponseBody;
 import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.account.exceptions.MemberRoleVerificationException;
 import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 public class ArgumentExceptionAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> requestFormatExceptionHandler(final HttpMessageNotReadableException exception) {
-        return ResponseEntity.badRequest().body("API 호출을 위해 필수적인 필드가 있습니다.");
+        return ResponseEntity.badRequest().body(new ExceptionResponseBody("-000", List.of("해당 API에 적절하지 않은 요청 형식입니다.")));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

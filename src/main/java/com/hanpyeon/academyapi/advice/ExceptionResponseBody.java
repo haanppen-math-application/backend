@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi;
+package com.hanpyeon.academyapi.advice;
 
 
 import java.util.List;
