@@ -19,6 +19,6 @@ public class LoginService {
                 .findAny()
                 .map(member ->
                         jwtUtils.generateToken(member.getMemberId(), member.getUserRole(), member.getMemberName()))
-                .orElseThrow(NoSuchMemberException::new);
+                .orElseThrow(() -> new NoSuchMemberException("등록되지 않은 사용자 입니다"));
     }
 }
