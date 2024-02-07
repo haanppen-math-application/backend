@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.security.authentication;
 
 import com.hanpyeon.academyapi.security.JwtUtils;
 import com.hanpyeon.academyapi.security.Role;
-import com.hanpyeon.academyapi.security.exception.IllegalJwtArgumentException;
+import com.hanpyeon.academyapi.security.exception.IllegalJwtAuthenticationException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         try {
             token = (String) authentication.getCredentials();
         } catch (ClassCastException exception) {
-            throw new IllegalJwtArgumentException("적합한 토큰 형식이 아닙니다.");
+            throw new IllegalJwtAuthenticationException("적합한 토큰 형식이 아닙니다.");
         }
 
         try {
@@ -38,9 +38,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             return JwtAuthenticationToken.authenticated(token, memberPrincipal, getMemberRole(claims));
 
         } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException exception) {
-            throw new IllegalJwtArgumentException("사용할 수 없는 JWT 입니다.");
+            throw new IllegalJwtAuthenticationException("사용할 수 없는 JWT 입니다.");
         } catch (ExpiredJwtException exception) {
-            throw new IllegalJwtArgumentException("만료된 토큰 입니다. 토큰을 재발급 받아주세요");
+            throw new IllegalJwtAuthenticationException("만료된 토큰 입니다. 토큰을 재발급 받아주세요");
         }
 
     }
@@ -49,7 +49,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         return jwtUtils.getMemberId(claims).stream()
                 .findAny()
                 .orElseThrow(() -> {
-                    throw new IllegalJwtArgumentException("Cannot Find MemberId");
+                    throw new IllegalJwtAuthenticationException("Cannot Find MemberId");
                 });
     }
 
@@ -57,7 +57,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         return jwtUtils.getMemberName(claims).stream()
                 .findAny()
                 .orElseThrow(() -> {
-                    throw new IllegalJwtArgumentException("Cannot Find MemberName");
+                    throw new IllegalJwtAuthenticationException("Cannot Find MemberName");
                 });
     }
 
@@ -65,7 +65,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         Role role = jwtUtils.getMemberRole(claims).stream()
                 .findAny()
                 .orElseThrow(() -> {
-                    throw new IllegalJwtArgumentException("Cannot Find MemberRole");
+                    throw new IllegalJwtAuthenticationException("Cannot Find MemberRole");
                 });
         return List.of(new SimpleGrantedAuthority(role.getSecurityRole()));
     }
