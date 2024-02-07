@@ -7,8 +7,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import org.hibernate.validator.constraints.Range;
 
-import java.time.LocalDateTime;
-
 @Builder
 public record RegisterMemberDto(
         @NotBlank String name,
@@ -16,5 +14,5 @@ public record RegisterMemberDto(
         @NotBlank @Pattern(regexp = "^[0-9]+$") String phoneNumber,
         @NotNull Role role,
         String password
-){
+) {
 }

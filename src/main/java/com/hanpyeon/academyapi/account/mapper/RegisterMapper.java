@@ -19,6 +19,7 @@ public class RegisterMapper {
                 .role(requestDto.role())
                 .build();
     }
+
     public RegisterMemberTotalDto createMemberTotalDto(final RegisterMemberDto registerMemberDto, final LocalDateTime dateTime) {
         return RegisterMemberTotalDto.builder()
                 .name(registerMemberDto.name())
@@ -29,6 +30,7 @@ public class RegisterMapper {
                 .registerDate(dateTime)
                 .build();
     }
+
     public Member createMemberEntity(final RegisterMemberTotalDto memberTotalDto, final String encodedPassword) {
         return Member.builder()
                 .memberName(memberTotalDto.name())

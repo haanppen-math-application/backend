@@ -1,13 +1,10 @@
-package com.hanpyeon.academyapi.service;
+package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.account.dto.RegisterMemberTotalDto;
 import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
-import com.hanpyeon.academyapi.account.service.MemberVerification;
-import com.hanpyeon.academyapi.account.service.RegisterService;
-import com.hanpyeon.academyapi.account.service.RegisterServiceProvider;
-import com.hanpyeon.academyapi.account.service.TimeProvider;
+import com.hanpyeon.academyapi.account.service.verify.MemberVerification;
 import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -100,10 +97,10 @@ class RegisterServiceTest {
 
     public static Stream<Arguments> provideRegisterRequest() {
         return Stream.of(
-                Arguments.of(createMemberDto("Heejong", 10, Role.ROLE_STUDENT, "01099182281", "000")),
-                Arguments.of(createMemberDto("Hee12", 11, Role.ROLE_TEACHER, "010991822281", "121")),
-                Arguments.of(createMemberDto("Heejong", 10, Role.ROLE_STUDENT, "02109931822813", "124")),
-                Arguments.of(createMemberDto("Heejong", 10, Role.ROLE_TEACHER, "120109918122281", ""))
+                Arguments.of(createMemberDto("Heejong", 10, Role.STUDENT, "01099182281", "000")),
+                Arguments.of(createMemberDto("Hee12", 11, Role.TEACHER, "010991822281", "121")),
+                Arguments.of(createMemberDto("Heejong", 10, Role.STUDENT, "02109931822813", "124")),
+                Arguments.of(createMemberDto("Heejong", 10, Role.TEACHER, "120109918122281", ""))
         );
     }
 }

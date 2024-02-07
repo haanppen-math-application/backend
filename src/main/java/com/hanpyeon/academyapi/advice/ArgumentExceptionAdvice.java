@@ -1,8 +1,8 @@
 package com.hanpyeon.academyapi.advice;
 
-import com.hanpyeon.academyapi.account.ExceptionResponseBody;
 import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.account.exceptions.MemberRoleVerificationException;
+import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ArgumentExceptionAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<?> requestFormatExceptionHandler(HttpMessageNotReadableException exception) {
-        return ResponseEntity.badRequest().body("API 호출을 위해 필수적인 필드가 있습니다.");
+    public ResponseEntity<?> requestFormatExceptionHandler(final HttpMessageNotReadableException exception) {
+        return ResponseEntity.badRequest().body(new ExceptionResponseBody("-000", List.of("해당 API에 적절하지 않은 요청 형식입니다.")));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> missingFieldExceptionHandler(MethodArgumentNotValidException exception) {
+    public ResponseEntity<?> missingFieldExceptionHandler(final MethodArgumentNotValidException exception) {
         List<String> errors = exception.getFieldErrors().stream()
                 .map(o -> o.getField())
                 .collect(Collectors.toList());
@@ -29,17 +29,22 @@ public class ArgumentExceptionAdvice {
     }
 
     @ExceptionHandler(AlreadyRegisteredException.class)
-    public ResponseEntity<?> alreadyRegisteredExceptionHandler(AlreadyRegisteredException exception) {
+    public ResponseEntity<?> alreadyRegisteredExceptionHandler(final AlreadyRegisteredException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponseBody("-002", List.of(exception.getMessage())));
     }
 
     @ExceptionHandler(MemberRoleVerificationException.class)
-    public ResponseEntity<?> roleVerificationExceptionHandler(MemberRoleVerificationException exception) {
+    public ResponseEntity<?> roleVerificationExceptionHandler(final MemberRoleVerificationException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponseBody("-003", List.of(exception.getMessage())));
     }
 
     @ExceptionHandler(NotSupportedMemberTypeException.class)
-    public ResponseEntity<?> notSupportedMemberTypeExceptionHandler(NotSupportedMemberTypeException exception) {
+    public ResponseEntity<?> notSupportedMemberTypeExceptionHandler(final NotSupportedMemberTypeException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponseBody("-004", List.of(exception.getMessage())));
+    }
+
+    @ExceptionHandler(NoSuchMemberException.class)
+    public ResponseEntity<?> noSuchMemberExceptionHandler(final NoSuchMemberException exception) {
+        return ResponseEntity.badRequest().body(new ExceptionResponseBody("-010", List.of(exception.getMessage())));
     }
 }

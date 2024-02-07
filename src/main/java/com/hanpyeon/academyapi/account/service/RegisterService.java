@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.account.dto.RegisterMemberTotalDto;
 import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.service.verify.MemberVerification;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class RegisterService {
         registerServiceProvider.registerMember(memberTotalDto);
     }
 
-    private void verify(RegisterMemberDto memberDto) {
+    private void verify(final RegisterMemberDto memberDto) {
         verifications.stream()
                 .filter(memberVerification -> memberVerification.supports(memberDto))
                 .findAny()

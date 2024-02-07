@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.security.PasswordHandler;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

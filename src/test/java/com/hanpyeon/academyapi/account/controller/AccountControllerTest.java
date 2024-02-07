@@ -1,11 +1,9 @@
-package com.hanpyeon.academyapi.controller;
+package com.hanpyeon.academyapi.account.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.account.controller.AccountController;
-import com.hanpyeon.academyapi.account.dto.RegisterRequestDto;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
-import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.account.service.RegisterService;
+import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,17 +17,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -39,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = AccountController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
         excludeFilters = {
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class, JwtAuthenticationFilter.class})
         })
 public class AccountControllerTest {
     private static final String BASE_URL = "/api/accounts";
@@ -90,7 +82,7 @@ public class AccountControllerTest {
                 Arguments.of(createRequest("TOM", 11, "102010021", "student", null)),
                 Arguments.of(createRequest("COKE", 10, "1022", "manager", null)),
                 Arguments.of(createRequest("COKE", null, "1022", "manager", null))
-                );
+        );
     }
 
     public static Stream<Arguments> provideIllegalArguments() {

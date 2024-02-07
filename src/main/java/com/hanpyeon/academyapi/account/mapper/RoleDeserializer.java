@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class RoleDeserializer extends JsonDeserializer<Role> {
     @Override
-    public Role deserialize(JsonParser parser, DeserializationContext context) throws IOException, JacksonException {
+    public Role deserialize(final JsonParser parser, final DeserializationContext context) throws IOException, JacksonException {
         String identifier = parser.getValueAsString();
         return Arrays.stream(Role.values())
                 .filter(role -> role.getIdentifier().equals(identifier))
