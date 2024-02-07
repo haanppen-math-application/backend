@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.security;
 
+import com.hanpyeon.academyapi.security.exceptionhandler.AccessDeniedHandler;
 import com.hanpyeon.academyapi.security.exceptionhandler.JwtEntryPointHandler;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +29,7 @@ public class SecurityConfig {
                 )
                 .exceptionHandling(config -> {
                     config.authenticationEntryPoint(new JwtEntryPointHandler());
-//                    config.accessDeniedHandler()
+                    config.accessDeniedHandler(new AccessDeniedHandler());
                 })
                 .addFilterBefore(new JwtAuthenticationFilter(authenticationManager), AuthorizationFilter.class)
                 .authorizeHttpRequests(http ->
