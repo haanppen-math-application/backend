@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.account;
+package com.hanpyeon.academyapi;
 
 
 import java.util.List;
