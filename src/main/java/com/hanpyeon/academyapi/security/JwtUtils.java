@@ -33,11 +33,7 @@ public class JwtUtils {
                 .compact();
     }
 
-    // 필터 에러 전역처리
     public Claims parseToken(String authorizationHeader) {
-        if (!authorizationHeader.contains(TOKEN_TYPE)) {
-            throw new IllegalArgumentException();
-        }
         String token = authorizationHeader.replace(TOKEN_TYPE, "").trim();
         return jwtParser.parseClaimsJws(token).getBody();
     }
