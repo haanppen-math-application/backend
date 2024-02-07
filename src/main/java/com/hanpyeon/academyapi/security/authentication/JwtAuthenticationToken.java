@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.security.authentication;
 
+import com.hanpyeon.academyapi.security.exception.IllegalJwtArgumentException;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -14,7 +15,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     private JwtAuthenticationToken(String token, MemberPrincipal memberPrincipal, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         if (token == null || token.isBlank()) {
-            throw new IllegalArgumentException("토큰 값은 null 일 수 없습니다." + token);
+            throw new IllegalArgumentException("Jwt 토큰 값은 null 일 수 없습니다." + token);
         }
         this.token = token;
         this.principals = memberPrincipal;
