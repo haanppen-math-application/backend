@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/login")
 @RequiredArgsConstructor
@@ -21,8 +24,8 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<?> memberLogin(@Valid @RequestBody final LoginRequestDto loginRequestDto) {
         String token = loginService.provideJwt(loginRequestDto.userPhoneNumber());
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("Authentication", token);
+        Map<String, String> body = new HashMap<>();
+        body.put("Authentication", token);
         return ResponseEntity.ok(body);
     }
 }
