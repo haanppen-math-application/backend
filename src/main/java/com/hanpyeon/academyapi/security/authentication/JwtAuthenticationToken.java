@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.security.authentication;
 
-import com.hanpyeon.academyapi.security.exception.IllegalJwtArgumentException;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 

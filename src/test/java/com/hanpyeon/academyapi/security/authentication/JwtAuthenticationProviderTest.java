@@ -2,9 +2,8 @@ package com.hanpyeon.academyapi.security.authentication;
 
 import com.hanpyeon.academyapi.security.JwtUtils;
 import com.hanpyeon.academyapi.security.Role;
-import com.hanpyeon.academyapi.security.exception.IllegalJwtArgumentException;
+import com.hanpyeon.academyapi.security.exception.IllegalJwtAuthenticationException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,7 +56,7 @@ class JwtAuthenticationProviderTest {
         Mockito.lenient().when(jwtUtils.getMemberId(claims)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> jwtAuthenticationProvider.authenticate(jwtAuthenticationToken))
-                .isInstanceOf(IllegalJwtArgumentException.class)
+                .isInstanceOf(IllegalJwtAuthenticationException.class)
                 .hasMessage("Cannot Find MemberId");
     }
 
@@ -67,7 +66,7 @@ class JwtAuthenticationProviderTest {
         Mockito.lenient().when(jwtUtils.getMemberName(claims)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> jwtAuthenticationProvider.authenticate(jwtAuthenticationToken))
-                .isInstanceOf(IllegalJwtArgumentException.class)
+                .isInstanceOf(IllegalJwtAuthenticationException.class)
                 .hasMessage("Cannot Find MemberName");
     }
 
@@ -78,7 +77,7 @@ class JwtAuthenticationProviderTest {
         Mockito.lenient().when(jwtUtils.getMemberRole(claims)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> jwtAuthenticationProvider.authenticate(jwtAuthenticationToken))
-                .isInstanceOf(IllegalJwtArgumentException.class)
+                .isInstanceOf(IllegalJwtAuthenticationException.class)
                 .hasMessage("Cannot Find MemberRole");
     }
 
