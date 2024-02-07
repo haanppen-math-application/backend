@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.advice;
 
 import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.account.exceptions.MemberRoleVerificationException;
+import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -40,5 +41,10 @@ public class ArgumentExceptionAdvice {
     @ExceptionHandler(NotSupportedMemberTypeException.class)
     public ResponseEntity<?> notSupportedMemberTypeExceptionHandler(final NotSupportedMemberTypeException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponseBody("-004", List.of(exception.getMessage())));
+    }
+
+    @ExceptionHandler(NoSuchMemberException.class)
+    public ResponseEntity<?> noSuchMemberExceptionHandler(final NoSuchMemberException exception) {
+        return ResponseEntity.badRequest().body(new ExceptionResponseBody("-010", List.of(exception.getMessage())));
     }
 }
