@@ -44,7 +44,7 @@ class LoginServiceTest {
     void 사용자_찾기_성공_테스트() {
         Mockito.when(memberRepository.findMemberByPhoneNumber(Mockito.anyString()))
                 .thenReturn(Optional.of(member));
-        Mockito.when(jwtUtils.generateToken(member.getMemberId(), member.getUserRole(), member.getMemberName())).thenReturn("12");
+        Mockito.when(jwtUtils.generateToken(member.getId(), member.getRole(), member.getName())).thenReturn("12");
         assertThat(loginService.provideJwt(Mockito.anyString())).isNotNull();
     }
 }

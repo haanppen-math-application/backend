@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberId;
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)
-    private String memberName;
+    private String name;
 
     @Column(nullable = false)
     private String password;
@@ -27,31 +27,31 @@ public class Member {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role userRole;
+    private Role role;
 
     @Column(nullable = false)
-    private LocalDateTime localDateTime;
+    private LocalDateTime registeredDate;
 
     @Builder
-    private Member(String phoneNumber, String memberName, String password, Integer grade, Role userRole, LocalDateTime localDateTime) {
+    private Member(String phoneNumber, String name, String password, Integer grade, Role role, LocalDateTime registeredDate) {
         this.phoneNumber = phoneNumber;
-        this.memberName = memberName;
+        this.name = name;
         this.password = password;
         this.grade = grade;
-        this.userRole = userRole;
-        this.localDateTime = localDateTime;
+        this.role = role;
+        this.registeredDate = registeredDate;
     }
 
     @Override
     public String toString() {
         return "Member{" +
-                "memberId=" + memberId +
+                "memberId=" + id +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", memberName='" + memberName + '\'' +
+                ", memberName='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", grade=" + grade +
-                ", userRole=" + userRole +
-                ", localDateTime=" + localDateTime +
+                ", userRole=" + role +
+                ", localDateTime=" + registeredDate +
                 '}';
     }
 
