@@ -14,12 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 public class BoardService {
     private final QuestionRepository questionRepository;
-    private final QuestionMemberProvider questionMemberProvider;
+    private final QuestionRelatedMemberProvider questionRelatedMemberProvider;
     private final ImageService imageService;
     private final QuestionMapper questionMapper;
 
     public void addQuestion(@Validated final QuestionRegisterDto questionDto) {
-        QuestionRelatedMember questionMember = questionMemberProvider.getQuestionRelatedMember(questionDto);
+        QuestionRelatedMember questionMember = questionRelatedMemberProvider.getQuestionRelatedMember(questionDto);
         List<Image> imageSources = imageService.saveImage(questionDto.images());
         questionRepository.save(questionMapper.createEntity(
                 questionDto,

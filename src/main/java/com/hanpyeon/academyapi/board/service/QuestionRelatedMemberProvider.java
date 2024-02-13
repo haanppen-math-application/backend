@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 @Component
 @AllArgsConstructor
-public class QuestionMemberProvider {
+public class QuestionRelatedMemberProvider {
     private final MemberManager memberManager;
 
     public QuestionRelatedMember getQuestionRelatedMember(final QuestionRegisterDto questionDto) {

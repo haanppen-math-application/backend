@@ -18,7 +18,7 @@ class BoardServiceTest {
     @Mock
     QuestionRepository questionRepository;
     @Mock
-    QuestionMemberProvider questionMemberProvider;
+    QuestionRelatedMemberProvider questionRelatedMemberProvider;
     @Mock
     ImageService imageService;
     @Mock
@@ -28,18 +28,18 @@ class BoardServiceTest {
 
     @BeforeEach
     void init() {
-        boardService = new BoardService(questionRepository, questionMemberProvider, imageService, questionMapper);
+        boardService = new BoardService(questionRepository, questionRelatedMemberProvider, imageService, questionMapper);
     }
 
     @Test
     void addQuestion() {
         QuestionRegisterDto questionRegisterDto = new QuestionRegisterDto("test", "test", 1l, 2L, Collections.emptyList());
-        Mockito.when(questionMemberProvider.getQuestionRelatedMember(questionRegisterDto))
+        Mockito.when(questionRelatedMemberProvider.getQuestionRelatedMember(questionRegisterDto))
                 .thenReturn(Mockito.mock(QuestionRelatedMember.class));
 
         boardService.addQuestion(questionRegisterDto);
 
-        Mockito.verify(questionMemberProvider).getQuestionRelatedMember(Mockito.any());
+        Mockito.verify(questionRelatedMemberProvider).getQuestionRelatedMember(Mockito.any());
         Mockito.verify(imageService).saveImage(Mockito.any());
         Mockito.verify(questionRepository).save(Mockito.any());
     }

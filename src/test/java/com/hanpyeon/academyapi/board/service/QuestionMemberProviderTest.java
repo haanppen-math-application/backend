@@ -14,18 +14,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class QuestionMemberProviderTest {
 
     @Mock
     MemberRepository memberRepository;
-    QuestionMemberProvider questionMemberProvider;
+    QuestionRelatedMemberProvider questionRelatedMemberProvider;
 
     @BeforeEach
     void init() {
-        questionMemberProvider = new QuestionMemberProvider(new MemberManager(memberRepository));
+        questionRelatedMemberProvider = new QuestionRelatedMemberProvider(new MemberManager(memberRepository));
     }
 
     @Test
@@ -40,7 +39,7 @@ class QuestionMemberProviderTest {
         Mockito.when(memberRepository.findById(targetMemberId))
                         .thenReturn(Optional.of(targetMember));
 
-        assertThat(questionMemberProvider.getQuestionRelatedMember(new QuestionRegisterDto(null, null, ownerMemberId, targetMemberId, null)))
+        assertThat(questionRelatedMemberProvider.getQuestionRelatedMember(new QuestionRegisterDto(null, null, ownerMemberId, targetMemberId, null)))
                 .isEqualTo(new QuestionRelatedMember(ownerMember, targetMember));
     }
 }
