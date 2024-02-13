@@ -2,12 +2,15 @@ package com.hanpyeon.academyapi.board.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
+import com.hanpyeon.academyapi.board.mapper.QuestionMapper;
+import com.hanpyeon.academyapi.board.service.BoardService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
@@ -27,12 +30,16 @@ class BoardControllerTest {
     private MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
-
+    @MockBean
+    QuestionMapper questionMapper;
+    @MockBean
+    BoardService boardService;
     @Test
     void dto_없음_실패_테스트() throws Exception {
         MockMultipartFile image = new MockMultipartFile(
                 "image",
                 "helwijadw".getBytes());
+
         mockMvc.perform(multipart("/api/board")
                 .file(image)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -50,6 +57,7 @@ class BoardControllerTest {
                         12L
                 )).getBytes()
         );
+
         mockMvc.perform(multipart("/api/board")
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -61,6 +69,7 @@ class BoardControllerTest {
         MockMultipartFile image = new MockMultipartFile(
                 "image",
                 "helwijadw".getBytes());
+
         MockMultipartFile dto = new MockMultipartFile(
                 "questionRegisterRequestDto",
                 null,
