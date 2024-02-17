@@ -4,7 +4,6 @@ import com.hanpyeon.academyapi.board.dto.ImageDto;
 import com.hanpyeon.academyapi.board.entity.Image;
 import com.hanpyeon.academyapi.board.repository.ImageRepository;
 import com.hanpyeon.academyapi.board.service.storage.MediaStorage;
-import com.hanpyeon.academyapi.board.service.storage.UploadFile;
 import com.hanpyeon.academyapi.board.service.validator.UploadImageValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
