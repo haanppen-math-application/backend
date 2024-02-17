@@ -11,11 +11,8 @@ public class Image {
     @NotBlank
     @Column(unique = true)
     private String src;
-    @NotBlank
-    private String contentType;
 
-    public Image(String src, String contentType) {
+    public Image(String src) {
         this.src = src;
-        this.contentType = contentType;
     }
 }
