@@ -22,7 +22,6 @@ public class ImageController {
 
     @GetMapping("/{imageSource}")
     public ResponseEntity<?> getImage(@PathVariable("imageSource") String imageSource) throws IOException {
-        logger.info(imageSource + " ");
         ImageDto media = imageService.loadImage(imageSource);
 
         return ResponseEntity.ok()
