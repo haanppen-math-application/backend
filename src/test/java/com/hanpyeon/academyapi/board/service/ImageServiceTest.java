@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
 class ImageServiceTest {
@@ -38,7 +37,7 @@ class ImageServiceTest {
     }
 
     @Test
-    void empty_imageFiles_Params_FailTest() {
+    void 이미지_없음_처리_테스트() {
         assertThat(imageService.saveImage(null))
                 .isEmpty();
         assertThat(imageService.saveImage(Collections.emptyList()))
@@ -46,13 +45,12 @@ class ImageServiceTest {
     }
 
     @Test
-    void process_Test() {
+    void 진행_테스트() {
         Image image = Mockito.mock(Image.class);
         MultipartFile multipartFile = Mockito.mock(MultipartFile.class);
         UploadFile uploadFile = Mockito.mock(UploadFile.class);
 
         List<MultipartFile> files = List.of(multipartFile);
-        List<Image> expectedImage = List.of(image);
 
 
         Mockito.when(mediaMapper.createUploadFile(Mockito.any()))

@@ -16,6 +16,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -57,15 +58,16 @@ class BoardControllerTest {
                         12L
                 )).getBytes()
         );
-
+        
         mockMvc.perform(multipart("/api/board")
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-        ).andExpect(MockMvcResultMatchers.status().isCreated());
+        ).andExpect(MockMvcResultMatchers.status().isCreated())
+                .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
-    void 정상_형식_테스트() throws Exception {
+    void 이미지와_DTO_모두_존재_성공_테스트() throws Exception {
         MockMultipartFile image = new MockMultipartFile(
                 "image",
                 "helwijadw".getBytes());
