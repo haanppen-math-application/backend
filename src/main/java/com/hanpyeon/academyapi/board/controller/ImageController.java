@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.board.controller;
 
-import com.hanpyeon.academyapi.board.dto.ImageDto;
+import com.hanpyeon.academyapi.board.dto.MediaDto;
 import com.hanpyeon.academyapi.board.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class ImageController {
 
     @GetMapping("/{imageSource}")
     public ResponseEntity<?> getImage(@PathVariable("imageSource") String imageSource) throws IOException {
-        ImageDto media = imageService.loadImage(imageSource);
+        MediaDto media = imageService.loadImage(imageSource);
 
         return ResponseEntity.ok()
                 .contentType(media.mediaType())

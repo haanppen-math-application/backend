@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.service.storage;
 
+import com.hanpyeon.academyapi.board.dto.MediaDto;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,5 +9,5 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface MediaStorage {
     String store(MultipartFile multipartFile, String newFileName);
-    Resource loadFile(String fileName);
+    MediaDto loadFile(String fileName);
 }

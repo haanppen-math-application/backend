@@ -1,7 +1,8 @@
 package com.hanpyeon.academyapi.board.service;
 
-import com.hanpyeon.academyapi.board.dto.ImageDto;
+import com.hanpyeon.academyapi.board.dto.MediaDto;
 import com.hanpyeon.academyapi.board.entity.Image;
+import com.hanpyeon.academyapi.board.exception.NotSupportedMediaException;
 import com.hanpyeon.academyapi.board.repository.ImageRepository;
 import com.hanpyeon.academyapi.board.service.storage.MediaStorage;
 import com.hanpyeon.academyapi.board.service.validator.UploadImageValidator;
@@ -44,13 +45,9 @@ public class ImageService {
         }
         return saveImageNames(imageNames);
     }
-    public ImageDto loadImage(final String imageName) {
-        Resource resource = mediaStorage.loadFile(imageName);
-        try {
-            return new ImageDto(resource, MediaType.parseMediaType(Files.probeContentType(resource.getFile().toPath())));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+    public MediaDto loadImage(final String imageName) {
+        return mediaStorage.loadFile(imageName);
     }
 
     private boolean checkImagesPresence(final List<MultipartFile> imageFiles) {
