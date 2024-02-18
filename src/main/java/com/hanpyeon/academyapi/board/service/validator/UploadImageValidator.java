@@ -9,6 +9,9 @@ public class UploadImageValidator implements UploadFileValidator {
     // 업로드 될 파일에 대한 제약사항 구현
     @Override
     public boolean validate(MultipartFile file) {
+        if (file.isEmpty()) {
+            return false;
+        }
         return true;
     }
 }
