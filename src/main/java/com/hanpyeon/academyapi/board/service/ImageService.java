@@ -54,7 +54,7 @@ public class ImageService {
 
     private List<Image> saveImageNames(List<String> imageNames) {
         List<Image> images = imageNames.stream()
-                .map(Image::new)
+                .map(mediaMapper::createImage)
                 .toList();
         return imageRepository.saveAll(images);
     }
