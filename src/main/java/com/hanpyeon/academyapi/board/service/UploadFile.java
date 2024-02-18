@@ -29,6 +29,9 @@ public class UploadFile {
     }
     private String getExtension(String fileName) {
         final int extensionIdx = fileName.lastIndexOf(".");
+        if (extensionIdx == -1) {
+            throw new InvalidUploadFileException("확장자를 찾을 수 없습니다.");
+        }
         return fileName.substring(extensionIdx);
     }
 }
