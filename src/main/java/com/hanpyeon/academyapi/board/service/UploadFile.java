@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.service;
 
+import com.hanpyeon.academyapi.board.exception.InvalidMediaException;
 import com.hanpyeon.academyapi.board.service.storage.MediaStorage;
 import com.hanpyeon.academyapi.board.service.validator.UploadFileValidator;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,10 +15,11 @@ public class UploadFile {
         this.multipartFile = multipartFile;
         newFileName = getNewFileName(multipartFile.getOriginalFilename());
     }
-    public void validateWith(UploadFileValidator uploadFileValidator) {
+    public UploadFile validateWith(UploadFileValidator uploadFileValidator) {
         if (!uploadFileValidator.validate(multipartFile)) {
-            throw new IllegalArgumentException();
+            throw new InvalidMediaException("업로드 할 수 없는 파일입니다.");
         }
+        return this;
     }
     public String uploadTo(MediaStorage storageService) {
         return storageService.store(multipartFile, newFileName);
