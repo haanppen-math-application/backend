@@ -2,19 +2,14 @@ package com.hanpyeon.academyapi.board.service;
 
 import com.hanpyeon.academyapi.board.dto.MediaDto;
 import com.hanpyeon.academyapi.board.entity.Image;
-import com.hanpyeon.academyapi.board.exception.NotSupportedMediaException;
+import com.hanpyeon.academyapi.board.mapper.MediaMapper;
 import com.hanpyeon.academyapi.board.repository.ImageRepository;
 import com.hanpyeon.academyapi.board.service.storage.MediaStorage;
 import com.hanpyeon.academyapi.board.service.validator.UploadImageValidator;
 import lombok.AllArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,6 +20,7 @@ public class ImageService {
     private final ImageRepository imageRepository;
     private final MediaStorage mediaStorage;
     private final UploadImageValidator uploadImageValidator;
+    private final MediaMapper mediaMapper;
 
     /**
      * MultipartFile 을 처리하고, ImageRepository 엔티티 저장하는 역할을 수행합니다.
@@ -36,14 +32,13 @@ public class ImageService {
         if (!checkImagesPresence(imageFiles)) {
             return Collections.emptyList();
         }
-        List<String> imageNames = new ArrayList<>();
-        for (MultipartFile multipartFile : imageFiles) {
-            UploadFile uploadFile = new UploadFile(multipartFile);
-            uploadFile.validateWith(uploadImageValidator);
-
-            imageNames.add(uploadFile.uploadTo(mediaStorage));
-        }
-        return saveImageNames(imageNames);
+        return saveImageNames(
+                imageFiles.stream()
+                        .map(mediaMapper::createUploadFile)
+                        .map(uploadFile -> uploadFile.validateWith(uploadImageValidator))
+                        .map(uploadFile -> uploadFile.uploadTo(mediaStorage))
+                        .toList()
+        );
     }
 
     public MediaDto loadImage(final String imageName) {
