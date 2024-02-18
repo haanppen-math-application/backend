@@ -33,12 +33,12 @@ public class RegisterMapper {
 
     public Member createMemberEntity(final RegisterMemberTotalDto memberTotalDto, final String encodedPassword) {
         return Member.builder()
-                .memberName(memberTotalDto.name())
+                .name(memberTotalDto.name())
                 .phoneNumber(memberTotalDto.phoneNumber())
                 .grade(memberTotalDto.grade())
                 .password(encodedPassword)
-                .userRole(memberTotalDto.role())
-                .localDateTime(memberTotalDto.registerDate())
+                .role(memberTotalDto.role())
+                .registeredDate(memberTotalDto.registerDate())
                 .build();
     }
 }

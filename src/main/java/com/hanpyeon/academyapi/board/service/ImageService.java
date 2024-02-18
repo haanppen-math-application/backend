@@ -1,0 +1,61 @@
+package com.hanpyeon.academyapi.board.service;
+
+import com.hanpyeon.academyapi.board.dto.MediaDto;
+import com.hanpyeon.academyapi.board.entity.Image;
+import com.hanpyeon.academyapi.board.mapper.MediaMapper;
+import com.hanpyeon.academyapi.board.repository.ImageRepository;
+import com.hanpyeon.academyapi.board.service.storage.MediaStorage;
+import com.hanpyeon.academyapi.board.service.validator.UploadImageValidator;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Collections;
+import java.util.List;
+
+@Component
+@AllArgsConstructor
+public class ImageService {
+
+    private final ImageRepository imageRepository;
+    private final MediaStorage mediaStorage;
+    private final UploadImageValidator uploadImageValidator;
+    private final MediaMapper mediaMapper;
+
+    /**
+     * MultipartFile 을 처리하고, ImageRepository 엔티티 저장하는 역할을 수행합니다.
+     *
+     * @param imageFiles empty일 경우, 빈 컬렉션을 리턴합니다.
+     * @return images, never returns null
+     */
+    public List<Image> saveImage(final List<MultipartFile> imageFiles) {
+        if (!checkImagesPresence(imageFiles)) {
+            return Collections.emptyList();
+        }
+        return saveImageNames(
+                imageFiles.stream()
+                        .map(mediaMapper::createUploadFile)
+                        .map(uploadFile -> uploadFile.validateWith(uploadImageValidator))
+                        .map(uploadFile -> uploadFile.uploadTo(mediaStorage))
+                        .toList()
+        );
+    }
+
+    public MediaDto loadImage(final String imageName) {
+        return mediaStorage.loadFile(imageName);
+    }
+
+    private boolean checkImagesPresence(final List<MultipartFile> imageFiles) {
+        if (imageFiles == null || imageFiles.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    private List<Image> saveImageNames(List<String> imageNames) {
+        List<Image> images = imageNames.stream()
+                .map(mediaMapper::createImage)
+                .toList();
+        return imageRepository.saveAll(images);
+    }
+}
