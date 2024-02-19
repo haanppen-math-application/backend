@@ -36,7 +36,6 @@ public class BoardMapper {
         return QuestionDetails.builder()
                 .solved(question.getSolved())
                 .viewCount(question.getViewCount())
-                .memberGrade(question.getOwnerMember().getGrade())
                 .registeredMember(createMemberDetails(question.getOwnerMember()))
                 .targetMember(createMemberDetails(question.getTargetMember()))
                 .imageUrls(question.getImages().stream()

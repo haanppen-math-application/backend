@@ -10,7 +10,6 @@ public record QuestionDetails(
         boolean solved,
         Long viewCount,
         LocalDateTime registeredDateTime,
-        Integer memberGrade,
         MemberDetails registeredMember,
         MemberDetails targetMember,
         List<CommentDetails> comments,
