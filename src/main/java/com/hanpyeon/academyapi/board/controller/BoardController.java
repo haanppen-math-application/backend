@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.controller;
 
+import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
 import com.hanpyeon.academyapi.board.mapper.QuestionMapper;
@@ -7,6 +8,7 @@ import com.hanpyeon.academyapi.board.service.BoardService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,5 +37,11 @@ public class BoardController {
         );
         boardService.addQuestion(dto);
         return ResponseEntity.created(null).build();
+    }
+
+    @GetMapping("/{questionId}")
+    public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
+            @NotNull @PathVariable Long questionId) {
+        return ResponseEntity.ok(boardService.getSingleQuestionDetails(questionId));
     }
 }
