@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,8 +16,10 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String content;
     private Boolean isSelected = false;
+    @CreationTimestamp
     private LocalDateTime registeredDateTime;
     @ManyToOne
     private Member registeredMember;
@@ -26,9 +29,8 @@ public class Comment {
     private List<Image> images;
 
     @Builder
-    public Comment(String content, LocalDateTime registeredDateTime, Member registeredMember, Question question, List<Image> images) {
+    public Comment(String content, Member registeredMember, Question question, List<Image> images) {
         this.content = content;
-        this.registeredDateTime = registeredDateTime;
         this.registeredMember = registeredMember;
         this.question = question;
         this.images = images;
