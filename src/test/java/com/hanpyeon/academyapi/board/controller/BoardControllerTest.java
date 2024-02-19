@@ -1,12 +1,14 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
 import com.hanpyeon.academyapi.board.mapper.QuestionMapper;
 import com.hanpyeon.academyapi.board.service.BoardService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 
 @WebMvcTest(controllers = BoardController.class,
@@ -116,5 +119,14 @@ class BoardControllerTest {
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
         ).andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+
+    @Test
+    void 질문조회성공테스트() throws Exception {
+        Mockito.when(boardService.getSingleQuestionDetails(Mockito.any()))
+                        .thenReturn(Mockito.mock(QuestionDetails.class));
+        mockMvc.perform(get("/api/board/12"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 }
