@@ -34,24 +34,28 @@ public class BoardMapper {
 
     public QuestionDetails createQuestionDetails(final Question question) {
         return QuestionDetails.builder()
+                .questionId(question.getId())
+                .content(question.getContent())
                 .solved(question.getSolved())
                 .viewCount(question.getViewCount())
                 .registeredMember(createMemberDetails(question.getOwnerMember()))
                 .targetMember(createMemberDetails(question.getTargetMember()))
+                .registeredDateTime(question.getRegisteredDateTime())
                 .imageUrls(question.getImages().stream()
                         .map(this::createImageUrlDto)
                         .toList())
-                .registeredDateTime(question.getRegisteredDateTime())
                 .comments(question.getComments().stream()
                         .map(this::createCommentDetails)
                         .toList())
                 .build();
     }
+
     public ImageUrlDto createImageUrlDto(final Image image) {
         return ImageUrlDto.builder()
                 .imageUrl(image.getSrc())
                 .build();
     }
+
     public MemberDetails createMemberDetails(final Member member) {
         return MemberDetails.builder()
                 .memberId(member.getId())
@@ -60,6 +64,7 @@ public class BoardMapper {
                 .role(member.getRole().getIdentifier())
                 .build();
     }
+
     public CommentDetails createCommentDetails(final Comment comment) {
         return CommentDetails.builder()
                 .commentId(comment.getId())

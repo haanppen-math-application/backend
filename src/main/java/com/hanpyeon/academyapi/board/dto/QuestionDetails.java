@@ -7,7 +7,9 @@ import java.util.List;
 
 @Builder
 public record QuestionDetails(
-        boolean solved,
+        Long questionId,
+        String content,
+        Boolean solved,
         Long viewCount,
         LocalDateTime registeredDateTime,
         MemberDetails registeredMember,
