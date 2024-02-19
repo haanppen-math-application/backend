@@ -3,7 +3,7 @@ package com.hanpyeon.academyapi.board.controller;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
-import com.hanpyeon.academyapi.board.mapper.QuestionMapper;
+import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.BoardService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import jakarta.annotation.Nullable;
@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BoardController {
     BoardService boardService;
-    QuestionMapper questionMapper;
+    BoardMapper boardMapper;
 
     @PostMapping
     public ResponseEntity<?> addQuestion(
@@ -30,7 +30,7 @@ public class BoardController {
             @Valid @RequestPart("questionRegisterRequestDto") QuestionRegisterRequestDto questionRegisterRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
 
-        QuestionRegisterDto dto = questionMapper.createRegisterDto(
+        QuestionRegisterDto dto = boardMapper.createRegisterDto(
                 questionRegisterRequestDto,
                 multipartFile,
                 memberPrincipal.getMemberId()

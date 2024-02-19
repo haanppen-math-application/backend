@@ -3,7 +3,7 @@ package com.hanpyeon.academyapi.board.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
-import com.hanpyeon.academyapi.board.mapper.QuestionMapper;
+import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.BoardService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
@@ -35,7 +35,7 @@ class BoardControllerTest {
     @Autowired
     ObjectMapper objectMapper;
     @MockBean
-    QuestionMapper questionMapper;
+    BoardMapper boardMapper;
     @MockBean
     BoardService boardService;
     @Test
