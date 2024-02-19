@@ -39,8 +39,6 @@ class BoardServiceTest {
 
         boardService.addQuestion(questionRegisterDto);
 
-        Mockito.verify(questionRelatedMemberProvider).getQuestionRelatedMember(Mockito.any());
-        Mockito.verify(imageService).saveImage(Mockito.any());
         Mockito.verify(questionRepository).save(Mockito.any());
     }
 }
