@@ -44,6 +44,7 @@ class ImageServiceTest {
                 .isEmpty();
     }
 
+//    거짓 양성을 피하고 리팩터링 내성을 향상 시키기 위해 구현 세부사항이 아닌 결과에 집중하라
     @Test
     void 진행_테스트() {
         Image image = Mockito.mock(Image.class);
@@ -64,7 +65,6 @@ class ImageServiceTest {
 
         imageService.saveImage(files);
 
-        Mockito.verify(uploadFile).validateWith(uploadImageValidator);
-        Mockito.verify(uploadFile).uploadTo(mediaStorage);
+        Mockito.verify(imageRepository).saveAll(Mockito.any());
     }
 }
