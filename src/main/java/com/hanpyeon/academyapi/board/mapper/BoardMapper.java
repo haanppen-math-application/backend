@@ -77,4 +77,18 @@ public class BoardMapper {
                 .registeredMemberDetails(createMemberDetails(comment.getRegisteredMember()))
                 .build();
     }
+
+    public QuestionPreview createQuestionPreview(final Question question) {
+        return QuestionPreview.builder()
+                .questionId(question.getId())
+                .content(question.getContent())
+                .solved(question.getSolved())
+                .images(question.getImages().stream()
+                        .map(this::createImageUrlDto)
+                        .toList())
+                .commentCount(question.getComments().size())
+                .viewCount(question.getViewCount())
+                .owner(createMemberDetails(question.getOwnerMember()))
+                .build();
+    }
 }
