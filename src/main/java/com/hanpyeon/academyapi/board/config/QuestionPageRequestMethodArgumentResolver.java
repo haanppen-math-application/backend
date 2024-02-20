@@ -10,12 +10,12 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class QuestionPageRequestMethodArgumentResolver extends PageableHandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return QuestionPageRequest.class.isAssignableFrom(parameter.getParameterType());
+        return EntityFieldMappedPageRequest.class.isAssignableFrom(parameter.getParameterType());
     }
 
     @Override
     public Pageable resolveArgument(MethodParameter methodParameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         Pageable pageable = super.resolveArgument(methodParameter, mavContainer, webRequest, binderFactory);
-        return QuestionPageRequest.create(pageable, SortParameter::getEntityFieldName);
+        return EntityFieldMappedPageRequest.create(pageable, SortParameter::getEntityFieldName);
     }
 }

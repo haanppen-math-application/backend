@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.board.controller;
 
-import com.hanpyeon.academyapi.board.config.QuestionPageRequest;
+import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
@@ -49,7 +49,7 @@ public class BoardController {
     }
 
     @GetMapping
-    public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(final QuestionPageRequest questionPageRequest) {
-        return ResponseEntity.ok(boardService.loadLimitedQuestions(questionPageRequest));
+    public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
+        return ResponseEntity.ok(boardService.loadLimitedQuestions(entityFieldMappedPageRequest));
     }
 }

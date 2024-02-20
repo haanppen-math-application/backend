@@ -1,10 +1,8 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.board.config.QuestionPageRequest;
-import com.hanpyeon.academyapi.board.config.QuestionPageRequestMethodArgumentResolver;
+import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
-import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.BoardService;
@@ -14,35 +12,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcBuilderCustomizer;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -162,7 +143,7 @@ class BoardControllerTest {
             "2, 15"
     })
     void 페이지_조회_테스트(String pageNumber, String pageSize) throws Exception {
-        ArgumentCaptor<QuestionPageRequest> captor = ArgumentCaptor.forClass(QuestionPageRequest.class);
+        ArgumentCaptor<EntityFieldMappedPageRequest> captor = ArgumentCaptor.forClass(EntityFieldMappedPageRequest.class);
         mockMvc.perform(get("/api/board")
                         .param("page", pageNumber)
                         .param("size", pageSize))
@@ -171,9 +152,9 @@ class BoardControllerTest {
 
         Mockito.verify(boardService).loadLimitedQuestions(captor.capture());
 
-        QuestionPageRequest questionPageRequest = captor.getValue();
+        EntityFieldMappedPageRequest entityFieldMappedPageRequest = captor.getValue();
 
-        Assertions.assertEquals(questionPageRequest.getPageNumber(), Integer.parseInt(pageNumber));
-        Assertions.assertEquals(questionPageRequest.getPageSize(), Integer.parseInt(pageSize));
+        Assertions.assertEquals(entityFieldMappedPageRequest.getPageNumber(), Integer.parseInt(pageNumber));
+        Assertions.assertEquals(entityFieldMappedPageRequest.getPageSize(), Integer.parseInt(pageSize));
     }
 }
