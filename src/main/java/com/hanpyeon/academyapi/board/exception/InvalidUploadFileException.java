@@ -1,7 +1,13 @@
 package com.hanpyeon.academyapi.board.exception;
 
-public class InvalidUploadFileException extends RuntimeException{
-    public InvalidUploadFileException(String message) {
-        super(message);
+import com.hanpyeon.academyapi.exception.ErrorCode;
+
+public class InvalidUploadFileException extends BoardException {
+    public InvalidUploadFileException(ErrorCode errorCode) {
+        super(errorCode);
+    }
+
+    public InvalidUploadFileException(String detailMessage, ErrorCode errorCode) {
+        super(detailMessage, errorCode);
     }
 }

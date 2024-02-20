@@ -1,8 +1,10 @@
 package com.hanpyeon.academyapi.board.service.storage;
 
 import com.hanpyeon.academyapi.board.dto.MediaDto;
+import com.hanpyeon.academyapi.board.exception.MediaStoreException;
 import com.hanpyeon.academyapi.board.exception.NoSuchMediaException;
 import com.hanpyeon.academyapi.board.exception.NotSupportedMediaException;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -30,7 +32,7 @@ public class LocalStorage implements MediaStorage {
             multipartFile.transferTo(path);
             return newFileName;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new MediaStoreException(ErrorCode.MEDIA_STORE_EXCEPTION);
         }
     }
 
@@ -39,12 +41,12 @@ public class LocalStorage implements MediaStorage {
         final Path absoluteImagePath = this.resolveFilePath(fileName);
         Resource fileResource = new FileSystemResource(absoluteImagePath);
         if (!fileResource.exists()) {
-            throw new NoSuchMediaException("파일을 찾을 수 없습니다.");
+            throw new NoSuchMediaException(ErrorCode.NO_SUCH_MEDIA);
         }
         try {
             return new MediaDto(fileResource.getInputStream(), MediaType.parseMediaType(Files.probeContentType(fileResource.getFile().toPath())));
         } catch (IOException | InvalidMediaTypeException | InvalidPathException | SecurityException e) {
-            throw new NotSupportedMediaException("적절한 확장자를 찾을 수 없습니다.");
+            throw new NotSupportedMediaException("지원하지 않는 이미지 입니다.", ErrorCode.NOT_SUPPORTED_MEDIA);
         }
     }
 

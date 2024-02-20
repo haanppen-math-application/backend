@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -38,7 +39,7 @@ public class RegisterServiceProvider {
     private void validateRegisterRequest(final RegisterMemberTotalDto memberTotalDto) {
         if (repository.existsByPhoneNumber(memberTotalDto.phoneNumber())) {
             LOGGER.debug("이미 등록된 사용자(전화번호) 입니다.");
-            throw new AlreadyRegisteredException("이미 등록된 전화번호 입니다.");
+            throw new AlreadyRegisteredException(ErrorCode.ALREADY_REGISTERED);
         }
     }
 }

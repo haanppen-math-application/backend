@@ -1,7 +1,13 @@
 package com.hanpyeon.academyapi.account.exceptions;
 
-public class NotSupportedMemberTypeException extends RuntimeException {
-    public NotSupportedMemberTypeException(String message) {
-        super(message);
+import com.hanpyeon.academyapi.exception.ErrorCode;
+
+public class NotSupportedMemberTypeException extends AccountException {
+    public NotSupportedMemberTypeException(ErrorCode errorCode) {
+        super(errorCode);
+    }
+
+    public NotSupportedMemberTypeException(String detailMessage, ErrorCode errorCode) {
+        super(detailMessage, errorCode);
     }
 }
