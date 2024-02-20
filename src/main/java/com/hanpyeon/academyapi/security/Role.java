@@ -1,7 +1,6 @@
 package com.hanpyeon.academyapi.security;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.hanpyeon.academyapi.account.mapper.RoleDeserializer;
 
 @JsonDeserialize(using = RoleDeserializer.class)
 public enum Role {

@@ -1,7 +1,5 @@
-package com.hanpyeon.academyapi.advice;
+package com.hanpyeon.academyapi.exception;
 
-import com.hanpyeon.academyapi.exception.BusinessException;
-import com.hanpyeon.academyapi.exception.ErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;

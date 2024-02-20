@@ -1,9 +1,8 @@
-package com.hanpyeon.academyapi.advice;
+package com.hanpyeon.academyapi.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.Getter;
 
 import java.util.List;

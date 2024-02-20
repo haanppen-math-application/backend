@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.account.mapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.hanpyeon.academyapi.security.Role;
+import com.hanpyeon.academyapi.security.RoleDeserializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
