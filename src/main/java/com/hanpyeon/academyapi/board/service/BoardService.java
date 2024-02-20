@@ -1,12 +1,16 @@
 package com.hanpyeon.academyapi.board.service;
 
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
+import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
 import com.hanpyeon.academyapi.board.entity.Image;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -34,5 +38,9 @@ public class BoardService {
         return questionRepository.findById(questionId)
                 .map(boardMapper::createQuestionDetails)
                 .orElseThrow(NoSuchQuestionException::new);
+    }
+    public Slice<QuestionPreview> loadLimitedQuestions(final Pageable pageable) {
+        return questionRepository.findBy(pageable)
+                .map(boardMapper::createQuestionPreview);
     }
 }
