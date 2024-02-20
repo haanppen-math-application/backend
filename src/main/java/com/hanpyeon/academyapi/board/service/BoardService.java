@@ -7,6 +7,7 @@ import com.hanpyeon.academyapi.board.entity.Image;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,7 @@ public class BoardService {
     public QuestionDetails getSingleQuestionDetails(final Long questionId) {
         return questionRepository.findById(questionId)
                 .map(boardMapper::createQuestionDetails)
-                .orElseThrow(NoSuchQuestionException::new);
+                .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
     }
     public Slice<QuestionPreview> loadLimitedQuestions(final Pageable pageable) {
         return questionRepository.findBy(pageable)

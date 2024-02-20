@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.board.service;
 import com.hanpyeon.academyapi.board.exception.InvalidUploadFileException;
 import com.hanpyeon.academyapi.board.service.storage.MediaStorage;
 import com.hanpyeon.academyapi.board.service.validator.UploadFileValidator;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
@@ -17,7 +18,7 @@ public class UploadFile {
     }
     public UploadFile validateWith(UploadFileValidator uploadFileValidator) {
         if (!uploadFileValidator.validate(multipartFile)) {
-            throw new InvalidUploadFileException("업로드 할 수 없는 파일입니다.");
+            throw new InvalidUploadFileException(ErrorCode.INVALID_UPLOAD_FILE);
         }
         return this;
     }
@@ -30,7 +31,7 @@ public class UploadFile {
     private String getExtension(String fileName) {
         final int extensionIdx = fileName.lastIndexOf(".");
         if (extensionIdx == -1) {
-            throw new InvalidUploadFileException("확장자를 찾을 수 없습니다.");
+            throw new InvalidUploadFileException(ErrorCode.INVALID_UPLOAD_FILE);
         }
         return fileName.substring(extensionIdx);
     }

@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.exception;
 
+import com.hanpyeon.academyapi.board.exception.MediaStoreException;
 import lombok.Getter;
 
 @Getter
@@ -11,7 +12,8 @@ public enum ErrorCode {
 
     INVALID_UPLOAD_FILE("-801", ""),
     NOT_SUPPORTED_MEDIA("-802", "지원하지 않는 타입의 이미지 입니다."),
-    NO_SUCH_MEDIA("-803", "파일을 찾을 수 없습니다.");
+    NO_SUCH_MEDIA("-803", "파일을 찾을 수 없습니다."),
+    MEDIA_STORE_EXCEPTION("-804", "파일을 저장할 수 없습니다.");
     private final String errorCodeResponse;
     private final String errorDescription;
 
