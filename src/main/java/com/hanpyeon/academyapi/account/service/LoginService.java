@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,6 @@ public class LoginService {
                 .findAny()
                 .map(member ->
                         jwtUtils.generateToken(member.getId(), member.getRole(), member.getName()))
-                .orElseThrow(() -> new NoSuchMemberException("등록되지 않은 사용자 입니다"));
+                .orElseThrow(() -> new NoSuchMemberException(ErrorCode.NOT_REGISTERED_MEMBER));
     }
 }

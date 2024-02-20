@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.advice;
 
 import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
-import com.hanpyeon.academyapi.account.exceptions.MemberRoleVerificationException;
+import com.hanpyeon.academyapi.account.exceptions.MemberRegisterRequestVerificationException;
 import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +33,8 @@ public class ArgumentExceptionAdvice {
         return ResponseEntity.badRequest().body(new ExceptionResponseBody("-002", List.of(exception.getMessage())));
     }
 
-    @ExceptionHandler(MemberRoleVerificationException.class)
-    public ResponseEntity<?> roleVerificationExceptionHandler(final MemberRoleVerificationException exception) {
+    @ExceptionHandler(MemberRegisterRequestVerificationException.class)
+    public ResponseEntity<?> roleVerificationExceptionHandler(final MemberRegisterRequestVerificationException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponseBody("-003", List.of(exception.getMessage())));
     }
 
