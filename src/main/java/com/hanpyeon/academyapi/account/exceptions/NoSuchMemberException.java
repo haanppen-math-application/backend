@@ -1,7 +1,13 @@
 package com.hanpyeon.academyapi.account.exceptions;
 
-public class NoSuchMemberException extends RuntimeException {
-    public NoSuchMemberException(String message) {
-        super(message);
+import com.hanpyeon.academyapi.exception.ErrorCode;
+
+public class NoSuchMemberException extends AccountException {
+    public NoSuchMemberException(ErrorCode errorCode) {
+        super(errorCode);
+    }
+
+    public NoSuchMemberException(String detailMessage, ErrorCode errorCode) {
+        super(detailMessage, errorCode);
     }
 }
