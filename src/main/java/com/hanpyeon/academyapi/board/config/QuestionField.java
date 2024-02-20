@@ -2,14 +2,14 @@ package com.hanpyeon.academyapi.board.config;
 
 import java.util.Arrays;
 
-public enum SortParameter {
+public enum QuestionField {
     DATE("date", "registeredDateTime"),
     SOLVED("solve", "solved");
 
     private final String requestFieldName;
     private final String entityFieldName;
 
-    SortParameter(String requestFieldName, String entityFieldName) {
+    QuestionField(String requestFieldName, String entityFieldName) {
         this.requestFieldName = requestFieldName;
         this.entityFieldName = entityFieldName;
     }
