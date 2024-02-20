@@ -1,22 +1,14 @@
 package com.hanpyeon.academyapi.exception;
 
 public class BusinessException extends RuntimeException{
-    public BusinessException() {
+    private final ErrorCode errorCode;
+
+    public BusinessException(ErrorCode errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public BusinessException(String message) {
+    public BusinessException(String message, ErrorCode errorCode) {
         super(message);
-    }
-
-    public BusinessException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public BusinessException(Throwable cause) {
-        super(cause);
-    }
-
-    public BusinessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+        this.errorCode = errorCode;
     }
 }
