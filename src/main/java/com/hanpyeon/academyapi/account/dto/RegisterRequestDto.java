@@ -10,7 +10,7 @@ public record RegisterRequestDto(
         @NotBlank String name,
         @Range(min = 0, max = 11) Integer grade,
         @NotBlank @Pattern(regexp = "^[0-9]+$") String phoneNumber,
-        @NotNull Role role,
+        @NotNull(message = "teacher / student 둘중 하나여야 합니다")Role role,
         String password
 ) {
 }
