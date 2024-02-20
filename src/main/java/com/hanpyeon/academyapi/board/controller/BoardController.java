@@ -1,6 +1,8 @@
 package com.hanpyeon.academyapi.board.controller;
 
+import com.hanpyeon.academyapi.board.config.QuestionPageRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
+import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
@@ -10,6 +12,7 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +46,10 @@ public class BoardController {
     public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
             @NotNull @PathVariable Long questionId) {
         return ResponseEntity.ok(boardService.getSingleQuestionDetails(questionId));
+    }
+
+    @GetMapping
+    public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(final QuestionPageRequest questionPageRequest) {
+        return ResponseEntity.ok(boardService.loadLimitedQuestions(questionPageRequest));
     }
 }
