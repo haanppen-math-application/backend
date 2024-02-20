@@ -16,6 +16,6 @@ public class QuestionPageRequestMethodArgumentResolver extends PageableHandlerMe
     @Override
     public Pageable resolveArgument(MethodParameter methodParameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         Pageable pageable = super.resolveArgument(methodParameter, mavContainer, webRequest, binderFactory);
-        return EntityFieldMappedPageRequest.create(pageable, QuestionField::getEntityFieldName);
+        return EntityFieldMappedPageRequest.create(pageable, QuestionField::mapToEntityFieldName);
     }
 }

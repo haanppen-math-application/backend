@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.board.config;
 
 import java.util.Arrays;
 
-public enum QuestionField {
+enum QuestionField {
     DATE("date", "registeredDateTime"),
     SOLVED("solve", "solved");
 
@@ -14,7 +14,7 @@ public enum QuestionField {
         this.entityFieldName = entityFieldName;
     }
 
-    static String getEntityFieldName(final String requestFieldName) {
+    static String mapToEntityFieldName(final String requestFieldName) {
         return Arrays.stream(values())
                 .filter(params -> params.requestFieldName.equals(requestFieldName))
                 .findAny()

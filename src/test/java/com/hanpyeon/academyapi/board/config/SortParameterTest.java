@@ -13,7 +13,7 @@ class SortParameterTest {
             "solve, solved"
     })
     void 요청파라미터_에서_엔티티필드명_변경(String param, String entityField) {
-        assertThat(QuestionField.getEntityFieldName(param))
+        assertThat(QuestionField.mapToEntityFieldName(param))
                 .isEqualTo(entityField);
     }
     @ParameterizedTest
@@ -24,7 +24,7 @@ class SortParameterTest {
             "any"
     })
     void 실패_테스트(String param) {
-        assertThatThrownBy(() -> QuestionField.getEntityFieldName(param))
+        assertThatThrownBy(() -> QuestionField.mapToEntityFieldName(param))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
