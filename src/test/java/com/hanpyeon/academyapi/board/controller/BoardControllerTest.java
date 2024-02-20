@@ -1,28 +1,53 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanpyeon.academyapi.board.config.QuestionPageRequest;
+import com.hanpyeon.academyapi.board.config.QuestionPageRequestMethodArgumentResolver;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
+import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.BoardService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcBuilderCustomizer;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = BoardController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
@@ -47,7 +72,7 @@ class BoardControllerTest {
         mockMvc.perform(multipart("/api/board")
                 .file(image)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-        ).andExpect(MockMvcResultMatchers.status().isBadRequest());
+        ).andExpect(status().isBadRequest());
     }
     @Test
     void 이미지_없음_성공_테스트() throws Exception {
@@ -65,7 +90,7 @@ class BoardControllerTest {
         mockMvc.perform(multipart("/api/board")
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-        ).andExpect(MockMvcResultMatchers.status().isCreated())
+        ).andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -90,7 +115,7 @@ class BoardControllerTest {
                 .file(image)
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-                ).andExpect(MockMvcResultMatchers.status().isCreated());
+                ).andExpect(status().isCreated());
     }
 
     @Test
@@ -118,7 +143,7 @@ class BoardControllerTest {
                 .file(image2)
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-        ).andExpect(MockMvcResultMatchers.status().isCreated());
+        ).andExpect(status().isCreated());
     }
 
     @Test
@@ -126,7 +151,29 @@ class BoardControllerTest {
         Mockito.when(boardService.getSingleQuestionDetails(Mockito.any()))
                         .thenReturn(Mockito.mock(QuestionDetails.class));
         mockMvc.perform(get("/api/board/12"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "0, 10",
+            "1, 5",
+            "2, 15"
+    })
+    void 페이지_조회_테스트(String pageNumber, String pageSize) throws Exception {
+        ArgumentCaptor<QuestionPageRequest> captor = ArgumentCaptor.forClass(QuestionPageRequest.class);
+        mockMvc.perform(get("/api/board")
+                        .param("page", pageNumber)
+                        .param("size", pageSize))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+        Mockito.verify(boardService).loadLimitedQuestions(captor.capture());
+
+        QuestionPageRequest questionPageRequest = captor.getValue();
+
+        Assertions.assertEquals(questionPageRequest.getPageNumber(), Integer.parseInt(pageNumber));
+        Assertions.assertEquals(questionPageRequest.getPageSize(), Integer.parseInt(pageSize));
     }
 }
