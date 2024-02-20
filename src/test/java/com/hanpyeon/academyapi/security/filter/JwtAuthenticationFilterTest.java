@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.security.filter;
 
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.JwtUtils;
 import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +33,7 @@ class JwtAuthenticationFilterTest {
     void 잘못된_JWT_테스트() throws Exception {
         mockMvc.perform(post("/api/accounts").header(JwtUtils.HEADER, JwtUtils.TOKEN_TYPE + " " + "rfeefew"))
                 .andExpect(status().isUnauthorized())
-                .andExpect(content().string(containsString("892")));
+                .andExpect(content().string(containsString(ErrorCode.AUTHENTICATION_FAILED_EXCEPTION.getErrorCode())));
     }
 
     @Test
@@ -40,7 +41,7 @@ class JwtAuthenticationFilterTest {
         String testToken = jwtUtils.generateToken((long) 12, Role.STUDENT, null) + "12";
         mockMvc.perform(get("/any").header(JwtUtils.HEADER, testToken))
                 .andExpect(status().isUnauthorized())
-                .andExpect(content().string(containsString("892")));
+                .andExpect(content().string(containsString(ErrorCode.AUTHENTICATION_FAILED_EXCEPTION.getErrorCode())));
     }
 
     @Test
@@ -48,6 +49,6 @@ class JwtAuthenticationFilterTest {
         String testToken = jwtUtils.generateToken((long) 12, Role.STUDENT, null);
         mockMvc.perform(get("/any").header(JwtUtils.HEADER, testToken))
                 .andExpect(status().isUnauthorized())
-                .andExpect(content().string(containsString("892")));
+                .andExpect(content().string(containsString(ErrorCode.AUTHENTICATION_FAILED_EXCEPTION.getErrorCode())));
     }
 }
