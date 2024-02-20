@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.dto;
+package com.hanpyeon.academyapi.media.dto;
 
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.MediaType;

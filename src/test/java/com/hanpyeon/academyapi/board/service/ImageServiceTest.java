@@ -1,10 +1,12 @@
 package com.hanpyeon.academyapi.board.service;
 
-import com.hanpyeon.academyapi.board.entity.Image;
-import com.hanpyeon.academyapi.board.mapper.MediaMapper;
-import com.hanpyeon.academyapi.board.repository.ImageRepository;
-import com.hanpyeon.academyapi.board.service.storage.MediaStorage;
-import com.hanpyeon.academyapi.board.service.validator.UploadImageValidator;
+import com.hanpyeon.academyapi.media.entity.Image;
+import com.hanpyeon.academyapi.media.MediaMapper;
+import com.hanpyeon.academyapi.media.repository.ImageRepository;
+import com.hanpyeon.academyapi.media.service.ImageService;
+import com.hanpyeon.academyapi.media.service.UploadFile;
+import com.hanpyeon.academyapi.media.storage.MediaStorage;
+import com.hanpyeon.academyapi.media.validator.UploadImageValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

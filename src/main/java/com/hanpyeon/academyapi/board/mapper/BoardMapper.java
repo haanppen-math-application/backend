@@ -3,8 +3,9 @@ package com.hanpyeon.academyapi.board.mapper;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.entity.Comment;
-import com.hanpyeon.academyapi.board.entity.Image;
 import com.hanpyeon.academyapi.board.entity.Question;
+import com.hanpyeon.academyapi.media.dto.ImageUrlDto;
+import com.hanpyeon.academyapi.media.entity.Image;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,10 +1,10 @@
-package com.hanpyeon.academyapi.board.service.storage;
+package com.hanpyeon.academyapi.media.storage;
 
-import com.hanpyeon.academyapi.board.dto.MediaDto;
-import com.hanpyeon.academyapi.board.exception.MediaStoreException;
-import com.hanpyeon.academyapi.board.exception.NoSuchMediaException;
-import com.hanpyeon.academyapi.board.exception.NotSupportedMediaException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.media.dto.MediaDto;
+import com.hanpyeon.academyapi.media.exception.MediaStoreException;
+import com.hanpyeon.academyapi.media.exception.NoSuchMediaException;
+import com.hanpyeon.academyapi.media.exception.NotSupportedMediaException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;

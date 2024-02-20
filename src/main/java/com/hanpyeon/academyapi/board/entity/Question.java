@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.board.entity;
 
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.media.entity.Image;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

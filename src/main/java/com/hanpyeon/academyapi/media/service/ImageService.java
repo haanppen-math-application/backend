@@ -1,11 +1,11 @@
-package com.hanpyeon.academyapi.board.service;
+package com.hanpyeon.academyapi.media.service;
 
-import com.hanpyeon.academyapi.board.dto.MediaDto;
-import com.hanpyeon.academyapi.board.entity.Image;
-import com.hanpyeon.academyapi.board.mapper.MediaMapper;
-import com.hanpyeon.academyapi.board.repository.ImageRepository;
-import com.hanpyeon.academyapi.board.service.storage.MediaStorage;
-import com.hanpyeon.academyapi.board.service.validator.UploadImageValidator;
+import com.hanpyeon.academyapi.media.MediaMapper;
+import com.hanpyeon.academyapi.media.dto.MediaDto;
+import com.hanpyeon.academyapi.media.entity.Image;
+import com.hanpyeon.academyapi.media.repository.ImageRepository;
+import com.hanpyeon.academyapi.media.storage.MediaStorage;
+import com.hanpyeon.academyapi.media.validator.UploadImageValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

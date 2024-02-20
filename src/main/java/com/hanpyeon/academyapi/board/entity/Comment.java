@@ -1,13 +1,13 @@
 package com.hanpyeon.academyapi.board.entity;
 
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.media.entity.Image;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

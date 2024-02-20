@@ -3,13 +3,13 @@ package com.hanpyeon.academyapi.board.service;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
-import com.hanpyeon.academyapi.board.entity.Image;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.media.entity.Image;
+import com.hanpyeon.academyapi.media.service.ImageService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -35,11 +35,13 @@ public class BoardService {
                 imageSources)
         );
     }
+
     public QuestionDetails getSingleQuestionDetails(final Long questionId) {
         return questionRepository.findById(questionId)
                 .map(boardMapper::createQuestionDetails)
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
     }
+
     public Slice<QuestionPreview> loadLimitedQuestions(final Pageable pageable) {
         return questionRepository.findBy(pageable)
                 .map(boardMapper::createQuestionPreview);

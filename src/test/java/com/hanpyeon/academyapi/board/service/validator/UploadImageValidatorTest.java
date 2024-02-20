@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.service.validator;
 
+import com.hanpyeon.academyapi.media.validator.UploadImageValidator;
 import org.apache.http.entity.ContentType;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;

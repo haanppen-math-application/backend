@@ -1,7 +1,7 @@
-package com.hanpyeon.academyapi.board.controller;
+package com.hanpyeon.academyapi.media.controller;
 
-import com.hanpyeon.academyapi.board.dto.MediaDto;
-import com.hanpyeon.academyapi.board.service.ImageService;
+import com.hanpyeon.academyapi.media.dto.MediaDto;
+import com.hanpyeon.academyapi.media.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

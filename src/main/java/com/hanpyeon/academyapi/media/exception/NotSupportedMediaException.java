@@ -1,5 +1,6 @@
-package com.hanpyeon.academyapi.board.exception;
+package com.hanpyeon.academyapi.media.exception;
 
+import com.hanpyeon.academyapi.board.exception.BoardException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 
 public class NotSupportedMediaException extends BoardException {

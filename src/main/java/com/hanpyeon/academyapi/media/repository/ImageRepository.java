@@ -1,6 +1,6 @@
-package com.hanpyeon.academyapi.board.repository;
+package com.hanpyeon.academyapi.media.repository;
 
-import com.hanpyeon.academyapi.board.entity.Image;
+import com.hanpyeon.academyapi.media.entity.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

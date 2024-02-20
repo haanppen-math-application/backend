@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service.validator;
+package com.hanpyeon.academyapi.media.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

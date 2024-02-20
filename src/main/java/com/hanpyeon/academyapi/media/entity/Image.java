@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.entity;
+package com.hanpyeon.academyapi.media.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

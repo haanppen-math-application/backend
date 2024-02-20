@@ -1,8 +1,9 @@
 package com.hanpyeon.academyapi.board.service;
 
-import com.hanpyeon.academyapi.board.exception.InvalidUploadFileException;
-import com.hanpyeon.academyapi.board.service.storage.MediaStorage;
-import com.hanpyeon.academyapi.board.service.validator.UploadFileValidator;
+import com.hanpyeon.academyapi.media.exception.InvalidUploadFileException;
+import com.hanpyeon.academyapi.media.service.UploadFile;
+import com.hanpyeon.academyapi.media.storage.MediaStorage;
+import com.hanpyeon.academyapi.media.validator.UploadFileValidator;
 import org.apache.http.entity.ContentType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
