@@ -1,12 +1,19 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
+import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
-import com.hanpyeon.academyapi.board.mapper.QuestionMapper;
+import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.BoardService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,9 +24,11 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = BoardController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
@@ -32,7 +41,7 @@ class BoardControllerTest {
     @Autowired
     ObjectMapper objectMapper;
     @MockBean
-    QuestionMapper questionMapper;
+    BoardMapper boardMapper;
     @MockBean
     BoardService boardService;
     @Test
@@ -44,7 +53,7 @@ class BoardControllerTest {
         mockMvc.perform(multipart("/api/board")
                 .file(image)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-        ).andExpect(MockMvcResultMatchers.status().isBadRequest());
+        ).andExpect(status().isBadRequest());
     }
     @Test
     void 이미지_없음_성공_테스트() throws Exception {
@@ -62,7 +71,7 @@ class BoardControllerTest {
         mockMvc.perform(multipart("/api/board")
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-        ).andExpect(MockMvcResultMatchers.status().isCreated())
+        ).andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -87,7 +96,7 @@ class BoardControllerTest {
                 .file(image)
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-                ).andExpect(MockMvcResultMatchers.status().isCreated());
+                ).andExpect(status().isCreated());
     }
 
     @Test
@@ -115,6 +124,37 @@ class BoardControllerTest {
                 .file(image2)
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-        ).andExpect(MockMvcResultMatchers.status().isCreated());
+        ).andExpect(status().isCreated());
+    }
+
+    @Test
+    void 질문조회성공테스트() throws Exception {
+        Mockito.when(boardService.getSingleQuestionDetails(Mockito.any()))
+                        .thenReturn(Mockito.mock(QuestionDetails.class));
+        mockMvc.perform(get("/api/board/12"))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "0, 10",
+            "1, 5",
+            "2, 15"
+    })
+    void 페이지_조회_테스트(String pageNumber, String pageSize) throws Exception {
+        ArgumentCaptor<EntityFieldMappedPageRequest> captor = ArgumentCaptor.forClass(EntityFieldMappedPageRequest.class);
+        mockMvc.perform(get("/api/board")
+                        .param("page", pageNumber)
+                        .param("size", pageSize))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+        Mockito.verify(boardService).loadLimitedQuestions(captor.capture());
+
+        EntityFieldMappedPageRequest entityFieldMappedPageRequest = captor.getValue();
+
+        Assertions.assertEquals(entityFieldMappedPageRequest.getPageNumber(), Integer.parseInt(pageNumber));
+        Assertions.assertEquals(entityFieldMappedPageRequest.getPageSize(), Integer.parseInt(pageSize));
     }
 }

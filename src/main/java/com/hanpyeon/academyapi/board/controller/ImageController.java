@@ -26,6 +26,6 @@ public class ImageController {
 
         return ResponseEntity.ok()
                 .contentType(media.mediaType())
-                .body(media.data());
+                .body(media.data().readAllBytes());
     }
 }

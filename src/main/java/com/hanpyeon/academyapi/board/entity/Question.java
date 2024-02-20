@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,17 +32,20 @@ public class Question {
     @ManyToOne(targetEntity = Member.class)
     private Member targetMember;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "question_id")
     private List<Image> images;
+    @OneToMany
+    @JoinColumn(name = "question_id")
+    private List<Comment> comments;
 
 
     @Builder
-    private Question(LocalDateTime registeredDateTime, List<Image> images, String title, String content, Member ownerMember, Member targetMember) {
+    private Question(LocalDateTime registeredDateTime, List<Image> images, String title, String content, Member ownerMember, Member targetMember, List<Comment> comments) {
         this.registeredDateTime = registeredDateTime;
         this.images = images;
         this.title = title;
         this.content = content;
         this.ownerMember = ownerMember;
         this.targetMember = targetMember;
+        this.comments = comments;
     }
 }

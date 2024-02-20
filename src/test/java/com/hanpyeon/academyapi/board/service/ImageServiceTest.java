@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
@@ -44,12 +45,12 @@ class ImageServiceTest {
                 .isEmpty();
     }
 
+//    거짓 양성을 피하고 리팩터링 내성을 향상 시키기 위해 구현 세부사항이 아닌 결과에 집중하라
     @Test
-    void 진행_테스트() {
+    void 파일_존재시_등록_테스트() {
         Image image = Mockito.mock(Image.class);
-        MultipartFile multipartFile = Mockito.mock(MultipartFile.class);
+        MultipartFile multipartFile = new MockMultipartFile("name", "temp".getBytes());
         UploadFile uploadFile = Mockito.mock(UploadFile.class);
-
         List<MultipartFile> files = List.of(multipartFile);
 
 
@@ -64,7 +65,6 @@ class ImageServiceTest {
 
         imageService.saveImage(files);
 
-        Mockito.verify(uploadFile).validateWith(uploadImageValidator);
-        Mockito.verify(uploadFile).uploadTo(mediaStorage);
+        Mockito.verify(imageRepository).saveAll(Mockito.any());
     }
 }

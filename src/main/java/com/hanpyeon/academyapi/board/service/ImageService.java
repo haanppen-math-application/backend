@@ -34,6 +34,7 @@ public class ImageService {
         }
         return saveImageNames(
                 imageFiles.stream()
+                        .filter(multipartFile -> !multipartFile.isEmpty())
                         .map(mediaMapper::createUploadFile)
                         .map(uploadFile -> uploadFile.validateWith(uploadImageValidator))
                         .map(uploadFile -> uploadFile.uploadTo(mediaStorage))
