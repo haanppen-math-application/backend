@@ -7,7 +7,7 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-public class QuestionPageRequestMethodArgumentResolver extends PageableHandlerMethodArgumentResolver {
+public class EntityFieldMappedPageRequestMethodArgumentResolver extends PageableHandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return EntityFieldMappedPageRequest.class.isAssignableFrom(parameter.getParameterType());

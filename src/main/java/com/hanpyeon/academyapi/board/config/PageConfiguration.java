@@ -7,9 +7,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 @Configuration
-public class QuestionPageConfiguration implements WebMvcConfigurer {
+public class PageConfiguration implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new QuestionPageRequestMethodArgumentResolver());
+        resolvers.add(new EntityFieldMappedPageRequestMethodArgumentResolver());
     }
 }
