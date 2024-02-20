@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.media;
 
+import com.hanpyeon.academyapi.media.dto.ImageUrlDto;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.service.UploadFile;
 import org.springframework.stereotype.Component;
@@ -13,5 +14,11 @@ public class MediaMapper {
 
     public Image createImage(final String imageSrc) {
         return new Image(imageSrc);
+    }
+
+    public ImageUrlDto createImageUrlDto(final Image image) {
+        return ImageUrlDto.builder()
+                .imageUrl(image.getSrc())
+                .build();
     }
 }
