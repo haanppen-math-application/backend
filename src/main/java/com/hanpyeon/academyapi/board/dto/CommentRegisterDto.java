@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.dto;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.springframework.web.multipart.MultipartFile;

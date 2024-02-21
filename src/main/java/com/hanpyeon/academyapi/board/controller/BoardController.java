@@ -1,10 +1,7 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
-import com.hanpyeon.academyapi.board.dto.QuestionDetails;
-import com.hanpyeon.academyapi.board.dto.QuestionPreview;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
+import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.BoardService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -27,7 +24,7 @@ public class BoardController {
     BoardService boardService;
     BoardMapper boardMapper;
 
-    @PostMapping
+    @PostMapping("/question")
     public ResponseEntity<?> addQuestion(
             @Nullable @RequestPart("image") List<MultipartFile> multipartFile,
             @Valid @RequestPart("questionRegisterRequestDto") QuestionRegisterRequestDto questionRegisterRequestDto,
@@ -42,14 +39,26 @@ public class BoardController {
         return ResponseEntity.created(null).build();
     }
 
-    @GetMapping("/{questionId}")
+    @GetMapping("/question/{questionId}")
     public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
             @NotNull @PathVariable Long questionId) {
         return ResponseEntity.ok(boardService.getSingleQuestionDetails(questionId));
     }
 
-    @GetMapping
+    @GetMapping("/question")
     public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
         return ResponseEntity.ok(boardService.loadLimitedQuestions(entityFieldMappedPageRequest));
+    }
+
+    @PostMapping("/question/{questionId}/comment")
+    public ResponseEntity<CommentDetails> addComment(
+            @NotNull @PathVariable Long questionId,
+            @Valid @RequestPart("commentRegisterRequestDto") CommentRegisterRequestDto commentRegisterRequestDto,
+            @RequestPart("imags") List<MultipartFile> images,
+            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+
+        CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(questionId, commentRegisterRequestDto, images, memberPrincipal.getMemberId());
+        return ResponseEntity.created(null)
+                .body(boardService.addComment(commentRegisterDto));
     }
 }
