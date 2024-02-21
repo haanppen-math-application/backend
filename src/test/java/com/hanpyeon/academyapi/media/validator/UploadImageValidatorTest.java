@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service.validator;
+package com.hanpyeon.academyapi.media.validator;
 
 import com.hanpyeon.academyapi.media.validator.UploadImageValidator;
 import org.apache.http.entity.ContentType;

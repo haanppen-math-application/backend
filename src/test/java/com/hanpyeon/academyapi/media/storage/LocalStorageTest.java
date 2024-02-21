@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service.storage;
+package com.hanpyeon.academyapi.media.storage;
 
 import com.hanpyeon.academyapi.media.storage.LocalStorage;
 import jakarta.transaction.Transactional;

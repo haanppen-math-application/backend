@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service;
+package com.hanpyeon.academyapi.media;
 
 import com.hanpyeon.academyapi.media.exception.InvalidUploadFileException;
 import com.hanpyeon.academyapi.media.service.UploadFile;

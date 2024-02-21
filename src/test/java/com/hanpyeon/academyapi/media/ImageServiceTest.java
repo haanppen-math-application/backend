@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service;
+package com.hanpyeon.academyapi.media;
 
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.MediaMapper;
