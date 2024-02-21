@@ -3,15 +3,21 @@ package com.hanpyeon.academyapi.board.mapper;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.entity.Comment;
-import com.hanpyeon.academyapi.board.entity.Image;
 import com.hanpyeon.academyapi.board.entity.Question;
+import com.hanpyeon.academyapi.media.MediaMapper;
+import com.hanpyeon.academyapi.media.entity.Image;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class BoardMapper {
+
+    private final MediaMapper mediaMapper;
+
     public QuestionRegisterDto createRegisterDto(final QuestionRegisterRequestDto questionRegisterRequestDto, final List<MultipartFile> multipartFiles, Long userId) {
         return QuestionRegisterDto.builder()
                 .title(questionRegisterRequestDto.title())
@@ -42,17 +48,11 @@ public class BoardMapper {
                 .targetMember(createMemberDetails(question.getTargetMember()))
                 .registeredDateTime(question.getRegisteredDateTime())
                 .imageUrls(question.getImages().stream()
-                        .map(this::createImageUrlDto)
+                        .map(mediaMapper::createImageUrlDto)
                         .toList())
                 .comments(question.getComments().stream()
                         .map(this::createCommentDetails)
                         .toList())
-                .build();
-    }
-
-    public ImageUrlDto createImageUrlDto(final Image image) {
-        return ImageUrlDto.builder()
-                .imageUrl(image.getSrc())
                 .build();
     }
 
@@ -71,7 +71,7 @@ public class BoardMapper {
                 .content(comment.getContent())
                 .selected(comment.getIsSelected())
                 .images(comment.getImages().stream()
-                        .map(this::createImageUrlDto)
+                        .map(mediaMapper::createImageUrlDto)
                         .toList())
                 .registeredDateTime(comment.getRegisteredDateTime())
                 .registeredMemberDetails(createMemberDetails(comment.getRegisteredMember()))
@@ -84,7 +84,7 @@ public class BoardMapper {
                 .content(question.getContent())
                 .solved(question.getSolved())
                 .images(question.getImages().stream()
-                        .map(this::createImageUrlDto)
+                        .map(mediaMapper::createImageUrlDto)
                         .toList())
                 .commentCount(question.getComments().size())
                 .viewCount(question.getViewCount())

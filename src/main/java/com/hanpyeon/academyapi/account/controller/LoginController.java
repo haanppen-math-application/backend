@@ -2,11 +2,10 @@ package com.hanpyeon.academyapi.account.controller;
 
 import com.hanpyeon.academyapi.account.dto.LoginRequestDto;
 import com.hanpyeon.academyapi.account.service.LoginService;
+import com.hanpyeon.academyapi.security.JwtUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +22,9 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity<?> memberLogin(@Valid @RequestBody final LoginRequestDto loginRequestDto) {
-        String token = loginService.provideJwt(loginRequestDto.userPhoneNumber());
+        String token = loginService.provideJwt(loginRequestDto.userPhoneNumber(), loginRequestDto.password());
         Map<String, String> body = new HashMap<>();
-        body.put("Authentication", token);
+        body.put(JwtUtils.HEADER, token);
         return ResponseEntity.ok(body);
     }
 }

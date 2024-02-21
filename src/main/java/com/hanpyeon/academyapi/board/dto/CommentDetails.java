@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.dto;
 
+import com.hanpyeon.academyapi.media.dto.ImageUrlDto;
 import lombok.Builder;
 
 import java.time.LocalDateTime;

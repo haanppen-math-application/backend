@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.security.exceptionhandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.advice.ExceptionResponseBody;
+import com.hanpyeon.academyapi.exception.ExceptionResponseBody;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

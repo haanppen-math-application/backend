@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
+import com.hanpyeon.academyapi.media.service.ImageService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

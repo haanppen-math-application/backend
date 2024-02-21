@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.dto;
 
+import com.hanpyeon.academyapi.media.dto.ImageUrlDto;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -15,5 +16,5 @@ public record QuestionDetails(
         MemberDetails registeredMember,
         MemberDetails targetMember,
         List<CommentDetails> comments,
-        List<ImageUrlDto> imageUrls)
-{}
+        List<ImageUrlDto> imageUrls) {
+}
