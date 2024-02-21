@@ -37,4 +37,7 @@ public class Comment {
         this.question = question;
         this.images = images;
     }
+    public void setSelectedTo(Boolean state) {
+        this.isSelected = state;
+    }
 }

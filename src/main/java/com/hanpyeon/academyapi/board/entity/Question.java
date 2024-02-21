@@ -49,4 +49,8 @@ public class Question {
         this.targetMember = targetMember;
         this.comments = comments;
     }
+
+    public void changeSolvedStateTo(final Boolean state) {
+        this.solved = state;
+    }
 }
