@@ -19,4 +19,8 @@ public class PasswordHandler {
         }
         return passwordEncoder.encode(password);
     }
+
+    public boolean matches(final String rawPassword, final String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
 }

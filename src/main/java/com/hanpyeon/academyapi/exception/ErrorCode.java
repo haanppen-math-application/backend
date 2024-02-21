@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     AUTHENTICATION_FAILED_EXCEPTION(HttpStatus.UNAUTHORIZED, "-001", "인증 불가"),
     DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "-002", "적절한 권한 부재"),
+    INVALID_PASSWORD_EXCEPTION(HttpStatus.UNAUTHORIZED, "-003", "비밀번호 오류"),
 
     METHOD_ARGUMENT_NOT_VALID_EXCEPTION(HttpStatus.BAD_REQUEST, "-101", "잘못된 JSON 필드"),
     HTTP_MESSAGE_NOT_READABLE(HttpStatus.BAD_REQUEST, "-102", "부적절한 API 요청 형식"),
