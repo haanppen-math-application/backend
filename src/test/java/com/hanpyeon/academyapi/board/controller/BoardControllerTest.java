@@ -50,7 +50,7 @@ class BoardControllerTest {
                 "image",
                 "helwijadw".getBytes());
 
-        mockMvc.perform(multipart("/api/board")
+        mockMvc.perform(multipart("/api/board/question")
                 .file(image)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
         ).andExpect(status().isBadRequest());
@@ -68,7 +68,7 @@ class BoardControllerTest {
                 )).getBytes()
         );
         
-        mockMvc.perform(multipart("/api/board")
+        mockMvc.perform(multipart("/api/board/question")
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
         ).andExpect(status().isCreated())
@@ -92,7 +92,7 @@ class BoardControllerTest {
                 )).getBytes()
         );
 
-        mockMvc.perform(multipart("/api/board")
+        mockMvc.perform(multipart("/api/board/question")
                 .file(image)
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -119,7 +119,7 @@ class BoardControllerTest {
                 )).getBytes()
         );
 
-        mockMvc.perform(multipart("/api/board")
+        mockMvc.perform(multipart("/api/board/question")
                 .file(image1)
                 .file(image2)
                 .file(dto)
@@ -131,7 +131,7 @@ class BoardControllerTest {
     void 질문조회성공테스트() throws Exception {
         Mockito.when(boardService.getSingleQuestionDetails(Mockito.any()))
                         .thenReturn(Mockito.mock(QuestionDetails.class));
-        mockMvc.perform(get("/api/board/12"))
+        mockMvc.perform(get("/api/board/question/12"))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -144,7 +144,7 @@ class BoardControllerTest {
     })
     void 페이지_조회_테스트(String pageNumber, String pageSize) throws Exception {
         ArgumentCaptor<EntityFieldMappedPageRequest> captor = ArgumentCaptor.forClass(EntityFieldMappedPageRequest.class);
-        mockMvc.perform(get("/api/board")
+        mockMvc.perform(get("/api/board/question")
                         .param("page", pageNumber)
                         .param("size", pageSize))
                 .andExpect(status().isOk())

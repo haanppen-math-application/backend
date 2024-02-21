@@ -20,7 +20,7 @@ class LocalStorageTest {
     @Test
     @Transactional
     void testPath() throws IOException {
-        File file = new File("src/test/java/com/hanpyeon/academyapi/board/service/storage/temp.png");
+        File file = new File("src/test/java/com/hanpyeon/academyapi/media/storage/temp.png");
         FileInputStream imageInputStream;
         try {
             imageInputStream = new FileInputStream(file);

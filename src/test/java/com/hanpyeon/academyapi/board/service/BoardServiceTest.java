@@ -1,10 +1,12 @@
 package com.hanpyeon.academyapi.board.service;
 
+import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
+import com.hanpyeon.academyapi.board.repository.CommentRepository;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import org.assertj.core.api.Assertions;
@@ -24,6 +26,10 @@ class BoardServiceTest {
     @Mock
     QuestionRepository questionRepository;
     @Mock
+    CommentRepository commentRepository;
+    @Mock
+    MemberRepository memberRepository;
+    @Mock
     QuestionRelatedMemberProvider questionRelatedMemberProvider;
     @Mock
     ImageService imageService;
@@ -34,7 +40,7 @@ class BoardServiceTest {
 
     @BeforeEach
     void init() {
-        boardService = new BoardService(questionRepository, questionRelatedMemberProvider, imageService, boardMapper);
+        boardService = new BoardService(questionRepository, commentRepository, memberRepository, questionRelatedMemberProvider, imageService, boardMapper);
     }
 
     @Test
