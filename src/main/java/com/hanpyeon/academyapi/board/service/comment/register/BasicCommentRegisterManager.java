@@ -8,10 +8,8 @@ import com.hanpyeon.academyapi.board.repository.QuestionRepository;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 @Component
-public class BasicCommentRegisterManager extends AbstractCommentRegisterManager{
+class BasicCommentRegisterManager extends AbstractCommentRegisterManager {
     public BasicCommentRegisterManager(ImageService imageService, QuestionRepository questionRepository, MemberRepository memberRepository, BoardMapper boardMapper) {
         super(imageService, questionRepository, memberRepository, boardMapper);
     }

@@ -7,7 +7,6 @@ import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
-import com.hanpyeon.academyapi.board.exception.NotAllowedCommentException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -23,7 +22,7 @@ import java.util.List;
  * 해당 클래스를 이용하여 댓글에 대한 여러 제약을 구현할 수 있습니다.
  */
 @AllArgsConstructor
-public abstract class AbstractCommentRegisterManager implements CommentRegisterManager {
+abstract class AbstractCommentRegisterManager implements CommentRegisterManager {
     private final ImageService imageService;
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;

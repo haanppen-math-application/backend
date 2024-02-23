@@ -2,9 +2,7 @@ package com.hanpyeon.academyapi.board.service.comment;
 
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
 import com.hanpyeon.academyapi.board.entity.Comment;
-import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.CommentRepository;
-import com.hanpyeon.academyapi.board.service.comment.register.AbstractCommentRegisterManager;
 import com.hanpyeon.academyapi.board.service.comment.register.CommentRegisterManager;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
