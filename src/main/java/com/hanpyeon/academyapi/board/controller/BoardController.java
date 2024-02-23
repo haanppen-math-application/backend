@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Slice;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +54,7 @@ public class BoardController {
         return ResponseEntity.ok(questionService.loadLimitedQuestions(entityFieldMappedPageRequest));
     }
 
-    @PostMapping("/question/comment")
+    @PostMapping(value = "/question/comment", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addComment(
             @Valid @RequestPart("commentRegisterRequestDto") CommentRegisterRequestDto commentRegisterRequestDto,
             @Nullable @RequestPart("images") List<MultipartFile> images,
@@ -69,12 +70,35 @@ public class BoardController {
         ).build();
     }
 
-    @PutMapping("/questions/comments/{commentId}/adopt")
-    public ResponseEntity<?> adoptComment(
+    @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateComment(
             @PathVariable final Long commentId,
+            @RequestBody final CommentUpdateRequestDto commentAdoptRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        final CommentAdoptDto commentAdoptDto = boardMapper.createCommentAdoptDto(memberPrincipal.getMemberId(), commentId);
-        commentService.adoptComment(commentAdoptDto);
+        final CommentUpdateDto commentUpdateDto = CommentUpdateDto.builder()
+                .commentId(commentId)
+                .content(commentAdoptRequestDto.content())
+                .selectedState(commentAdoptRequestDto.isSelected())
+                .requestMemberId(memberPrincipal.getMemberId())
+                .build();
+        commentService.updateComment(commentUpdateDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateCommentImage(
+            @PathVariable final Long commentId,
+            @Nullable @RequestPart("images") List<MultipartFile> images,
+            @Nullable @RequestPart("data") final CommentUpdateRequestDto commentUpdateRequestDto,
+            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        final CommentUpdateDto commentUpdateDto = CommentUpdateDto.builder()
+                .content(commentUpdateRequestDto.content())
+                .images(images)
+                .requestMemberId(memberPrincipal.getMemberId())
+                .commentId(commentId)
+                .selectedState(commentUpdateRequestDto.isSelected())
+                .build();
+        commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }
 }
