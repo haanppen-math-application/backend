@@ -54,5 +54,5 @@ public abstract class AbstractCommentRegisterManager implements CommentRegisterM
 
     protected abstract void verifyQuestion(final Question question);
 
-    protected abstract void verifyMember(final Member member) throws NotAllowedCommentException;
+    protected abstract void verifyMember(final Member member);
 }
