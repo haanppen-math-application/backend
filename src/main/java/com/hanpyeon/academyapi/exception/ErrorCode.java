@@ -11,6 +11,7 @@ public enum ErrorCode {
 
     METHOD_ARGUMENT_NOT_VALID_EXCEPTION(HttpStatus.BAD_REQUEST, "-101", "잘못된 JSON 필드"),
     HTTP_MESSAGE_NOT_READABLE(HttpStatus.BAD_REQUEST, "-102", "부적절한 API 요청 형식"),
+    INVALID_CONTENT_TYPE(HttpStatus.BAD_REQUEST, "-103", "부적절한 Content-type"),
 
     ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "-201", "이미 등록된 사용자"),
     ILLEGAL_MEMBER_REGISTER_FORMAT(HttpStatus.BAD_REQUEST, "-202", "해당 유형 사용자 등록 필수값 부재"),
