@@ -6,6 +6,8 @@ import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.BoardService;
+import com.hanpyeon.academyapi.board.service.comment.CommentService;
+import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Assertions;
@@ -43,7 +45,9 @@ class BoardControllerTest {
     @MockBean
     BoardMapper boardMapper;
     @MockBean
-    BoardService boardService;
+    QuestionService questionService;
+    @MockBean
+    CommentService commentService;
     @Test
     void dto_없음_실패_테스트() throws Exception {
         MockMultipartFile image = new MockMultipartFile(
@@ -129,7 +133,7 @@ class BoardControllerTest {
 
     @Test
     void 질문조회성공테스트() throws Exception {
-        Mockito.when(boardService.getSingleQuestionDetails(Mockito.any()))
+        Mockito.when(questionService.getSingleQuestionDetails(Mockito.any()))
                         .thenReturn(Mockito.mock(QuestionDetails.class));
         mockMvc.perform(get("/api/board/question/12"))
                 .andExpect(status().isOk())
@@ -150,7 +154,7 @@ class BoardControllerTest {
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
-        Mockito.verify(boardService).loadLimitedQuestions(captor.capture());
+        Mockito.verify(questionService).loadLimitedQuestions(captor.capture());
 
         EntityFieldMappedPageRequest entityFieldMappedPageRequest = captor.getValue();
 

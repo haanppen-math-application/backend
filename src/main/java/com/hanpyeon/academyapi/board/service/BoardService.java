@@ -9,6 +9,8 @@ import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.CommentRepository;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
+import com.hanpyeon.academyapi.board.service.question.register.QuestionRelatedMember;
+import com.hanpyeon.academyapi.board.service.question.register.QuestionRelatedMemberProvider;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.service.ImageService;
@@ -23,6 +25,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Deprecated
 public class BoardService {
     private final QuestionRepository questionRepository;
     private final CommentRepository commentRepository;
@@ -31,34 +34,32 @@ public class BoardService {
     private final BoardMapper boardMapper;
 
     @Transactional
+    @Deprecated
     public Long addQuestion(@Validated final QuestionRegisterDto questionDto) {
         QuestionRelatedMember questionMember = questionRelatedMemberProvider.getQuestionRelatedMember(questionDto);
         List<Image> imageSources = imageService.saveImage(questionDto.images());
-        return questionRepository.save(boardMapper.createEntity(
-                questionDto,
-                questionMember.requestMember(),
-                questionMember.targetMember(),
-                imageSources)
-        ).getId();
+
+        return questionRepository.save(boardMapper.createEntity(questionDto, questionMember.requestMember(), questionMember.targetMember(), imageSources)).getId();
     }
 
     @Transactional
+    @Deprecated
     public Long addComment(@Validated final CommentRegisterDto commentRegisterDto) {
-        Question question = questionRepository.findById(commentRegisterDto.questionId())
+        Question targetQuestion = questionRepository.findById(commentRegisterDto.questionId())
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
-        List<Image> images = imageService.saveImage(commentRegisterDto.images());
 
-        return boardMapper.createCommentDetails(
-                commentRepository.save(boardMapper.createComment(question, question.getOwnerMember(), images, commentRegisterDto.content()))
-        ).commentId();
+        List<Image> images = imageService.saveImage(commentRegisterDto.images());
+        return commentRepository.save(boardMapper.createComment(targetQuestion, targetQuestion.getOwnerMember(), images, commentRegisterDto.content())).getId();
     }
 
+    @Deprecated
     public QuestionDetails getSingleQuestionDetails(final Long questionId) {
         return questionRepository.findById(questionId)
                 .map(boardMapper::createQuestionDetails)
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
     }
 
+    @Deprecated
     public Slice<QuestionPreview> loadLimitedQuestions(final Pageable pageable) {
         return questionRepository.findBy(pageable)
                 .map(boardMapper::createQuestionPreview);
