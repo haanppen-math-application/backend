@@ -3,12 +3,12 @@ package com.hanpyeon.academyapi.board.controller;
 import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
-import com.hanpyeon.academyapi.board.service.BoardService;
+import com.hanpyeon.academyapi.board.service.comment.CommentService;
+import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +23,17 @@ import java.util.List;
 @RequestMapping("/api/board")
 @AllArgsConstructor
 public class BoardController {
-    BoardService boardService;
-    BoardMapper boardMapper;
+    private final QuestionService questionService;
+    private final CommentService commentService;
+    private final BoardMapper boardMapper;
 
     @PostMapping("/question")
     public ResponseEntity<?> addQuestion(
             @Nullable @RequestPart("images") List<MultipartFile> multipartFile,
             @Valid @RequestPart("questionRegisterRequestDto") QuestionRegisterRequestDto questionRegisterRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-
         QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, multipartFile, memberPrincipal.getMemberId());
-        final Long createdQuestionId = boardService.addQuestion(questionRegisterDto);
+        final Long createdQuestionId = questionService.addQuestion(questionRegisterDto);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -45,12 +45,12 @@ public class BoardController {
     @GetMapping("/question/{questionId}")
     public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
             @NotNull @PathVariable Long questionId) {
-        return ResponseEntity.ok(boardService.getSingleQuestionDetails(questionId));
+        return ResponseEntity.ok(questionService.getSingleQuestionDetails(questionId));
     }
 
     @GetMapping("/question")
     public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
-        return ResponseEntity.ok(boardService.loadLimitedQuestions(entityFieldMappedPageRequest));
+        return ResponseEntity.ok(questionService.loadLimitedQuestions(entityFieldMappedPageRequest));
     }
 
     @PostMapping("/question/comment")
@@ -60,7 +60,7 @@ public class BoardController {
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
 
         CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, images, memberPrincipal.getMemberId());
-        final Long createdCommentId = boardService.addComment(commentRegisterDto);
+        final Long createdCommentId = commentService.addComment(commentRegisterDto);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
