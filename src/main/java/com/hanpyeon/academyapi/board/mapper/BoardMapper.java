@@ -115,5 +115,11 @@ public class BoardMapper {
                 .images(images)
                 .build();
     }
+    public CommentAdoptDto createCommentAdoptDto(final Long memberId, final Long commentId) {
+        return CommentAdoptDto.builder()
+                .questionOwnerId(memberId)
+                .commentId(commentId)
+                .build();
+    }
 
 }

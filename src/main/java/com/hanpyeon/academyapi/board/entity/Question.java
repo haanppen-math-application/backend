@@ -50,7 +50,7 @@ public class Question {
         this.comments = comments;
     }
 
-    public void changeSolvedStateTo(final Boolean state) {
-        this.solved = state;
+    public void isSolved() {
+        this.solved = true;
     }
 }
