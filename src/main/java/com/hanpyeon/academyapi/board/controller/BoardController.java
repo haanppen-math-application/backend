@@ -68,4 +68,13 @@ public class BoardController {
                 .toUri()
         ).build();
     }
+
+    @PutMapping("/questions/comments/{commentId}/adopt")
+    public ResponseEntity<?> adoptComment(
+            @PathVariable final Long commentId,
+            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        final CommentAdoptDto commentAdoptDto = boardMapper.createCommentAdoptDto(memberPrincipal.getMemberId(), commentId);
+        commentService.adoptComment(commentAdoptDto);
+        return ResponseEntity.ok().build();
+    }
 }
