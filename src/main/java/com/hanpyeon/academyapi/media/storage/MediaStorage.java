@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface MediaStorage {
     String store(MultipartFile multipartFile, String newFileName);
+    void remove(String fileName);
 
     MediaDto loadFile(String fileName);
 }

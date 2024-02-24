@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
@@ -34,6 +35,12 @@ public class LocalStorage implements MediaStorage {
         } catch (IOException e) {
             throw new MediaStoreException(ErrorCode.MEDIA_STORE_EXCEPTION);
         }
+    }
+
+    @Override
+    public void remove(String fileName) {
+        final Path absoluteMediaPath = this.resolveFilePath(fileName);
+        absoluteMediaPath.toFile().delete();
     }
 
     @Override
