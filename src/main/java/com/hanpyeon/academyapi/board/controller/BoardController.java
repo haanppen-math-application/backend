@@ -78,7 +78,6 @@ public class BoardController {
         final CommentUpdateDto commentUpdateDto = CommentUpdateDto.builder()
                 .commentId(commentId)
                 .content(commentAdoptRequestDto.content())
-                .selectedState(commentAdoptRequestDto.isSelected())
                 .requestMemberId(memberPrincipal.getMemberId())
                 .build();
         commentService.updateComment(commentUpdateDto);
@@ -86,17 +85,16 @@ public class BoardController {
     }
 
     @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateCommentImage(
+    public ResponseEntity<?> updateCommentWithImages(
             @PathVariable final Long commentId,
-            @Nullable @RequestPart("images") List<MultipartFile> images,
+            @Nullable @RequestPart("images") final List<MultipartFile> images,
             @Nullable @RequestPart("data") final CommentUpdateRequestDto commentUpdateRequestDto,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
         final CommentUpdateDto commentUpdateDto = CommentUpdateDto.builder()
                 .content(commentUpdateRequestDto.content())
                 .images(images)
                 .requestMemberId(memberPrincipal.getMemberId())
                 .commentId(commentId)
-                .selectedState(commentUpdateRequestDto.isSelected())
                 .build();
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
