@@ -33,6 +33,7 @@ abstract class AbstractCommentRegisterManager implements CommentRegisterManager 
         Question question = findQuestion(commentRegisterDto.questionId());
         Member member = findMember(commentRegisterDto.memberId());
         List<Image> images = imageService.saveImage(commentRegisterDto.images());
+        question.solved();
 
         return boardMapper.createComment(question, member, images, commentRegisterDto.content());
     }
