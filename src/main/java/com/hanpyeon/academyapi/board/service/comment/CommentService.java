@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.service.comment;
 
+import com.hanpyeon.academyapi.board.dto.CommentDeleteDto;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
 import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
 import com.hanpyeon.academyapi.board.entity.Comment;
@@ -8,8 +9,10 @@ import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
 import com.hanpyeon.academyapi.board.repository.CommentRepository;
 import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManager;
 import com.hanpyeon.academyapi.board.service.comment.register.CommentRegisterManager;
+import com.hanpyeon.academyapi.board.service.question.register.MemberManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.service.ImageService;
+import com.hanpyeon.academyapi.security.Role;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,6 +24,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final CommentRegisterManager commentRegisterManager;
     private final CommentContentManager commentContentManager;
+    private final CommentDeleteManager commentDeleteManager;
     private final ImageService imageService;
 
     @Transactional
@@ -41,6 +45,13 @@ public class CommentService {
         if (commentUpdateDto.content() != null) {
             commentContentManager.changeContentTo(comment, commentUpdateDto.content());
         }
+    }
+
+    @Transactional
+    public void deleteComment(@Validated final CommentDeleteDto commentDeleteDto) {
+        Comment comment = commentRepository.findById(commentDeleteDto.commentId())
+                .orElseThrow(() -> new NoSuchCommentException(ErrorCode.NO_SUCH_COMMENT));
+        commentDeleteManager.remove(comment, commentDeleteDto.requestMemberId());
     }
 
     private Comment findComment(final Long commentId) {

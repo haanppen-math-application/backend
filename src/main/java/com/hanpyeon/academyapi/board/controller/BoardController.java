@@ -90,4 +90,14 @@ public class BoardController {
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/question/comments/{commentId}")
+    public ResponseEntity<?> deleteComment(
+            @NotNull @PathVariable final Long commentId,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
+        CommentDeleteDto commentDeleteDto = boardMapper.createCommentDeleteDto(commentId, memberPrincipal.getMemberId());
+        commentService.deleteComment(commentDeleteDto);
+        return ResponseEntity.noContent().build();
+    }
+
 }
