@@ -33,11 +33,13 @@ jobs:
           cd /home/ubuntu/projects/hanpyeon-academy
           git pull origin main
           ./gradlew build 
+          sudo systemctl stop apiserver.service
+          
           sudo chmod 100 build/libs/academyapi-0.0.1-SNAPSHOT-plain.jar
           sudo chmod 100 build/libs/academyapi-0.0.1-SNAPSHOT.jar
           
-          sudo nohup java -jar build/libs/academyapi-0.0.1-SNAPSHOT.jar &
-          exit
+          sudo systemctl restart apiserver.service
+          
           
           
         
