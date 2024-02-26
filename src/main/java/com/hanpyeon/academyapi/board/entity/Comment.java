@@ -20,7 +20,7 @@ public class Comment {
     private Long id;
     @Column(nullable = false)
     private String content;
-    private Boolean isSelected = false;
+    private Boolean adopted = false;
     @CreationTimestamp
     private LocalDateTime registeredDateTime;
     @ManyToOne
@@ -37,7 +37,25 @@ public class Comment {
         this.question = question;
         this.images = images;
     }
-    public void isSelected() {
-        this.isSelected = true;
+    void singleAdopt() {
+        this.adopted = true;
+    }
+    void singleDeAdopt() {
+        this.adopted = false;
+    }
+    public void adopt() {
+        question.clearCommentsAdoptedStatus();
+        question.singleSolved();
+        singleAdopt();
+    }
+    public void deAdopt() {
+        question.singleUnsolved();
+        question.clearCommentsAdoptedStatus();
+    }
+    public void setContent(final String content) {
+        this.content = content;
+    }
+    public void changeImagesTo(final List<Image> images) {
+        this.images = images;
     }
 }

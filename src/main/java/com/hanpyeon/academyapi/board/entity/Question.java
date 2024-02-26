@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.board.entity;
 
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.board.exception.InvalidTargetException;
 import com.hanpyeon.academyapi.media.entity.Image;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -50,7 +51,22 @@ public class Question {
         this.comments = comments;
     }
 
-    public void isSolved() {
+    public void clearSolved() {
+        this.solved = false;
+        clearCommentsAdoptedStatus();
+    }
+    public void solved() {
+        this.solved = true;
+
+    }
+    void clearCommentsAdoptedStatus() {
+        comments.parallelStream()
+                .forEach(comment -> comment.singleDeAdopt());
+    }
+    void singleUnsolved() {
+        this.solved = false;
+    }
+    void singleSolved() {
         this.solved = true;
     }
 }
