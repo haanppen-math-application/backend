@@ -18,8 +18,7 @@ class BasicCommentRegisterManager extends AbstractCommentRegisterManager {
     }
 
     @Override
-    protected void verifyQuestion(Question quesㅎtion) {
-
+    protected void verifyQuestion(Question question) {
     }
 
     @Override
