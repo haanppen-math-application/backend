@@ -11,8 +11,8 @@ jobs:
     environment: production
 
     steps:
-    - name: ssh access to ex2
-      uses: appleboy/ssh-action@v0.1.2
+    - name: ssh access to ec2
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.AWS_HOST }}
         username: ${{ secrets.AWS_USERNAME }}
