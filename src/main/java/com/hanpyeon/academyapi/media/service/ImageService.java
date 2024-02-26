@@ -52,6 +52,17 @@ public class ImageService {
         comment.changeImagesTo(saveImage(images));
     }
 
+    public void removeImage(final List<Image> images) {
+        if (images == null || images.isEmpty()) {
+            return;
+        }
+        images.stream()
+                .map(image -> image.getSrc())
+                .forEach(mediaStorage::remove);
+        images.stream()
+                .forEach(imageRepository::delete);
+    }
+
     public MediaDto loadImage(final String imageName) {
         return mediaStorage.loadFile(imageName);
     }
