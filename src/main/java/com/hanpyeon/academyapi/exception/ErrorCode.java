@@ -23,6 +23,7 @@ public enum ErrorCode {
     NO_SUCH_QUESTION(HttpStatus.BAD_REQUEST, "-103", "존재하지 않는 질문 게시글"),
     NO_SUCH_COMMENT(HttpStatus.BAD_REQUEST, "-104", "존재하지 않는 댓글"),
     ALREADY_SOLVED_QUESTION_EXCEPTION(HttpStatus.BAD_REQUEST, "-105", "이미 해결된 질문"),
+    NOT_ADOPTED_COMMENT(HttpStatus.BAD_REQUEST, "-106", "채택되지 않은 댓글"),
 
 
     INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "-801", "파일 검증 실패"),
