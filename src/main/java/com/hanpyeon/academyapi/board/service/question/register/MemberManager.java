@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service;
+package com.hanpyeon.academyapi.board.service.question.register;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;

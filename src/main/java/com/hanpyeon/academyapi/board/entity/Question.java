@@ -49,4 +49,31 @@ public class Question {
         this.targetMember = targetMember;
         this.comments = comments;
     }
+
+    public void addViewCount() {
+        this.viewCount++;
+    }
+
+    public void clearSolved() {
+        this.solved = false;
+        clearCommentsAdoptedStatus();
+    }
+
+    public void solved() {
+        this.solved = true;
+
+    }
+
+    void clearCommentsAdoptedStatus() {
+        comments.parallelStream()
+                .forEach(comment -> comment.singleDeAdopt());
+    }
+
+    void singleUnsolved() {
+        this.solved = false;
+    }
+
+    void singleSolved() {
+        this.solved = true;
+    }
 }

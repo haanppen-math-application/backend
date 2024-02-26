@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.exception;
 
+import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,6 +11,12 @@ import java.util.List;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
+    @ExceptionHandler(InvalidContentTypeException.class)
+    public ResponseEntity<ExceptionResponseBody> invalidContentTypeExceptionHandler(final InvalidContentTypeException invalidContentTypeException) {
+        ErrorCode errorCode = ErrorCode.INVALID_CONTENT_TYPE;
+        return createExceptionResponse(errorCode, ExceptionResponseBody.of(errorCode));
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ExceptionResponseBody> requestFormatExceptionHandler(final HttpMessageNotReadableException exception) {
         ErrorCode errorCode = ErrorCode.HTTP_MESSAGE_NOT_READABLE;

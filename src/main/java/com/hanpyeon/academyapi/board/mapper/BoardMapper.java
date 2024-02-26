@@ -69,7 +69,7 @@ public class BoardMapper {
         return CommentDetails.builder()
                 .commentId(comment.getId())
                 .content(comment.getContent())
-                .selected(comment.getIsSelected())
+                .selected(comment.getAdopted())
                 .images(comment.getImages().stream()
                         .map(mediaMapper::createImageUrlDto)
                         .toList())
@@ -89,6 +89,46 @@ public class BoardMapper {
                 .commentCount(question.getComments().size())
                 .viewCount(question.getViewCount())
                 .owner(createMemberDetails(question.getOwnerMember()))
+                .build();
+    }
+
+    public Comment createComment(final Question question, final Member member, final List<Image> images, final String content) {
+        return Comment.builder()
+                .question(question)
+                .content(content)
+                .images(images)
+                .registeredMember(member)
+                .build();
+    }
+    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto requestDto, final Long commentId, final Long requestMemberId, final List<MultipartFile> images) {
+        return CommentUpdateDto.builder()
+                .commentId(commentId)
+                .images(images)
+                .content(requestDto.content())
+                .requestMemberId(requestMemberId)
+                .build();
+    }
+    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto requestDto, final Long commentId, final Long requestMemberId) {
+        return CommentUpdateDto.builder()
+                .commentId(commentId)
+                .content(requestDto.content())
+                .requestMemberId(requestMemberId)
+                .build();
+    }
+
+    public CommentRegisterDto createCommentRegisterDto(final CommentRegisterRequestDto registerRequestDto, final List<MultipartFile> images, final Long memberId) {
+        return CommentRegisterDto.builder()
+                .questionId(registerRequestDto.questionId())
+                .content(registerRequestDto.content())
+                .memberId(memberId)
+                .images(images)
+                .build();
+    }
+
+    public CommentDeleteDto createCommentDeleteDto(final Long commentId, final Long requestMemberId) {
+        return CommentDeleteDto.builder()
+                .requestMemberId(requestMemberId)
+                .commentId(commentId)
                 .build();
     }
 }

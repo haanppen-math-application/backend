@@ -1,11 +1,13 @@
 package com.hanpyeon.academyapi.media.service;
 
+import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.media.MediaMapper;
 import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.repository.ImageRepository;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
 import com.hanpyeon.academyapi.media.validator.UploadImageValidator;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,7 @@ public class ImageService {
      * @param imageFiles empty일 경우, 빈 컬렉션을 리턴합니다.
      * @return images, never returns null
      */
+    @Transactional
     public List<Image> saveImage(final List<MultipartFile> imageFiles) {
         if (!checkImagesPresence(imageFiles)) {
             return Collections.emptyList();
@@ -40,6 +43,24 @@ public class ImageService {
                         .map(uploadFile -> uploadFile.uploadTo(mediaStorage))
                         .toList()
         );
+    }
+
+    @Transactional
+    public void updateImage(final Comment comment, final List<MultipartFile> images) {
+        comment.getImages().stream()
+                .forEach(image -> mediaStorage.remove(image.getSrc()));
+        comment.changeImagesTo(saveImage(images));
+    }
+
+    public void removeImage(final List<Image> images) {
+        if (images == null || images.isEmpty()) {
+            return;
+        }
+        images.stream()
+                .map(image -> image.getSrc())
+                .forEach(mediaStorage::remove);
+        images.stream()
+                .forEach(imageRepository::delete);
     }
 
     public MediaDto loadImage(final String imageName) {

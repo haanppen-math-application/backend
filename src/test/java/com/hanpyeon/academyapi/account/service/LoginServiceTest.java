@@ -41,7 +41,7 @@ class LoginServiceTest {
         Mockito.when(memberRepository.findMemberByPhoneNumber(Mockito.any()))
                 .thenReturn(Optional.empty());
         assertThatThrownBy(() -> {
-            loginService.provideJwt(Mockito.anyString(), Mockito.anyString());
+            loginService.provideJwt("hi", "hello");
         }).isInstanceOf(NoSuchMemberException.class);
     }
 

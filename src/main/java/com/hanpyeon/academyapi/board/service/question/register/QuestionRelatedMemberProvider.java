@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service;
+package com.hanpyeon.academyapi.board.service.question.register;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
@@ -18,6 +18,7 @@ public class QuestionRelatedMemberProvider {
         Member teacher = findMemberWithRoleValidation(questionDto.targetMemberId(), Role.MANAGER, Role.TEACHER);
         return new QuestionRelatedMember(student, teacher);
     }
+
     private Member findMemberWithRoleValidation(final Long memberId, final Role... roles) {
         return memberManager.getMemberWithValidated(
                 memberId, member -> Arrays.stream(roles).anyMatch(role -> role.equals(member.getRole()))

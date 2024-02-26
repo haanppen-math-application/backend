@@ -6,6 +6,8 @@ import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.BoardService;
+import com.hanpyeon.academyapi.board.service.comment.CommentService;
+import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Assertions;
@@ -43,14 +45,16 @@ class BoardControllerTest {
     @MockBean
     BoardMapper boardMapper;
     @MockBean
-    BoardService boardService;
+    QuestionService questionService;
+    @MockBean
+    CommentService commentService;
     @Test
     void dto_없음_실패_테스트() throws Exception {
         MockMultipartFile image = new MockMultipartFile(
                 "image",
                 "helwijadw".getBytes());
 
-        mockMvc.perform(multipart("/api/board")
+        mockMvc.perform(multipart("/api/board/question")
                 .file(image)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
         ).andExpect(status().isBadRequest());
@@ -68,7 +72,7 @@ class BoardControllerTest {
                 )).getBytes()
         );
         
-        mockMvc.perform(multipart("/api/board")
+        mockMvc.perform(multipart("/api/board/question")
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
         ).andExpect(status().isCreated())
@@ -92,7 +96,7 @@ class BoardControllerTest {
                 )).getBytes()
         );
 
-        mockMvc.perform(multipart("/api/board")
+        mockMvc.perform(multipart("/api/board/question")
                 .file(image)
                 .file(dto)
                 .content(MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -119,7 +123,7 @@ class BoardControllerTest {
                 )).getBytes()
         );
 
-        mockMvc.perform(multipart("/api/board")
+        mockMvc.perform(multipart("/api/board/question")
                 .file(image1)
                 .file(image2)
                 .file(dto)
@@ -129,9 +133,9 @@ class BoardControllerTest {
 
     @Test
     void 질문조회성공테스트() throws Exception {
-        Mockito.when(boardService.getSingleQuestionDetails(Mockito.any()))
+        Mockito.when(questionService.getSingleQuestionDetails(Mockito.any()))
                         .thenReturn(Mockito.mock(QuestionDetails.class));
-        mockMvc.perform(get("/api/board/12"))
+        mockMvc.perform(get("/api/board/question/12"))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -144,13 +148,13 @@ class BoardControllerTest {
     })
     void 페이지_조회_테스트(String pageNumber, String pageSize) throws Exception {
         ArgumentCaptor<EntityFieldMappedPageRequest> captor = ArgumentCaptor.forClass(EntityFieldMappedPageRequest.class);
-        mockMvc.perform(get("/api/board")
+        mockMvc.perform(get("/api/board/question")
                         .param("page", pageNumber)
                         .param("size", pageSize))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
-        Mockito.verify(boardService).loadLimitedQuestions(captor.capture());
+        Mockito.verify(questionService).loadLimitedQuestions(captor.capture());
 
         EntityFieldMappedPageRequest entityFieldMappedPageRequest = captor.getValue();
 

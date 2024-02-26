@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.board.service;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
+import com.hanpyeon.academyapi.board.service.question.register.MemberManager;
 import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
