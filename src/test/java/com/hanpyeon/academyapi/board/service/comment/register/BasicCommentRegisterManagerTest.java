@@ -10,6 +10,7 @@ import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
 import com.hanpyeon.academyapi.media.service.ImageService;
+import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -58,6 +59,8 @@ class BasicCommentRegisterManagerTest {
                         Collections.emptyList(),
                         null))
                 .thenReturn(comment);
+        Mockito.when(member.getRole())
+                        .thenReturn(Role.MANAGER);
 
         assertThat(basicCommentRegisterManager.register(commentRegisterDto))
                 .isEqualTo(comment);
