@@ -75,11 +75,7 @@ public class BoardController {
             @PathVariable final Long commentId,
             @RequestBody final CommentUpdateRequestDto commentAdoptRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = CommentUpdateDto.builder()
-                .commentId(commentId)
-                .content(commentAdoptRequestDto.content())
-                .requestMemberId(memberPrincipal.getMemberId())
-                .build();
+        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentAdoptRequestDto, commentId, memberPrincipal.getMemberId());
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }
@@ -90,12 +86,7 @@ public class BoardController {
             @Nullable @RequestPart("images") final List<MultipartFile> images,
             @Nullable @RequestPart("data") final CommentUpdateRequestDto commentUpdateRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = CommentUpdateDto.builder()
-                .content(commentUpdateRequestDto.content())
-                .images(images)
-                .requestMemberId(memberPrincipal.getMemberId())
-                .commentId(commentId)
-                .build();
+        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, commentId, memberPrincipal.getMemberId(), images);
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }

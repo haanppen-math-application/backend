@@ -69,7 +69,7 @@ public class BoardMapper {
         return CommentDetails.builder()
                 .commentId(comment.getId())
                 .content(comment.getContent())
-                .selected(comment.getIsSelected())
+                .selected(comment.getAdopted())
                 .images(comment.getImages().stream()
                         .map(mediaMapper::createImageUrlDto)
                         .toList())
@@ -100,13 +100,22 @@ public class BoardMapper {
                 .registeredMember(member)
                 .build();
     }
-    public CommentSelectionUpdateDto createCommentSelectionUpdateDto(final CommentSelectionUpdateRequestDto requestDto, final Long memberId) {
-        return CommentSelectionUpdateDto.builder()
-                .requestMemberId(memberId)
-                .commendId(requestDto.commentId())
-                .status(requestDto.state())
+    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto requestDto, final Long commentId, final Long requestMemberId, final List<MultipartFile> images) {
+        return CommentUpdateDto.builder()
+                .commentId(commentId)
+                .images(images)
+                .content(requestDto.content())
+                .requestMemberId(requestMemberId)
                 .build();
     }
+    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto requestDto, final Long commentId, final Long requestMemberId) {
+        return CommentUpdateDto.builder()
+                .commentId(commentId)
+                .content(requestDto.content())
+                .requestMemberId(requestMemberId)
+                .build();
+    }
+
     public CommentRegisterDto createCommentRegisterDto(final CommentRegisterRequestDto registerRequestDto, final List<MultipartFile> images, final Long memberId) {
         return CommentRegisterDto.builder()
                 .questionId(registerRequestDto.questionId())
@@ -115,11 +124,4 @@ public class BoardMapper {
                 .images(images)
                 .build();
     }
-    public CommentAdoptDto createCommentAdoptDto(final Long memberId, final Long commentId) {
-        return CommentAdoptDto.builder()
-                .questionOwnerId(memberId)
-                .commentId(commentId)
-                .build();
-    }
-
 }
