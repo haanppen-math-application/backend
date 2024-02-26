@@ -124,4 +124,11 @@ public class BoardMapper {
                 .images(images)
                 .build();
     }
+
+    public CommentDeleteDto createCommentDeleteDto(final Long commentId, final Long requestMemberId) {
+        return CommentDeleteDto.builder()
+                .requestMemberId(requestMemberId)
+                .commentId(commentId)
+                .build();
+    }
 }
