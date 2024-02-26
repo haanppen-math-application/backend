@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.board.service.question;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
+import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
@@ -35,10 +36,12 @@ public class QuestionService {
         return questionRepository.save(boardMapper.createEntity(questionDto, questionMember.requestMember(), questionMember.targetMember(), imageSources)).getId();
     }
 
+    @Transactional
     public QuestionDetails getSingleQuestionDetails(final Long questionId) {
-        return questionRepository.findById(questionId)
-                .map(boardMapper::createQuestionDetails)
+        Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
+        question.addViewCount();
+        return boardMapper.createQuestionDetails(question);
     }
 
     public Slice<QuestionPreview> loadLimitedQuestions(final Pageable pageable) {
