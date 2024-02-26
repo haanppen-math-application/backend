@@ -11,6 +11,11 @@ jobs:
     environment: production
 
     steps:
+    - name: setting-jdk17
+      uses: actions/setup-java@v3
+      with: 
+        java-version: '17'
+    
     - name: checkout
       uses: actions/checkout@v2
 
