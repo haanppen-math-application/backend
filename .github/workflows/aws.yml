@@ -33,7 +33,7 @@ jobs:
         username: ${{ secrets.AWS_USERNAME }}
         key: ${{ secrets.AWS_SSH_KEY }}
         source: "build/libs/*"
-        target: "/home/ubuntu/apiserver/jar"
+        target: "/home/ubuntu/apiserver"
         
     - name: ssh access to ec2
       uses: appleboy/ssh-action@master
