@@ -1,10 +1,8 @@
 package com.hanpyeon.academyapi.aspect.log;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -17,13 +15,22 @@ import java.util.Objects;
 @Aspect
 @Component
 public class LoggingAspect {
-    @Before("within(@org.springframework.web.bind.annotation.RestController *)")
-    public void infoLog(JoinPoint joinPoint) {
-        Logger log = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
-        List<String> arguments = Arrays.stream(joinPoint.getArgs())
+
+    @Around("within(@org.springframework.web.bind.annotation.RestController *)")
+    public Object logController(ProceedingJoinPoint proceedingJoinPoint) {
+        Logger logger = LoggerFactory.getLogger(proceedingJoinPoint.getTarget().getClass());
+        List<String> arguments = Arrays.stream(proceedingJoinPoint.getArgs())
                 .map(Objects::toString)
                 .toList();
-        log.info("[ API REQUEST ] -> " + joinPoint.getSignature().getName() + ", [ ARGUMENT ] -> " + arguments);
+        logger.info("[ REQUEST ] -> " + proceedingJoinPoint.getSignature().getName() + ", [ ARGUMENT ] -> " + arguments);
+        Object result = null;
+        try {
+            result = proceedingJoinPoint.proceed();
+            logger.info("[ REQUEST SUCCEED ]");
+        } catch (Throwable throwable) {
+            logger.warn("[ REQUEST FAILED ] -> " + throwable.getMessage());
+        }
+        return result;
     }
     @AfterThrowing(value = "within(@WarnLoggable *)", throwing = "exception")
     public void warningLog(JoinPoint joinPoint, Exception exception) {
@@ -38,7 +45,8 @@ public class LoggingAspect {
     }
 
     @Pointcut("execution(* com.hanpyeon.academyapi..*Repository.*(..))")
-    public void cutRepositoryAccess() {}
+    public void cutRepositoryAccess() {
+    }
 
     @Before("cutRepositoryAccess()")
     public void beforeAccess(JoinPoint joinPoint) {
