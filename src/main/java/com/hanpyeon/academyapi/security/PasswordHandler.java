@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PasswordHandler {
-    @Value("service.password.default")
+    @Value("${service.password.default}")
     private String DEFAULT_PASSWORD;
     private final PasswordEncoder passwordEncoder;
 
