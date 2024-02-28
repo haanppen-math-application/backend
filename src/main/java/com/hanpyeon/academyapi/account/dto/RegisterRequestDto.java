@@ -13,4 +13,14 @@ public record RegisterRequestDto(
         @NotNull(message = "teacher / student 둘중 하나여야 합니다")Role role,
         String password
 ) {
+    @Override
+    public String toString() {
+        return "RegisterRequestDto{" +
+                "name='" + name + '\'' +
+                ", grade=" + grade +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", role=" + role +
+                ", password='" + "****" + '\'' +
+                '}';
+    }
 }

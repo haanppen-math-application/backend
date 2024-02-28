@@ -10,4 +10,11 @@ public record LoginRequestDto(
         @NotBlank
         String password
 ) {
+        @Override
+        public String toString() {
+                return "LoginRequestDto{" +
+                        "userPhoneNumber='" + userPhoneNumber + '\'' +
+                        ", password='" + "****" + '\'' +
+                        '}';
+        }
 }
