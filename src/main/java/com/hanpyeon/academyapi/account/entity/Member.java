@@ -48,7 +48,7 @@ public class Member {
                 "memberId=" + id +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", memberName='" + name + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + "****" + '\'' +
                 ", grade=" + grade +
                 ", userRole=" + role +
                 ", localDateTime=" + registeredDate +

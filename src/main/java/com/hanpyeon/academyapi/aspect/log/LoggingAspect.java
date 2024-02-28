@@ -23,24 +23,22 @@ public class LoggingAspect {
         List<String> arguments = Arrays.stream(joinPoint.getArgs())
                 .map(Objects::toString)
                 .toList();
-        log.info(" [ API REQUEST ] -> " + joinPoint.getSignature().getName() + ", [ WITH ARGUMENT ] -> " + arguments);
+        log.info("[ API REQUEST ] -> " + joinPoint.getSignature().getName() + ", [ ARGUMENT ] -> " + arguments);
     }
-
     @AfterThrowing(value = "within(@WarnLoggable *)", throwing = "exception")
     public void warningLog(JoinPoint joinPoint, Exception exception) {
         Logger logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
-        logger.warn("[ " + exception.toString() + " ] -> " + exception.getMessage());
+        logger.warn("[ EXCEPTION ] -> " + exception.getClass().getSimpleName() + ", -> " + exception.getMessage());
     }
 
     @AfterThrowing(value = "within(@ErrorLoggable *)", throwing = "exception")
     public void errorLog(JoinPoint joinPoint, Exception exception) {
         Logger logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
-        logger.error("[ " + exception.toString() + " ] -> " + exception.getMessage());
+        logger.warn("[ EXCEPTION ] -> " + exception.getClass().getSimpleName() + " -> " + exception.getMessage());
     }
 
     @Pointcut("execution(* com.hanpyeon.academyapi..*Repository.*(..))")
-    public void cutRepositoryAccess() {
-    }
+    public void cutRepositoryAccess() {}
 
     @Before("cutRepositoryAccess()")
     public void beforeAccess(JoinPoint joinPoint) {
@@ -48,12 +46,12 @@ public class LoggingAspect {
         List<String> arguments = Arrays.stream(joinPoint.getArgs())
                 .map(Objects::toString)
                 .toList();
-        logger.info(" [ REPOSITORY ACCESS ] -> " + joinPoint.getSignature().getName() + ", [ WITH ARGUMENT ] -> " + arguments);
+        logger.info("[ REPOSITORY ACCESS ] -> " + joinPoint.getSignature().getName() + ", [ ARGUMENT ] -> " + arguments);
     }
 
     @AfterThrowing(value = "cutRepositoryAccess()", throwing = "exception")
     public void afterRepositoryThrows(JoinPoint joinPoint, Exception exception) {
         Logger logger = LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringType());
-        logger.error("[ " + exception.toString() + " ] -> " + exception.getMessage());
+        logger.error("[ EXCEPTION ] -> " + exception.getClass().getSimpleName() + " -> " + exception.getMessage());
     }
 }
