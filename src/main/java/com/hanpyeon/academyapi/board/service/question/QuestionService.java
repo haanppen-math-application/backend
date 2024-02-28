@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.service.question;
 
+import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
@@ -12,11 +13,11 @@ import com.hanpyeon.academyapi.board.service.question.register.QuestionRelatedMe
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.service.ImageService;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -30,13 +31,14 @@ public class QuestionService {
     private final BoardMapper boardMapper;
 
     @Transactional
+    @WarnLoggable
     public Long addQuestion(@Validated final QuestionRegisterDto questionDto) {
         QuestionRelatedMember questionMember = questionRelatedMemberProvider.getQuestionRelatedMember(questionDto);
         List<Image> imageSources = imageService.saveImage(questionDto.images());
         return questionRepository.save(boardMapper.createEntity(questionDto, questionMember.requestMember(), questionMember.targetMember(), imageSources)).getId();
     }
 
-    @Transactional
+    @WarnLoggable
     public QuestionDetails getSingleQuestionDetails(final Long questionId) {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));

@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.board.service.comment;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
+@WarnLoggable
 @Component
 public class CommentDeleteManager {
     private final MemberRepository memberRepository;
