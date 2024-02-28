@@ -28,7 +28,7 @@ public class LoggingAspect {
     @AfterThrowing(value = "within(@WarnLoggable *)", throwing = "exception")
     public void warningLog(JoinPoint joinPoint, Exception exception) {
         Logger logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
-        logger.error("[ " + exception.toString() + " ] -> " + exception.getMessage());
+        logger.warn("[ " + exception.toString() + " ] -> " + exception.getMessage());
     }
 
     @AfterThrowing(value = "within(@ErrorLoggable *)", throwing = "exception")
