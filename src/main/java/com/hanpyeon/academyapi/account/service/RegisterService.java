@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.account.dto.RegisterMemberTotalDto;
 import com.hanpyeon.academyapi.account.exceptions.NotSupportedMemberTypeException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.account.service.verify.MemberVerification;
+import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@WarnLoggable
 @AllArgsConstructor
 public class RegisterService {
     private final static Logger LOGGER = LoggerFactory.getLogger("RegisterRoleChecker");
