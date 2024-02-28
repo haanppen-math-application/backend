@@ -33,7 +33,7 @@ public class BoardController {
             @Nullable @RequestPart("images") List<MultipartFile> multipartFile,
             @Valid @RequestPart("questionRegisterRequestDto") QuestionRegisterRequestDto questionRegisterRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, multipartFile, memberPrincipal.getMemberId());
+        QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, multipartFile, memberPrincipal.memberId());
         final Long createdQuestionId = questionService.addQuestion(questionRegisterDto);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
@@ -60,7 +60,7 @@ public class BoardController {
             @Nullable @RequestPart("images") List<MultipartFile> images,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
 
-        CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, images, memberPrincipal.getMemberId());
+        CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, images, memberPrincipal.memberId());
         final Long createdCommentId = commentService.addComment(commentRegisterDto);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
@@ -75,7 +75,7 @@ public class BoardController {
             @PathVariable final Long commentId,
             @RequestBody final CommentUpdateRequestDto commentAdoptRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentAdoptRequestDto, commentId, memberPrincipal.getMemberId());
+        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentAdoptRequestDto, commentId, memberPrincipal.memberId());
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }
@@ -86,7 +86,7 @@ public class BoardController {
             @Nullable @RequestPart("images") final List<MultipartFile> images,
             @Nullable @RequestPart("data") final CommentUpdateRequestDto commentUpdateRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, commentId, memberPrincipal.getMemberId(), images);
+        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, commentId, memberPrincipal.memberId(), images);
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }
@@ -95,7 +95,7 @@ public class BoardController {
     public ResponseEntity<?> deleteComment(
             @NotNull @PathVariable final Long commentId,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        CommentDeleteDto commentDeleteDto = boardMapper.createCommentDeleteDto(commentId, memberPrincipal.getMemberId());
+        CommentDeleteDto commentDeleteDto = boardMapper.createCommentDeleteDto(commentId, memberPrincipal.memberId());
         commentService.deleteComment(commentDeleteDto);
         return ResponseEntity.noContent().build();
     }

@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.service.comment;
 
+import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.dto.CommentDeleteDto;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
 import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
@@ -9,16 +10,15 @@ import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
 import com.hanpyeon.academyapi.board.repository.CommentRepository;
 import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManager;
 import com.hanpyeon.academyapi.board.service.comment.register.CommentRegisterManager;
-import com.hanpyeon.academyapi.board.service.question.register.MemberManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.service.ImageService;
-import com.hanpyeon.academyapi.security.Role;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Component
+@WarnLoggable
 @AllArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
@@ -27,7 +27,6 @@ public class CommentService {
     private final CommentDeleteManager commentDeleteManager;
     private final ImageService imageService;
 
-    @Transactional
     public Long addComment(@Validated final CommentRegisterDto commentRegisterDto) {
         Comment comment = commentRegisterManager.register(commentRegisterDto);
         commentRepository.save(comment);
@@ -49,8 +48,7 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(@Validated final CommentDeleteDto commentDeleteDto) {
-        Comment comment = commentRepository.findById(commentDeleteDto.commentId())
-                .orElseThrow(() -> new NoSuchCommentException(ErrorCode.NO_SUCH_COMMENT));
+        Comment comment = findComment(commentDeleteDto.commentId());
         commentDeleteManager.remove(comment, commentDeleteDto.requestMemberId());
     }
 

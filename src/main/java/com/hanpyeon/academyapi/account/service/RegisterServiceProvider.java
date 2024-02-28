@@ -5,13 +5,12 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -20,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 @AllArgsConstructor
 public class RegisterServiceProvider {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger("RegisterCategoryChecker");
     private final MemberRepository repository;
     private final RegisterMapper registerMapper;
     private final PasswordHandler passwordHandler;
@@ -33,12 +31,11 @@ public class RegisterServiceProvider {
         Member member = registerMapper.createMemberEntity(memberTotalDto, encodedPassword);
 
         repository.save(member);
-        LOGGER.info(member.toString());
     }
 
+    @WarnLoggable
     private void validateRegisterRequest(final RegisterMemberTotalDto memberTotalDto) {
         if (repository.existsByPhoneNumber(memberTotalDto.phoneNumber())) {
-            LOGGER.debug("이미 등록된 사용자(전화번호) 입니다.");
             throw new AlreadyRegisteredException(ErrorCode.ALREADY_REGISTERED);
         }
     }

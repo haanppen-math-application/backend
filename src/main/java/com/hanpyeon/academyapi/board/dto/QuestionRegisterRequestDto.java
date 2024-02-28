@@ -10,4 +10,13 @@ public record QuestionRegisterRequestDto(
         String content,
         @NotNull
         Long targetMemberId
-) {}
+) {
+        @Override
+        public String toString() {
+                return "QuestionRegisterRequestDto{" +
+                        "title='" + title + '\'' +
+                        ", content='" + content + '\'' +
+                        ", targetMemberId=" + targetMemberId +
+                        '}';
+        }
+}

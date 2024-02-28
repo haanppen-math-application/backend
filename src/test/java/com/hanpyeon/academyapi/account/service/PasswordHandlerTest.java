@@ -11,14 +11,19 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
+@PropertySource("service.password.default=1234")
 public class PasswordHandlerTest {
     private static final String OTHER = "OTHER";
     private static final String DEFAULT = "DEFAULT";
+    @Value("${service.password.default}")
+    private String testPassword;
 
     @Mock
     PasswordEncoder passwordEncoder;
@@ -32,7 +37,7 @@ public class PasswordHandlerTest {
     @ParameterizedTest
     @MethodSource("provideIllegalPasswords")
     void 비밀번호_초기값_테스트(String inputPassword) {
-        Mockito.when(passwordEncoder.encode(ArgumentMatchers.eq("0000"))).thenReturn(DEFAULT);
+        Mockito.when(passwordEncoder.encode(ArgumentMatchers.eq(testPassword))).thenReturn(DEFAULT);
 
         Assertions.assertThat(passwordHandler.getEncodedPassword(inputPassword)).isEqualTo(DEFAULT);
         Assertions.assertThat(passwordHandler.getEncodedPassword(null)).isEqualTo(DEFAULT);
@@ -41,7 +46,7 @@ public class PasswordHandlerTest {
     @ParameterizedTest
     @MethodSource("provideLegalPasswords")
     void 비밀번호_사용자값_테스트(String inputPassword) {
-        Mockito.when(passwordEncoder.encode(ArgumentMatchers.argThat(arg -> !arg.equals("0000")))).thenReturn(OTHER);
+        Mockito.when(passwordEncoder.encode(ArgumentMatchers.argThat(arg -> !arg.equals(testPassword)))).thenReturn(OTHER);
 
         Assertions.assertThat(passwordHandler.getEncodedPassword(inputPassword)).isEqualTo(OTHER);
     }

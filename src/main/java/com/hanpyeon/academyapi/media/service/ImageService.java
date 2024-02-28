@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.media.service;
 
+import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.media.MediaMapper;
 import com.hanpyeon.academyapi.media.dto.MediaDto;
@@ -7,9 +8,9 @@ import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.repository.ImageRepository;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
 import com.hanpyeon.academyapi.media.validator.UploadImageValidator;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
+@WarnLoggable
 public class ImageService {
 
     private final ImageRepository imageRepository;
@@ -52,6 +54,7 @@ public class ImageService {
         comment.changeImagesTo(saveImage(images));
     }
 
+    @Transactional
     public void removeImage(final List<Image> images) {
         if (images == null || images.isEmpty()) {
             return;
