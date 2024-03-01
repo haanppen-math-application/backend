@@ -6,19 +6,19 @@ import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
-import jakarta.annotation.Nullable;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/board")
@@ -28,12 +28,13 @@ public class BoardController {
     private final CommentService commentService;
     private final BoardMapper boardMapper;
 
-    @PostMapping("/question")
+    @Operation(summary = "질문 등록 API", description = "질문을 등록하는 API 입니다")
+    @SecurityRequirement(name = "jwtAuth")
+    @PostMapping(value = "/question", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addQuestion(
-            @Nullable @RequestPart("images") List<MultipartFile> multipartFile,
-            @Valid @RequestPart("questionRegisterRequestDto") QuestionRegisterRequestDto questionRegisterRequestDto,
+            @Valid @ModelAttribute QuestionRegisterRequestDto questionRegisterRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, multipartFile, memberPrincipal.memberId());
+        QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, memberPrincipal.memberId());
         final Long createdQuestionId = questionService.addQuestion(questionRegisterDto);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
@@ -43,55 +44,54 @@ public class BoardController {
         ).build();
     }
 
+    @Operation(summary = "질문 상세보기 API", description = "질문의 등록 날짜, 댓글 내용, 조회 수 등 상세 정보를 알 수 있는 API 입니다.")
     @GetMapping("/question/{questionId}")
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
             @NotNull @PathVariable Long questionId) {
         return ResponseEntity.ok(questionService.getSingleQuestionDetails(questionId));
     }
 
+    @Operation(summary = "질문 게시판 조회", description = "전체 질문을 페이지별로 조회하는 기능입니다. sort 또한 쿼리 파라미터로 보내면 되며, sort=date 로 날짜순, sort=solve로 풀어진 문제 순 으로 정렬할 수 있습니다.")
     @GetMapping("/question")
-    public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
+    @SecurityRequirement(name = "jwtAuth")
+    public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(
+            @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
         return ResponseEntity.ok(questionService.loadLimitedQuestions(entityFieldMappedPageRequest));
     }
 
-    @PostMapping(value = "/question/comment", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "댓글 등록 API", description = "질문 게시글에 댓글을 달 수 있도록 하는 API 입니다.")
+    @PostMapping(value = "/question/comment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> addComment(
-            @Valid @RequestPart("commentRegisterRequestDto") CommentRegisterRequestDto commentRegisterRequestDto,
-            @Nullable @RequestPart("images") List<MultipartFile> images,
+            @Valid @ModelAttribute CommentRegisterRequestDto commentRegisterRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
 
-        CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, images, memberPrincipal.memberId());
+        CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, memberPrincipal.memberId());
         final Long createdCommentId = commentService.addComment(commentRegisterDto);
 
-        return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(createdCommentId)
-                .toUri()
+        return ResponseEntity.created(
+                ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("/{id}")
+                        .buildAndExpand(createdCommentId)
+                        .toUri()
         ).build();
     }
 
-    @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateComment(
-            @PathVariable final Long commentId,
-            @RequestBody final CommentUpdateRequestDto commentAdoptRequestDto,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentAdoptRequestDto, commentId, memberPrincipal.memberId());
-        commentService.updateComment(commentUpdateDto);
-        return ResponseEntity.ok().build();
-    }
-
+    @Operation(summary = "댓글 내용 수정 API")
     @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateCommentWithImages(
-            @PathVariable final Long commentId,
-            @Nullable @RequestPart("images") final List<MultipartFile> images,
-            @Nullable @RequestPart("data") final CommentUpdateRequestDto commentUpdateRequestDto,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, commentId, memberPrincipal.memberId(), images);
+    @SecurityRequirement(name = "jwtAuth")
+    public ResponseEntity<?> updateComment(
+            @Valid @ModelAttribute CommentUpdateRequestDto commentUpdateRequestDto,
+            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, memberPrincipal.memberId());
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "댓글 삭제 API", description = "댓글을 삭제할 수 있는 API 입니다")
     @DeleteMapping("/question/comments/{commentId}")
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> deleteComment(
             @NotNull @PathVariable final Long commentId,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
@@ -99,5 +99,4 @@ public class BoardController {
         commentService.deleteComment(commentDeleteDto);
         return ResponseEntity.noContent().build();
     }
-
 }
