@@ -6,6 +6,8 @@ import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -28,12 +30,13 @@ public class BoardController {
     private final CommentService commentService;
     private final BoardMapper boardMapper;
 
-    @PostMapping("/question")
+    @Operation(summary = "질문 등록 API", description = "질문을 등록하는 API 입니다")
+    @SecurityRequirement(name = "jwtAuth")
+    @PostMapping(value = "/question", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addQuestion(
-            @Nullable @RequestPart("images") List<MultipartFile> multipartFile,
-            @Valid @RequestPart("questionRegisterRequestDto") QuestionRegisterRequestDto questionRegisterRequestDto,
+            @Valid @ModelAttribute QuestionRegisterRequestDto questionRegisterRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, multipartFile, memberPrincipal.memberId());
+        QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, memberPrincipal.memberId());
         final Long createdQuestionId = questionService.addQuestion(questionRegisterDto);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
@@ -43,34 +46,40 @@ public class BoardController {
         ).build();
     }
 
+    @Operation(summary = "질문 상세보기 API", description = "질문의 등록 날짜, 댓글 내용, 조회 수 등 상세 정보를 알 수 있는 API 입니다.")
     @GetMapping("/question/{questionId}")
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
             @NotNull @PathVariable Long questionId) {
         return ResponseEntity.ok(questionService.getSingleQuestionDetails(questionId));
     }
 
     @GetMapping("/question")
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
         return ResponseEntity.ok(questionService.loadLimitedQuestions(entityFieldMappedPageRequest));
     }
 
-    @PostMapping(value = "/question/comment", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "댓글 등록 API", description = "질문 게시글에 댓글을 달 수 있도록 하는 API 입니다.")
+    @PostMapping(value = "/question/comment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> addComment(
-            @Valid @RequestPart("commentRegisterRequestDto") CommentRegisterRequestDto commentRegisterRequestDto,
-            @Nullable @RequestPart("images") List<MultipartFile> images,
+            @Valid @ModelAttribute CommentRegisterRequestDto commentRegisterRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
 
-        CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, images, memberPrincipal.memberId());
+        CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, memberPrincipal.memberId());
         final Long createdCommentId = commentService.addComment(commentRegisterDto);
 
-        return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(createdCommentId)
-                .toUri()
+        return ResponseEntity.created(
+                ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("/{id}")
+                        .buildAndExpand(createdCommentId)
+                        .toUri()
         ).build();
     }
 
     @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateComment(
             @PathVariable final Long commentId,
             @RequestBody final CommentUpdateRequestDto commentAdoptRequestDto,
@@ -81,6 +90,7 @@ public class BoardController {
     }
 
     @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateCommentWithImages(
             @PathVariable final Long commentId,
             @Nullable @RequestPart("images") final List<MultipartFile> images,
@@ -92,6 +102,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/question/comments/{commentId}")
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> deleteComment(
             @NotNull @PathVariable final Long commentId,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
@@ -99,5 +110,4 @@ public class BoardController {
         commentService.deleteComment(commentDeleteDto);
         return ResponseEntity.noContent().build();
     }
-
 }
