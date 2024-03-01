@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.account.dto.RegisterRequestDto;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.account.service.RegisterService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,8 @@ public class AccountController {
 
     @PostMapping
     @Operation(summary = "계정 등록", description = "어플리케이션에 계정을 등록하기 위한 API 입니다 ")
-    public ResponseEntity<?> registerStudent(@Valid @RequestBody final RegisterRequestDto registerRequestDto) {
+    @ApiResponse(responseCode = "201", description = "계정 생성 성공")
+    public ResponseEntity<?> registerMember(@Valid @RequestBody final RegisterRequestDto registerRequestDto) {
         RegisterMemberDto memberDto = registerMapper.createRegisterMemberDto(registerRequestDto);
         registerService.register(memberDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
