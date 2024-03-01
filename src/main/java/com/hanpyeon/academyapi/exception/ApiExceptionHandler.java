@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,8 +20,14 @@ public class ApiExceptionHandler {
     @ExceptionHandler(InvalidContentTypeException.class)
     public ResponseEntity<ExceptionResponseBody> invalidContentTypeExceptionHandler(final InvalidContentTypeException invalidContentTypeException) {
         ErrorCode errorCode = ErrorCode.INVALID_CONTENT_TYPE;
-        logger.warn("[ EXCEPTION WITH ] -> " + invalidContentTypeException.getMessage());
-        return createExceptionResponse(errorCode, ExceptionResponseBody.of(errorCode));
+        logger.warn("[ EXCEPTION WITH ] -> " + invalidContentTypeException.toString());
+        return createExceptionResponse(errorCode, ExceptionResponseBody.of(errorCode, invalidContentTypeException.toString()));
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<ExceptionResponseBody> mediaTypeNotSupportedExceptionHandler(final HttpMediaTypeNotSupportedException exception) {
+        logger.warn("[ EXCEPTION WITH ] -> " + exception.getMessage());
+        return createExceptionResponse(ErrorCode.INVALID_CONTENT_TYPE, ExceptionResponseBody.of(ErrorCode.INVALID_CONTENT_TYPE));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
