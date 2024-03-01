@@ -17,7 +17,7 @@ import java.util.Objects;
 public class LoggingAspect {
 
     @Around("within(@org.springframework.web.bind.annotation.RestController *)")
-    public Object logController(ProceedingJoinPoint proceedingJoinPoint) {
+    public Object logController(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Logger logger = LoggerFactory.getLogger(proceedingJoinPoint.getTarget().getClass());
         List<String> arguments = Arrays.stream(proceedingJoinPoint.getArgs())
                 .map(Objects::toString)
@@ -27,10 +27,11 @@ public class LoggingAspect {
         try {
             result = proceedingJoinPoint.proceed();
             logger.info("[ REQUEST SUCCEED ]");
+            return result;
         } catch (Throwable throwable) {
             logger.warn("[ REQUEST FAILED ] -> " + throwable.getMessage());
+            throw throwable;
         }
-        return result;
     }
     @AfterThrowing(value = "within(@WarnLoggable *)", throwing = "exception")
     public void warningLog(JoinPoint joinPoint, Exception exception) {
