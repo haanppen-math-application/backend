@@ -7,20 +7,18 @@ import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/board")
@@ -54,9 +52,11 @@ public class BoardController {
         return ResponseEntity.ok(questionService.getSingleQuestionDetails(questionId));
     }
 
+    @Operation(summary = "질문 게시판 조회", description = "전체 질문을 페이지별로 조회하는 기능입니다. sort 또한 쿼리 파라미터로 보내면 되며, sort=date 로 날짜순, sort=solve로 풀어진 문제 순 으로 정렬할 수 있습니다.")
     @GetMapping("/question")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
+    public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(
+            @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
         return ResponseEntity.ok(questionService.loadLimitedQuestions(entityFieldMappedPageRequest));
     }
 
@@ -78,29 +78,18 @@ public class BoardController {
         ).build();
     }
 
-    @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<?> updateComment(
-            @PathVariable final Long commentId,
-            @RequestBody final CommentUpdateRequestDto commentAdoptRequestDto,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentAdoptRequestDto, commentId, memberPrincipal.memberId());
-        commentService.updateComment(commentUpdateDto);
-        return ResponseEntity.ok().build();
-    }
-
+    @Operation(summary = "댓글 내용 수정 API")
     @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<?> updateCommentWithImages(
-            @PathVariable final Long commentId,
-            @Nullable @RequestPart("images") final List<MultipartFile> images,
-            @Nullable @RequestPart("data") final CommentUpdateRequestDto commentUpdateRequestDto,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, commentId, memberPrincipal.memberId(), images);
+    public ResponseEntity<?> updateComment(
+            @Valid @ModelAttribute CommentUpdateRequestDto commentUpdateRequestDto,
+            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, memberPrincipal.memberId());
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "댓글 삭제 API", description = "댓글을 삭제할 수 있는 API 입니다")
     @DeleteMapping("/question/comments/{commentId}")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> deleteComment(
