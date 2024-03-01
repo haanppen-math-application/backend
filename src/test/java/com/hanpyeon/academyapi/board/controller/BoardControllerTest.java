@@ -5,7 +5,6 @@ import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
-import com.hanpyeon.academyapi.board.service.BoardService;
 import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
@@ -27,7 +26,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,59 +46,52 @@ class BoardControllerTest {
     QuestionService questionService;
     @MockBean
     CommentService commentService;
-    @Test
-    void dto_없음_실패_테스트() throws Exception {
-        MockMultipartFile image = new MockMultipartFile(
-                "image",
-                "helwijadw".getBytes());
 
+    @Test
+    void 질문_등록시_targetMemberId_없음_에러_테스트() throws Exception {
         mockMvc.perform(multipart("/api/board/question")
-                .file(image)
-                .content(MediaType.MULTIPART_FORM_DATA_VALUE)
+                .param("content", "내용")
         ).andExpect(status().isBadRequest());
     }
     @Test
-    void 이미지_없음_성공_테스트() throws Exception {
-        MockMultipartFile dto = new MockMultipartFile(
-                "questionRegisterRequestDto",
-                null,
-                MediaType.APPLICATION_JSON_VALUE,
-                objectMapper.writeValueAsString(new QuestionRegisterRequestDto(
-                        "제목",
-                        "내용",
-                        12L
-                )).getBytes()
-        );
-        
+    void 질문_등록시_content_없음_테스트() throws Exception {
         mockMvc.perform(multipart("/api/board/question")
-                .file(dto)
-                .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-        ).andExpect(status().isCreated())
+                .param("targetMemberId", "1")
+        ).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void 질문_등록_이미지_포함_성공_테스트() throws Exception {
+        MockMultipartFile image = new MockMultipartFile(
+                "image",
+                "helwijadw".getBytes());
+        mockMvc.perform(multipart("/api/board/question")
+                .file(image)
+                .param("title", "제목")
+                .param("content", "내용")
+        ).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void 이미지_없음_성공_테스트() throws Exception {
+        mockMvc.perform(multipart("/api/board/question")
+                        .param("targetMemberId", "1")
+                        .param("content", "hello")
+                ).andExpect(status().isCreated())
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
-    void 이미지와_DTO_모두_존재_성공_테스트() throws Exception {
+    void 이미지_존재_성공_테스트() throws Exception {
         MockMultipartFile image = new MockMultipartFile(
-                "image",
+                "images",
                 "helwijadw".getBytes());
-
-        MockMultipartFile dto = new MockMultipartFile(
-                "questionRegisterRequestDto",
-                null,
-                MediaType.APPLICATION_JSON_VALUE,
-                objectMapper.writeValueAsString(new QuestionRegisterRequestDto(
-                        "제목",
-                        "내용",
-                        12L
-                )).getBytes()
-        );
 
         mockMvc.perform(multipart("/api/board/question")
                 .file(image)
-                .file(dto)
-                .content(MediaType.MULTIPART_FORM_DATA_VALUE)
-                ).andExpect(status().isCreated());
+                .param("content", "내용")
+                .param("targetMemberId", "12")
+        ).andExpect(status().isCreated());
     }
 
     @Test
@@ -112,29 +103,18 @@ class BoardControllerTest {
                 "image",
                 "helwijadw".getBytes());
 
-        MockMultipartFile dto = new MockMultipartFile(
-                "questionRegisterRequestDto",
-                null,
-                MediaType.APPLICATION_JSON_VALUE,
-                objectMapper.writeValueAsString(new QuestionRegisterRequestDto(
-                        "제목",
-                        "내용",
-                        12L
-                )).getBytes()
-        );
-
         mockMvc.perform(multipart("/api/board/question")
                 .file(image1)
                 .file(image2)
-                .file(dto)
-                .content(MediaType.MULTIPART_FORM_DATA_VALUE)
+                .param("content", "내용")
+                .param("targetMemberId", "12")
         ).andExpect(status().isCreated());
     }
 
     @Test
     void 질문조회성공테스트() throws Exception {
         Mockito.when(questionService.getSingleQuestionDetails(Mockito.any()))
-                        .thenReturn(Mockito.mock(QuestionDetails.class));
+                .thenReturn(Mockito.mock(QuestionDetails.class));
         mockMvc.perform(get("/api/board/question/12"))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
