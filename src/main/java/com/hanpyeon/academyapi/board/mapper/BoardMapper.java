@@ -18,13 +18,13 @@ public class BoardMapper {
 
     private final MediaMapper mediaMapper;
 
-    public QuestionRegisterDto createRegisterDto(final QuestionRegisterRequestDto questionRegisterRequestDto, final List<MultipartFile> multipartFiles, Long userId) {
+    public QuestionRegisterDto createRegisterDto(final QuestionRegisterRequestDto questionRegisterRequestDto, final Long userId) {
         return QuestionRegisterDto.builder()
                 .title(questionRegisterRequestDto.title())
                 .content(questionRegisterRequestDto.content())
                 .requestMemberId(userId)
                 .targetMemberId(questionRegisterRequestDto.targetMemberId())
-                .images(multipartFiles)
+                .images(questionRegisterRequestDto.images())
                 .build();
     }
 
@@ -100,28 +100,21 @@ public class BoardMapper {
                 .registeredMember(member)
                 .build();
     }
-    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto requestDto, final Long commentId, final Long requestMemberId, final List<MultipartFile> images) {
+    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto commentUpdateRequestDto, final Long requestMemberId) {
         return CommentUpdateDto.builder()
-                .commentId(commentId)
-                .images(images)
-                .content(requestDto.content())
-                .requestMemberId(requestMemberId)
-                .build();
-    }
-    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto requestDto, final Long commentId, final Long requestMemberId) {
-        return CommentUpdateDto.builder()
-                .commentId(commentId)
-                .content(requestDto.content())
+                .commentId(commentUpdateRequestDto.commentId())
+                .content(commentUpdateRequestDto.content())
+                .images(commentUpdateRequestDto.images())
                 .requestMemberId(requestMemberId)
                 .build();
     }
 
-    public CommentRegisterDto createCommentRegisterDto(final CommentRegisterRequestDto registerRequestDto, final List<MultipartFile> images, final Long memberId) {
+    public CommentRegisterDto createCommentRegisterDto(final CommentRegisterRequestDto registerRequestDto, final Long memberId) {
         return CommentRegisterDto.builder()
                 .questionId(registerRequestDto.questionId())
                 .content(registerRequestDto.content())
                 .memberId(memberId)
-                .images(images)
+                .images(registerRequestDto.images())
                 .build();
     }
 
