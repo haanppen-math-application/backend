@@ -3,7 +3,6 @@ package com.hanpyeon.academyapi.board.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
@@ -21,7 +20,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -30,12 +28,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = BoardController.class,
+@WebMvcTest(controllers = QuestionController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class, JwtAuthenticationFilter.class})
         })
-class BoardControllerTest {
+class QuestionControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -44,18 +42,16 @@ class BoardControllerTest {
     BoardMapper boardMapper;
     @MockBean
     QuestionService questionService;
-    @MockBean
-    CommentService commentService;
 
     @Test
     void 질문_등록시_targetMemberId_없음_에러_테스트() throws Exception {
-        mockMvc.perform(multipart("/api/board/question")
+        mockMvc.perform(multipart("/api/board/questions")
                 .param("content", "내용")
         ).andExpect(status().isBadRequest());
     }
     @Test
     void 질문_등록시_content_없음_테스트() throws Exception {
-        mockMvc.perform(multipart("/api/board/question")
+        mockMvc.perform(multipart("/api/board/questions")
                 .param("targetMemberId", "1")
         ).andExpect(status().isBadRequest());
     }
@@ -65,7 +61,7 @@ class BoardControllerTest {
         MockMultipartFile image = new MockMultipartFile(
                 "image",
                 "helwijadw".getBytes());
-        mockMvc.perform(multipart("/api/board/question")
+        mockMvc.perform(multipart("/api/board/questions")
                 .file(image)
                 .param("title", "제목")
                 .param("content", "내용")
@@ -74,7 +70,7 @@ class BoardControllerTest {
 
     @Test
     void 이미지_없음_성공_테스트() throws Exception {
-        mockMvc.perform(multipart("/api/board/question")
+        mockMvc.perform(multipart("/api/board/questions")
                         .param("targetMemberId", "1")
                         .param("content", "hello")
                 ).andExpect(status().isCreated())
@@ -87,7 +83,7 @@ class BoardControllerTest {
                 "images",
                 "helwijadw".getBytes());
 
-        mockMvc.perform(multipart("/api/board/question")
+        mockMvc.perform(multipart("/api/board/questions")
                 .file(image)
                 .param("content", "내용")
                 .param("targetMemberId", "12")
@@ -103,7 +99,7 @@ class BoardControllerTest {
                 "image",
                 "helwijadw".getBytes());
 
-        mockMvc.perform(multipart("/api/board/question")
+        mockMvc.perform(multipart("/api/board/questions")
                 .file(image1)
                 .file(image2)
                 .param("content", "내용")
@@ -115,7 +111,7 @@ class BoardControllerTest {
     void 질문조회성공테스트() throws Exception {
         Mockito.when(questionService.getSingleQuestionDetails(Mockito.any()))
                 .thenReturn(Mockito.mock(QuestionDetails.class));
-        mockMvc.perform(get("/api/board/question/12"))
+        mockMvc.perform(get("/api/board/questions/12"))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -128,7 +124,7 @@ class BoardControllerTest {
     })
     void 페이지_조회_테스트(String pageNumber, String pageSize) throws Exception {
         ArgumentCaptor<EntityFieldMappedPageRequest> captor = ArgumentCaptor.forClass(EntityFieldMappedPageRequest.class);
-        mockMvc.perform(get("/api/board/question")
+        mockMvc.perform(get("/api/board/questions")
                         .param("page", pageNumber)
                         .param("size", pageSize))
                 .andExpect(status().isOk())
