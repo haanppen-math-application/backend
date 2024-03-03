@@ -124,4 +124,12 @@ public class BoardMapper {
                 .commentId(commentId)
                 .build();
     }
+    public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequestDto questionUpdateRequestDto, final Long requestMemberId) {
+        return QuestionUpdateDto.builder()
+                .requestMemberId(requestMemberId)
+                .targetMemberId(questionUpdateRequestDto.targetMemberId())
+                .images(questionUpdateRequestDto.images())
+                .content(questionUpdateRequestDto.content())
+                .build();
+    }
 }

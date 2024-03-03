@@ -1,10 +1,7 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
-import com.hanpyeon.academyapi.board.dto.QuestionDetails;
-import com.hanpyeon.academyapi.board.dto.QuestionPreview;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
+import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -29,6 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class QuestionController {
     private final QuestionService questionService;
     private final BoardMapper boardMapper;
+
     @Operation(summary = "질문 등록 API", description = "질문을 등록하는 API 입니다")
     @SecurityRequirement(name = "jwtAuth")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -59,5 +57,14 @@ public class QuestionController {
     public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(
             @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
         return ResponseEntity.ok(questionService.loadLimitedQuestions(entityFieldMappedPageRequest));
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> updateQuestion(
+            @Valid @ModelAttribute QuestionUpdateRequestDto questionUpdateRequestDto,
+            @AuthenticationPrincipal MemberPrincipal memberPrincipal
+    ) {
+        final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId());
+        return ResponseEntity.ok(questionService.updateQuestion(questionUpdateDto));
     }
 }
