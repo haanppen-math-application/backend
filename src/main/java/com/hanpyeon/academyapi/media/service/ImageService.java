@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.media.service;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.entity.Comment;
+import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.media.MediaMapper;
 import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.entity.Image;
@@ -49,9 +50,14 @@ public class ImageService {
 
     @Transactional
     public void updateImage(final Comment comment, final List<MultipartFile> images) {
-        comment.getImages().stream()
-                .forEach(image -> mediaStorage.remove(image.getSrc()));
+        this.removeImage(comment.getImages());
         comment.changeImagesTo(saveImage(images));
+    }
+
+    @Transactional
+    public void updateImage(final Question question, final List<MultipartFile> images) {
+        this.removeImage(question.getImages());
+        question.changeImages(saveImage(images));
     }
 
     @Transactional
@@ -62,8 +68,7 @@ public class ImageService {
         images.stream()
                 .map(image -> image.getSrc())
                 .forEach(mediaStorage::remove);
-        images.stream()
-                .forEach(imageRepository::delete);
+        imageRepository.deleteAll(images);
     }
 
     public MediaDto loadImage(final String imageName) {
