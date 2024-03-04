@@ -69,4 +69,13 @@ public class QuestionController {
         final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId());
         return ResponseEntity.ok(questionService.updateQuestion(questionUpdateDto));
     }
+
+    @Operation(summary = "질문 삭제 API", description = "작성된 질문은 선생님, 매니저 권한만 가능합니다")
+    @SecurityRequirement(name = "jwtAuth")
+    @DeleteMapping("/{questionId")
+    public ResponseEntity<?> deleteQuestion(
+            @ModelAttribute final QuestionDeleteRequestDto questionDeleteRequestDto
+    ) {
+        return ResponseEntity.noContent().build();
+    }
 }
