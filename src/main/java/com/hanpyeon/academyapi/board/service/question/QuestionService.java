@@ -32,7 +32,7 @@ public class QuestionService {
     private final QuestionRelatedMemberProvider questionRelatedMemberProvider;
     private final ImageService imageService;
     private final BoardMapper boardMapper;
-    private final List<QuestionUpdateManager> questionUpdateManagers;
+    private final QuestionUpdateManager questionUpdateManager;
 
     @Transactional
     @WarnLoggable
@@ -56,9 +56,7 @@ public class QuestionService {
         if (!questionUpdateDto.requestMemberId().equals(targetQuestion.getOwnerMember().getId())) {
             throw new RequestDeniedException("본인 질문이 아닙니다", ErrorCode.DENIED_EXCEPTION);
         }
-        questionUpdateManagers.stream()
-                .filter(questionUpdateManager -> questionUpdateManager.applicable(questionUpdateDto))
-                .forEach(questionUpdateManager -> questionUpdateManager.update(targetQuestion, questionUpdateDto));
+        questionUpdateManager.updateQuestion(targetQuestion, questionUpdateDto);
         return targetQuestion.getId();
     }
 

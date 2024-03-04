@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class QuestionImageUpdateManager implements QuestionUpdateManager {
+public class QuestionImageUpdateHandler implements QuestionUpdateHandler {
     private final ImageService imageService;
 
     @Override

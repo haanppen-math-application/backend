@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class QuestionTargetUpdateManger implements QuestionUpdateManager {
+public class QuestionTargetUpdateHandler implements QuestionUpdateHandler {
     private final QuestionRelatedMemberProvider questionRelatedMemberProvider;
 
     @Override

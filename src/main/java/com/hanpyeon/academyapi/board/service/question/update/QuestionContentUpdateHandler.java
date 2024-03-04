@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class QuestionContentUpdateManger implements QuestionUpdateManager {
+public class QuestionContentUpdateHandler implements QuestionUpdateHandler {
     @Override
     public boolean applicable(QuestionUpdateDto questionUpdateDto) {
         return questionUpdateDto.content() != null;
