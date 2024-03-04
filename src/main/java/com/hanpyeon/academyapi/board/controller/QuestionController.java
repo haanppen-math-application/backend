@@ -31,8 +31,8 @@ public class QuestionController {
     @SecurityRequirement(name = "jwtAuth")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addQuestion(
-            @Valid @ModelAttribute QuestionRegisterRequestDto questionRegisterRequestDto,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+            @Valid @ModelAttribute final QuestionRegisterRequestDto questionRegisterRequestDto,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
         QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, memberPrincipal.memberId());
         final Long createdQuestionId = questionService.addQuestion(questionRegisterDto);
 
@@ -47,7 +47,7 @@ public class QuestionController {
     @GetMapping("/{questionId}")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
-            @NotNull @PathVariable Long questionId) {
+            @NotNull @PathVariable final Long questionId) {
         return ResponseEntity.ok(questionService.getSingleQuestionDetails(questionId));
     }
 
@@ -59,10 +59,12 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.loadLimitedQuestions(entityFieldMappedPageRequest));
     }
 
+    @Operation(summary = "댓글 수정 API", description = "질문 수정은 본인만 가능합니다")
+    @SecurityRequirement(name = "jwtAuth")
     @PatchMapping
     public ResponseEntity<?> updateQuestion(
-            @Valid @ModelAttribute QuestionUpdateRequestDto questionUpdateRequestDto,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal
+            @Valid @ModelAttribute final QuestionUpdateRequestDto questionUpdateRequestDto,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId());
         return ResponseEntity.ok(questionService.updateQuestion(questionUpdateDto));
