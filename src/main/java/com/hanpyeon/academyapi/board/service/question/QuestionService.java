@@ -12,6 +12,7 @@ import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRelatedMember;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRelatedMemberProvider;
+import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
@@ -29,6 +30,7 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
+    private final QuestionValidateManager questionValidateManager;
     private final QuestionRelatedMemberProvider questionRelatedMemberProvider;
     private final ImageService imageService;
     private final BoardMapper boardMapper;
@@ -39,7 +41,10 @@ public class QuestionService {
     public Long addQuestion(@Validated final QuestionRegisterDto questionDto) {
         QuestionRelatedMember questionMember = questionRelatedMemberProvider.getQuestionRelatedMember(questionDto);
         List<Image> imageSources = imageService.saveImage(questionDto.images());
-        return questionRepository.save(boardMapper.createEntity(questionDto, questionMember.requestMember(), questionMember.targetMember(), imageSources)).getId();
+        Question newQuestion = boardMapper.createEntity(questionDto, questionMember.requestMember(), questionMember.targetMember(), imageSources);
+
+        questionValidateManager.validate(newQuestion);
+        return questionRepository.save(newQuestion).getId();
     }
 
     @WarnLoggable
@@ -57,6 +62,8 @@ public class QuestionService {
             throw new RequestDeniedException("본인 질문이 아닙니다", ErrorCode.DENIED_EXCEPTION);
         }
         questionUpdateManager.updateQuestion(targetQuestion, questionUpdateDto);
+
+        questionValidateManager.validate(targetQuestion);
         return targetQuestion.getId();
     }
 
