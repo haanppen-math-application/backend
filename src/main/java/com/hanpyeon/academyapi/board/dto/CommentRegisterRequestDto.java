@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Schema(description = "질문 등록 요청 DTO", requiredProperties = {"questionId"})
+@Schema(description = "댓글 등록 DTO", requiredProperties = {"questionId"})
 public record CommentRegisterRequestDto(
         @NotNull Long questionId,
         @NotNull String content,
