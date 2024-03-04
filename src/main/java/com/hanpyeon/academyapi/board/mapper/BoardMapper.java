@@ -132,4 +132,8 @@ public class BoardMapper {
                 .content(questionUpdateRequestDto.content())
                 .build();
     }
+
+    public QuestionDeleteDto createQuestionDeleteDto(final QuestionDeleteRequestDto questionDeleteRequestDto) {
+        return new QuestionDeleteDto(questionDeleteRequestDto.questionId());
+    }
 }

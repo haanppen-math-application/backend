@@ -76,6 +76,8 @@ public class QuestionController {
     public ResponseEntity<?> deleteQuestion(
             @ModelAttribute final QuestionDeleteRequestDto questionDeleteRequestDto
     ) {
+        final QuestionDeleteDto questionDeleteDto = boardMapper.createQuestionDeleteDto(questionDeleteRequestDto);
+        questionService.deleteQuestion(questionDeleteDto);
         return ResponseEntity.noContent().build();
     }
 }
