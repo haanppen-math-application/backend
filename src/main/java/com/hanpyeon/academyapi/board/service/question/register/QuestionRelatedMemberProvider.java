@@ -18,6 +18,9 @@ public class QuestionRelatedMemberProvider {
         Member teacher = findMemberWithRoleValidation(questionDto.targetMemberId(), Role.MANAGER, Role.TEACHER);
         return new QuestionRelatedMember(student, teacher);
     }
+    public Member getUpperTeacherTargetMember(final Long memberId) {
+        return this.findMemberWithRoleValidation(memberId, Role.TEACHER, Role.MANAGER);
+    }
 
     private Member findMemberWithRoleValidation(final Long memberId, final Role... roles) {
         return memberManager.getMemberWithValidated(
