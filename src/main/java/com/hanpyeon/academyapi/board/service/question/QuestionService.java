@@ -1,10 +1,7 @@
 package com.hanpyeon.academyapi.board.service.question;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
-import com.hanpyeon.academyapi.board.dto.QuestionDetails;
-import com.hanpyeon.academyapi.board.dto.QuestionPreview;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
-import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
+import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
@@ -12,8 +9,8 @@ import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRelatedMember;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRelatedMemberProvider;
-import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
+import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.service.ImageService;
@@ -55,8 +52,13 @@ public class QuestionService {
         return boardMapper.createQuestionDetails(question);
     }
 
+    public Slice<QuestionPreview> loadLimitedQuestions(final Pageable pageable) {
+        return questionRepository.findBy(pageable)
+                .map(boardMapper::createQuestionPreview);
+    }
+
     @Transactional
-    public Long updateQuestion(@Validated QuestionUpdateDto questionUpdateDto) {
+    public Long updateQuestion(@Validated final QuestionUpdateDto questionUpdateDto) {
         Question targetQuestion = findQuestion(questionUpdateDto.questionId());
         if (!questionUpdateDto.requestMemberId().equals(targetQuestion.getOwnerMember().getId())) {
             throw new RequestDeniedException("본인 질문이 아닙니다", ErrorCode.DENIED_EXCEPTION);
@@ -67,9 +69,11 @@ public class QuestionService {
         return targetQuestion.getId();
     }
 
-    public Slice<QuestionPreview> loadLimitedQuestions(final Pageable pageable) {
-        return questionRepository.findBy(pageable)
-                .map(boardMapper::createQuestionPreview);
+    @Transactional
+    public void deleteQuestion(@Validated final QuestionDeleteDto questionDeleteDto) {
+        final Question question = findQuestion(questionDeleteDto.questionId());
+        imageService.removeImage(question.getImages());
+        questionRepository.delete(question);
     }
 
     private Question findQuestion(final Long questionId) {
