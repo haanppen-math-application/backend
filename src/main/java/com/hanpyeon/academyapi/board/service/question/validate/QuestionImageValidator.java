@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class QuestionImageValidator implements QuestionValidator {
+class QuestionImageValidator implements QuestionValidator {
     private final ImageService imageService;
     @Override
     public void validate(Question question) {

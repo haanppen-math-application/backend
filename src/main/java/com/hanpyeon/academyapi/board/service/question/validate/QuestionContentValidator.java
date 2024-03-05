@@ -6,7 +6,7 @@ import com.hanpyeon.academyapi.exception.ErrorCode;
 import org.springframework.stereotype.Component;
 
 @Component
-public class QuestionContentValidator implements QuestionValidator {
+class QuestionContentValidator implements QuestionValidator {
     @Override
     public void validate(Question question) {
         if (question.getContent().length() > 500) {

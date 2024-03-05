@@ -7,7 +7,7 @@ import com.hanpyeon.academyapi.security.Role;
 import org.springframework.stereotype.Component;
 
 @Component
-public class QuestionTargetMemberValidator implements QuestionValidator {
+class QuestionTargetMemberValidator implements QuestionValidator {
     @Override
     public void validate(Question question) {
         if (question.getTargetMember().getRole().equals(Role.STUDENT)) {

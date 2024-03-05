@@ -4,6 +4,6 @@ import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.entity.Question;
 
 @WarnLoggable
-public interface QuestionValidator {
+interface QuestionValidator {
     void validate(Question question);
 }
