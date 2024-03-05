@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class QuestionImageUpdateHandler implements QuestionUpdateHandler {
+class QuestionImageUpdateHandler extends QuestionUpdateHandler {
     private final ImageService imageService;
 
     @Override
-    public boolean applicable(QuestionUpdateDto questionUpdateDto) {
-        return questionUpdateDto.images() != null || !questionUpdateDto.images().isEmpty();
+    boolean applicable(QuestionUpdateDto questionUpdateDto) {
+        return questionUpdateDto.images() != null && !questionUpdateDto.images().isEmpty();
     }
 
     @Override
-    public void update(Question question, QuestionUpdateDto questionUpdateDto) {
+    void process(Question question, QuestionUpdateDto questionUpdateDto) {
         imageService.updateImage(question, questionUpdateDto.images());
     }
 }

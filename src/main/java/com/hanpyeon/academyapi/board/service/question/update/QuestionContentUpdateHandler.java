@@ -6,14 +6,15 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class QuestionContentUpdateHandler implements QuestionUpdateHandler {
+class QuestionContentUpdateHandler extends QuestionUpdateHandler {
+
     @Override
-    public boolean applicable(QuestionUpdateDto questionUpdateDto) {
+    boolean applicable(QuestionUpdateDto questionUpdateDto) {
         return questionUpdateDto.content() != null;
     }
 
     @Override
-    public void update(Question question, QuestionUpdateDto questionUpdateDto) {
+    void process(Question question, QuestionUpdateDto questionUpdateDto) {
         question.changeContent(questionUpdateDto.content());
     }
 }

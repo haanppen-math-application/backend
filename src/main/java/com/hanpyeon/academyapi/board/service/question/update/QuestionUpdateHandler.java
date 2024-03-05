@@ -5,7 +5,14 @@ import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
 import com.hanpyeon.academyapi.board.entity.Question;
 
 @WarnLoggable
-public interface QuestionUpdateHandler {
-    boolean applicable(QuestionUpdateDto questionUpdateDto);
-    void update(Question question, QuestionUpdateDto questionUpdateDto);
+abstract class QuestionUpdateHandler {
+    abstract boolean applicable(QuestionUpdateDto questionUpdateDto);
+
+    abstract void process(Question question, QuestionUpdateDto questionUpdateDto);
+
+    public final void update(Question question, QuestionUpdateDto questionUpdateDto) {
+        if (applicable(questionUpdateDto)) {
+            process(question, questionUpdateDto);
+        }
+    }
 }

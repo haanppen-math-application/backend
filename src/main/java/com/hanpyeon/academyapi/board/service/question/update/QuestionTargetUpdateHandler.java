@@ -9,18 +9,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class QuestionTargetUpdateHandler implements QuestionUpdateHandler {
+class QuestionTargetUpdateHandler extends QuestionUpdateHandler {
     private final QuestionRelatedMemberProvider questionRelatedMemberProvider;
 
     @Override
-    public boolean applicable(QuestionUpdateDto questionUpdateDto) {
-        return questionUpdateDto.requestMemberId() != null;
+    boolean applicable(QuestionUpdateDto questionUpdateDto) {
+        return questionUpdateDto.targetMemberId() != null;
     }
 
     @Override
-    public void update(Question question, QuestionUpdateDto questionUpdateDto) {
+    void process(Question question, QuestionUpdateDto questionUpdateDto) {
         Member member = questionRelatedMemberProvider.getUpperTeacherTargetMember(questionUpdateDto.targetMemberId());
         question.changeTargetMember(member);
-
     }
 }
