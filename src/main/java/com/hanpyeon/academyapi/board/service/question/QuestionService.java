@@ -4,16 +4,12 @@ import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
-import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
-import com.hanpyeon.academyapi.board.service.question.register.QuestionRelatedMember;
-import com.hanpyeon.academyapi.board.service.question.register.QuestionRelatedMemberProvider;
+import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
+import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
-import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import com.hanpyeon.academyapi.media.entity.Image;
-import com.hanpyeon.academyapi.media.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -21,33 +17,25 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
-
 @Component
 @AllArgsConstructor
 public class QuestionService {
-    private final QuestionRepository questionRepository;
-    private final QuestionValidateManager questionValidateManager;
-    private final QuestionRelatedMemberProvider questionRelatedMemberProvider;
-    private final ImageService imageService;
-    private final BoardMapper boardMapper;
+    private final QuestionRegisterManger questionRegisterManager;
     private final QuestionUpdateManager questionUpdateManager;
+    private final QuestionDeleteManager questionDeleteManager;
+    private final QuestionRepository questionRepository;
+    private final BoardMapper boardMapper;
 
     @Transactional
     @WarnLoggable
-    public Long addQuestion(@Validated final QuestionRegisterDto questionDto) {
-        QuestionRelatedMember questionMember = questionRelatedMemberProvider.getQuestionRelatedMember(questionDto);
-        List<Image> imageSources = imageService.saveImage(questionDto.images());
-        Question newQuestion = boardMapper.createEntity(questionDto, questionMember.requestMember(), questionMember.targetMember(), imageSources);
-
-        questionValidateManager.validate(newQuestion);
-        return questionRepository.save(newQuestion).getId();
+    public Long addQuestion(@Validated final QuestionRegisterDto questionRegisterDto) {
+        final Question question = questionRegisterManager.register(questionRegisterDto);
+        return questionRepository.save(question).getId();
     }
 
     @WarnLoggable
     public QuestionDetails getSingleQuestionDetails(final Long questionId) {
-        Question question = questionRepository.findById(questionId)
-                .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
+        Question question = findQuestion(questionId);
         question.addViewCount();
         return boardMapper.createQuestionDetails(question);
     }
@@ -60,19 +48,14 @@ public class QuestionService {
     @Transactional
     public Long updateQuestion(@Validated final QuestionUpdateDto questionUpdateDto) {
         Question targetQuestion = findQuestion(questionUpdateDto.questionId());
-        if (!questionUpdateDto.requestMemberId().equals(targetQuestion.getOwnerMember().getId())) {
-            throw new RequestDeniedException("본인 질문이 아닙니다", ErrorCode.DENIED_EXCEPTION);
-        }
-        questionUpdateManager.updateQuestion(targetQuestion, questionUpdateDto);
-
-        questionValidateManager.validate(targetQuestion);
+        questionUpdateManager.update(targetQuestion, questionUpdateDto);
         return targetQuestion.getId();
     }
 
     @Transactional
     public void deleteQuestion(@Validated final QuestionDeleteDto questionDeleteDto) {
         final Question question = findQuestion(questionDeleteDto.questionId());
-        imageService.removeImage(question.getImages());
+        questionDeleteManager.delete(question, questionDeleteDto.requestMemberId());
         questionRepository.delete(question);
     }
 
