@@ -4,8 +4,8 @@ import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
-import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.repository.QuestionRepository;
+import com.hanpyeon.academyapi.board.service.question.access.QuestionAccessManager;
 import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
@@ -23,8 +23,9 @@ public class QuestionService {
     private final QuestionRegisterManger questionRegisterManager;
     private final QuestionUpdateManager questionUpdateManager;
     private final QuestionDeleteManager questionDeleteManager;
+    private final QuestionAccessManager questionAccessManager;
+
     private final QuestionRepository questionRepository;
-    private final BoardMapper boardMapper;
 
     @Transactional
     @WarnLoggable
@@ -35,19 +36,18 @@ public class QuestionService {
 
     @WarnLoggable
     public QuestionDetails getSingleQuestionDetails(final Long questionId) {
-        Question question = findQuestion(questionId);
-        question.addViewCount();
-        return boardMapper.createQuestionDetails(question);
+        final Question question = findQuestion(questionId);
+        return questionAccessManager.getSingle(question);
     }
 
-    public Slice<QuestionPreview> loadLimitedQuestions(final Pageable pageable) {
-        return questionRepository.findBy(pageable)
-                .map(boardMapper::createQuestionPreview);
+    public Slice<QuestionPreview> loadQuestionsByPage(final Pageable pageable) {
+        final Slice<Question> questionSlice = questionRepository.findBy(pageable);
+        return questionAccessManager.loadBySlice(questionSlice);
     }
 
     @Transactional
     public Long updateQuestion(@Validated final QuestionUpdateDto questionUpdateDto) {
-        Question targetQuestion = findQuestion(questionUpdateDto.questionId());
+        final Question targetQuestion = findQuestion(questionUpdateDto.questionId());
         questionUpdateManager.update(targetQuestion, questionUpdateDto);
         return targetQuestion.getId();
     }
