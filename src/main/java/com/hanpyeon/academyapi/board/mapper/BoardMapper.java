@@ -8,7 +8,6 @@ import com.hanpyeon.academyapi.media.MediaMapper;
 import com.hanpyeon.academyapi.media.entity.Image;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class BoardMapper {
                 .build();
     }
 
-    public Question createEntity(final QuestionRegisterDto questionRegisterDto, final Member requestMember, final Member targetMember, final List<Image> images) {
+    public Question createQuestion(final QuestionRegisterDto questionRegisterDto, final Member requestMember, final Member targetMember, final List<Image> images) {
         return Question.builder()
                 .title(questionRegisterDto.title())
                 .content(questionRegisterDto.content())
@@ -123,5 +122,17 @@ public class BoardMapper {
                 .requestMemberId(requestMemberId)
                 .commentId(commentId)
                 .build();
+    }
+    public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequestDto questionUpdateRequestDto, final Long requestMemberId) {
+        return QuestionUpdateDto.builder()
+                .requestMemberId(requestMemberId)
+                .targetMemberId(questionUpdateRequestDto.targetMemberId())
+                .images(questionUpdateRequestDto.images())
+                .content(questionUpdateRequestDto.content())
+                .build();
+    }
+
+    public QuestionDeleteDto createQuestionDeleteDto(final QuestionDeleteRequestDto questionDeleteRequestDto, final Long requestMemberId) {
+        return new QuestionDeleteDto(questionDeleteRequestDto.questionId(), requestMemberId);
     }
 }

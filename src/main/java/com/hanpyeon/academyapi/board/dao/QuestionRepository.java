@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.repository;
+package com.hanpyeon.academyapi.board.dao;
 
 import com.hanpyeon.academyapi.board.entity.Question;
 import org.springframework.data.domain.Pageable;

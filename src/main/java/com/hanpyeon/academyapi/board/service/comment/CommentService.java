@@ -7,7 +7,7 @@ import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.exception.NoSuchCommentException;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
-import com.hanpyeon.academyapi.board.repository.CommentRepository;
+import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManager;
 import com.hanpyeon.academyapi.board.service.comment.register.CommentRegisterManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;

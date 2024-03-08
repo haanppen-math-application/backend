@@ -49,6 +49,15 @@ public class Question {
         this.targetMember = targetMember;
         this.comments = comments;
     }
+    public void changeContent(final String content) {
+        this.content = content;
+    }
+    public void changeTargetMember(final Member targetMember) {
+        this.targetMember = targetMember;
+    }
+    public void changeImages(final List<Image> images) {
+        this.images = images;
+    }
 
     public void addViewCount() {
         this.viewCount++;
