@@ -4,7 +4,7 @@ import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
-import com.hanpyeon.academyapi.board.repository.QuestionRepository;
+import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.service.question.access.QuestionAccessManager;
 import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;

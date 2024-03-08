@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.board.service.question.delete;
 
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
-import com.hanpyeon.academyapi.account.service.MemberManager;
+import com.hanpyeon.academyapi.board.dao.MemberManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.security.Role;

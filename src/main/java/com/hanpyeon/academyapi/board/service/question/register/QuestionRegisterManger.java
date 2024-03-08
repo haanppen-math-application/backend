@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.board.service.question.register;
 
 import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.account.service.MemberManager;
+import com.hanpyeon.academyapi.board.dao.MemberManager;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
