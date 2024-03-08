@@ -2,13 +2,13 @@ package com.hanpyeon.academyapi.board.service.comment.register;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
-import com.hanpyeon.academyapi.board.repository.QuestionRepository;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +19,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
 class BasicCommentRegisterManagerTest {

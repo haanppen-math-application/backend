@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
-import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
@@ -24,8 +23,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = QuestionController.class,
@@ -130,11 +128,17 @@ class QuestionControllerTest {
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
-        Mockito.verify(questionService).loadLimitedQuestions(captor.capture());
+        Mockito.verify(questionService).loadQuestionsByPage(captor.capture());
 
         EntityFieldMappedPageRequest entityFieldMappedPageRequest = captor.getValue();
 
         Assertions.assertEquals(entityFieldMappedPageRequest.getPageNumber(), Integer.parseInt(pageNumber));
         Assertions.assertEquals(entityFieldMappedPageRequest.getPageSize(), Integer.parseInt(pageSize));
+    }
+
+    @Test
+    void 질문_삭제_API_테스트() throws Exception {
+        mockMvc.perform(delete("/api/board/questions/1"))
+                .andExpect(status().isNoContent());
     }
 }
