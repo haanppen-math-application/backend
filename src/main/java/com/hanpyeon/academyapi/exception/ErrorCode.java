@@ -28,6 +28,9 @@ public enum ErrorCode {
     QUESTION_CONTENT_OVERSIZE(HttpStatus.BAD_REQUEST, "-107", "질문 크기 초과"),
     QUESTION_IMAGE_OVER_LENGTH(HttpStatus.BAD_REQUEST, "-108", "질문 게시글 이미지 갯수 초과"),
 
+    ILLEGAL_COURSE_NAME(HttpStatus.BAD_REQUEST, "-201", "잘못된 반 이름"),
+    ILLEGAL_COURSE_STUDENT_STATE(HttpStatus.BAD_REQUEST, "-202", "사용할 수 없는 학생"),
+
 
     INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "-801", "파일 검증 실패"),
     NOT_SUPPORTED_MEDIA(HttpStatus.BAD_REQUEST, "-802", "지원하지 않는 타입의 파일"),
