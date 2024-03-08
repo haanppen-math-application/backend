@@ -56,7 +56,7 @@ public class QuestionController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(
             @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
-        return ResponseEntity.ok(questionService.loadLimitedQuestions(entityFieldMappedPageRequest));
+        return ResponseEntity.ok(questionService.loadQuestionsByPage(entityFieldMappedPageRequest));
     }
 
     @Operation(summary = "댓글 수정 API", description = "질문 수정은 본인만 가능합니다")
@@ -72,11 +72,12 @@ public class QuestionController {
 
     @Operation(summary = "질문 삭제 API", description = "작성된 질문은 선생님, 매니저 권한만 가능합니다")
     @SecurityRequirement(name = "jwtAuth")
-    @DeleteMapping("/{questionId")
+    @DeleteMapping("/{questionId}")
     public ResponseEntity<?> deleteQuestion(
-            @ModelAttribute final QuestionDeleteRequestDto questionDeleteRequestDto
+            @ModelAttribute @Valid final QuestionDeleteRequestDto questionDeleteRequestDto,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final QuestionDeleteDto questionDeleteDto = boardMapper.createQuestionDeleteDto(questionDeleteRequestDto);
+        final QuestionDeleteDto questionDeleteDto = boardMapper.createQuestionDeleteDto(questionDeleteRequestDto, memberPrincipal.memberId());
         questionService.deleteQuestion(questionDeleteDto);
         return ResponseEntity.noContent().build();
     }
