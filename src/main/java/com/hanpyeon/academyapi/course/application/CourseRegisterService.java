@@ -10,6 +10,7 @@ import com.hanpyeon.academyapi.course.domain.Student;
 import com.hanpyeon.academyapi.course.domain.Teacher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class CourseRegisterService implements CourseRegisterUseCase {
     private final RegisterCoursePort registerCoursePort;
 
     @Override
-    public Long register(final CourseRegisterDto courseRegisterDto) {
+    public Long register(@Validated final CourseRegisterDto courseRegisterDto) {
         Course course = mapToCourse(courseRegisterDto);
         return registerCoursePort.register(course);
     }
