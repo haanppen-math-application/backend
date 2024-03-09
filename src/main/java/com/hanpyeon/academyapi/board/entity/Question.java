@@ -34,8 +34,7 @@ public class Question {
     private Member targetMember;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
-    @OneToMany
-    @JoinColumn(name = "question_id")
+    @OneToMany(mappedBy = "id")
     private List<Comment> comments;
 
 

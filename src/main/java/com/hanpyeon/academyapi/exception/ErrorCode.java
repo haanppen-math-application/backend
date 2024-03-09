@@ -19,7 +19,7 @@ public enum ErrorCode {
     NOT_SUPPORTED_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "-204", "등록 할 수 없는 사용자 유형"),
 
 
-    INVALID_MEMBER_TARGET(HttpStatus.BAD_REQUEST, "-101", "질문 게시글 대상은 선생님"),
+    INVALID_MEMBER_TARGET(HttpStatus.BAD_REQUEST, "-101", "잘못된 대상입니다."),
     NO_SUCH_MEMBER(HttpStatus.BAD_REQUEST, "-102", "존재하지 않는 사용자"),
     NO_SUCH_QUESTION(HttpStatus.BAD_REQUEST, "-103", "존재하지 않는 질문 게시글"),
     NO_SUCH_COMMENT(HttpStatus.BAD_REQUEST, "-104", "존재하지 않는 댓글"),
@@ -27,6 +27,9 @@ public enum ErrorCode {
     NOT_ADOPTED_COMMENT(HttpStatus.BAD_REQUEST, "-106", "채택되지 않은 댓글"),
     QUESTION_CONTENT_OVERSIZE(HttpStatus.BAD_REQUEST, "-107", "질문 크기 초과"),
     QUESTION_IMAGE_OVER_LENGTH(HttpStatus.BAD_REQUEST, "-108", "질문 게시글 이미지 갯수 초과"),
+
+    ILLEGAL_COURSE_NAME(HttpStatus.BAD_REQUEST, "-201", "잘못된 반 이름"),
+    ILLEGAL_COURSE_STUDENT_STATE(HttpStatus.BAD_REQUEST, "-202", "사용할 수 없는 학생"),
 
 
     INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "-801", "파일 검증 실패"),
