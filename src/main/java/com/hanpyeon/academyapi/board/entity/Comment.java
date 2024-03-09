@@ -26,6 +26,7 @@ public class Comment {
     @ManyToOne
     private Member registeredMember;
     @ManyToOne
+    @JoinColumn(name = "question_id")
     private Question question;
     @OneToMany
     private List<Image> images;
