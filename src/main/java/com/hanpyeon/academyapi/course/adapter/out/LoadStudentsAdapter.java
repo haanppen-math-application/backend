@@ -18,6 +18,7 @@ import java.util.List;
 class LoadStudentsAdapter implements LoadStudentsPort {
 
     private final MemberRepository memberRepository;
+
     @Override
     public List<Student> loadStudent(final List<Long> memberIds) {
         int requestMemberCount = memberIds.size();
@@ -39,6 +40,6 @@ class LoadStudentsAdapter implements LoadStudentsPort {
         if (member.getRole().equals(Role.STUDENT)) {
             return new Student(member.getId());
         }
-        throw new InvalidTargetException(ErrorCode.INVALID_MEMBER_TARGET);
+        throw new InvalidTargetException("", ErrorCode.INVALID_MEMBER_TARGET);
     }
 }

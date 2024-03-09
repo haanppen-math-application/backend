@@ -19,7 +19,7 @@ public enum ErrorCode {
     NOT_SUPPORTED_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "-204", "등록 할 수 없는 사용자 유형"),
 
 
-    INVALID_MEMBER_TARGET(HttpStatus.BAD_REQUEST, "-101", "질문 게시글 대상은 선생님"),
+    INVALID_MEMBER_TARGET(HttpStatus.BAD_REQUEST, "-101", "잘못된 대상입니다."),
     NO_SUCH_MEMBER(HttpStatus.BAD_REQUEST, "-102", "존재하지 않는 사용자"),
     NO_SUCH_QUESTION(HttpStatus.BAD_REQUEST, "-103", "존재하지 않는 질문 게시글"),
     NO_SUCH_COMMENT(HttpStatus.BAD_REQUEST, "-104", "존재하지 않는 댓글"),
