@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +29,7 @@ import java.util.List;
         scheme = "bearer", // HTTP 스키마
         bearerFormat = "JWT" // 베어러 포맷
 )
+@EnableMethodSecurity
 public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
@@ -35,14 +37,25 @@ public class SecurityConfig {
                 .csrf(csrf ->
                         csrf.disable()
                 )
+                .cors(cors ->
+                        cors.disable()
+                )
                 .exceptionHandling(config -> {
                     config.authenticationEntryPoint(new JwtEntryPointHandler());
                     config.accessDeniedHandler(new AccessDeniedHandler());
                 })
                 .addFilterBefore(new JwtAuthenticationFilter(authenticationManager), AuthorizationFilter.class)
-                .authorizeHttpRequests(http ->
-                        http.anyRequest().permitAll()
-                ).build();
+                .authorizeHttpRequests(request -> {
+                    request.requestMatchers("/api/login")
+                            .permitAll();
+                    request.requestMatchers("/api/accounts")
+                            .hasAnyAuthority(
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole());
+                    request.anyRequest().authenticated();
+                })
+                .build();
     }
 
     @Bean
