@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -29,7 +30,6 @@ import java.util.List;
         scheme = "bearer", // HTTP 스키마
         bearerFormat = "JWT" // 베어러 포맷
 )
-@EnableMethodSecurity
 public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
@@ -46,14 +46,43 @@ public class SecurityConfig {
                 })
                 .addFilterBefore(new JwtAuthenticationFilter(authenticationManager), AuthorizationFilter.class)
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/api/login")
-                            .permitAll();
-                    request.requestMatchers("/api/accounts")
-                            .hasAnyAuthority(
-                                    Role.MANAGER.getSecurityRole(),
-                                    Role.ADMIN.getSecurityRole(),
-                                    Role.TEACHER.getSecurityRole());
-                    request.anyRequest().authenticated();
+                    request.requestMatchers("/swagger-ui/**").permitAll();
+                    request.requestMatchers("/swagger-ui").permitAll();
+                    request.requestMatchers("/v3/api-docs/**").permitAll();
+
+                    request.requestMatchers("/api/login").permitAll();
+                    request.requestMatchers("/api/accounts").hasAnyAuthority(
+                            Role.MANAGER.getSecurityRole(),
+                            Role.ADMIN.getSecurityRole(),
+                            Role.TEACHER.getSecurityRole());
+
+                    request.requestMatchers("/api/images/**").permitAll();
+
+                    request.requestMatchers(HttpMethod.POST, "/api/board/comments").hasAnyAuthority(
+                            Role.MANAGER.getSecurityRole(),
+                            Role.TEACHER.getSecurityRole());
+                    request.requestMatchers(HttpMethod.DELETE, "/api/board/comments/*").hasAnyAuthority(
+                            Role.MANAGER.getSecurityRole(),
+                            Role.TEACHER.getSecurityRole());
+                    request.requestMatchers(HttpMethod.PATCH, "/api/board/comments/*").hasAnyAuthority(
+                            Role.STUDENT.getSecurityRole());
+
+                    request.requestMatchers(HttpMethod.POST, "/api/board/questions").hasAuthority(
+                            Role.STUDENT.getSecurityRole());
+                    request.requestMatchers(HttpMethod.GET, "/api/board/questions/*").authenticated();
+                    request.requestMatchers(HttpMethod.GET, "/api/board/questions").authenticated();
+                    request.requestMatchers(HttpMethod.PATCH, "/api/board/questions/*").hasAnyAuthority(
+                            Role.STUDENT.getSecurityRole());
+                    request.requestMatchers(HttpMethod.DELETE, "/api/board/questions/*").hasAnyAuthority(
+                            Role.MANAGER.getSecurityRole(),
+                            Role.TEACHER.getSecurityRole());
+
+                    request.requestMatchers(HttpMethod.POST, "/api/courses").hasAnyAuthority(
+                            Role.MANAGER.getSecurityRole(),
+                            Role.TEACHER.getSecurityRole());
+
+                    request.anyRequest().hasAuthority(
+                            Role.ADMIN.getSecurityRole());
                 })
                 .build();
     }
