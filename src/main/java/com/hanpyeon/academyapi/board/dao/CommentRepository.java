@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.repository;
+package com.hanpyeon.academyapi.board.dao;
 
 import com.hanpyeon.academyapi.board.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;

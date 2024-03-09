@@ -34,8 +34,7 @@ public class Question {
     private Member targetMember;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
-    @OneToMany
-    @JoinColumn(name = "question_id")
+    @OneToMany(mappedBy = "id")
     private List<Comment> comments;
 
 
@@ -48,6 +47,15 @@ public class Question {
         this.ownerMember = ownerMember;
         this.targetMember = targetMember;
         this.comments = comments;
+    }
+    public void changeContent(final String content) {
+        this.content = content;
+    }
+    public void changeTargetMember(final Member targetMember) {
+        this.targetMember = targetMember;
+    }
+    public void changeImages(final List<Image> images) {
+        this.images = images;
     }
 
     public void addViewCount() {
