@@ -3,7 +3,6 @@ package com.hanpyeon.academyapi.course.adapter.out;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.course.application.port.out.RegisterCoursePort;
-import com.hanpyeon.academyapi.course.domain.Course;
 import com.hanpyeon.academyapi.course.domain.Student;
 import com.hanpyeon.academyapi.course.domain.Teacher;
 import lombok.RequiredArgsConstructor;
@@ -18,17 +17,25 @@ public class RegisterCourseAdapter implements RegisterCoursePort {
     private final MemberRepository memberRepository;
 
     @Override
-    public Long register(final Course course) {
-        return courseRepository.save(mapToEntity(course)).getId();
+    public Long register(final com.hanpyeon.academyapi.course.domain.Course course) {
+        Course courseEntity = mapToEntity(course);
+        final List<CourseStudent> courseStudents = createCourseStudents(findStudents(course.getStudents()), courseEntity);
+        courseEntity.addStudents(courseStudents);
+
+        return courseRepository.save(courseEntity).getId();
     }
 
-
-    private CourseEntity mapToEntity(final Course course) {
-        return new CourseEntity(
+    private Course mapToEntity(final com.hanpyeon.academyapi.course.domain.Course course) {
+        return new Course(
                 course.getCourseName(),
-                findStudents(course.getStudents()),
                 findTeacher(course.getTeacher())
         );
+    }
+
+    private List<CourseStudent> createCourseStudents(final List<Member> students, final Course courseEntity) {
+        return students.stream()
+                .map(student -> CourseStudent.of(student, courseEntity))
+                .toList();
     }
 
     private List<Member> findStudents(final List<Student> students) {
