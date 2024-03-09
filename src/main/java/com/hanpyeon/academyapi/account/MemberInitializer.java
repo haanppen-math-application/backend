@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
-public class MemberConfig {
+public class MemberInitializer {
     private final MemberRepository memberRepository;
     private final PasswordHandler passwordEncoder;
 
@@ -23,7 +23,7 @@ public class MemberConfig {
     private String adminPassword;
 
     @PostConstruct
-    public void initAdminMember() {
+    public void initAdmin() {
         memberRepository.save(Member.builder()
                 .phoneNumber(adminId)
                 .name("어드민계정")
