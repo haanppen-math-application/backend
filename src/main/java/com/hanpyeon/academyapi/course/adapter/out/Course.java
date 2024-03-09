@@ -7,27 +7,32 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "COURSE")
 @NoArgsConstructor
 @Getter
-class CourseEntity {
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String courseName;
-
     @CreationTimestamp
     private LocalDateTime registeredDateTime;
-    @OneToMany
-    private List<Member> members;
     @ManyToOne
     private Member teacher;
+    @OneToMany(mappedBy = "id")
+    private List<CourseStudent> students = new ArrayList<>();
 
-    CourseEntity(final String courseName, final List<Member> members, final Member teacher) {
+    Course(final String courseName, final Member teacher) {
         this.courseName = courseName;
-        this.members = members;
         this.teacher = teacher;
+    }
+
+    public Integer addStudents(Collection<CourseStudent> courseStudents) {
+        this.students.addAll(courseStudents);
+        return students.size();
     }
 }
