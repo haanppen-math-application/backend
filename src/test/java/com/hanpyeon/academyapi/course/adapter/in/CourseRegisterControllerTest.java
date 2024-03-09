@@ -55,6 +55,5 @@ class CourseRegisterControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(print());
-
     }
 }
