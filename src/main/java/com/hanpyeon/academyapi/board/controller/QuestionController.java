@@ -61,7 +61,7 @@ public class QuestionController {
 
     @Operation(summary = "댓글 수정 API", description = "질문 수정은 본인만 가능합니다")
     @SecurityRequirement(name = "jwtAuth")
-    @PatchMapping
+    @PatchMapping("/{questionId}")
     public ResponseEntity<?> updateQuestion(
             @Valid @ModelAttribute final QuestionUpdateRequestDto questionUpdateRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal

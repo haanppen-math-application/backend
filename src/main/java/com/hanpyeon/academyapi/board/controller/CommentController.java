@@ -23,7 +23,7 @@ public class CommentController {
     private final BoardMapper boardMapper;
 
     @Operation(summary = "댓글 등록 API", description = "질문 게시글에 댓글을 달 수 있도록 하는 API 입니다.")
-    @PostMapping(value = "/question/comment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> addComment(
             @Valid @ModelAttribute CommentRegisterRequestDto commentRegisterRequestDto,
@@ -41,7 +41,7 @@ public class CommentController {
     }
 
     @Operation(summary = "댓글 내용 수정 API")
-    @PatchMapping(value = "/questions/comments/{commentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PatchMapping(value = "/{commentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateComment(
             @Valid @ModelAttribute CommentUpdateRequestDto commentUpdateRequestDto,
@@ -52,7 +52,7 @@ public class CommentController {
     }
 
     @Operation(summary = "댓글 삭제 API", description = "댓글을 삭제할 수 있는 API 입니다")
-    @DeleteMapping("/question/comments/{commentId}")
+    @DeleteMapping("/{commentId}")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> deleteComment(
             @NotNull @PathVariable final Long commentId,
@@ -61,5 +61,4 @@ public class CommentController {
         commentService.deleteComment(commentDeleteDto);
         return ResponseEntity.noContent().build();
     }
-
 }

@@ -3,6 +3,8 @@ package com.hanpyeon.academyapi.course.adapter.in;
 import com.hanpyeon.academyapi.course.application.dto.CourseRegisterDto;
 import com.hanpyeon.academyapi.course.application.port.in.CourseRegisterUseCase;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ class CourseRegisterController {
     private final CourseRegisterUseCase courseRegisterUseCase;
 
     @PostMapping
+    @SecurityRequirement(name = "jwtAuth")
+    @Operation(summary = "반 등록 API", description = "반을 등록하기 위한 API 입니다")
     public ResponseEntity<?> registerCourse(
             @Valid @RequestBody final CourseRegisterRequestDto courseRegisterRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
