@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.security.exceptionhandler.JwtEntryPointHandler;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,10 +15,14 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
@@ -34,12 +39,9 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
         return httpSecurity
-                .csrf(csrf ->
-                        csrf.disable()
-                )
-                .cors(cors ->
-                        cors.disable()
-                )
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(configurationSource()))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(config -> {
                     config.authenticationEntryPoint(new JwtEntryPointHandler());
                     config.accessDeniedHandler(new AccessDeniedHandler());
@@ -95,5 +97,23 @@ public class SecurityConfig {
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2B);
+    }
+
+
+    CorsConfigurationSource configurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.setAllowedMethods(
+                List.of(
+                        HttpMethod.GET.name(),
+                        HttpMethod.PATCH.name(),
+                        HttpMethod.POST.name(),
+                        HttpMethod.DELETE.name()
+                ));
+//        corsConfiguration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
     }
 }
