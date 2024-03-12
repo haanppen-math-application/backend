@@ -20,7 +20,7 @@ class CourseTest {
         final List<Student> student = List.of(new Student(1l));
         final Teacher teacher = Mockito.mock(Teacher.class);
 
-        assertDoesNotThrow(() -> Course.of(name, student, teacher));
+        assertDoesNotThrow(() -> Course.createNewCourse(name, student, teacher));
     }
 
     @Test
@@ -29,7 +29,7 @@ class CourseTest {
         final List<Student> students = List.of(new Student(1l));
         final Teacher teacher = new Teacher(2l);
 
-        assertThatThrownBy(() -> Course.of(name, students, teacher))
+        assertThatThrownBy(() -> Course.createNewCourse(name, students, teacher))
                 .isInstanceOf(IllegalCourseNameException.class);
     }
     @Test
@@ -40,7 +40,7 @@ class CourseTest {
         students.add(null);
         final Teacher teacher = new Teacher(2l);
 
-        assertThatThrownBy(() -> Course.of(name, students, teacher))
+        assertThatThrownBy(() -> Course.createNewCourse(name, students, teacher))
                 .isInstanceOf(IllegalCourseStudentStateException.class);
     }
     @Test
@@ -49,7 +49,7 @@ class CourseTest {
         final List<Student> students = List.of(new Student(1l));
         final Teacher teacher = null;
 
-        assertThatThrownBy(() -> Course.of(name, students, teacher))
+        assertThatThrownBy(() -> Course.createNewCourse(name, students, teacher))
                 .isInstanceOf(NotFoundTeacherException.class);
     }
 
