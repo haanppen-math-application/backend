@@ -15,22 +15,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class LoadTeacherAdapter implements LoadTeacherPort {
     private final MemberRepository memberRepository;
+    private final CourseMapper courseMapper;
 
     @Override
     public Teacher loadTeacher(final Long id) {
         final Member member = loadMember(id);
-        return mapToTeacher(member);
+        return courseMapper.mapToTeacher(member);
     }
 
     private Member loadMember(final Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER));
-    }
-
-    private Teacher mapToTeacher(final Member member) {
-        if (member.getRole().equals(Role.STUDENT)) {
-            throw new InvalidTargetException(ErrorCode.INVALID_MEMBER_TARGET);
-        }
-        return new Teacher(member.getId());
     }
 }
