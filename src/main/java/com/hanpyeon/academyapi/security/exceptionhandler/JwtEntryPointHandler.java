@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.io.IOException;
 
@@ -21,7 +22,7 @@ public class JwtEntryPointHandler implements AuthenticationEntryPoint {
             // JWT 만료일 경우
             errorCode = ErrorCode.JWT_EXPIRED_EXCEPTION;
         } else {
-            // 위 위에 인증되지 않았을 경우
+            // 위에 인증되지 않았을 경우
             errorCode = ErrorCode.AUTHENTICATION_FAILED_EXCEPTION;
         }
 
