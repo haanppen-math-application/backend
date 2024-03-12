@@ -21,7 +21,7 @@ public class JwtUtils {
             .setSigningKey(SECRET_KEY)
             .build();
 
-    public String generateToken(final Long memberId, final Role role, final String name) {
+    public String generateAccessToken(final Long memberId, final Role role, final String name) {
         Date time = new Date();
         return TOKEN_TYPE + " " + Jwts.builder()
                 .setSubject(String.valueOf(memberId))
@@ -29,6 +29,16 @@ public class JwtUtils {
                 .claim(MEMBER_ROLE, role)
                 .setIssuedAt(time)
                 .setExpiration(new Date(time.getTime() + EXPIRATION_TIME))
+                .signWith(SECRET_KEY, SIGNATURE_ALGORITHM)
+                .compact();
+    }
+
+    public String generateRefreshToken(final Long memberId) {
+        Date time = new Date();
+        return TOKEN_TYPE + " " + Jwts.builder()
+                .setSubject(String.valueOf(memberId))
+                .setIssuedAt(time)
+                .setExpiration(new Date(time.getTime() + EXPIRATION_TIME * 2))
                 .signWith(SECRET_KEY, SIGNATURE_ALGORITHM)
                 .compact();
     }
