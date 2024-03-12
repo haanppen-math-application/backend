@@ -18,9 +18,10 @@ import java.util.List;
 class LoadStudentsAdapter implements LoadStudentsPort {
 
     private final MemberRepository memberRepository;
+    private final CourseMapper courseMapper;
 
     @Override
-    public List<Student> loadStudent(final List<Long> memberIds) {
+    public List<Student> loadStudents(final List<Long> memberIds) {
         int requestMemberCount = memberIds.size();
 
         List<Student> students = loadAllStudent(memberIds);
@@ -32,14 +33,7 @@ class LoadStudentsAdapter implements LoadStudentsPort {
 
     public List<Student> loadAllStudent(final List<Long> memberIds) {
         return memberRepository.findAllById(memberIds).stream()
-                .map(this::mapToStudent)
+                .map(courseMapper::mapToStudent)
                 .toList();
-    }
-
-    private Student mapToStudent(final Member member) {
-        if (member.getRole().equals(Role.STUDENT)) {
-            return new Student(member.getId());
-        }
-        throw new InvalidTargetException("", ErrorCode.INVALID_MEMBER_TARGET);
     }
 }

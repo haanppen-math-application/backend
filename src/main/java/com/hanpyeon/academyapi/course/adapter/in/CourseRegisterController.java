@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +25,9 @@ import java.util.List;
 class CourseRegisterController {
     private final CourseRegisterUseCase courseRegisterUseCase;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
-    @Operation(summary = "반 등록 API", description = "반을 등록하기 위한 API 입니다")
+    @Operation(summary = "반 등록 API", description = "반을 등록하기 위한 API 입니다, 반 등록은 학생은 허용되지 않습니다.")
     public ResponseEntity<?> registerCourse(
             @Valid @RequestBody final CourseRegisterRequestDto courseRegisterRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
