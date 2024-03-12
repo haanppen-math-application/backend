@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
+@ToString
 class CourseStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
