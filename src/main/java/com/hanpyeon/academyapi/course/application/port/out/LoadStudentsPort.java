@@ -5,5 +5,5 @@ import com.hanpyeon.academyapi.course.domain.Student;
 import java.util.List;
 
 public interface LoadStudentsPort {
-    List<Student> loadStudent(final List<Long> memberId);
+    List<Student> loadStudents(final List<Long> memberId);
 }
