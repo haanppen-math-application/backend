@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.course.domain;
 
 import com.hanpyeon.academyapi.course.application.exception.IllegalCourseNameException;
 import com.hanpyeon.academyapi.course.application.exception.IllegalCourseStudentStateException;
+import com.hanpyeon.academyapi.course.application.exception.IllegalCourseStudentSizeException;
 import com.hanpyeon.academyapi.course.application.exception.NotFoundTeacherException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AccessLevel;
@@ -64,7 +65,7 @@ public class Course {
 
     private static void validateStudentSize(final Integer size) {
         if (size > MAX_STUDENT_SIZE) {
-            throw new IllegalCourseStudentStateException("최대인원 : " + MAX_STUDENT_SIZE + "현재원 : " + size, ErrorCode.ILLEGAL_COURSE_STUDENT_SIZE);
+            throw new IllegalCourseStudentSizeException("최대인원 : " + MAX_STUDENT_SIZE + "현재원 : " + size, ErrorCode.ILLEGAL_COURSE_STUDENT_SIZE);
         }
     }
 
