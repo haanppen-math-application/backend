@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.security.authentication;
 
 import com.hanpyeon.academyapi.security.JwtUtils;
 import com.hanpyeon.academyapi.security.Role;
+import com.hanpyeon.academyapi.security.exception.ExpiredJwtAuthenticationException;
 import com.hanpyeon.academyapi.security.exception.IllegalJwtAuthenticationException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
@@ -40,7 +41,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException exception) {
             throw new IllegalJwtAuthenticationException("사용할 수 없는 JWT 입니다.");
         } catch (ExpiredJwtException exception) {
-            throw new IllegalJwtAuthenticationException("만료된 토큰 입니다. 토큰을 재발급 받아주세요");
+            throw new ExpiredJwtAuthenticationException("토큰을 재발급 받아주세요");
         }
 
     }
