@@ -3,10 +3,12 @@ package com.hanpyeon.academyapi.course.adapter.in;
 import com.hanpyeon.academyapi.course.application.dto.RegisterStudentDto;
 import com.hanpyeon.academyapi.course.application.port.in.AddStudentToCourseUseCase;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,9 @@ public class AddStudentToCourseController {
 
     private final AddStudentToCourseUseCase addStudentToCourseUseCase;
 
-    @PostMapping("/students")
+    @PostMapping(value = "/students", consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
+    @Operation(summary = "반에 학생 추가 API", description = "존재하는 반에 학생들을 등록하는 기능입니다. 중복되는 학생들은 중복되어 등록되지 않습니다.")
     public ResponseEntity<?> addStudent(
             @Valid @RequestBody final RegisterStudentRequest registerStudentRequest,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
