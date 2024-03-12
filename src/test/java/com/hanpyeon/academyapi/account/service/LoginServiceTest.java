@@ -1,12 +1,13 @@
 package com.hanpyeon.academyapi.account.service;
 
+import com.hanpyeon.academyapi.account.dto.JwtDto;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.InvalidPasswordException;
 import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.security.JwtUtils;
 import com.hanpyeon.academyapi.security.PasswordHandler;
-import jakarta.transaction.Transactional;
+import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,11 +30,11 @@ class LoginServiceTest {
     JwtUtils jwtUtils;
     @Mock
     PasswordHandler passwordHandler;
-    LoginService loginService;
+    JwtService loginService;
 
     @BeforeEach
     void initLoginService() {
-        this.loginService = new LoginService(memberRepository, jwtUtils, passwordHandler);
+        this.loginService = new JwtService(memberRepository, jwtUtils, passwordHandler);
     }
 
     @Test
@@ -41,7 +42,7 @@ class LoginServiceTest {
         Mockito.when(memberRepository.findMemberByPhoneNumber(Mockito.any()))
                 .thenReturn(Optional.empty());
         assertThatThrownBy(() -> {
-            loginService.provideJwt("hi", "hello");
+            loginService.provideJwtByLogin("hi", "hello");
         }).isInstanceOf(NoSuchMemberException.class);
     }
 
@@ -57,7 +58,7 @@ class LoginServiceTest {
         Mockito.when(passwordHandler.matches(Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(false);
 
-        assertThatThrownBy(() -> loginService.provideJwt("1212", "12"))
+        assertThatThrownBy(() -> loginService.provideJwtByLogin("1212", "12"))
                 .isInstanceOf(InvalidPasswordException.class);
 
     }
@@ -66,16 +67,19 @@ class LoginServiceTest {
         member = Member.builder()
                 .password("010001010")
                 .password("12345")
+                .role(Role.STUDENT)
                 .build();
 
         Mockito.when(memberRepository.findMemberByPhoneNumber(Mockito.anyString()))
                 .thenReturn(Optional.of(member));
         Mockito.when(passwordHandler.matches(Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(true);
-        Mockito.when(jwtUtils.generateToken(member.getId(), member.getRole(), member.getName()))
+        Mockito.when(jwtUtils.generateAccessToken(member.getId(), member.getRole(), member.getName()))
+                        .thenReturn("result");
+        Mockito.when(jwtUtils.generateRefreshToken(member.getId()))
                         .thenReturn("result");
 
-        assertThat(loginService.provideJwt("1212", "12"))
-                .isEqualTo("result");
+        assertThat(loginService.provideJwtByLogin("1212", "12"))
+                .isEqualTo(new JwtDto("result", "result", Role.STUDENT));
     }
 }

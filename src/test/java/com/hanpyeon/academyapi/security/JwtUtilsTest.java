@@ -22,14 +22,14 @@ class JwtUtilsTest {
     @ParameterizedTest
     @MethodSource("provideArguments")
     void generateToken(Long id, Role role, String name) {
-        String token = jwtUtils.generateToken(id, role, name);
+        String token = jwtUtils.generateAccessToken(id, role, name);
         assertThat(token).isNotBlank();
     }
 
     @ParameterizedTest
     @MethodSource("provideArguments")
     void 토큰_추출_테스트(Long id, Role role, String name) {
-        String token = jwtUtils.generateToken(id, role, name);
+        String token = jwtUtils.generateAccessToken(id, role, name);
         Claims claims = jwtUtils.parseToken(token);
         assertThat(jwtUtils.getMemberId(claims)).isEqualTo(Optional.ofNullable(id));
         assertThat(jwtUtils.getMemberRole(claims)).isEqualTo(Optional.ofNullable(role));

@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.account.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.account.service.LoginService;
+import com.hanpyeon.academyapi.account.service.JwtService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,7 +34,7 @@ class LoginControllerTest {
     private static final String BASE_URL = "/api/login";
 
     @MockBean
-    LoginService loginService;
+    JwtService loginService;
     @Autowired
     ObjectMapper objectMapper;
     @Autowired

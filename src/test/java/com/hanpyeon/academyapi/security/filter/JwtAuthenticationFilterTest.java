@@ -3,7 +3,6 @@ package com.hanpyeon.academyapi.security.filter;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.JwtUtils;
 import com.hanpyeon.academyapi.security.Role;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -40,7 +39,7 @@ class JwtAuthenticationFilterTest {
 
     @Test
     void 조작된_JWT_테스트() throws Exception {
-        String testToken = jwtUtils.generateToken((long) 12, Role.STUDENT, null) + "12";
+        String testToken = jwtUtils.generateAccessToken((long) 12, Role.STUDENT, null) + "12";
         mockMvc.perform(get("/any").header(JwtUtils.HEADER, testToken))
                 .andExpect(status().isUnauthorized())
                 .andExpect(content().string(containsString(ErrorCode.AUTHENTICATION_FAILED_EXCEPTION.getErrorCode())));
@@ -48,7 +47,7 @@ class JwtAuthenticationFilterTest {
 
     @Test
     void 부적절한_JWT_테스트() throws Exception {
-        String testToken = jwtUtils.generateToken((long) 12, Role.STUDENT, null);
+        String testToken = jwtUtils.generateAccessToken((long) 12, Role.STUDENT, null);
         mockMvc.perform(get("/any").header(JwtUtils.HEADER, testToken))
                 .andExpect(status().isUnauthorized())
                 .andExpect(content().string(containsString(ErrorCode.AUTHENTICATION_FAILED_EXCEPTION.getErrorCode())));
