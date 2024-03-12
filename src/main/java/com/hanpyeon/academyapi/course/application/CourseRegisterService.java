@@ -30,7 +30,7 @@ public class CourseRegisterService implements CourseRegisterUseCase {
     }
 
     private Course mapToCourse(final CourseRegisterDto courseRegisterDto) {
-        return Course.of(
+        return Course.createNewCourse(
                 courseRegisterDto.courseName(),
                 getStudents(courseRegisterDto.students()),
                 getTeacher(courseRegisterDto.teacherId())
@@ -38,7 +38,7 @@ public class CourseRegisterService implements CourseRegisterUseCase {
     }
 
     private List<Student> getStudents(final List<Long> studentIds) {
-        return loadStudentPort.loadStudent(studentIds);
+        return loadStudentPort.loadStudents(studentIds);
     }
 
     private Teacher getTeacher(final Long teacherId) {
