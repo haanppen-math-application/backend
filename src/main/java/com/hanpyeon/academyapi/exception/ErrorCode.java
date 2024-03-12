@@ -30,6 +30,7 @@ public enum ErrorCode {
 
     ILLEGAL_COURSE_NAME(HttpStatus.BAD_REQUEST, "-401", "잘못된 반 이름"),
     ILLEGAL_COURSE_STUDENT_STATE(HttpStatus.BAD_REQUEST, "-402", "사용할 수 없는 학생"),
+    ILLEGAL_COURSE_STUDENT_SIZE(HttpStatus.BAD_REQUEST, "-403", "반 인원 초과"),
 
 
     INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "-801", "파일 검증 실패"),

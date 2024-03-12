@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class RegisterCourseAdapter implements RegisterCoursePort {
+class RegisterCourseAdapter implements RegisterCoursePort {
     private final CourseRepository courseRepository;
     private final MemberRepository memberRepository;
 

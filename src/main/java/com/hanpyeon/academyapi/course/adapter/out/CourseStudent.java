@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,8 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
-public class CourseStudent {
+@ToString
+class CourseStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +34,7 @@ public class CourseStudent {
         this.courseEntity = courseEntity;
     }
 
-    public static CourseStudent of(final Member member, final Course courseEntity) {
+    static CourseStudent of(final Member member, final Course courseEntity) {
         return new CourseStudent(member, courseEntity);
     }
 }

@@ -10,11 +10,13 @@ import com.hanpyeon.academyapi.course.domain.Student;
 import com.hanpyeon.academyapi.course.domain.Teacher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CourseRegisterService implements CourseRegisterUseCase {
 
@@ -30,7 +32,7 @@ public class CourseRegisterService implements CourseRegisterUseCase {
     }
 
     private Course mapToCourse(final CourseRegisterDto courseRegisterDto) {
-        return Course.of(
+        return Course.createNewCourse(
                 courseRegisterDto.courseName(),
                 getStudents(courseRegisterDto.students()),
                 getTeacher(courseRegisterDto.teacherId())
@@ -38,7 +40,7 @@ public class CourseRegisterService implements CourseRegisterUseCase {
     }
 
     private List<Student> getStudents(final List<Long> studentIds) {
-        return loadStudentPort.loadStudent(studentIds);
+        return loadStudentPort.loadStudents(studentIds);
     }
 
     private Teacher getTeacher(final Long teacherId) {
