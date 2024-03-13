@@ -1,12 +1,15 @@
 package com.hanpyeon.academyapi.account.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanpyeon.academyapi.account.dto.JwtDto;
 import com.hanpyeon.academyapi.account.service.JwtService;
+import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,15 +37,19 @@ class LoginControllerTest {
     private static final String BASE_URL = "/api/login";
 
     @MockBean
-    JwtService loginService;
+    JwtService jwtService;
     @Autowired
     ObjectMapper objectMapper;
+
     @Autowired
     MockMvc mockMvc;
 
     @ParameterizedTest
     @MethodSource("provideLegalRequest")
     void 로그인_형식_성공_테스트(Map<String, String> requestDto) throws Exception {
+
+        Mockito.when(jwtService.provideJwtByLogin(Mockito.anyString(), Mockito.anyString()))
+                        .thenReturn(new JwtDto("1", "1", Role.STUDENT));
         request(status().isOk(), requestDto);
     }
 
