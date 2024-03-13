@@ -26,7 +26,7 @@ public class JwtService {
     @WarnLoggable
     public JwtDto provideJwtByLogin(final String phoneNumber, final String password) {
         final Member member = memberRepository.findMemberByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new NoSuchMemberException(ErrorCode.NOT_REGISTERED_MEMBER));
+                .orElseThrow(() -> new NoSuchMemberException("jwt 발급 불가", ErrorCode.NOT_REGISTERED_MEMBER));
 
         if (!passwordHandler.matches(password, member.getPassword())) {
             throw new InvalidPasswordException(ErrorCode.INVALID_PASSWORD_EXCEPTION);

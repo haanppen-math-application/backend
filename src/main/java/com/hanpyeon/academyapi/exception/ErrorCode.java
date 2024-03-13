@@ -9,12 +9,12 @@ public enum ErrorCode {
     DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "-002", "적절한 권한 부재"),
     INVALID_PASSWORD_EXCEPTION(HttpStatus.UNAUTHORIZED, "-003", "비밀번호 오류"),
     JWT_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "-004", "만료된 JWT"),
-    RE_LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED, "-005", "사용할 수 없는 REFRESH TOKEN"),
+    RE_LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED, "-005", "재 로그인 필요"),
+    NOT_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "-006", "등록되지 않은 사용자"),
 
     METHOD_ARGUMENT_NOT_VALID_EXCEPTION(HttpStatus.BAD_REQUEST, "-101", "잘못된 JSON 필드"),
     HTTP_MESSAGE_NOT_READABLE(HttpStatus.BAD_REQUEST, "-102", "부적절한 API 요청 형식"),
     INVALID_CONTENT_TYPE(HttpStatus.BAD_REQUEST, "-103", "부적절한 Content-type"),
-    NOT_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "-104", "등록되지 않은 사용자"),
 
     ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "-201", "이미 등록된 사용자"),
     ILLEGAL_MEMBER_REGISTER_FORMAT(HttpStatus.BAD_REQUEST, "-202", "해당 유형 사용자 등록 필수값 부재"),
