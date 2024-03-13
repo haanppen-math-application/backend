@@ -10,11 +10,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.server.Cookie;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,12 +49,12 @@ public class LoginController {
             final @NotNull @CookieValue(REFRESH_TOKEN_NAME) String jwtRefreshToken,
             final HttpServletResponse httpServletResponse
     ) {
-        final String refreshToken = parseToken(jwtRefreshToken);
+        final String refreshToken = decodeToken(jwtRefreshToken);
         final JwtDto jwtDto = jwtService.provideJwtByRefreshToken(refreshToken);
         return createJwtResponse(httpServletResponse, jwtDto);
     }
 
-    private String parseToken(final String refreshToken) {
+    private String decodeToken(final String refreshToken) {
         try {
             return URLDecoder.decode(refreshToken, ENCODER);
         } catch (UnsupportedEncodingException exception) {
@@ -60,21 +62,29 @@ public class LoginController {
         }
     }
 
-    private ResponseEntity<JwtResponse> createJwtResponse(final HttpServletResponse httpServletResponse, final JwtDto jwtDto) {
+    private String encodeToken(final String refreshToken) {
         try {
-            final String encodedRefreshToken = URLEncoder.encode(jwtDto.refreshToken(), ENCODER);
-
-            httpServletResponse.addCookie(createHttpOnlyCookieRefreshToken(encodedRefreshToken));
-
-            return ResponseEntity.ok(new JwtResponse(jwtDto.accessToken(), jwtDto.role()));
-        } catch (UnsupportedEncodingException e) {
+            return URLEncoder.encode(refreshToken, ENCODER);
+        } catch (UnsupportedEncodingException exception) {
             throw new ReLoginRequiredException(ErrorCode.RE_LOGIN_REQUIRED);
         }
     }
 
-    private Cookie createHttpOnlyCookieRefreshToken(final String refreshToken) {
-        final Cookie cookie = new Cookie(REFRESH_TOKEN_NAME, refreshToken);
-        cookie.setHttpOnly(true);
-        return cookie;
+    private ResponseEntity<JwtResponse> createJwtResponse(final HttpServletResponse httpServletResponse, final JwtDto jwtDto) {
+        final String encodedRefreshToken = encodeToken(jwtDto.refreshToken());
+        final ResponseCookie cookie = createHttpOnlyCookieHeader(encodedRefreshToken);
+
+        httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        return ResponseEntity.ok(new JwtResponse(jwtDto.accessToken(), jwtDto.role()));
+    }
+
+    private ResponseCookie createHttpOnlyCookieHeader(final String refreshToken) {
+        return ResponseCookie.from(REFRESH_TOKEN_NAME, refreshToken)
+                .httpOnly(true)
+                .sameSite(Cookie.SameSite.NONE.name())
+                .secure(true)
+                .maxAge(60 * 60)
+                .build();
     }
 }
