@@ -20,7 +20,7 @@ public class Course {
     private final Long courseId;
     private String courseName;
     private final List<Student> students;
-    private final Teacher teacher;
+    private Teacher teacher;
 
     public void addStudents(final List<Student> students) {
         final List<Student> newStudents = students.stream()
@@ -28,6 +28,16 @@ public class Course {
                 .toList();
         validateStudents(newStudents);
         this.students.addAll(newStudents);
+    }
+
+    public void changeCourseName(final String newCourseName) {
+        validateCourseName(newCourseName);
+        this.courseName = newCourseName;
+    }
+
+    public void changeTeacher(final Teacher newTeacher) {
+        validateTeacher(newTeacher);
+        this.teacher = teacher;
     }
 
     public static Course createNewCourse(final String courseName, final List<Student> students, final Teacher teacher) {
@@ -42,12 +52,12 @@ public class Course {
     }
 
     private static void validate(Course course) {
-        validateCourseNameLength(course.courseName);
+        validateCourseName(course.getCourseName());
         validateStudents(course.getStudents());
         validateTeacher(course.getTeacher());
     }
 
-    private static void validateCourseNameLength(final String courseName) {
+    private static void validateCourseName(final String courseName) {
         if (courseName.length() > 100) {
             throw new IllegalCourseNameException("글자수 초과", ErrorCode.ILLEGAL_COURSE_NAME);
         }

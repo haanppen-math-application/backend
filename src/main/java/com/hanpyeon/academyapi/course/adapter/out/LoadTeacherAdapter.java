@@ -24,7 +24,7 @@ class LoadTeacherAdapter implements LoadTeacherPort {
     }
 
     private Member loadMember(final Long memberId) {
-        return memberRepository.findById(memberId)
+        return memberRepository.findMemberByIdAndRole(memberId, Role.TEACHER)
                 .orElseThrow(() -> new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER));
     }
 }

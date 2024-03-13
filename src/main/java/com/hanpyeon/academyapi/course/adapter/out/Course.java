@@ -31,8 +31,15 @@ class Course {
         this.teacher = teacher;
     }
 
-    public Integer addStudents(Collection<CourseStudent> courseStudents) {
+    Integer addStudents(Collection<CourseStudent> courseStudents) {
         this.students.addAll(courseStudents);
         return students.size();
+    }
+
+    void changeCourseName(final String newCourseName) {
+        this.courseName = newCourseName;
+    }
+    void changeTeacher(final Member newTeacher) {
+        this.teacher = newTeacher;
     }
 }

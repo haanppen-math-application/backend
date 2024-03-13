@@ -32,7 +32,7 @@ class LoadStudentsAdapter implements LoadStudentsPort {
     }
 
     public List<Student> loadAllStudent(final List<Long> memberIds) {
-        return memberRepository.findAllById(memberIds).stream()
+        return memberRepository.findMembersByIdIsInAndRole(memberIds, Role.STUDENT).stream()
                 .map(courseMapper::mapToStudent)
                 .toList();
     }
