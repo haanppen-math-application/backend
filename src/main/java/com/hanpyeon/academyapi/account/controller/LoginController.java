@@ -82,8 +82,8 @@ public class LoginController {
     private ResponseCookie createHttpOnlyCookieHeader(final String refreshToken) {
         return ResponseCookie.from(REFRESH_TOKEN_NAME, refreshToken)
                 .httpOnly(true)
-                .sameSite(Cookie.SameSite.NONE.name())
-                .secure(true)
+//                .sameSite(Cookie.SameSite.NONE.name())
+//                .secure(true)
                 .maxAge(60 * 60)
                 .build();
     }
