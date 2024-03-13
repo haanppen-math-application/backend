@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.webconfig;
 
 import com.hanpyeon.academyapi.aspect.log.LogInterceptor;
+import jakarta.servlet.http.Cookie;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -17,8 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("localhost")
-                .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.DELETE.name(), HttpMethod.PATCH.name())
+                .allowedOriginPatterns("*")
+                .allowedMethods("*")
                 .allowCredentials(true);
     }
 }
