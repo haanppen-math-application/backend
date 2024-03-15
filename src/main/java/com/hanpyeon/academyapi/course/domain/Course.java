@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,15 +20,18 @@ public class Course {
     private static final int MAX_STUDENT_SIZE = 50;
     private final Long courseId;
     private String courseName;
-    private final List<Student> students;
+    private List<Student> students;
     private Teacher teacher;
 
     public void addStudents(final List<Student> students) {
-        final List<Student> newStudents = students.stream()
-                .filter(student -> !this.students.contains(student))
-                .toList();
-        validateStudents(newStudents);
-        this.students.addAll(newStudents);
+        final List<Student> tempAddedStudents = new ArrayList<>(students);
+        tempAddedStudents.addAll(this.students);
+
+        final List<Student> newCourseStudents = tempAddedStudents.stream()
+                .distinct().toList();
+
+        validateStudents(newCourseStudents);
+        this.students = newCourseStudents;
     }
 
     public void changeCourseName(final String newCourseName) {
@@ -58,13 +62,16 @@ public class Course {
     }
 
     private static void validateCourseName(final String courseName) {
+        if (Objects.isNull(courseName)) {
+            throw new IllegalCourseNameException("반 이름은 null 일 수 없습니다", ErrorCode.ILLEGAL_COURSE_NAME);
+        }
         if (courseName.length() > 100) {
             throw new IllegalCourseNameException("글자수 초과", ErrorCode.ILLEGAL_COURSE_NAME);
         }
     }
 
     private static void validateStudents(final List<Student> students) {
-        if (Objects.isNull(students)) {
+        if (Objects.isNull(students) || students.isEmpty()) {
             return;
         }
         if (students.stream().anyMatch(Objects::isNull)) {
