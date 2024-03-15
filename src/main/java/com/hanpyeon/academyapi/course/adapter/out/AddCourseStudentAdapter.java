@@ -2,7 +2,10 @@ package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.course.application.exception.NoSuchCourseException;
+import com.hanpyeon.academyapi.course.application.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.course.application.port.out.AddCourseStudentPort;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +20,19 @@ class AddCourseStudentAdapter implements AddCourseStudentPort {
     private final CourseStudentRepository courseStudentRepository;
 
     @Override
-    public void addToCourse(final Long courseId, final List<Long> studentId) {
-        final List<Member> students = memberRepository.findAllById(studentId);
-        final Course course = courseRepository.findById(courseId)
-                .orElseThrow();
-        final List<CourseStudent> newCourseStudents = students.stream().map(student -> CourseStudent.of(student, course))
-                .toList();
+    public void addToCourse(final com.hanpyeon.academyapi.course.domain.Course courseDomain) {
+        final List<Member> students = memberRepository.findAllById(
+                courseDomain.getStudents().stream()
+                        .map(student -> student.memberId())
+                        .toList());
+        if (students.size() != courseDomain.getStudents().size()) {
+            throw new NoSuchMemberException("새로 등록될 학생을 찾을 수 없습니다", ErrorCode.NO_SUCH_COURSE_MEMBER);
+        }
+        final Course course = courseRepository.findById(courseDomain.getCourseId())
+                .orElseThrow(() -> new NoSuchCourseException(ErrorCode.NO_SUCH_COURSE));
 
-        courseStudentRepository.saveAll(newCourseStudents);
+        courseStudentRepository.saveAll(students.stream()
+                .map(student -> CourseStudent.of(student, course))
+                .toList());
     }
 }
