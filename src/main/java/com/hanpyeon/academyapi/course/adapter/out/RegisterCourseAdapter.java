@@ -14,13 +14,17 @@ import java.util.List;
 @RequiredArgsConstructor
 class RegisterCourseAdapter implements RegisterCoursePort {
     private final CourseRepository courseRepository;
+    private final CourseStudentRepository courseStudentRepository;
     private final MemberRepository memberRepository;
 
     @Override
     public Long register(final com.hanpyeon.academyapi.course.domain.Course course) {
         Course courseEntity = mapToEntity(course);
-        final List<CourseStudent> courseStudents = createCourseStudents(findStudents(course.getStudents()), courseEntity);
-        courseEntity.addStudents(courseStudents);
+        final List<CourseStudent> courseStudents = createCourseStudents(
+                findStudents(course.getStudents()),
+                courseEntity);
+        // 연관관계 주인 엔티티에 추가하도록 변경
+        courseStudentRepository.saveAll(courseStudents);
 
         return courseRepository.save(courseEntity).getId();
     }
