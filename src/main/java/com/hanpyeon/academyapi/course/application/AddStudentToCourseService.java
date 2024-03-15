@@ -26,9 +26,8 @@ public class AddStudentToCourseService implements AddStudentToCourseUseCase {
     public void addStudentToCourse(RegisterStudentDto registerStudentDto) {
         final Course course = loadCoursePort.loadCourse(registerStudentDto.courseId());
         final List<Student> students = loadStudentsPort.loadStudents(registerStudentDto.targetMembersId());
-        final List<Long> studentIds = students.stream().map(student -> student.memberId()).toList();
 
         course.addStudents(students);
-        addCourseStudentPort.addToCourse(course.getCourseId(), studentIds);
+        addCourseStudentPort.addToCourse(course);
     }
 }
