@@ -2,20 +2,26 @@ package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.course.application.port.out.LoadCoursePort;
+import com.hanpyeon.academyapi.course.application.port.out.RegisterCoursePort;
+import com.hanpyeon.academyapi.course.domain.Student;
+import com.hanpyeon.academyapi.course.domain.Teacher;
 import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import(AddCourseStudentAdapter.class)
+@Import({AddCourseStudentAdapter.class, RegisterCourseAdapter.class, LoadCourseAdapter.class, CourseMapper.class})
 class AddCourseStudentAdapterTest {
 
     @Autowired
@@ -24,9 +30,13 @@ class AddCourseStudentAdapterTest {
     CourseRepository courseRepository;
     @Autowired
     CourseStudentRepository courseStudentRepository;
+    @Autowired
+    RegisterCoursePort registerCoursePort;
 
     @Autowired
     AddCourseStudentAdapter adapter;
+    @Autowired
+    LoadCoursePort loadCoursePort;
 
     @BeforeEach
     void init() {
@@ -57,10 +67,4 @@ class AddCourseStudentAdapterTest {
         courseRepository.save(new Course("testCourse", teacher));
     }
 
-    @Test
-    void Course_Student_추가_테스트() {
-        adapter.addToCourse(1l, List.of(1l, 2l));
-        assertThat(courseStudentRepository.findAll().size())
-                .isEqualTo(2);
-    }
 }

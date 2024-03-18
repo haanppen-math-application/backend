@@ -41,8 +41,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
-//                .cors(Customizer.withDefaults())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable())
+                .sessionManagement(session -> session.disable())
                 .exceptionHandling(config -> {
                     config.authenticationEntryPoint(new JwtEntryPointHandler());
                     config.accessDeniedHandler(new AccessDeniedHandler());
@@ -122,15 +122,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2B);
     }
 
-//    @Bean
-//    CorsConfigurationSource configurationSource() {
-//        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.addAllowedOrigin("*");
-//        corsConfiguration.addAllowedMethod("*");
-////        corsConfiguration.setAllowCredentials(true);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", corsConfiguration);
-//        return source;
-//    }
+    @Bean
+    CorsConfigurationSource configurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOriginPattern("*");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
+    }
 }

@@ -35,6 +35,7 @@ public enum ErrorCode {
     ILLEGAL_COURSE_STUDENT_STATE(HttpStatus.BAD_REQUEST, "-402", "사용할 수 없는 학생"),
     ILLEGAL_COURSE_STUDENT_SIZE(HttpStatus.BAD_REQUEST, "-403", "반 인원 초과"),
     NO_SUCH_COURSE_MEMBER(HttpStatus.BAD_REQUEST, "-404", "대상 찾을 수 없음"),
+    NO_SUCH_COURSE(HttpStatus.BAD_REQUEST, "-405", "반을 찾을 수 없음"),
 
 
 
