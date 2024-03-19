@@ -40,7 +40,7 @@ class CourseRegisterServiceTest {
         Mockito.when(loadStudentsPort.loadStudents(Mockito.any()))
                 .thenReturn(List.of(new Student(1l)));
         Mockito.when(loadTeacherPort.loadTeacher(Mockito.any()))
-                .thenReturn(new Teacher(1l));
+                .thenReturn(new Teacher(1l, "test"));
 
         assertThat(courseRegisterService.register(courseRegisterDto))
                 .isEqualTo(1l);

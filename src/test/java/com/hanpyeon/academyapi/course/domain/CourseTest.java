@@ -28,7 +28,7 @@ class CourseTest {
     void Course_제목_글자수_초과() {
         final String name = "1".repeat(101);
         final List<Student> students = List.of(new Student(1l));
-        final Teacher teacher = new Teacher(2l);
+        final Teacher teacher = new Teacher(2l, "test");
 
         assertThatThrownBy(() -> Course.createNewCourse(name, students, teacher))
                 .isInstanceOf(IllegalCourseNameException.class);
@@ -39,7 +39,7 @@ class CourseTest {
         final List<Student> students = new ArrayList<>();
         students.add(new Student(1l));
         students.add(null);
-        final Teacher teacher = new Teacher(2l);
+        final Teacher teacher = new Teacher(2l, "test");
 
         assertThatThrownBy(() -> Course.createNewCourse(name, students, teacher))
                 .isInstanceOf(IllegalCourseStudentStateException.class);
@@ -59,7 +59,7 @@ class CourseTest {
         List<Student> students = new ArrayList<>(List.of(new Student(1l), new Student(2l)));
         List<Student> newStudents = new ArrayList<>(List.of(new Student(1l), new Student(2l)));
 
-        Course course = Course.loadByEntity(1l, "temp", students, new Teacher(10l));
+        Course course = Course.loadByEntity(1l, "temp", students, new Teacher(10l, "test"));
         course.addStudents(newStudents);
         assertThat(course.getStudents().size())
                 .isEqualTo(2);
