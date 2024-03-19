@@ -34,7 +34,12 @@ class Course {
     void changeCourseName(final String newCourseName) {
         this.courseName = newCourseName;
     }
+
     void changeTeacher(final Member newTeacher) {
         this.teacher = newTeacher;
+    }
+
+    void addCourseStudent(final CourseStudent courseStudent) {
+        this.students.add(courseStudent);
     }
 }

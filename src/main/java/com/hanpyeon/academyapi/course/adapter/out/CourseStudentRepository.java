@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 interface CourseStudentRepository extends JpaRepository<CourseStudent, Long> {
     List<CourseStudent> findCourseStudentByCourseEntity(final Course course);
+    List<Course> findCourseStudentByMember_Id(final Long memberId);
 }

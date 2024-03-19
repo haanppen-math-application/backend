@@ -23,7 +23,7 @@ class AddCourseStudentAdapter implements AddCourseStudentPort {
     public void addToCourse(final com.hanpyeon.academyapi.course.domain.Course courseDomain) {
         final List<Member> students = memberRepository.findAllById(
                 courseDomain.getStudents().stream()
-                        .map(student -> student.memberId())
+                        .map(student -> student.id())
                         .toList());
         if (students.size() != courseDomain.getStudents().size()) {
             throw new NoSuchMemberException("새로 등록될 학생을 찾을 수 없습니다", ErrorCode.NO_SUCH_COURSE_MEMBER);

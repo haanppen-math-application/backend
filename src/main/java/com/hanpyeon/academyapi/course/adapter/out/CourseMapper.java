@@ -14,12 +14,12 @@ class CourseMapper {
         if (member.getRole().equals(Role.STUDENT)) {
             throw new InvalidTargetException("학생은 반을 관리할 수 없습니다",ErrorCode.INVALID_MEMBER_TARGET);
         }
-        return new Teacher(member.getId());
+        return new Teacher(member.getId(), member.getName());
     }
 
     Student mapToStudent(final Member member) {
         if (member.getRole().equals(Role.STUDENT)) {
-            return new Student(member.getId());
+            return new Student(member.getId(), member.getName(), member.getGrade());
         }
         throw new InvalidTargetException("학생만 반에 등록될 수 있습니다", ErrorCode.INVALID_MEMBER_TARGET);
     }
