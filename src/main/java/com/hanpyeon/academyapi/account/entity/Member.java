@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.account.entity;
 
-import com.hanpyeon.academyapi.course.adapter.out.CourseStudent;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -8,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -36,13 +33,6 @@ public class Member {
 
     @Column(nullable = false)
     private LocalDateTime registeredDate;
-
-    @OneToMany(mappedBy = "id")
-    private List<CourseStudent> courseStudents = new ArrayList<>();
-
-    public void addCourseStudent(final CourseStudent courseStudent) {
-        this.courseStudents.add(courseStudent);
-    }
 
     @Builder
     private Member(String phoneNumber, String name, String password, Integer grade, Role role, LocalDateTime registeredDate) {

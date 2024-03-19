@@ -29,9 +29,6 @@ public class CourseStudent {
     @JoinColumn(name = "student_id", nullable = false)
     private Member member;
 
-    private void addCourse(final Course course) {
-    }
-
     private CourseStudent(final Member member, final Course courseEntity) {
         this.member = member;
         this.courseEntity = courseEntity;
@@ -40,7 +37,6 @@ public class CourseStudent {
     static CourseStudent of(final Member member, final Course courseEntity) {
         final CourseStudent courseStudent = new CourseStudent(member, courseEntity);
         courseEntity.addCourseStudent(courseStudent);
-        member.addCourseStudent(courseStudent);
         return new CourseStudent(member, courseEntity);
     }
 }
