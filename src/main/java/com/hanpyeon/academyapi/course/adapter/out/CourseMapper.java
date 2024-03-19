@@ -14,7 +14,7 @@ class CourseMapper {
         if (member.getRole().equals(Role.STUDENT)) {
             throw new InvalidTargetException("학생은 반을 관리할 수 없습니다",ErrorCode.INVALID_MEMBER_TARGET);
         }
-        return new Teacher(member.getId());
+        return new Teacher(member.getId(), member.getName());
     }
 
     Student mapToStudent(final Member member) {

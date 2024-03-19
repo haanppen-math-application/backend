@@ -14,7 +14,7 @@ import java.util.List;
 @Entity(name = "COURSE")
 @NoArgsConstructor
 @Getter
-class Course {
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
