@@ -35,6 +35,8 @@ class CourseStudent {
     }
 
     static CourseStudent of(final Member member, final Course courseEntity) {
+        final CourseStudent courseStudent = new CourseStudent(member, courseEntity);
+        courseEntity.addCourseStudent(courseStudent);
         return new CourseStudent(member, courseEntity);
     }
 }

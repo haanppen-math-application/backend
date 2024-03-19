@@ -26,7 +26,7 @@ import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@WebMvcTest(controllers = CourseRegisterController.class,
+@WebMvcTest(controllers = RegisterCourseController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class, JwtAuthenticationFilter.class})
@@ -51,7 +51,7 @@ class CourseRegisterControllerTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         mockMvc.perform(MockMvcRequestBuilders.post("/api/courses")
-                        .content(objectMapper.writeValueAsBytes(new CourseRegisterController.CourseRegisterRequestDto("12", 1l, List.of(1l))))
+                        .content(objectMapper.writeValueAsBytes(new RegisterCourseController.CourseRegisterRequestDto("12", 1l, List.of(1l))))
                         .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(print());
