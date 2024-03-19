@@ -71,7 +71,7 @@ class AddCourseStudentAdapterTest {
     void Course_Student_추가_테스트() {
         final List<Student> students = memberRepository.findMembersByIdIsInAndRole(List.of(1l, 2l), Role.STUDENT)
                 .stream()
-                .map(member -> new Student(member.getId()))
+                .map(member -> new Student(member.getId(), member.getName(), member.getGrade()))
                 .toList();
         final com.hanpyeon.academyapi.course.domain.Course courseDomain = loadCoursePort.loadCourse(1l);
 
