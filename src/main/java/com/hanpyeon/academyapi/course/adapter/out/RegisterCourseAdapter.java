@@ -44,7 +44,7 @@ class RegisterCourseAdapter implements RegisterCoursePort {
 
     private List<Member> findStudents(final List<Student> students) {
         List<Long> studentIds = students.stream()
-                .map(student -> student.memberId())
+                .map(student -> student.id())
                 .toList();
         return memberRepository.findAllById(studentIds);
     }
