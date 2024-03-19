@@ -19,9 +19,9 @@ public class QueryCourseByTeacherController {
 
     @GetMapping(value = "/api/teachers/{teacherId}/courses")
     @SecurityRequirement(name = "jwtAuth")
-    @Operation(summary = "선생님 아이디로 담당 수업 조회 API", description = "멤버 ID를 통해 관리중인 반 정보를 조회할 수 있습니다.")
+    @Operation(summary = "선생님 아이디로 담당 수업 조회 API", description = "선생님 멤버 ID를 통해 관리중인 반 정보를 조회할 수 있습니다. 선생님, 원장님 권한으로 가능합니다.")
     public ResponseEntity<List<CoursePreview>> getCourses(
-            @PathVariable Long teacherId
+            @PathVariable final Long teacherId
     ) {
         return ResponseEntity.ok(loadCoursesQuery.loadCoursePreviews(teacherId));
     }
