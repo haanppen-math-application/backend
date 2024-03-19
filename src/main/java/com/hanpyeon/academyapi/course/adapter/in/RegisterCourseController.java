@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/courses")
 @RequiredArgsConstructor
-class CourseRegisterController {
+class RegisterCourseController {
     private final CourseRegisterUseCase courseRegisterUseCase;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
