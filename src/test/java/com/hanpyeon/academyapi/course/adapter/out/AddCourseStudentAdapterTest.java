@@ -67,4 +67,25 @@ class AddCourseStudentAdapterTest {
         courseRepository.save(new Course("testCourse", teacher));
     }
 
+    @Test
+    void Course_Student_추가_테스트() {
+        final List<Student> students = memberRepository.findMembersByIdIsInAndRole(List.of(1l, 2l), Role.STUDENT)
+                .stream()
+                .map(member -> new Student(member.getId()))
+                .toList();
+        final com.hanpyeon.academyapi.course.domain.Course courseDomain = loadCoursePort.loadCourse(1l);
+
+        courseDomain.addStudents(students);
+        adapter.addToCourse(courseDomain);
+
+        courseStudentRepository.findAll().forEach(System.out::println);
+
+        assertThat(courseStudentRepository.findAll().size())
+                .isEqualTo(2);
+        assertThat(courseRepository.findById(1l).orElseThrow().getStudents().size())
+                .isEqualTo(2);
+        assertThat(memberRepository.findMemberByIdAndRole(1l, Role.STUDENT).orElseThrow().getCourseStudents().size())
+                .isEqualTo(1);
+
+    }
 }
