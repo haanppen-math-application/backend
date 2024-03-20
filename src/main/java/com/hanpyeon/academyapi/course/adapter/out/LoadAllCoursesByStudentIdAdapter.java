@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
-import com.hanpyeon.academyapi.course.application.dto.CourseDetails;
 import com.hanpyeon.academyapi.course.application.port.out.LoadAllCoursesByStudentIdPort;
 import com.hanpyeon.academyapi.course.domain.Course;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +16,8 @@ class LoadAllCoursesByStudentIdAdapter implements LoadAllCoursesByStudentIdPort 
 
     @Override
     public List<Course> loadAll(Long studentId) {
-        return courseStudentRepository.findCourseStudentByMember_Id(studentId)
-                .stream()
+        return courseStudentRepository.findCourseStudentsByMemberId(studentId).stream()
+                .map(courseStudent -> courseStudent.getCourseEntity())
                 .map(courseMapper::mapToCourseDomain)
                 .toList();
     }

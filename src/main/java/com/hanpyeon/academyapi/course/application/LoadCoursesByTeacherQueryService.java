@@ -17,7 +17,7 @@ public class LoadCoursesByTeacherQueryService implements LoadCoursesByTeacherQue
 
     @Override
     public List<CoursePreview> loadCoursePreviews(final Long teacherId) {
-        List<Course> courses = loadCoursesByTeacherIdPort.loadByTeacherId(teacherId);
+        final List<Course> courses = loadCoursesByTeacherIdPort.loadByTeacherId(teacherId);
         return courses.stream()
                 .map(CoursePreview::of)
                 .toList();

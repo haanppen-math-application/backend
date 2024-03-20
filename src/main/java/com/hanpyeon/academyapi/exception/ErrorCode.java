@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     AUTHENTICATION_FAILED_EXCEPTION(HttpStatus.UNAUTHORIZED, "-001", "인증 불가"),
-    DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "-002", "적절한 권한 부재"),
+    DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "-002", "허용되지 않음"),
     INVALID_PASSWORD_EXCEPTION(HttpStatus.UNAUTHORIZED, "-003", "비밀번호 오류"),
     JWT_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "-004", "만료된 JWT"),
     RE_LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED, "-005", "재 로그인 필요"),
