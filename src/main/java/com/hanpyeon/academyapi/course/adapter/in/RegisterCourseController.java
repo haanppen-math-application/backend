@@ -20,7 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/courses")
+@RequestMapping("/api/manage/courses")
 @RequiredArgsConstructor
 class RegisterCourseController {
     private final CourseRegisterUseCase courseRegisterUseCase;

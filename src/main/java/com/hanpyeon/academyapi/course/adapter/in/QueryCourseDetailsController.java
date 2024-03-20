@@ -16,7 +16,7 @@ public class QueryCourseDetailsController {
 
     private final LoadCourseDetailsQuery loadCourseDetailsQuery;
 
-    @GetMapping("/api/courses/{courseId}")
+    @GetMapping("/api/manage/courses/{courseId}")
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "반의 세부사항( 메모 X )을 조회하는 기능입니다", description = "선생님이상의 권한을 가져야 합니다")
     public ResponseEntity<CourseDetails> loadCourseDetails(

@@ -35,7 +35,7 @@ class AddStudentToCourseControllerTest {
         @Test
         void 학생등록요청_테스트() throws Exception {
                 AddStudentToCourseController.RegisterStudentRequest request = new AddStudentToCourseController.RegisterStudentRequest(1l, List.of(2l,3l));
-                mockMvc.perform(MockMvcRequestBuilders.post("/api/courses/students")
+                mockMvc.perform(MockMvcRequestBuilders.post("/api/manage/courses/students")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsBytes(request))
                 ).andExpect(MockMvcResultMatchers.status().isOk())
@@ -44,7 +44,7 @@ class AddStudentToCourseControllerTest {
         @Test
         void 학생_NULL_테스트_에러처리() throws Exception {
                 AddStudentToCourseController.RegisterStudentRequest request = new AddStudentToCourseController.RegisterStudentRequest(1l, null);
-                mockMvc.perform(MockMvcRequestBuilders.post("/api/courses/students")
+                mockMvc.perform(MockMvcRequestBuilders.post("/api/manage/courses/students")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsBytes(request))
                 ).andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -53,7 +53,7 @@ class AddStudentToCourseControllerTest {
         @Test
         void 등록할_반_NULL_에러처리() throws Exception {
                 AddStudentToCourseController.RegisterStudentRequest request = new AddStudentToCourseController.RegisterStudentRequest(null, List.of(1l));
-                mockMvc.perform(MockMvcRequestBuilders.post("/api/courses/students")
+                mockMvc.perform(MockMvcRequestBuilders.post("/api/manage/courses/students")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                                 .content(objectMapper.writeValueAsBytes(request))
                         ).andExpect(MockMvcResultMatchers.status().isBadRequest())

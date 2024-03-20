@@ -50,7 +50,7 @@ class CourseRegisterControllerTest {
                 .thenReturn(1l);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/courses")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/manage/courses")
                         .content(objectMapper.writeValueAsBytes(new RegisterCourseController.CourseRegisterRequestDto("12", 1l, List.of(1l))))
                         .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().isCreated())

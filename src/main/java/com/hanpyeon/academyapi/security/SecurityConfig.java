@@ -96,10 +96,12 @@ public class SecurityConfig {
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
 
-                    request.requestMatchers(HttpMethod.POST, "/api/courses")
+                    request.requestMatchers("/api/manage/courses/**")
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
+                    request.requestMatchers("/api/courses/**")
+                            .permitAll();
 
                     request.requestMatchers(HttpMethod.GET, "/api/members/**")
                             .hasAnyAuthority(
@@ -107,9 +109,8 @@ public class SecurityConfig {
                                     Role.TEACHER.getSecurityRole()
                             );
 
-                    // 404 NOT FOUND EXCEPTION
-                    request.anyRequest()
-                            .permitAll();
+                    // 404 NOT FOUND EXCEPTION -> DENIED
+                    request.anyRequest().denyAll();
                 })
                 .build();
     }

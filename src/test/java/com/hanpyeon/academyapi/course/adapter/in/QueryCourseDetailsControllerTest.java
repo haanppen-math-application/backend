@@ -31,7 +31,7 @@ class QueryCourseDetailsControllerTest {
 
     @Test
     void 요청_성공테스트() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/courses/{courseId}", 1l))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/manage/courses/{courseId}", 1l))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
