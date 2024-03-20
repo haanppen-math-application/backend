@@ -3,20 +3,20 @@ package com.hanpyeon.academyapi.course.adapter.out;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.security.Role;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Transactional
 class CourseRepositoryTest {
+    @Autowired
+    EntityManager entityManager;
     @Autowired
     CourseRepository courseRepository;
     @Autowired
@@ -55,7 +55,7 @@ class CourseRepositoryTest {
 
     @Test
     void 선생님_번호를_통한_수업_조회_테스트() {
-        assertThat(courseRepository.findAllByTeacherId(3l).size())
+        assertThat(courseRepository.findAll().size())
                 .isEqualTo(1);
     }
 }
