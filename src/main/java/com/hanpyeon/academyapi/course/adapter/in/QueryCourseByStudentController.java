@@ -17,7 +17,7 @@ import java.util.List;
 public class QueryCourseByStudentController {
     private final LoadCoursesByStudentQuery loadCoursesByStudentQuery;
 
-    @GetMapping("/api/students/{studentId}/courses")
+    @GetMapping("/api/courses/students/{studentId}")
     @Operation(summary = "학생 ID 를 이용한 반 조회", description = "선생님, 원장님만 접근 가능합니다")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<List<CoursePreview>> loadCourses(

@@ -28,7 +28,7 @@ class CourseQueryByTeacherControllerTest {
 
     @Test
     void 요청_테스트() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/teachers/{teacherId}/courses", 1l))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/courses/teachers/{teacherId}", 1l))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }

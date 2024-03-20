@@ -29,7 +29,7 @@ class QueryCourseByStudentControllerTest {
 
     @Test
     void 요청_성공테스트() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/students/{studentId}/courses", 1l))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/courses/students/{studentId}", 1l))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/courses")
+@RequestMapping("/api/manage/courses")
 @RequiredArgsConstructor
 class UpdateCourseController {
 
