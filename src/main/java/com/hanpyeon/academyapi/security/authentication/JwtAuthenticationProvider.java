@@ -68,7 +68,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                 .orElseThrow(() -> {
                     throw new IllegalJwtAuthenticationException("Cannot Find MemberRole");
                 });
-        System.out.println(role.getSecurityRole());
         return List.of(new SimpleGrantedAuthority(role.getSecurityRole()));
     }
 
