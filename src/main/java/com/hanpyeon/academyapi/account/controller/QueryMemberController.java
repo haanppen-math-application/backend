@@ -20,7 +20,7 @@ public class QueryMemberController {
     private final QueryService queryService;
 
     @GetMapping("/teachers")
-    @Operation(summary = "전체 선생 조회 API", description = "선생님 이상의 권한이 필요")
+    @Operation(summary = "전체 선생 조회 API", description = "인증된 사용자면 모두 가능")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<List<PreviewTeacher>> queryTeachers() {
         List<PreviewTeacher> teachers = queryService.loadTeachers();
@@ -28,7 +28,7 @@ public class QueryMemberController {
     }
 
     @GetMapping("/students")
-    @Operation(summary = "전체 학생 조회 API", description = "선생님 이상의 권한이 필요")
+    @Operation(summary = "전체 학생 조회 API", description = "인증된 사용자면 모두 가능")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<List<PreviewStudent>> queryStudents() {
         List<PreviewStudent> students = queryService.loadStudents();

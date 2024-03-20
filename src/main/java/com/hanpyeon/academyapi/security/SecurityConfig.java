@@ -45,10 +45,10 @@ public class SecurityConfig {
                 })
                 .addFilterBefore(new JwtAuthenticationFilter(authenticationManager), AuthorizationFilter.class)
                 .authorizeHttpRequests(request -> {
-
+/////////////////////////////////////// 개발 중 열어둠 //////////////////////////////////////
                     request.requestMatchers(request1 -> request1.isUserInRole(Role.ADMIN.getSecurityRole()))
                             .permitAll();
-
+                    
                     request.requestMatchers("/swagger-ui/**")
                             .permitAll();
                     request.requestMatchers("/swagger-ui")
@@ -60,10 +60,10 @@ public class SecurityConfig {
                             .permitAll();
                     request.requestMatchers("/api/login/refresh")
                             .permitAll();
+//////////////////////////////////////////////////////////////////////////////////////////
                     request.requestMatchers("/api/accounts")
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
-                                    Role.ADMIN.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
 
                     request.requestMatchers("/api/images/**")
@@ -79,15 +79,16 @@ public class SecurityConfig {
                                     Role.TEACHER.getSecurityRole());
                     request.requestMatchers(HttpMethod.PATCH, "/api/board/comments/*")
                             .hasAnyAuthority(
-                                    Role.STUDENT.getSecurityRole());
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole());
 
                     request.requestMatchers(HttpMethod.POST, "/api/board/questions")
                             .hasAuthority(
                                     Role.STUDENT.getSecurityRole());
-                    request.requestMatchers(HttpMethod.GET, "/api/board/questions/*")
-                            .authenticated();
-                    request.requestMatchers(HttpMethod.GET, "/api/board/questions")
-                            .authenticated();
+//                    request.requestMatchers(HttpMethod.GET, "/api/board/questions/*")
+//                            .authenticated();
+//                    request.requestMatchers(HttpMethod.GET, "/api/board/questions")
+//                            .authenticated();
                     request.requestMatchers(HttpMethod.PATCH, "/api/board/questions/*")
                             .hasAnyAuthority(
                                     Role.STUDENT.getSecurityRole());
@@ -100,17 +101,18 @@ public class SecurityConfig {
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
-                    request.requestMatchers("/api/courses/**")
-                            .permitAll();
 
-                    request.requestMatchers(HttpMethod.GET, "/api/members/**")
-                            .hasAnyAuthority(
-                                    Role.MANAGER.getSecurityRole(),
-                                    Role.TEACHER.getSecurityRole()
-                            );
+//                    request.requestMatchers("/api/courses/**")
+//                            .permitAll();
+
+//                    request.requestMatchers(HttpMethod.GET, "/api/members/teachers")
+//                            .hasAnyAuthority(
+//                                    Role.MANAGER.getSecurityRole(),
+//                                    Role.TEACHER.getSecurityRole()
+//                            );
 
                     // 404 NOT FOUND EXCEPTION -> DENIED
-                    request.anyRequest().denyAll();
+                    request.anyRequest().authenticated();
                 })
                 .build();
     }
