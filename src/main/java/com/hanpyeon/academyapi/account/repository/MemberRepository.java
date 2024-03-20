@@ -16,4 +16,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findMemberByPhoneNumber(final String phoneNumber);
     Optional<Member> findMemberByIdAndRole(final Long id, final Role role);
     List<Member> findMembersByIdIsInAndRole(final List<Long> ids, final Role role);
+    List<Member> findMembersByRole(final Role role);
 }
