@@ -7,7 +7,7 @@ import com.hanpyeon.academyapi.security.Role;
 import org.springframework.stereotype.Component;
 
 @Component
-class StudentMemberVerification implements MemberRegisterRequestVerification {
+class StudentMemberRegisterRequestVerifyHandler implements MemberRegisterRequestVerifyHandler {
     @Override
     public boolean supports(final RegisterMemberDto memberDto) {
         if (memberDto.role().equals(Role.STUDENT)) {
