@@ -5,13 +5,14 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+
 @Component
-class MemberPhoneNumberUpdateManager implements AccountUpdateManager {
+class MemberNameUpdateHandler implements AccountUpdateHandler {
     @Override
     public void update(AccountUpdateDto accountUpdateDto, Member member) {
-        final String phoneNumber = accountUpdateDto.phoneNumber();
-        if (Objects.nonNull(phoneNumber)) {
-            member.setPhoneNumber(phoneNumber);
+        final String newName = accountUpdateDto.name();
+        if (Objects.nonNull(newName)) {
+            member.setName(newName);
         }
     }
 }
