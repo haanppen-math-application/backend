@@ -49,7 +49,7 @@ class LoginControllerTest {
     void 로그인_형식_성공_테스트(Map<String, String> requestDto) throws Exception {
 
         Mockito.when(jwtService.provideJwtByLogin(Mockito.anyString(), Mockito.anyString()))
-                        .thenReturn(new JwtDto("1", "1", Role.STUDENT));
+                        .thenReturn(new JwtDto("1", "1", "1", Role.STUDENT));
         request(status().isOk(), requestDto);
     }
 

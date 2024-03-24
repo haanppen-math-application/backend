@@ -65,6 +65,7 @@ class LoginServiceTest {
     @Test
     void 비밀번호_성공처리() {
         member = Member.builder()
+                .name("1")
                 .password("010001010")
                 .password("12345")
                 .role(Role.STUDENT)
@@ -80,6 +81,6 @@ class LoginServiceTest {
                         .thenReturn("result");
 
         assertThat(loginService.provideJwtByLogin("1212", "12"))
-                .isEqualTo(new JwtDto("result", "result", Role.STUDENT));
+                .isEqualTo(new JwtDto("1", "result", "result", Role.STUDENT));
     }
 }

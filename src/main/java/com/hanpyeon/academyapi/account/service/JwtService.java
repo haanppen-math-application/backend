@@ -52,9 +52,10 @@ public class JwtService {
     }
 
     private JwtDto createJwtDto(final Member member) {
+        String userName = member.getName();
         String accessToken = jwtUtils.generateAccessToken(member.getId(), member.getRole(), member.getName());
         String refreshToken = jwtUtils.generateRefreshToken(member.getId());
         Role role = member.getRole();
-        return new JwtDto(accessToken, refreshToken, role);
+        return new JwtDto(userName, accessToken, refreshToken, role);
     }
 }
