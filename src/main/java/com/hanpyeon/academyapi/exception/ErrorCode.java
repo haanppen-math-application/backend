@@ -11,6 +11,8 @@ public enum ErrorCode {
     JWT_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "-004", "만료된 JWT"),
     RE_LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED, "-005", "재 로그인 필요"),
     NOT_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "-006", "등록되지 않은 사용자"),
+    NOT_OWNED_ACCOUNT(HttpStatus.FORBIDDEN, "-007", "계정 내용 변경은 소유자만 가능"),
+    ACCOUNT_POLICY(HttpStatus.BAD_REQUEST, "-008", "계정 정책 위반"),
 
     METHOD_ARGUMENT_NOT_VALID_EXCEPTION(HttpStatus.BAD_REQUEST, "-101", "잘못된 JSON 필드"),
     HTTP_MESSAGE_NOT_READABLE(HttpStatus.BAD_REQUEST, "-102", "부적절한 API 요청 형식"),
@@ -36,7 +38,6 @@ public enum ErrorCode {
     ILLEGAL_COURSE_STUDENT_SIZE(HttpStatus.BAD_REQUEST, "-403", "반 인원 초과"),
     NO_SUCH_COURSE_MEMBER(HttpStatus.BAD_REQUEST, "-404", "대상 찾을 수 없음"),
     NO_SUCH_COURSE(HttpStatus.BAD_REQUEST, "-405", "반을 찾을 수 없음"),
-
 
 
     INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "-801", "파일 검증 실패"),

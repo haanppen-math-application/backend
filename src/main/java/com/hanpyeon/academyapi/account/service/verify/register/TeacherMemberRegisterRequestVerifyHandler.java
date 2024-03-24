@@ -1,11 +1,11 @@
-package com.hanpyeon.academyapi.account.service.verify;
+package com.hanpyeon.academyapi.account.service.verify.register;
 
 import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.security.Role;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TeacherMemberVerification implements MemberVerification {
+class TeacherMemberRegisterRequestVerifyHandler implements MemberRegisterRequestVerifyHandler {
     @Override
     public boolean supports(final RegisterMemberDto memberDto) {
         if (memberDto.role().equals(Role.TEACHER)) {

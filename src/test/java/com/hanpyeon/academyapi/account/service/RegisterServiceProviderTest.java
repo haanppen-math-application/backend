@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.account.dto.RegisterMemberDto;
 import com.hanpyeon.academyapi.account.exceptions.AlreadyRegisteredException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.account.service.verify.policy.AccountPolicyManager;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import org.assertj.core.api.Assertions;
@@ -27,10 +28,12 @@ public class RegisterServiceProviderTest {
     PasswordHandler passwordHandler;
     RegisterMapper registerMapper = new RegisterMapper();
     RegisterServiceProvider serviceProvider;
+    @Mock
+    AccountPolicyManager accountPolicyManager;
 
     @BeforeEach
     void initRegisterService() {
-        this.serviceProvider = new RegisterServiceProvider(memberRepository, registerMapper, passwordHandler);
+        this.serviceProvider = new RegisterServiceProvider(memberRepository, registerMapper, passwordHandler, accountPolicyManager);
     }
 
     @ParameterizedTest

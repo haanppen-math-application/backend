@@ -34,6 +34,13 @@ public class Member {
     @Column(nullable = false)
     private LocalDateTime registeredDate;
 
+    public void setName(final String name) {
+        this.name = name;
+    }
+    public void setPhoneNumber(final String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Builder
     private Member(String phoneNumber, String name, String password, Integer grade, Role role, LocalDateTime registeredDate) {
         this.phoneNumber = phoneNumber;

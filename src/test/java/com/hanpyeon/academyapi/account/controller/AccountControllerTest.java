@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.account.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.service.AccountUpdateService;
 import com.hanpyeon.academyapi.account.service.RegisterService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
@@ -35,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         })
 public class AccountControllerTest {
     private static final String BASE_URL = "/api/accounts";
-    private static final Logger LOGGER = LoggerFactory.getLogger("계졍 컨트롤러 테스트");
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -44,6 +44,8 @@ public class AccountControllerTest {
     RegisterService studentRegisterService;
     @MockBean
     RegisterMapper registerMapper;
+    @MockBean
+    AccountUpdateService accountUpdateService;
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
@@ -58,7 +60,6 @@ public class AccountControllerTest {
     }
 
     private void request(ResultMatcher resultMatcher, Map<String, Object> requestDto) throws Exception {
-        LOGGER.info(objectMapper.writeValueAsString(requestDto));
         mockMvc.perform(post(BASE_URL)
                 .content(objectMapper.writeValueAsString(requestDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
