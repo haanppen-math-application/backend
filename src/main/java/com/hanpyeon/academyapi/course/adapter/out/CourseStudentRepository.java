@@ -9,4 +9,5 @@ import java.util.List;
 interface CourseStudentRepository extends JpaRepository<CourseStudent, Long> {
     List<CourseStudent> findCourseStudentByCourseEntity(final Course course);
     List<CourseStudent> findCourseStudentsByMemberId(final Long memberId);
+    void deleteCourseStudentByCourseEntityId(final Long courseId);
 }
