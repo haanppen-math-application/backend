@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/courses")
+@RequestMapping("/api/manage/courses")
 public class DeleteCourseController {
     private final DeleteCourseUseCase deleteCourseAdapter;
 

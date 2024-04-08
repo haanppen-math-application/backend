@@ -27,7 +27,7 @@ class DeleteCourseControllerTest {
 
     @Test
     void test() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/courses/{courseId}", 1))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/manage/courses/{courseId}", 1))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
