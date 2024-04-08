@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "COURSE")
@@ -23,7 +22,7 @@ class Course {
     private LocalDateTime registeredDateTime;
     @ManyToOne
     private Member teacher;
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "courseEntity")
     private List<CourseStudent> students = new ArrayList<>();
 
     Course(final String courseName, final Member teacher) {
@@ -41,5 +40,9 @@ class Course {
 
     void addCourseStudent(final CourseStudent courseStudent) {
         this.students.add(courseStudent);
+    }
+
+    public List<CourseStudent> getCourseStudents() {
+        return this.students;
     }
 }
