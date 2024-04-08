@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
-public class LoadCourseByTeacherIdAdapter implements LoadCoursesByTeacherIdPort {
+class LoadCourseByTeacherIdAdapter implements LoadCoursesByTeacherIdPort {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
     @Override

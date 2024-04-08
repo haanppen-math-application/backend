@@ -76,7 +76,7 @@ public class LoginController {
 
         httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return ResponseEntity.ok(new JwtResponse(jwtDto.accessToken(), jwtDto.role()));
+        return ResponseEntity.ok(new JwtResponse(jwtDto.name(), jwtDto.accessToken(), jwtDto.role()));
     }
 
     private ResponseCookie createHttpOnlyCookieHeader(final String refreshToken) {
