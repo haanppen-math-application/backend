@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class RegisterMemoController {
     public ResponseEntity<?> addMemo(
             @AuthenticationPrincipal @NotNull final MemberPrincipal memberPrincipal,
             @Valid final RegisterMemoRequest registerMemoRequest
-            ) {
+    ) {
         memoRegisterUseCase.register(registerMemoRequest.createMemoRegisterCommand(memberPrincipal.memberId()));
         return ResponseEntity.ok().build();
     }
@@ -36,6 +37,7 @@ public class RegisterMemoController {
             Long targetCourseId,
             String progressed,
             String homework,
+            LocalDateTime registerTargetDateTime,
             List<Long> courseMediaIds,
             List<Long> conceptMediaIds
     ) {
@@ -45,6 +47,7 @@ public class RegisterMemoController {
                     this.targetCourseId,
                     this.progressed,
                     this.homework,
+                    this.registerTargetDateTime,
                     this.courseMediaIds,
                     this.conceptMediaIds);
         }
