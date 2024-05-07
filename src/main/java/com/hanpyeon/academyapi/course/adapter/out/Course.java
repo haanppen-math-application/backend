@@ -25,6 +25,9 @@ class Course {
     @OneToMany(mappedBy = "courseEntity")
     private List<CourseStudent> students = new ArrayList<>();
 
+    @OneToMany
+    private List<Memo> memos = new ArrayList<>();
+
     Course(final String courseName, final Member teacher) {
         this.courseName = courseName;
         this.teacher = teacher;

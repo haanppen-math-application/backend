@@ -41,7 +41,7 @@ public class Course {
 
     public void changeTeacher(final Teacher newTeacher) {
         validateTeacher(newTeacher);
-        this.teacher = teacher;
+        this.teacher = newTeacher;
     }
 
     public static Course createNewCourse(final String courseName, final List<Student> students, final Teacher teacher) {
