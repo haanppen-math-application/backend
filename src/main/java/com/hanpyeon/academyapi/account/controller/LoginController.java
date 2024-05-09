@@ -83,7 +83,7 @@ public class LoginController {
         return ResponseCookie.from(REFRESH_TOKEN_NAME, refreshToken)
                 .httpOnly(true)
                 .sameSite(Cookie.SameSite.NONE.name())
-                .domain()
+                .domain();
                 .path("/api/login/refresh")
                 .secure(true)
                 .maxAge(60 * 60)
