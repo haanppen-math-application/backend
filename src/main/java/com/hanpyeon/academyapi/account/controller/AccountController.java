@@ -61,11 +61,26 @@ public class AccountController {
     @DeleteMapping
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "계정 삭제 API", description = "계정을 삭제하기 위한 API 입니다. (원장님, 개발자)만 사용 가능합니다")
-    public ResponseEntity<?> deleteStudents(
+    public ResponseEntity<?> deleteAccounts(
             @NonNull AccountRemoveRequest accountRemoveRequest
     ) {
         final AccountRemoveDto accountRemoveDto = new AccountRemoveDto(accountRemoveRequest.targetIds());
         accountRemoveService.removeAccount(accountRemoveDto);
+        return ResponseEntity.ok(null);
+    }
+
+    @PutMapping("/student")
+    @Operation(summary = "학생 수정 API", description = "선생님, 원장님이 학생 정보를 수정하는 API")
+    @SecurityRequirement(name = "jwtAuth")
+    public ResponseEntity<?> modifyStudent(@RequestBody ModifyStudentRequest modifyStudentRequest) {
+        accountUpdateService.updateAccount(modifyStudentRequest);
+        return ResponseEntity.ok(null);
+    }
+    @PutMapping("/teacher")
+    @Operation(summary = "선생 수정 API", description = "원장님만 사용가능한 API")
+    @SecurityRequirement(name = "jwtAuth")
+    public ResponseEntity<?> modifyTeacher(@RequestBody ModifyTeacherRequest modifyTeacherRequest) {
+        accountUpdateService.updateAccount(modifyTeacherRequest);
         return ResponseEntity.ok(null);
     }
 }
