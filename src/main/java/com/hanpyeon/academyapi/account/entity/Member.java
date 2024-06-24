@@ -40,6 +40,9 @@ public class Member {
     public void setPhoneNumber(final String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    public void setPassword(final String password) {
+        this.password = password;
+    }
 
     @Builder
     private Member(String phoneNumber, String name, String password, Integer grade, Role role, LocalDateTime registeredDate) {

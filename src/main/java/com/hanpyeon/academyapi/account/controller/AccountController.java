@@ -39,7 +39,7 @@ public class AccountController {
     }
 
     @PatchMapping(value = "/my", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "계정 이름, 전화번호 수정 API", description = "사용자의 이름과 전화번호를 바꾸기 위한 API 입니다")
+    @Operation(summary = "이름, 전화번호, 비밀번호 수정  API", description = "본인 계정을 수정하기 위한 API 입니다.")
     public ResponseEntity<?> updateAccount(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
             @Valid AccountUpdateRequest accountUpdateRequest
@@ -49,7 +49,9 @@ public class AccountController {
                 new AccountUpdateDto(
                         memberPrincipal.memberId(),
                         accountUpdateRequest.phoneNumber(),
-                        accountUpdateRequest.name())
+                        accountUpdateRequest.name(),
+                        accountUpdateRequest.prevPassword(),
+                        accountUpdateRequest.newPassword())
         );
         return ResponseEntity.ok(id);
     }
