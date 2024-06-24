@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.account.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
 import com.hanpyeon.academyapi.account.service.RegisterService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
@@ -46,6 +47,8 @@ public class AccountControllerTest {
     RegisterMapper registerMapper;
     @MockBean
     AccountUpdateService accountUpdateService;
+    @MockBean
+    AccountRemoveService accountRemoveService;
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
