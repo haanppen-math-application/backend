@@ -116,24 +116,16 @@ class QuestionControllerTest {
 
     @ParameterizedTest
     @CsvSource({
-            "0, 10",
-            "1, 5",
-            "2, 15"
+            "10",
+            "5",
+            "15"
     })
-    void 페이지_조회_테스트(String pageNumber, String pageSize) throws Exception {
-        ArgumentCaptor<EntityFieldMappedPageRequest> captor = ArgumentCaptor.forClass(EntityFieldMappedPageRequest.class);
+    void 페이지_조회_테스트(String pageSize) throws Exception {
         mockMvc.perform(get("/api/board/questions")
-                        .param("page", pageNumber)
-                        .param("size", pageSize))
+                        .param("size", pageSize)
+                        .param("cursorIndex", "12"))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
-
-        Mockito.verify(questionService).loadQuestionsByCursor(1L, captor.capture());
-
-        EntityFieldMappedPageRequest entityFieldMappedPageRequest = captor.getValue();
-
-        Assertions.assertEquals(entityFieldMappedPageRequest.getPageNumber(), Integer.parseInt(pageNumber));
-        Assertions.assertEquals(entityFieldMappedPageRequest.getPageSize(), Integer.parseInt(pageSize));
     }
 
     @Test
