@@ -122,8 +122,8 @@ public class SecurityConfig {
 //                                    Role.TEACHER.getSecurityRole()
 //                            );
 
-                    // 404 NOT FOUND EXCEPTION -> DENIED
-                    request.anyRequest().authenticated();
+                    // 404 NOT FOUND EXCEPTION
+                    request.anyRequest().permitAll();
                 })
                 .build();
     }
