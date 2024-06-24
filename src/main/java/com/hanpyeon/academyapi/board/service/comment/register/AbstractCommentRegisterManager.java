@@ -35,7 +35,9 @@ abstract class AbstractCommentRegisterManager implements CommentRegisterManager 
         List<Image> images = imageService.saveImage(commentRegisterDto.images());
         question.solved();
 
-        return boardMapper.createComment(question, member, images, commentRegisterDto.content());
+        final Comment comment = boardMapper.createComment(question, member, images, commentRegisterDto.content());
+        verifyComment(comment);
+        return comment;
     }
 
     private Question findQuestion(final Long questionId) {
@@ -55,4 +57,5 @@ abstract class AbstractCommentRegisterManager implements CommentRegisterManager 
     protected abstract void verifyQuestion(final Question question);
 
     protected abstract void verifyMember(final Member member);
+    protected abstract void verifyComment(final Comment comment);
 }
