@@ -9,9 +9,9 @@ import java.util.List;
 
 @Builder
 public record QuestionRegisterDto(
-        @NotBlank
-        String title,
-        @NotBlank
+//        @NotBlank
+//        String title,
+//        @NotBlank
         String content,
         @NotNull
         Long requestMemberId,

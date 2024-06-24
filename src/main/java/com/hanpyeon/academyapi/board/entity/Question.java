@@ -20,7 +20,7 @@ public class Question {
     private Long id;
     @CreationTimestamp
     private LocalDateTime registeredDateTime;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String title;
     @Column(nullable = false)
     private String content;

@@ -19,7 +19,7 @@ public class BoardMapper {
 
     public QuestionRegisterDto createRegisterDto(final QuestionRegisterRequestDto questionRegisterRequestDto, final Long userId) {
         return QuestionRegisterDto.builder()
-                .title(questionRegisterRequestDto.title())
+//                .title(questionRegisterRequestDto.title())
                 .content(questionRegisterRequestDto.content())
                 .requestMemberId(userId)
                 .targetMemberId(questionRegisterRequestDto.targetMemberId())
@@ -29,7 +29,7 @@ public class BoardMapper {
 
     public Question createQuestion(final QuestionRegisterDto questionRegisterDto, final Member requestMember, final Member targetMember, final List<Image> images) {
         return Question.builder()
-                .title(questionRegisterDto.title())
+//                .title(questionRegisterDto.title())
                 .content(questionRegisterDto.content())
                 .ownerMember(requestMember)
                 .targetMember(targetMember)
