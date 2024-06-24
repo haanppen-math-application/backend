@@ -4,9 +4,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record AccountUpdateDto(
-
         @NotNull
-        Long requestMemberId,
+        Long targetMemberId,
         @Pattern(regexp = "^[0-9]+$")
         String phoneNumber,
         String name,

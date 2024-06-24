@@ -72,6 +72,17 @@ public class SecurityConfig {
                                     Role.MANAGER.getSecurityRole(),
                                     Role.ADMIN.getSecurityRole()
                             );
+                    request.requestMatchers(HttpMethod.PUT, "/api/accounts/teacher")
+                            .hasAnyAuthority(
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.ADMIN.getSecurityRole()
+                            );
+                    request.requestMatchers(HttpMethod.PUT, "/api/accounts/student")
+                            .hasAnyAuthority(
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole()
+                            );
 
                     request.requestMatchers("/api/images/**")
                             .permitAll();
