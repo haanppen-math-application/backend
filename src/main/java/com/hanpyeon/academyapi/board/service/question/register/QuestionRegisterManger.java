@@ -35,6 +35,6 @@ public class QuestionRegisterManger {
         final Member targetMember = memberManager.getMemberWithRoleValidated(questionRegisterDto.targetMemberId(), Role.TEACHER, Role.MANAGER);
         final List<Image> images = imageService.saveImage(questionRegisterDto.images());
 
-        return boardMapper.createQuestion(questionRegisterDto, requestMember, targetMember, images);
+        return boardMapper.createQuestion(requestMember, targetMember, images);
     }
 }

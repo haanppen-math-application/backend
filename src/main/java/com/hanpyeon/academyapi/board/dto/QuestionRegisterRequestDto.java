@@ -9,9 +9,6 @@ import java.util.List;
 
 @Schema(description = "질문 작성 API")
 public record QuestionRegisterRequestDto(
-//        String title,
-//        @NotBlank
-        String content,
         @NotNull
         Long targetMemberId,
         List<MultipartFile> images
@@ -19,8 +16,6 @@ public record QuestionRegisterRequestDto(
     @Override
     public String toString() {
         return "TestQuestionRegisterRequestDto{" +
-//                "title='" + title + '\'' +
-                ", content='" + content + '\'' +
                 ", targetMemberId=" + targetMemberId +
                 ", images=" + images +
                 '}';

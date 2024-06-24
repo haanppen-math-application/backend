@@ -20,10 +20,6 @@ public class Question {
     private Long id;
     @CreationTimestamp
     private LocalDateTime registeredDateTime;
-    @Column(nullable = true)
-    private String title;
-    @Column(nullable = false)
-    private String content;
     @Column(nullable = false)
     private Boolean solved = false;
     @Column(nullable = false)
@@ -42,15 +38,15 @@ public class Question {
     private Question(LocalDateTime registeredDateTime, List<Image> images, String title, String content, Member ownerMember, Member targetMember, List<Comment> comments) {
         this.registeredDateTime = registeredDateTime;
         this.images = images;
-        this.title = title;
-        this.content = content;
+//        this.title = title;
+//        this.content = content;
         this.ownerMember = ownerMember;
         this.targetMember = targetMember;
         this.comments = comments;
     }
-    public void changeContent(final String content) {
-        this.content = content;
-    }
+//    public void changeContent(final String content) {
+//        this.content = content;
+//    }
     public void changeTargetMember(final Member targetMember) {
         this.targetMember = targetMember;
     }
