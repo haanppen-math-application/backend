@@ -48,7 +48,7 @@ public class SecurityConfig {
 /////////////////////////////////////// 개발 중 열어둠 //////////////////////////////////////
                     request.requestMatchers(request1 -> request1.isUserInRole(Role.ADMIN.getSecurityRole()))
                             .permitAll();
-                    
+
                     request.requestMatchers("/swagger-ui/**")
                             .permitAll();
                     request.requestMatchers("/swagger-ui")
@@ -61,10 +61,17 @@ public class SecurityConfig {
                     request.requestMatchers("/api/login/refresh")
                             .permitAll();
 //////////////////////////////////////////////////////////////////////////////////////////
-                    request.requestMatchers("/api/accounts")
+                    // accounts
+                    request.requestMatchers(HttpMethod.POST, "/api/accounts")
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
-                                    Role.TEACHER.getSecurityRole());
+                                    Role.TEACHER.getSecurityRole()
+                            );
+                    request.requestMatchers(HttpMethod.DELETE, "/api/accounts")
+                            .hasAnyAuthority(
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.ADMIN.getSecurityRole()
+                            );
 
                     request.requestMatchers("/api/images/**")
                             .permitAll();
@@ -96,10 +103,9 @@ public class SecurityConfig {
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
-
                     // 반 삭제 API는 매니저만 사용가능 하도록 구현
                     request.requestMatchers(HttpMethod.DELETE, "/api/manage/courses/*")
-                                    .hasAnyAuthority(Role.MANAGER.getSecurityRole());
+                            .hasAnyAuthority(Role.MANAGER.getSecurityRole());
 
                     // DELETE Method 경우 아래 Matcher 는 사용되지 않음
                     request.requestMatchers("/api/manage/courses/**")

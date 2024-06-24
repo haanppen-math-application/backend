@@ -11,7 +11,7 @@ class MemberNameUpdateHandler implements AccountUpdateHandler {
     @Override
     public void update(AccountUpdateDto accountUpdateDto, Member member) {
         final String newName = accountUpdateDto.name();
-        if (Objects.nonNull(newName)) {
+        if (Objects.nonNull(newName) && !member.getName().equals(newName)) {
             member.setName(newName);
         }
     }
