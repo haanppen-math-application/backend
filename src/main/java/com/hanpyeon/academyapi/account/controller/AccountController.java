@@ -39,7 +39,9 @@ public class AccountController {
     }
 
     @PatchMapping(value = "/my", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "이름, 전화번호, 비밀번호 수정  API", description = "본인 계정을 수정하기 위한 API 입니다.")
+    @Operation(summary = "이름, 전화번호, 비밀번호 수정  API", description = "본인 계정을 수정하기 위한 API 입니다.\n" +
+            "필드에 입력된 값이 기존과 같을 경우 || 필드가 null 경우  => 수정되지 않습니다. \n" +
+            "다만, 비밀번호의 경우 null이 아니라면 변경작업이 실행됩니다. (이전 비밀번호 검증)")
     public ResponseEntity<?> updateAccount(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
             @Valid AccountUpdateRequest accountUpdateRequest
