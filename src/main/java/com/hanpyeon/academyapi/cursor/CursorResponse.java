@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.account.dto;
+package com.hanpyeon.academyapi.cursor;
 
 import java.util.List;
 

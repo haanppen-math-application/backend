@@ -9,13 +9,15 @@ import com.hanpyeon.academyapi.board.service.question.access.QuestionAccessManag
 import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
+import com.hanpyeon.academyapi.cursor.CursorResponse;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -40,9 +42,19 @@ public class QuestionService {
         return questionAccessManager.getSingle(question);
     }
 
-    public Slice<QuestionPreview> loadQuestionsByPage(final Pageable pageable) {
-        final Slice<Question> questionSlice = questionRepository.findBy(pageable);
-        return questionAccessManager.loadBySlice(questionSlice);
+    public CursorResponse<QuestionPreview> loadQuestionsByCursor(final Long cursorIndex, final Pageable pageable) {
+        final List<Question> questions = questionRepository.findQuestionsByIdIsGreaterThanEqual(cursorIndex, pageable);
+        return new CursorResponse<>(questionAccessManager.mapToPreview(questions), getNextCursor(questions, pageable.getPageSize()));
+    }
+
+    private Long getNextCursor(final List<Question> questions, final Integer pageSize) {
+        Long nextCursorIndex = null;
+        if (questions.size() < pageSize) {
+            nextCursorIndex = null;
+        }else {
+            nextCursorIndex = questions.get(questions.size() - 1).getId() + 1;
+        }
+        return nextCursorIndex;
     }
 
     @Transactional

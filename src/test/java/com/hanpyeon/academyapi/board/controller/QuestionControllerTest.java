@@ -128,7 +128,7 @@ class QuestionControllerTest {
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
-        Mockito.verify(questionService).loadQuestionsByPage(captor.capture());
+        Mockito.verify(questionService).loadQuestionsByCursor(1L, captor.capture());
 
         EntityFieldMappedPageRequest entityFieldMappedPageRequest = captor.getValue();
 

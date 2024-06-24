@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
+import com.hanpyeon.academyapi.cursor.CursorResponse;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,7 +13,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -51,12 +51,16 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.getSingleQuestionDetails(questionId));
     }
 
-    @Operation(summary = "질문 게시판 조회", description = "전체 질문을 페이지별로 조회하는 기능입니다. sort 또한 쿼리 파라미터로 보내면 되며, sort=date 로 날짜순, sort=solve로 풀어진 문제 순 으로 정렬할 수 있습니다.")
+    @Operation(summary = "질문 게시판 조회", description = "전체 질문을 페이지별로 조회하는 기능입니다. sort 또한 쿼리 파라미터로 보내면 되며, sort=date 로 날짜순, sort=solve로 풀어진 문제 순 으로 정렬할 수 있습니다\n" +
+            "?cursorIndex= 를 통해 해당 ID 이후의 질문들을 받을 수 있습니다.\n" +
+            "?size= 를 통해 한번에 받아올 게시물의 수를 조절\n" +
+            "?sort=date 로 날짜 오름차순 \n")
     @GetMapping
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<Slice<QuestionPreview>> getQuestionsWithPagination(
-            @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
-        return ResponseEntity.ok(questionService.loadQuestionsByPage(entityFieldMappedPageRequest));
+    public ResponseEntity<CursorResponse<QuestionPreview>> getQuestionsWithPagination(
+            @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
+            @RequestParam(required = false, defaultValue = "0") final Long cursorIndex) {
+        return ResponseEntity.ok(questionService.loadQuestionsByCursor(cursorIndex, entityFieldMappedPageRequest));
     }
 
     @Operation(summary = "댓글 수정 API", description = "질문 수정은 본인만 가능합니다")

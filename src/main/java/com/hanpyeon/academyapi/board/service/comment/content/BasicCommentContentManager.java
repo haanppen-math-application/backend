@@ -12,6 +12,9 @@ public class BasicCommentContentManager implements CommentContentManager {
         }
     }
     private boolean changeable(final Comment comment) {
+        if (comment.getContent().isBlank()) {
+            return false;
+        }
         return true;
     }
 }
