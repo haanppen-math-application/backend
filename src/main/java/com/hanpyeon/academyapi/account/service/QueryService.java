@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.account.dto.*;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.course.application.dto.StudentPreview;
+import com.hanpyeon.academyapi.cursor.CursorResponse;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

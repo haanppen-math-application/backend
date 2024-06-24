@@ -88,6 +88,7 @@ public class BoardMapper {
                 .commentCount(question.getComments().size())
                 .viewCount(question.getViewCount())
                 .owner(createMemberDetails(question.getOwnerMember()))
+                .target(createMemberDetails(question.getTargetMember()))
                 .build();
     }
 

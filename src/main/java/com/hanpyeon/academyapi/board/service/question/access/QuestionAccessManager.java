@@ -9,14 +9,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class QuestionAccessManager {
 
     private final BoardMapper boardMapper;
 
-    public Slice<QuestionPreview> loadBySlice(final Slice<Question> slice) {
-        return slice.map(boardMapper::createQuestionPreview);
+    public List<QuestionPreview> mapToPreview(final List<Question> questions) {
+        return questions.stream().map(boardMapper::createQuestionPreview).toList();
     }
 
     @WarnLoggable

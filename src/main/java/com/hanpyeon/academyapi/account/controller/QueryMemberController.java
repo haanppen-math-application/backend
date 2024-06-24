@@ -1,7 +1,11 @@
 package com.hanpyeon.academyapi.account.controller;
 
-import com.hanpyeon.academyapi.account.dto.*;
+import com.hanpyeon.academyapi.account.dto.PreviewStudent;
+import com.hanpyeon.academyapi.account.dto.PreviewTeacher;
+import com.hanpyeon.academyapi.account.dto.StudentQueryDto;
+import com.hanpyeon.academyapi.account.dto.TeacherQueryDto;
 import com.hanpyeon.academyapi.account.service.QueryService;
+import com.hanpyeon.academyapi.cursor.CursorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
