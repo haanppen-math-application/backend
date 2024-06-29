@@ -5,16 +5,20 @@ import com.hanpyeon.academyapi.board.entity.Question;
 import org.springframework.stereotype.Component;
 
 
-//@Component
-//class QuestionContentUpdateHandler extends QuestionUpdateHandler {
-//
-//    @Override
-//    boolean applicable(QuestionUpdateDto questionUpdateDto) {
+/**
+ * no more used
+ */
+@Component
+class QuestionContentUpdateHandler extends QuestionUpdateHandler {
+
+    @Override
+    boolean applicable(QuestionUpdateDto questionUpdateDto) {
 //        return questionUpdateDto.content() != null;
-//    }
-//
-//    @Override
-//    void process(Question question, QuestionUpdateDto questionUpdateDto) {
+        return true;
+    }
+
+    @Override
+    void process(Question question, QuestionUpdateDto questionUpdateDto) {
 //        question.changeContent(questionUpdateDto.content());
-//    }
-//}
+    }
+}

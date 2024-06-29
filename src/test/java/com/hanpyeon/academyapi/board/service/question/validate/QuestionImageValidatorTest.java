@@ -38,7 +38,8 @@ class QuestionImageValidatorTest {
 
     @Test
     void 이미지수_경계_테스트() {
-        List<Image> images = List.of(Mockito.mock(Image.class), Mockito.mock(Image.class), Mockito.mock(Image.class));
+        List<Image> images = List.of(Mockito.mock(Image.class));
+        // 이미지 한개만 가능
         final Question question = Question.builder().images(images).build();
 
         assertDoesNotThrow(() -> questionImageValidator.validate(question));

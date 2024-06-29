@@ -123,11 +123,11 @@ class BasicCommentRegisterManagerTest {
 
     @Test
     void Comment_이미지_글_모두_작성_에러처리_테스트() {
-        final List<MultipartFile> images = List.of(new MockMultipartFile("test", "test".getBytes()));
         final List<Image> savedImages = List.of(new Image("test"));
         final Long questionId = 1L;
         final Long memberId = 2L;
         final String content = "test";
+        final List<MultipartFile> images = List.of(new MockMultipartFile("test", "test".getBytes()));
 
         CommentRegisterDto commentRegisterDto = new CommentRegisterDto(questionId, memberId, content, images);
         Member member = Mockito.mock(Member.class);

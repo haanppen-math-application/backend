@@ -47,12 +47,16 @@ class QuestionControllerTest {
                 .param("content", "내용")
         ).andExpect(status().isBadRequest());
     }
-    @Test
-    void 질문_등록시_content_없음_테스트() throws Exception {
-        mockMvc.perform(multipart("/api/board/questions")
-                .param("targetMemberId", "1")
-        ).andExpect(status().isBadRequest());
-    }
+
+    /**
+     * no more used
+     */
+//    @Test
+//    void 질문_등록시_content_없음_테스트() throws Exception {
+//        mockMvc.perform(multipart("/api/board/questions")
+//                .param("targetMemberId", "1")
+//        ).andExpect(status().isBadRequest());
+//    }
 
     @Test
     void 질문_등록_이미지_포함_성공_테스트() throws Exception {

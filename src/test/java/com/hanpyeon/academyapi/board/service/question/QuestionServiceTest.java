@@ -4,7 +4,6 @@ import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteDto;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
-import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.service.question.access.QuestionAccessManager;
 import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;
@@ -19,7 +18,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -28,7 +26,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import java.util.Collections;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
@@ -131,36 +128,33 @@ class QuestionServiceTest {
 
     private static Stream<Arguments> provideLegalQuestionUpdateDto() {
         return Stream.of(
-                Arguments.of(new QuestionUpdateDto(2l, null, null, 1l, null))
+                Arguments.of(new QuestionUpdateDto(2l, 1L, 3L,  null))
         );
     }
 
     private static Stream<Arguments> provideIllegalQuestionUpdateDto() {
         return Stream.of(
-                Arguments.of(new QuestionUpdateDto(null, "12", 2l, 1l, null)),
-                Arguments.of(new QuestionUpdateDto(2l, "12", 2l, null, null)),
-                Arguments.of(new QuestionUpdateDto(null, "12", 2l, null, null))
+                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, null)),
+                Arguments.of(new QuestionUpdateDto(2l, 12L, null, null)),
+                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, null))
         );
     }
 
 
     private static Stream<Arguments> provideLegalQuestionRegisterDto() {
         return Stream.of(
-                Arguments.of(new QuestionRegisterDto("1", "1", 1l, 2l, null)),
-                Arguments.of(new QuestionRegisterDto("1", "1", 1l, 2l, Collections.emptyList()))
+                Arguments.of(new QuestionRegisterDto(1L, 2L, null)),
+                Arguments.of(new QuestionRegisterDto(1L, 1L, Collections.emptyList()))
         );
     }
 
 
     private static Stream<Arguments> provideIllegalQuestionRegisterDto() {
         return Stream.of(
-                Arguments.of(new QuestionRegisterDto(null, "1", 1l, 2l, null)),
-                Arguments.of(new QuestionRegisterDto("", "1", 1l, 2l, null)),
-                Arguments.of(new QuestionRegisterDto("", "", 1l, 2l, null)),
-                Arguments.of(new QuestionRegisterDto("2", null, 1l, 2l, null)),
-                Arguments.of(new QuestionRegisterDto("2", "", 1l, 2l, null)),
-                Arguments.of(new QuestionRegisterDto("1", "1", null, 2l, null)),
-                Arguments.of(new QuestionRegisterDto("1", "1", 1l, null, null))
+                Arguments.of(new QuestionRegisterDto(null, 1L, null)),
+                Arguments.of(new QuestionRegisterDto(null, null, null)),
+                Arguments.of(new QuestionRegisterDto(2L, null, null)),
+                Arguments.of(new QuestionRegisterDto(2L, null, null))
         );
     }
 }

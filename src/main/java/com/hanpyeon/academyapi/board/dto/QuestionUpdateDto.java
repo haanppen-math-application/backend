@@ -10,6 +10,7 @@ import java.util.List;
 public record QuestionUpdateDto(
         @NotNull
         Long questionId,
+        @NotNull
         Long targetMemberId,
         @NotNull
         Long requestMemberId,
