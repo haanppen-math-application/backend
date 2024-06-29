@@ -62,7 +62,7 @@ public class AccountController {
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "계정 삭제 API", description = "계정을 삭제하기 위한 API 입니다. (원장님, 개발자)만 사용 가능합니다")
     public ResponseEntity<?> deleteAccounts(
-            @NonNull AccountRemoveRequest accountRemoveRequest
+            @RequestBody @NonNull AccountRemoveRequest accountRemoveRequest
     ) {
         final AccountRemoveDto accountRemoveDto = new AccountRemoveDto(accountRemoveRequest.targetIds());
         accountRemoveService.removeAccount(accountRemoveDto);
