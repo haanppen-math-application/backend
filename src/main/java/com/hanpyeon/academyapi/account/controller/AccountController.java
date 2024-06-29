@@ -58,6 +58,13 @@ public class AccountController {
         return ResponseEntity.ok(id);
     }
 
+    @GetMapping(value = "/my", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MyAccountInfo> getMyAccountInfo(
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        return ResponseEntity.ok(accountUpdateService.getMyInfo(memberPrincipal.memberId()));
+    }
+
     @DeleteMapping
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "계정 삭제 API", description = "계정을 삭제하기 위한 API 입니다. (원장님, 개발자)만 사용 가능합니다")

@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.account.service;
 import com.hanpyeon.academyapi.account.dto.AccountUpdateDto;
 import com.hanpyeon.academyapi.account.dto.ModifyStudentRequest;
 import com.hanpyeon.academyapi.account.dto.ModifyTeacherRequest;
+import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccessDeniedException;
 import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
@@ -30,6 +31,11 @@ public class AccountUpdateService {
         accountUpdateManager.update(accountUpdateDto, member);
         accountPolicyManager.verify(member);
         return member.getId();
+    }
+
+    public MyAccountInfo getMyInfo(final Long requestMemberId) {
+        final Member member = getMember(requestMemberId);
+        return new MyAccountInfo(member.getName(), member.getPhoneNumber(), member.getRole(), member.getGrade());
     }
 
     @Transactional
