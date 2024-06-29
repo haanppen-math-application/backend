@@ -13,6 +13,7 @@ import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,12 +30,12 @@ abstract class AbstractCommentRegisterManager implements CommentRegisterManager 
     private final BoardMapper boardMapper;
 
     @Override
-    public final Comment register(final CommentRegisterDto commentRegisterDto) {
+    @Transactional
+    public Comment register(final CommentRegisterDto commentRegisterDto) {
         Question question = findQuestion(commentRegisterDto.questionId());
         Member member = findMember(commentRegisterDto.memberId());
         List<Image> images = imageService.saveImage(commentRegisterDto.images());
         question.solved();
-
         final Comment comment = boardMapper.createComment(question, member, images, commentRegisterDto.content());
         verifyComment(comment);
         return comment;

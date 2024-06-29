@@ -10,7 +10,6 @@ import java.util.List;
 public record QuestionUpdateDto(
         @NotNull
         Long questionId,
-        String content,
         Long targetMemberId,
         @NotNull
         Long requestMemberId,
@@ -19,7 +18,6 @@ public record QuestionUpdateDto(
     @Override
     public String toString() {
         return "QuestionUpdateDto{" +
-                "content='" + content + '\'' +
                 ", targetMemberId=" + targetMemberId +
                 ", requestMemberId=" + requestMemberId +
                 ", images=" + images +

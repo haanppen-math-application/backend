@@ -31,8 +31,10 @@ public enum ErrorCode {
     NOT_ADOPTED_COMMENT(HttpStatus.BAD_REQUEST, "-306", "채택되지 않은 댓글"),
     QUESTION_CONTENT_OVERSIZE(HttpStatus.BAD_REQUEST, "-307", "질문 크기 초과"),
     QUESTION_IMAGE_OVER_LENGTH(HttpStatus.BAD_REQUEST, "-308", "질문 게시글 이미지 갯수 초과"),
+
     ILLEGAL_QUESTION_EXCEPTION(HttpStatus.BAD_REQUEST, "-309", "잘못된 질문입니다."),
     ILLEGAL_COMMENT_EXCEPTION(HttpStatus.BAD_REQUEST, "-310", "잘못된 댓글입니다."),
+
 
     ILLEGAL_COURSE_NAME(HttpStatus.BAD_REQUEST, "-401", "잘못된 반 이름"),
     ILLEGAL_COURSE_STUDENT_STATE(HttpStatus.BAD_REQUEST, "-402", "사용할 수 없는 학생"),

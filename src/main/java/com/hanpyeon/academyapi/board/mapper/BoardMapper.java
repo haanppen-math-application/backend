@@ -19,18 +19,14 @@ public class BoardMapper {
 
     public QuestionRegisterDto createRegisterDto(final QuestionRegisterRequestDto questionRegisterRequestDto, final Long userId) {
         return QuestionRegisterDto.builder()
-                .title(questionRegisterRequestDto.title())
-                .content(questionRegisterRequestDto.content())
                 .requestMemberId(userId)
                 .targetMemberId(questionRegisterRequestDto.targetMemberId())
                 .images(questionRegisterRequestDto.images())
                 .build();
     }
 
-    public Question createQuestion(final QuestionRegisterDto questionRegisterDto, final Member requestMember, final Member targetMember, final List<Image> images) {
+    public Question createQuestion(final Member requestMember, final Member targetMember, final List<Image> images) {
         return Question.builder()
-                .title(questionRegisterDto.title())
-                .content(questionRegisterDto.content())
                 .ownerMember(requestMember)
                 .targetMember(targetMember)
                 .images(images)
@@ -40,7 +36,6 @@ public class BoardMapper {
     public QuestionDetails createQuestionDetails(final Question question) {
         return QuestionDetails.builder()
                 .questionId(question.getId())
-                .content(question.getContent())
                 .solved(question.getSolved())
                 .viewCount(question.getViewCount())
                 .registeredMember(createMemberDetails(question.getOwnerMember()))
@@ -67,7 +62,6 @@ public class BoardMapper {
     public CommentDetails createCommentDetails(final Comment comment) {
         return CommentDetails.builder()
                 .commentId(comment.getId())
-                .content(comment.getContent())
                 .selected(comment.getAdopted())
                 .images(comment.getImages().stream()
                         .map(mediaMapper::createImageUrlDto)
@@ -80,7 +74,6 @@ public class BoardMapper {
     public QuestionPreview createQuestionPreview(final Question question) {
         return QuestionPreview.builder()
                 .questionId(question.getId())
-                .content(question.getContent())
                 .solved(question.getSolved())
                 .images(question.getImages().stream()
                         .map(mediaMapper::createImageUrlDto)
@@ -95,7 +88,6 @@ public class BoardMapper {
     public Comment createComment(final Question question, final Member member, final List<Image> images, final String content) {
         return Comment.builder()
                 .question(question)
-                .content(content)
                 .images(images)
                 .registeredMember(member)
                 .build();
@@ -129,7 +121,6 @@ public class BoardMapper {
                 .requestMemberId(requestMemberId)
                 .targetMemberId(questionUpdateRequestDto.targetMemberId())
                 .images(questionUpdateRequestDto.images())
-                .content(questionUpdateRequestDto.content())
                 .build();
     }
 
