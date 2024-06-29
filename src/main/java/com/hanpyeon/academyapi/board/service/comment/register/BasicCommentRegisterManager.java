@@ -2,10 +2,7 @@ package com.hanpyeon.academyapi.board.service.comment.register;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-<<<<<<< HEAD
 import com.hanpyeon.academyapi.board.dao.QuestionRepository;
-=======
->>>>>>> origin/feat/#88
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NotAllowedCommentException;
