@@ -39,7 +39,7 @@ class LoginServiceTest {
 
     @Test
     void 사용자_찾기_실패_테스트() {
-        Mockito.when(memberRepository.findMemberByPhoneNumber(Mockito.any()))
+        Mockito.when(memberRepository.findMemberByPhoneNumberAndRemovedIsFalse(Mockito.any()))
                 .thenReturn(Optional.empty());
         assertThatThrownBy(() -> {
             loginService.provideJwtByLogin("hi", "hello");
@@ -53,7 +53,7 @@ class LoginServiceTest {
                 .password("12345")
                 .build();
 
-        Mockito.when(memberRepository.findMemberByPhoneNumber(Mockito.anyString()))
+        Mockito.when(memberRepository.findMemberByPhoneNumberAndRemovedIsFalse(Mockito.anyString()))
                 .thenReturn(Optional.of(member));
         Mockito.when(passwordHandler.matches(Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(false);
@@ -71,7 +71,7 @@ class LoginServiceTest {
                 .role(Role.STUDENT)
                 .build();
 
-        Mockito.when(memberRepository.findMemberByPhoneNumber(Mockito.anyString()))
+        Mockito.when(memberRepository.findMemberByPhoneNumberAndRemovedIsFalse(Mockito.anyString()))
                 .thenReturn(Optional.of(member));
         Mockito.when(passwordHandler.matches(Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(true);

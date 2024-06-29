@@ -26,8 +26,8 @@ public class BoardTestDataInitializer {
 
     @PostConstruct
     void init() {
-        List<Member> students = memberRepository.findMembersByRole(Role.STUDENT);
-        List<Member> teachers = memberRepository.findMembersByRole(Role.TEACHER);
+        List<Member> students = memberRepository.findMembersByRoleAndRemovedIsFalse(Role.STUDENT);
+        List<Member> teachers = memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER);
         List<Question> questions = new ArrayList<>();
         for (Member student : students) {
             for (Member teacher : teachers) {

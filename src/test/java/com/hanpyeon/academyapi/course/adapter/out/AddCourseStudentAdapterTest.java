@@ -5,19 +5,16 @@ import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.course.application.port.out.LoadCoursePort;
 import com.hanpyeon.academyapi.course.application.port.out.RegisterCoursePort;
 import com.hanpyeon.academyapi.course.domain.Student;
-import com.hanpyeon.academyapi.course.domain.Teacher;
 import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -69,7 +66,7 @@ class AddCourseStudentAdapterTest {
 
     @Test
     void Course_Student_추가_테스트() {
-        final List<Student> students = memberRepository.findMembersByIdIsInAndRole(List.of(1l, 2l), Role.STUDENT)
+        final List<Student> students = memberRepository.findMembersByIdIsInAndRoleAndRemovedIsFalse(List.of(1l, 2l), Role.STUDENT)
                 .stream()
                 .map(member -> new Student(member.getId(), member.getName(), member.getGrade()))
                 .toList();

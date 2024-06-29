@@ -3,18 +3,14 @@ package com.hanpyeon.academyapi.account.service;
 import com.hanpyeon.academyapi.account.dto.*;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.course.application.dto.StudentPreview;
 import com.hanpyeon.academyapi.cursor.CursorResponse;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +21,9 @@ public class QueryService {
         final Pageable pageable = Pageable.ofSize(teacherQueryDto.pageSize());
         List<Member> teacherEntities;
         if (Objects.isNull(teacherQueryDto.name())) {
-            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRole(teacherQueryDto.cursorIndex(), Role.TEACHER, pageable);
+            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndRemovedIsFalse(teacherQueryDto.cursorIndex(), Role.TEACHER, pageable);
         }else {
-            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndNameContaining(teacherQueryDto.cursorIndex(), Role.TEACHER, pageable, teacherQueryDto.name());
+            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndNameContainingAndRemovedIsFalse(teacherQueryDto.cursorIndex(), Role.TEACHER, pageable, teacherQueryDto.name());
         }
         final List<PreviewTeacher> previewTeachers = teacherEntities.stream().map(PreviewTeacher::of).toList();
         return new CursorResponse<>(previewTeachers, getNextCursorIndex(teacherEntities));
@@ -39,9 +35,9 @@ public class QueryService {
 
         List<Member> studentEntities;
         if (Objects.isNull((studentQueryDto.name()))) {
-            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetween(studentQueryDto.cursorIndex(), Role.STUDENT, pageable, studentQueryDto.startGrade(), studentQueryDto.endGrade());
+            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndRemovedIsFalse(studentQueryDto.cursorIndex(), Role.STUDENT, pageable, studentQueryDto.startGrade(), studentQueryDto.endGrade());
         } else {
-            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndNameContaining(studentQueryDto.cursorIndex(), Role.STUDENT, pageable, studentQueryDto.startGrade(), studentQueryDto.endGrade(), studentQueryDto.name());
+            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndNameContainingAndRemovedIsFalse(studentQueryDto.cursorIndex(), Role.STUDENT, pageable, studentQueryDto.startGrade(), studentQueryDto.endGrade(), studentQueryDto.name());
         }
         List<PreviewStudent> previewStudents = studentEntities.stream().map(PreviewStudent::of).toList();
         return new CursorResponse<>(previewStudents, getNextCursorIndex(studentEntities));
