@@ -32,10 +32,17 @@ public class Member {
     private Role role;
 
     @Column(nullable = false)
+    private Boolean removed = false;
+
+    @Column(nullable = false)
     private LocalDateTime registeredDate;
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public void setRemoved(final Boolean removeStatus) {
+        this.removed = removeStatus;
     }
     public void setPhoneNumber(final String phoneNumber) {
         this.phoneNumber = phoneNumber;

@@ -61,12 +61,12 @@ class DeleteCourseServiceTest {
                 .build());
 
         // 수업 등록
-        Member teacher = memberRepository.findMemberByPhoneNumber("1213").orElseThrow();
+        Member teacher = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse("1213").orElseThrow();
         Course course = courseRepository.save(new Course("테스트용 수업이름", teacher));
 
         // 수업에 학생 등록
-        Member student1 = memberRepository.findMemberByPhoneNumber("123123").orElseThrow();
-        Member student2 = memberRepository.findMemberByPhoneNumber("123").orElseThrow();
+        Member student1 = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse("123123").orElseThrow();
+        Member student2 = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse("123").orElseThrow();
         courseStudentRepository.save(CourseStudent.of(student1, course));
         courseStudentRepository.save(CourseStudent.of(student2, course));
     }

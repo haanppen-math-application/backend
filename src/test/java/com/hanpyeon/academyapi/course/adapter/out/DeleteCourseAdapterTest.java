@@ -2,11 +2,8 @@ package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.course.application.port.in.DeleteCourseUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.DeleteCoursePort;
-import com.hanpyeon.academyapi.course.application.port.out.DeleteCourseStudentPort;
 import com.hanpyeon.academyapi.security.Role;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -60,7 +56,7 @@ class DeleteCourseAdapterTest {
                 .build());
 
         // 수업 등록
-        Member teacher = memberRepository.findMemberByPhoneNumber("1213").orElseThrow();
+        Member teacher = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse("1213").orElseThrow();
         courseRepository.save(new Course("테스트용 수업이름", teacher));
 
 //        // 수업에 학생 등록

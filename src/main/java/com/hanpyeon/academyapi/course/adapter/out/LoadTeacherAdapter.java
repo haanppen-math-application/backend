@@ -2,7 +2,6 @@ package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.board.exception.InvalidTargetException;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.course.application.port.out.LoadTeacherPort;
 import com.hanpyeon.academyapi.course.domain.Teacher;
@@ -24,7 +23,7 @@ class LoadTeacherAdapter implements LoadTeacherPort {
     }
 
     private Member loadMember(final Long memberId) {
-        return memberRepository.findMemberByIdAndRole(memberId, Role.TEACHER)
+        return memberRepository.findMemberByIdAndRoleAndRemovedIsFalse(memberId, Role.TEACHER)
                 .orElseThrow(() -> new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER));
     }
 }

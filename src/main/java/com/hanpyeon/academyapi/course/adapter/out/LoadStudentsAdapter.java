@@ -1,8 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
-import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.board.exception.InvalidTargetException;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.course.application.port.out.LoadStudentsPort;
 import com.hanpyeon.academyapi.course.domain.Student;
@@ -32,7 +30,7 @@ class LoadStudentsAdapter implements LoadStudentsPort {
     }
 
     public List<Student> loadAllStudent(final List<Long> memberIds) {
-        return memberRepository.findMembersByIdIsInAndRole(memberIds, Role.STUDENT).stream()
+        return memberRepository.findMembersByIdIsInAndRoleAndRemovedIsFalse(memberIds, Role.STUDENT).stream()
                 .map(courseMapper::mapToStudent)
                 .toList();
     }
