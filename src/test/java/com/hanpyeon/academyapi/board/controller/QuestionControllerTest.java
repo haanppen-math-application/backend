@@ -47,12 +47,16 @@ class QuestionControllerTest {
                 .param("content", "내용")
         ).andExpect(status().isBadRequest());
     }
-    @Test
-    void 질문_등록시_content_없음_테스트() throws Exception {
-        mockMvc.perform(multipart("/api/board/questions")
-                .param("targetMemberId", "1")
-        ).andExpect(status().isBadRequest());
-    }
+
+    /**
+     * no more used
+     */
+//    @Test
+//    void 질문_등록시_content_없음_테스트() throws Exception {
+//        mockMvc.perform(multipart("/api/board/questions")
+//                .param("targetMemberId", "1")
+//        ).andExpect(status().isBadRequest());
+//    }
 
     @Test
     void 질문_등록_이미지_포함_성공_테스트() throws Exception {
@@ -116,24 +120,16 @@ class QuestionControllerTest {
 
     @ParameterizedTest
     @CsvSource({
-            "0, 10",
-            "1, 5",
-            "2, 15"
+            "10",
+            "5",
+            "15"
     })
-    void 페이지_조회_테스트(String pageNumber, String pageSize) throws Exception {
-        ArgumentCaptor<EntityFieldMappedPageRequest> captor = ArgumentCaptor.forClass(EntityFieldMappedPageRequest.class);
+    void 페이지_조회_테스트(String pageSize) throws Exception {
         mockMvc.perform(get("/api/board/questions")
-                        .param("page", pageNumber)
-                        .param("size", pageSize))
+                        .param("size", pageSize)
+                        .param("cursorIndex", "12"))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
-
-        Mockito.verify(questionService).loadQuestionsByCursor(1L, captor.capture());
-
-        EntityFieldMappedPageRequest entityFieldMappedPageRequest = captor.getValue();
-
-        Assertions.assertEquals(entityFieldMappedPageRequest.getPageNumber(), Integer.parseInt(pageNumber));
-        Assertions.assertEquals(entityFieldMappedPageRequest.getPageSize(), Integer.parseInt(pageSize));
     }
 
     @Test

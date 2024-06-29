@@ -20,6 +20,10 @@ public class Question {
     private Long id;
     @CreationTimestamp
     private LocalDateTime registeredDateTime;
+    @Column(nullable = true)
+    private String title;
+    @Column(nullable = true)
+    private String content;
     @Column(nullable = false)
     private Boolean solved = false;
     @Column(nullable = false)

@@ -90,6 +90,7 @@ public class BoardMapper {
                 .question(question)
                 .images(images)
                 .registeredMember(member)
+                .content(content)
                 .build();
     }
     public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto commentUpdateRequestDto, final Long requestMemberId) {

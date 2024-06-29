@@ -2,12 +2,12 @@ package com.hanpyeon.academyapi.board.service.comment.register;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NotAllowedCommentException;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
-import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.security.Role;
@@ -32,11 +32,12 @@ class BasicCommentRegisterManager extends AbstractCommentRegisterManager {
 
     @Override
     protected void verifyComment(Comment comment) {
-        if (!comment.getImages().isEmpty() && !comment.getContent().isBlank()) {
-            throw new NotAllowedCommentException("댓글에는 이미지 혹은 글 중 하나만 작성할 수 있습니다.", ErrorCode.ILLEGAL_COMMENT);
+        if (comment.getContent() == null && !comment.getImages().isEmpty()) {
+            return;
         }
-        if (comment.getImages().isEmpty() && comment.getContent().isBlank()) {
-            throw new NotAllowedCommentException("댓글에 이미지 혹은 글 중 하나는 작성해야 합니다", ErrorCode.ILLEGAL_COMMENT);
+        if (comment.getContent() != null && comment.getImages().isEmpty()) {
+            return;
         }
+        throw new NotAllowedCommentException("댓글 = 이미지, 글 중 하나만 작성해야 합니다.", ErrorCode.ILLEGAL_COMMENT_EXCEPTION);
     }
 }

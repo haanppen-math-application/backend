@@ -34,6 +34,19 @@ public class Course {
         this.students = newCourseStudents;
     }
 
+    public void setStudents(final List<Student> students) {
+        validateStudents(students);
+        this.students = students;
+    }
+
+    public void removeStudents(final List<Student> students) {
+        final List<Student> tempStudents = new ArrayList<>(this.students);
+        tempStudents.removeAll(students);
+
+        validateStudents(tempStudents);
+        this.students = tempStudents;
+    }
+
     public void changeCourseName(final String newCourseName) {
         validateCourseName(newCourseName);
         this.courseName = newCourseName;

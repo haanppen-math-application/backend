@@ -26,7 +26,7 @@ class QuestionImageUpdateHandlerTest {
 
     @Test
     void 업데이트_가능_테스트() {
-        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, "2", 2l, 3l, List.of(Mockito.mock(MultipartFile.class)));
+        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l, List.of(Mockito.mock(MultipartFile.class)));
 
         assertThat(questionImageUpdateHandler.applicable(questionUpdateDto))
                 .isTrue();
@@ -34,8 +34,8 @@ class QuestionImageUpdateHandlerTest {
 
     @Test
     void 업데이트_불가_테스트() {
-        final QuestionUpdateDto emptyImagesDto = new QuestionUpdateDto(1l, "2", 2l, 3l, Collections.emptyList());
-        final QuestionUpdateDto nullImagesDto = new QuestionUpdateDto(1l, "2", 2l, 3l, null);
+        final QuestionUpdateDto emptyImagesDto = new QuestionUpdateDto(1l, 2l, 3l, Collections.emptyList());
+        final QuestionUpdateDto nullImagesDto = new QuestionUpdateDto(1l, 2l, 3l, null);
 
 
         assertThat(questionImageUpdateHandler.applicable(emptyImagesDto))
@@ -47,7 +47,7 @@ class QuestionImageUpdateHandlerTest {
     @Test
     void 이미지_업데이트_테스트() {
         final List<MultipartFile> multipartFiles = List.of(Mockito.mock(MultipartFile.class));
-        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, "2", 2l, 3l, multipartFiles);
+        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l, multipartFiles);
         final Question question = Mockito.mock(Question.class);
 
         questionImageUpdateHandler.update(question, questionUpdateDto);

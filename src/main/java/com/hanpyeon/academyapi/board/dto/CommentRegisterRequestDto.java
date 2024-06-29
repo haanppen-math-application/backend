@@ -9,7 +9,7 @@ import java.util.List;
 @Schema(description = "댓글 등록 DTO", requiredProperties = {"questionId"})
 public record CommentRegisterRequestDto(
         @NotNull Long questionId,
-        @NotNull String content,
+        String content,
         List<MultipartFile> images
 ) {
     @Override
