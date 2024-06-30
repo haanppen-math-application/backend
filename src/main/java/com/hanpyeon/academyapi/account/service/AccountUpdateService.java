@@ -40,13 +40,13 @@ public class AccountUpdateService {
 
     @Transactional
     public Long updateAccount(final ModifyStudentRequest modifyStudentRequest) {
-        final AccountUpdateDto accountUpdateDto = new AccountUpdateDto(modifyStudentRequest.studentId(), modifyStudentRequest.phoneNumber(), modifyStudentRequest.name(), null, null);
+        final AccountUpdateDto accountUpdateDto = new AccountUpdateDto(modifyStudentRequest.studentId(), modifyStudentRequest.phoneNumber(), modifyStudentRequest.name(), modifyStudentRequest.grade(), null, null);
         return this.updateAccount(accountUpdateDto);
     }
 
     @Transactional
     public Long updateAccount(final ModifyTeacherRequest modifyTeacherRequest) {
-        final AccountUpdateDto accountUpdateDto = new AccountUpdateDto(modifyTeacherRequest.targetId(), modifyTeacherRequest.phoneNumber(), modifyTeacherRequest.name(), null, null);
+        final AccountUpdateDto accountUpdateDto = new AccountUpdateDto(modifyTeacherRequest.targetId(), modifyTeacherRequest.phoneNumber(), modifyTeacherRequest.name(), null, null, null);
         return this.updateAccount(accountUpdateDto);
     }
 
