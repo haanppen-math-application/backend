@@ -9,6 +9,7 @@ public record AccountUpdateDto(
         @Pattern(regexp = "^[0-9]+$")
         String phoneNumber,
         String name,
+        Integer grade,
         String prevPassword,
         String newPassword
 ) {

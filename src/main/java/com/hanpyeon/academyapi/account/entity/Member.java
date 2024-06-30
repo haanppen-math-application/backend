@@ -40,6 +40,9 @@ public class Member {
     public void setName(final String name) {
         this.name = name;
     }
+    public void setGrade(final Integer grade) {
+        this.grade = grade;
+    }
 
     public void setRemoved(final Boolean removeStatus) {
         this.removed = removeStatus;

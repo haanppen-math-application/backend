@@ -46,12 +46,12 @@ public class AccountController {
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
             @Valid AccountUpdateRequest accountUpdateRequest
     ) {
-
         final Long id = accountUpdateService.updateAccount(
                 new AccountUpdateDto(
                         memberPrincipal.memberId(),
                         accountUpdateRequest.phoneNumber(),
                         accountUpdateRequest.name(),
+                        null,
                         accountUpdateRequest.prevPassword(),
                         accountUpdateRequest.newPassword())
         );
