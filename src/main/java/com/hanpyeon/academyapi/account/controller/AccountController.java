@@ -79,14 +79,14 @@ public class AccountController {
     @PutMapping("/student")
     @Operation(summary = "학생 수정 API", description = "선생님, 원장님이 학생 정보를 수정하는 API")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<?> modifyStudent(@RequestBody ModifyStudentRequest modifyStudentRequest) {
+    public ResponseEntity<?> modifyStudent(@RequestBody @Valid ModifyStudentRequest modifyStudentRequest) {
         accountUpdateService.updateAccount(modifyStudentRequest);
         return ResponseEntity.ok(null);
     }
     @PutMapping("/teacher")
     @Operation(summary = "선생 수정 API", description = "원장님만 사용가능한 API")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<?> modifyTeacher(@RequestBody ModifyTeacherRequest modifyTeacherRequest) {
+    public ResponseEntity<?> modifyTeacher(@RequestBody @Valid ModifyTeacherRequest modifyTeacherRequest) {
         accountUpdateService.updateAccount(modifyTeacherRequest);
         return ResponseEntity.ok(null);
     }
