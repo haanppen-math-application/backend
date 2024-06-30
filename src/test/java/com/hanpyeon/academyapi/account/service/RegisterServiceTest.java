@@ -51,12 +51,15 @@ class RegisterServiceTest {
     public static Stream<Arguments> provideRegisterRequest() {
         return Stream.of(
                 Arguments.of(createMemberDto("Heejo", 10, Role.STUDENT, "01099182281", "000")),
-                Arguments.of(createMemberDto("Hee12", 11, Role.TEACHER, "010991822281", "121")),
-                Arguments.of(createMemberDto("Heng", 10, Role.STUDENT, "01009931822813", "124")),
-                Arguments.of(createMemberDto("ejong", 10, Role.TEACHER, "010109918122281", ""))
+                Arguments.of(createMemberDto("Hee12", 11, Role.TEACHER, "01099182228", "121")),
+                Arguments.of(createMemberDto("Heng", 10, Role.STUDENT, "01009931822", "124")),
+                Arguments.of(createMemberDto("ejong", 10, Role.TEACHER, "01010991817", ""))
         );
     }
 
+    /**
+     * @return 전화번호 자릿수 확인 로직 추가
+     */
     public static Stream<Arguments> provideIllegalRegisterRequest() {
         return Stream.of(
                 Arguments.of(createMemberDto("Heejo", 10, Role.MANAGER, "01099182281", "000")),
