@@ -6,13 +6,19 @@ import com.hanpyeon.academyapi.board.exception.QuestionContentOverSizeException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 class QuestionContentValidator implements QuestionValidator {
     @Override
     public void validate(Question question) {
-//        if (!question.contents.isEmpty()) {
-//            throw new BoardException("Content, Image 둘 중 하나만 작성해야 합니다.", ErrorCode.ILLEGAL_QUESTION);
-//        }
+        if (Objects.isNull(question.getContent())) {
+            return;
+        }
+        if (question.getContent().isBlank()) {
+            return;
+        }
+        throw new BoardException("현재 질문에는 글 작성이 허용되지 않습니다.", ErrorCode.ILLEGAL_QUESTION_EXCEPTION);
 
 //        if (question.getContent().length() > 500) {
 //            throw new QuestionContentOverSizeException("500 이하 여야 합니다", ErrorCode.QUESTION_CONTENT_OVERSIZE);
