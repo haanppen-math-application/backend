@@ -8,10 +8,14 @@ import com.hanpyeon.academyapi.course.domain.Teacher;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.logging.Logger;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 class LoadTeacherAdapter implements LoadTeacherPort {
     private final MemberRepository memberRepository;
     private final CourseMapper courseMapper;

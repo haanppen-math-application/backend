@@ -24,9 +24,9 @@ class RegisterCourseAdapter implements RegisterCoursePort {
                 findStudents(course.getStudents()),
                 courseEntity);
         // 연관관계 주인 엔티티에 추가하도록 변경
+        final Long courseId = courseRepository.save(courseEntity).getId();
         courseStudentRepository.saveAll(courseStudents);
-
-        return courseRepository.save(courseEntity).getId();
+        return courseId;
     }
 
     private Course mapToEntity(final com.hanpyeon.academyapi.course.domain.Course course) {
