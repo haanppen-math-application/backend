@@ -124,8 +124,8 @@ public class SecurityConfig {
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
 
-//                    request.requestMatchers("/api/courses/**")
-//                            .permitAll();
+                    request.requestMatchers(HttpMethod.GET, "/api/courses")
+                            .authenticated();
 
 //                    request.requestMatchers(HttpMethod.GET, "/api/members/teachers")
 //                            .hasAnyAuthority(
