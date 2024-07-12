@@ -58,7 +58,7 @@ public class AccountController {
         return ResponseEntity.ok(id);
     }
 
-    @GetMapping(value = "/my", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/my")
     public ResponseEntity<MyAccountInfo> getMyAccountInfo(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
