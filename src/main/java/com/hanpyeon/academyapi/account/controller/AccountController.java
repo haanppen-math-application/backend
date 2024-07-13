@@ -1,10 +1,12 @@
 package com.hanpyeon.academyapi.account.controller;
 
 import com.hanpyeon.academyapi.account.dto.*;
+import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
 import com.hanpyeon.academyapi.account.service.RegisterService;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
 @AllArgsConstructor
@@ -62,6 +66,9 @@ public class AccountController {
     public ResponseEntity<MyAccountInfo> getMyAccountInfo(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
+        if (Objects.isNull(memberPrincipal)) {
+            throw new AccountException("로그인 하지 않았습니다", ErrorCode.DENIED_EXCEPTION);
+        }
         return ResponseEntity.ok(accountUpdateService.getMyInfo(memberPrincipal.memberId()));
     }
 
