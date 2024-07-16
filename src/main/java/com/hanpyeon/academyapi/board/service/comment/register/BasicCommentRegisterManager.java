@@ -35,12 +35,8 @@ class BasicCommentRegisterManager extends AbstractCommentRegisterManager {
 
     @Override
     protected void verifyComment(Comment comment) {
-        if (comment.getContent() == null && !comment.getImages().isEmpty()) {
-            return;
+        if (comment.getContent() == null && comment.getImages().isEmpty()) {
+            throw new NotAllowedCommentException("댓글 = 이미지, 글 중 하나는 작성해야 합니다.", ErrorCode.ILLEGAL_COMMENT_EXCEPTION);
         }
-        if (comment.getContent() != null && comment.getImages().isEmpty()) {
-            return;
-        }
-        throw new NotAllowedCommentException("댓글 = 이미지, 글 중 하나만 작성해야 합니다.", ErrorCode.ILLEGAL_COMMENT_EXCEPTION);
     }
 }

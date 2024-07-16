@@ -44,7 +44,7 @@ abstract class AbstractCommentRegisterManager implements CommentRegisterManager 
     }
 
     private Question findQuestion(final Long questionId) {
-        Question question = questionRepository.findQuestionById(questionId)
+        Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
         verifyQuestion(question);
         return question;

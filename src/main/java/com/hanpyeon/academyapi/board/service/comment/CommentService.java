@@ -31,13 +31,10 @@ public class CommentService {
     private final CommentDeleteManager commentDeleteManager;
     private final ImageService imageService;
 
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    @Transactional
     public Long addComment(@Validated final CommentRegisterDto commentRegisterDto) {
         Comment comment = commentRegisterManager.register(commentRegisterDto);
-        log.info(comment.toString());
         commentRepository.save(comment);
-        log.info(comment.toString());
-        log.info("마지막에 " + String.valueOf(comment.getQuestion().getComments().size()));
         return comment.getId();
     }
 

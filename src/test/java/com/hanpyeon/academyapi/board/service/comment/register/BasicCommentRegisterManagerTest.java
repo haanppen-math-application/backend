@@ -4,7 +4,6 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
-import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
@@ -63,7 +62,7 @@ class BasicCommentRegisterManagerTest {
 
         Mockito.when(questionRepository.findById(commentRegisterDto.questionId()))
                 .thenReturn(Optional.of(question));
-        Mockito.when(memberRepository.findById(commentRegisterDto.memberId()))
+        Mockito.when(memberRepository.findMemberByIdAndRemovedIsFalse(commentRegisterDto.memberId()))
                 .thenReturn(Optional.of(member));
         Mockito.when(member.getRole())
                 .thenReturn(Role.MANAGER);
@@ -87,7 +86,7 @@ class BasicCommentRegisterManagerTest {
 
         Mockito.when(questionRepository.findById(commentRegisterDto.questionId()))
                 .thenReturn(Optional.of(question));
-        Mockito.when(memberRepository.findById(commentRegisterDto.memberId()))
+        Mockito.when(memberRepository.findMemberByIdAndRemovedIsFalse(commentRegisterDto.memberId()))
                 .thenReturn(Optional.of(member));
         Mockito.when(member.getRole())
                 .thenReturn(Role.MANAGER);
@@ -111,7 +110,7 @@ class BasicCommentRegisterManagerTest {
 
         Mockito.when(questionRepository.findById(commentRegisterDto.questionId()))
                 .thenReturn(Optional.of(question));
-        Mockito.when(memberRepository.findById(commentRegisterDto.memberId()))
+        Mockito.when(memberRepository.findMemberByIdAndRemovedIsFalse(commentRegisterDto.memberId()))
                 .thenReturn(Optional.of(member));
         Mockito.when(member.getRole())
                 .thenReturn(Role.MANAGER);
@@ -122,7 +121,7 @@ class BasicCommentRegisterManagerTest {
     }
 
     @Test
-    void Comment_이미지_글_모두_작성_에러처리_테스트() {
+    void Comment_이미지_글_모두_작성_가능_테스트() {
         final List<Image> savedImages = List.of(new Image("test"));
         final Long questionId = 1L;
         final Long memberId = 2L;
@@ -135,14 +134,15 @@ class BasicCommentRegisterManagerTest {
 
         Mockito.when(questionRepository.findById(commentRegisterDto.questionId()))
                 .thenReturn(Optional.of(question));
-        Mockito.when(memberRepository.findById(commentRegisterDto.memberId()))
+        Mockito.when(memberRepository.findMemberByIdAndRemovedIsFalse(commentRegisterDto.memberId()))
                 .thenReturn(Optional.of(member));
         Mockito.when(member.getRole())
                 .thenReturn(Role.MANAGER);
         Mockito.when(imageService.saveImage(images))
                 .thenReturn(savedImages);
 
-        Assertions.assertThrows(NotAllowedCommentException.class, () -> basicCommentRegisterManager.register(commentRegisterDto));
+        Assertions.assertDoesNotThrow(() -> basicCommentRegisterManager.register(commentRegisterDto));
+//        Assertions.assertThrows(NotAllowedCommentException.class, () -> basicCommentRegisterManager.register(commentRegisterDto));
     }
 
     @Test
@@ -163,7 +163,7 @@ class BasicCommentRegisterManagerTest {
         CommentRegisterDto commentRegisterDto = Mockito.mock(CommentRegisterDto.class);
         Mockito.when(questionRepository.findById(Mockito.anyLong()))
                 .thenReturn(Optional.of(question));
-        Mockito.when(memberRepository.findById(Mockito.anyLong()))
+        Mockito.when(memberRepository.findMemberByIdAndRemovedIsFalse(Mockito.anyLong()))
                 .thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> basicCommentRegisterManager.register(commentRegisterDto))
