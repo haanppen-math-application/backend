@@ -16,6 +16,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 //    Optional<Member> findMemberByPhoneNumberAndRemovedIsFalse(final String phoneNumber);
     Optional<Member> findMemberByPhoneNumberAndRemovedIsFalse(final String phoneNumber);
+    Optional<Member> findMemberByIdAndRemovedIsFalse(final Long id);
     Optional<Member> findMemberByIdAndRoleAndRemovedIsFalse(final Long id, final Role role);
     List<Member> findMembersByIdIsInAndRoleAndRemovedIsFalse(final List<Long> ids, final Role role);
     List<Member> findMembersByRoleAndRemovedIsFalse(final Role role);

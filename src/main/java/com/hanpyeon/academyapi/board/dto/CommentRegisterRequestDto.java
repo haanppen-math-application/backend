@@ -14,7 +14,7 @@ public record CommentRegisterRequestDto(
 ) {
     @Override
     public String toString() {
-        return "TestCommentRegisterDto{" +
+        return "CommentRegisterDto{" +
                 "questionId=" + questionId +
                 ", content='" + content + '\'' +
                 ", images=" + images +

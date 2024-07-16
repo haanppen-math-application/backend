@@ -13,6 +13,7 @@ import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -35,21 +36,22 @@ abstract class AbstractCommentRegisterManager implements CommentRegisterManager 
         Question question = findQuestion(commentRegisterDto.questionId());
         Member member = findMember(commentRegisterDto.memberId());
         List<Image> images = imageService.saveImage(commentRegisterDto.images());
-        question.solved();
         final Comment comment = boardMapper.createComment(question, member, images, commentRegisterDto.content());
+        question.addComment(comment);
+        question.solved();
         verifyComment(comment);
         return comment;
     }
 
     private Question findQuestion(final Long questionId) {
-        Question question = questionRepository.findById(questionId)
+        Question question = questionRepository.findQuestionById(questionId)
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
         verifyQuestion(question);
         return question;
     }
 
     private Member findMember(final Long memberId) {
-        Member member = memberRepository.findById(memberId)
+        Member member = memberRepository.findMemberByIdAndRemovedIsFalse(memberId)
                 .orElseThrow(() -> new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER));
         verifyMember(member);
         return member;

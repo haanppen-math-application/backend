@@ -8,6 +8,7 @@ import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class QuestionAccessManager {
     }
 
     @WarnLoggable
+    @Transactional
     public QuestionDetails getSingle(final Question question) {
         question.addViewCount();
         return boardMapper.createQuestionDetails(question);

@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.board.entity;
 
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.board.controller.CommentController;
 import com.hanpyeon.academyapi.media.entity.Image;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @CreationTimestamp
     private LocalDateTime registeredDateTime;
@@ -33,9 +35,9 @@ public class Question {
     @ManyToOne(targetEntity = Member.class)
     private Member targetMember;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Image> images;
-    @OneToMany(mappedBy = "id")
-    private List<Comment> comments;
+    private List<Image> images = new ArrayList<>();
+    @OneToMany(mappedBy = "question")
+    private List<Comment> comments = new ArrayList<>();
 
 
     @Builder
@@ -51,6 +53,12 @@ public class Question {
 //    public void changeContent(final String content) {
 //        this.content = content;
 //    }
+
+    public int addComment(final Comment comment) {
+        this.comments.add(comment);
+        comment.setQuestion(this);
+        return comments.size();
+    }
     public void changeTargetMember(final Member targetMember) {
         this.targetMember = targetMember;
     }
@@ -60,6 +68,21 @@ public class Question {
 
     public void addViewCount() {
         this.viewCount++;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", registeredDateTime=" + registeredDateTime +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", solved=" + solved +
+                ", viewCount=" + viewCount +
+                ", ownerMember=" + ownerMember +
+                ", targetMember=" + targetMember +
+                ", images=" + images +
+                '}';
     }
 
     public void clearSolved() {

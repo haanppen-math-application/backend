@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(nullable = true)
     private String content;
@@ -25,11 +26,24 @@ public class Comment {
     private LocalDateTime registeredDateTime;
     @ManyToOne
     private Member registeredMember;
-    @ManyToOne
+    @ManyToOne(targetEntity = Question.class, optional = false)
     @JoinColumn(name = "question_id")
     private Question question;
     @OneToMany
     private List<Image> images;
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", adopted=" + adopted +
+                ", registeredDateTime=" + registeredDateTime +
+                ", registeredMember=" + registeredMember +
+                ", question=" + question +
+                ", images=" + images +
+                '}';
+    }
 
     @Builder
     public Comment(String content, Member registeredMember, Question question, List<Image> images) {
@@ -37,6 +51,10 @@ public class Comment {
         this.registeredMember = registeredMember;
         this.question = question;
         this.images = images;
+    }
+
+    void setQuestion(final Question question) {
+        this.question = question;
     }
     void singleAdopt() {
         this.adopted = true;

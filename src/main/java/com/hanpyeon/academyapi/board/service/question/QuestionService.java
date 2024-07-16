@@ -21,6 +21,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
+@Transactional
 public class QuestionService {
     private final QuestionRegisterManger questionRegisterManager;
     private final QuestionUpdateManager questionUpdateManager;

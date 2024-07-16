@@ -67,6 +67,7 @@ public class BoardMapper {
                         .map(mediaMapper::createImageUrlDto)
                         .toList())
                 .registeredDateTime(comment.getRegisteredDateTime())
+                .content(comment.getContent())
                 .registeredMemberDetails(createMemberDetails(comment.getRegisteredMember()))
                 .build();
     }

@@ -47,7 +47,7 @@ public class MemberInitializer {
                     .registeredDate(LocalDateTime.now())
                     .build());
             teacherList.add(Member.builder()
-                    .phoneNumber("0101223" + i)
+                    .phoneNumber("0101" + i)
                     .name("teacher" + i)
                     .password(passwordEncoder.getEncodedPassword(adminPassword))
                     .role(Role.TEACHER)
