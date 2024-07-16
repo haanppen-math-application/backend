@@ -9,16 +9,18 @@ import com.hanpyeon.academyapi.course.domain.Course;
 import com.hanpyeon.academyapi.course.domain.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DeleteCourseStudentsService implements UpdateCourseStudentsUseCase {
+public class UpdateCourseStudentsService implements UpdateCourseStudentsUseCase {
     private final LoadStudentsPort loadStudentsPort;
     private final LoadCoursePort loadCoursePort;
     private final UpdateCoursePort updateCoursePort;
 
+    @Transactional
     public void updateStudents(UpdateCourseStudentsDto updateCourseStudentsDto) {
         final List<Student> students = loadStudentsPort.loadStudents(updateCourseStudentsDto.studentIds());
         final Course targetCourse = loadCoursePort.loadCourse(updateCourseStudentsDto.courseId());

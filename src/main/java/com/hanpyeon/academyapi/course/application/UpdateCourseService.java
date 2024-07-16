@@ -10,6 +10,7 @@ import com.hanpyeon.academyapi.course.domain.Teacher;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -20,6 +21,7 @@ public class UpdateCourseService implements UpdateCourseUseCase {
     private final LoadTeacherPort loadTeacherPort;
     private final UpdateCoursePort updateCoursePort;
     @Override
+    @Transactional
     public void updateCourse(final @Valid CourseUpdateDto courseUpdateDto) {
         final Course course = loadCoursePort.loadCourse(courseUpdateDto.courseId());
 

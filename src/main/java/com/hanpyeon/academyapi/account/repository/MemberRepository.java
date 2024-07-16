@@ -24,4 +24,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findMembersByIdGreaterThanEqualAndRoleAndRemovedIsFalse(final Long cursorId, final Role role, final Pageable pageable);
     List<Member> findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndRemovedIsFalse(final Long cursorId, final Role role, final Pageable pageable, final Integer startGrade, final Integer endGrade);
     List<Member> findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndNameContainingAndRemovedIsFalse(final Long cursorId, final Role role, final Pageable pageable, final Integer startGrade, final Integer endGrade, final String name);
+    List<Member> findMembersByIdInAndRemovedIsFalse(final List<Long> ids);
 }

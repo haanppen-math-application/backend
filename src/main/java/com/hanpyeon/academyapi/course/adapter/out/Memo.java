@@ -21,6 +21,7 @@ class Memo {
     @Column(name = "TARGET_DATE")
     private LocalDateTime targetDate;
     @ManyToOne
+    @JoinColumn(name = "courseId")
     private Course course;
     @Column(name = "PROGRESSED")
     private String progressed;

@@ -26,8 +26,8 @@ public class UpdateCourseStudentsController {
                                             @PathVariable Long courseId,
                                             @RequestBody UpdateCourseStudentsRequest updateCourseStudentsRequest
     ) {
-        final UpdateCourseStudentsDto deleteCourseStudentsDto = UpdateCourseStudentsDto.of(memberPrincipal.memberId(), courseId, updateCourseStudentsRequest.studentIds);
-        updateCourseStudentsUseCase.updateStudents(deleteCourseStudentsDto);
+        final UpdateCourseStudentsDto updateCourseStudentsDto = UpdateCourseStudentsDto.of(memberPrincipal.memberId(), courseId, updateCourseStudentsRequest.studentIds);
+        updateCourseStudentsUseCase.updateStudents(updateCourseStudentsDto);
         return ResponseEntity.ok(null);
     }
 

@@ -29,14 +29,14 @@ class CourseStudent {
     @JoinColumn(name = "student_id", nullable = false)
     private Member member;
 
-    private CourseStudent(final Member member, final Course courseEntity) {
-        this.member = member;
+    private CourseStudent(final Member student, final Course courseEntity) {
+        this.member = student;
         this.courseEntity = courseEntity;
     }
 
-    static CourseStudent of(final Member member, final Course courseEntity) {
-        final CourseStudent courseStudent = new CourseStudent(member, courseEntity);
+    static CourseStudent addToCourse(final Member student, final Course courseEntity) {
+        final CourseStudent courseStudent = new CourseStudent(student, courseEntity);
         courseEntity.addCourseStudent(courseStudent);
-        return new CourseStudent(member, courseEntity);
+        return new CourseStudent(student, courseEntity);
     }
 }

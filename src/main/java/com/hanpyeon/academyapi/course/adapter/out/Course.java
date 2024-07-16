@@ -25,7 +25,7 @@ class Course {
     @OneToMany(mappedBy = "courseEntity")
     private List<CourseStudent> students = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "course")
     private List<Memo> memos = new ArrayList<>();
 
     Course(final String courseName, final Member teacher) {

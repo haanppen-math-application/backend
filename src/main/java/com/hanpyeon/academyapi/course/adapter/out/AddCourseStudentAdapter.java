@@ -32,7 +32,7 @@ class AddCourseStudentAdapter implements AddCourseStudentPort {
                 .orElseThrow(() -> new NoSuchCourseException(ErrorCode.NO_SUCH_COURSE));
 
         courseStudentRepository.saveAll(students.stream()
-                .map(student -> CourseStudent.of(student, course))
+                .map(student -> CourseStudent.addToCourse(student, course))
                 .toList());
     }
 }

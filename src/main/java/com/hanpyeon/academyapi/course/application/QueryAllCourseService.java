@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.course.application.port.in.QueryAllCourseUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.LoadAllCoursePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class QueryAllCourseService implements QueryAllCourseUseCase {
     private final LoadAllCoursePort loadAllCoursePort;
 
     @Override
+    @Transactional(readOnly = true)
     public List<CoursePreview> loadAllCoursePreviews() {
         return loadAllCoursePort.loadAllCourses()
                 .stream()

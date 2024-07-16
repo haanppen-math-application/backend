@@ -67,8 +67,8 @@ class DeleteCourseServiceTest {
         // 수업에 학생 등록
         Member student1 = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse("123123").orElseThrow();
         Member student2 = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse("123").orElseThrow();
-        courseStudentRepository.save(CourseStudent.of(student1, course));
-        courseStudentRepository.save(CourseStudent.of(student2, course));
+        courseStudentRepository.save(CourseStudent.addToCourse(student1, course));
+        courseStudentRepository.save(CourseStudent.addToCourse(student2, course));
     }
 
     @Test

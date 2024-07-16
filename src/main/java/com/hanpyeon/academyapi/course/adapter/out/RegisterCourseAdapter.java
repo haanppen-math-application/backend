@@ -38,7 +38,7 @@ class RegisterCourseAdapter implements RegisterCoursePort {
 
     private List<CourseStudent> createCourseStudents(final List<Member> students, final Course courseEntity) {
         return students.stream()
-                .map(student -> CourseStudent.of(student, courseEntity))
+                .map(student -> CourseStudent.addToCourse(student, courseEntity))
                 .toList();
     }
 
