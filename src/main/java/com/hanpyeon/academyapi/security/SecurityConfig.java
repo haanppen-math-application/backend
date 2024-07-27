@@ -130,12 +130,8 @@ public class SecurityConfig {
                     request.requestMatchers(HttpMethod.GET, "/api/courses")
                             .authenticated();
 
-//                    request.requestMatchers(HttpMethod.GET, "/api/members/teachers")
-//                            .hasAnyAuthority(
-//                                    Role.MANAGER.getSecurityRole(),
-//                                    Role.TEACHER.getSecurityRole()
-//                            );
-
+                    request.requestMatchers(HttpMethod.GET)
+                            .authenticated();
                     // 404 NOT FOUND EXCEPTION
                     request.anyRequest().permitAll();
                 })
