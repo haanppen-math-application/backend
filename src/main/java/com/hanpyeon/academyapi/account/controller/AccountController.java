@@ -66,9 +66,6 @@ public class AccountController {
     public ResponseEntity<MyAccountInfo> getMyAccountInfo(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        if (Objects.isNull(memberPrincipal)) {
-            throw new AccountException("로그인 하지 않았습니다", ErrorCode.DENIED_EXCEPTION);
-        }
         return ResponseEntity.ok(accountUpdateService.getMyInfo(memberPrincipal.memberId()));
     }
 

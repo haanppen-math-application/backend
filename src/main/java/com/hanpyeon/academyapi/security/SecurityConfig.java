@@ -62,6 +62,9 @@ public class SecurityConfig {
                             .permitAll();
 //////////////////////////////////////////////////////////////////////////////////////////
                     // accounts
+                    request.requestMatchers(HttpMethod.GET, "/api/accounts/my")
+                                    .authenticated();
+
                     request.requestMatchers(HttpMethod.POST, "/api/accounts")
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
