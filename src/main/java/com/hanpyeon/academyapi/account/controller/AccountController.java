@@ -48,7 +48,7 @@ public class AccountController {
             "다만, 비밀번호의 경우 null이 아니라면 변경작업이 실행됩니다. (이전 비밀번호 검증)")
     public ResponseEntity<?> updateAccount(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
-            @Valid AccountUpdateRequest accountUpdateRequest
+            @RequestBody @Valid AccountUpdateRequest accountUpdateRequest
     ) {
         final Long id = accountUpdateService.updateAccount(
                 new AccountUpdateDto(
