@@ -8,14 +8,22 @@ import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class QueryService {
     private final MemberRepository memberRepository;
+
+    public List<PreviewStudent> loadAllStudents() {
+        return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.STUDENT).stream()
+                .map(PreviewStudent::of)
+                .toList();
+    }
 
     public CursorResponse<PreviewTeacher> loadTeachers(final TeacherQueryDto teacherQueryDto) {
         final Pageable pageable = Pageable.ofSize(teacherQueryDto.pageSize());

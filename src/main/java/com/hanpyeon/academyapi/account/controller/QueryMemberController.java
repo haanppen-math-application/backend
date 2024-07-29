@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/members")
 @RequiredArgsConstructor
@@ -52,6 +54,12 @@ public class QueryMemberController {
     ) {
         final StudentQueryDto queryDto = new StudentQueryDto(cursorIndex, size, name, startGrade, endGrade);
         CursorResponse<PreviewStudent> students = queryService.loadStudents(queryDto);
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/students/all")
+    public ResponseEntity<List<PreviewStudent>> getAllStudents() {
+        final List<PreviewStudent> students = queryService.loadAllStudents();
         return ResponseEntity.ok(students);
     }
 }
