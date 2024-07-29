@@ -25,14 +25,14 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class LoginController {
     private static final String REFRESH_TOKEN_NAME = "refreshToken";
     private static final String ENCODER = "UTF-8";
     private final JwtService jwtService;
 
-    @PostMapping
+    @PostMapping("/login")
     @Operation(summary = "로그인 API", description = "JWT 발급을 위한 로그인 API 입니다.")
     @ApiResponse(responseCode = "200", description = "사용자 로그인 성공", content = @Content(schema = @Schema(implementation = JwtDto.class)))
     public ResponseEntity<JwtResponse> memberLogin(
@@ -43,7 +43,7 @@ public class LoginController {
         return createJwtResponse(httpServletResponse, jwtDto);
     }
 
-    @PostMapping("/refresh")
+    @PostMapping("/login/refresh")
     @Operation(summary = "JWT 재발급 API", description = "쿠키의 Refresh Token 을 이용해 새로 발급받는 API 입니다.")
     public ResponseEntity<JwtResponse> regenerateJwtToken(
             final @NotNull @CookieValue(REFRESH_TOKEN_NAME) String jwtRefreshToken,
@@ -52,6 +52,14 @@ public class LoginController {
         final String refreshToken = decodeToken(jwtRefreshToken);
         final JwtDto jwtDto = jwtService.provideJwtByRefreshToken(refreshToken);
         return createJwtResponse(httpServletResponse, jwtDto);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> removeCookie(
+            HttpServletResponse httpServletResponse
+    ) {
+        httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, null);
+        return ResponseEntity.ok(null);
     }
 
     private String decodeToken(final String refreshToken) {

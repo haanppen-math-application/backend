@@ -60,6 +60,8 @@ public class SecurityConfig {
                             .permitAll();
                     request.requestMatchers("/api/login/refresh")
                             .permitAll();
+                    request.requestMatchers("/api/logout")
+                                    .authenticated();
 //////////////////////////////////////////////////////////////////////////////////////////
                     // accounts
                     request.requestMatchers(HttpMethod.GET, "/api/accounts/my")
