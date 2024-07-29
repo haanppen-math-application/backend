@@ -26,7 +26,7 @@ public class MemberPasswordUpdateHandler implements AccountUpdateHandler {
     }
 
     private void verifyPreviousPassword(final Member member, final String prevPassword) {
-        if (prevPassword == null || !passwordHandler.matches(member.getPassword(), prevPassword)) {
+        if (prevPassword == null || !passwordHandler.matches(prevPassword, member.getPassword())) {
             throw new AccountException("prevPassword가 올바르지 않습니다.", ErrorCode.INVALID_PASSWORD_EXCEPTION);
         }
     }
