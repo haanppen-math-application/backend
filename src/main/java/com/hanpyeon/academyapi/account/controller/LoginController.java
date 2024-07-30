@@ -58,7 +58,7 @@ public class LoginController {
     public ResponseEntity<?> removeCookie(
             HttpServletResponse httpServletResponse
     ) {
-        httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, null);
+        httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, "null");
         return ResponseEntity.ok(null);
     }
 
