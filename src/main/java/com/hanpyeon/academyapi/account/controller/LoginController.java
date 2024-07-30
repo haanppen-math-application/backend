@@ -46,19 +46,20 @@ public class LoginController {
     @PostMapping("/login/refresh")
     @Operation(summary = "JWT 재발급 API", description = "쿠키의 Refresh Token 을 이용해 새로 발급받는 API 입니다.")
     public ResponseEntity<JwtResponse> regenerateJwtToken(
+            final @NotNull @CookieValue(REFRESH_TOKEN_NAME) String jwtRefreshToken,
             final HttpServletResponse httpServletResponse
     ) {
-        final JwtDto jwtDto = jwtService.provideJwtByRefreshToken("null");
+        final String refreshToken = decodeToken(jwtRefreshToken);
+        final JwtDto jwtDto = jwtService.provideJwtByRefreshToken(refreshToken);
         return createJwtResponse(httpServletResponse, jwtDto, 60);
     }
 
     @PostMapping("/logout")
     @Operation(summary = "로그아웃 ( 로그인 된 상태에서 사용 가능)")
     public ResponseEntity<?> removeCookie(
-            final @NotNull @CookieValue(REFRESH_TOKEN_NAME) String jwtRefreshToken,
             final HttpServletResponse httpServletResponse
     ) {
-        final ResponseCookie responseCookie = createHttpOnlyCookieHeader(jwtRefreshToken, 0);
+        final ResponseCookie responseCookie = createHttpOnlyCookieHeader("null", 0);
         httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
         return ResponseEntity.ok(null);
     }
