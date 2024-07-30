@@ -51,14 +51,17 @@ public class LoginController {
     ) {
         final String refreshToken = decodeToken(jwtRefreshToken);
         final JwtDto jwtDto = jwtService.provideJwtByRefreshToken(refreshToken);
-        return createJwtResponse(httpServletResponse, jwtDto);
+        return createJwtResponse(httpServletResponse, jwtDto, 60);
     }
 
     @PostMapping("/logout")
+    @Operation(summary = "로그아웃 ( 로그인 된 상태에서 사용 가능)")
     public ResponseEntity<?> removeCookie(
-            HttpServletResponse httpServletResponse
+            final @NotNull @CookieValue(REFRESH_TOKEN_NAME) String jwtRefreshToken,
+            final HttpServletResponse httpServletResponse
     ) {
-        httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, "null");
+        final ResponseCookie responseCookie = createHttpOnlyCookieHeader(jwtRefreshToken, 0);
+        httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
         return ResponseEntity.ok(null);
     }
 
@@ -78,22 +81,22 @@ public class LoginController {
         }
     }
 
-    private ResponseEntity<JwtResponse> createJwtResponse(final HttpServletResponse httpServletResponse, final JwtDto jwtDto) {
+    private ResponseEntity<JwtResponse> createJwtResponse(final HttpServletResponse httpServletResponse, final JwtDto jwtDto, final int minute) {
         final String encodedRefreshToken = encodeToken(jwtDto.refreshToken());
-        final ResponseCookie cookie = createHttpOnlyCookieHeader(encodedRefreshToken);
+        final ResponseCookie cookie = createHttpOnlyCookieHeader(encodedRefreshToken, minute);
 
         httpServletResponse.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return ResponseEntity.ok(new JwtResponse(jwtDto.name(), jwtDto.accessToken(), jwtDto.role()));
     }
 
-    private ResponseCookie createHttpOnlyCookieHeader(final String refreshToken) {
+    private ResponseCookie createHttpOnlyCookieHeader(final String refreshToken, final int minute) {
         return ResponseCookie.from(REFRESH_TOKEN_NAME, refreshToken)
                 .httpOnly(true)
                 .sameSite(Cookie.SameSite.NONE.name())
                 .path("/api/login/refresh")
                 .secure(true)
-                .maxAge(60 * 60)
+                .maxAge(60 * minute)
                 .build();
     }
 }
