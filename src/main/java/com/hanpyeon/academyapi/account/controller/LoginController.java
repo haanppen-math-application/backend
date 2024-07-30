@@ -40,7 +40,7 @@ public class LoginController {
             HttpServletResponse httpServletResponse
     ) {
         final JwtDto jwtDto = jwtService.provideJwtByLogin(loginRequestDto.userPhoneNumber(), loginRequestDto.password());
-        return createJwtResponse(httpServletResponse, jwtDto);
+        return createJwtResponse(httpServletResponse, jwtDto, 60);
     }
 
     @PostMapping("/login/refresh")
