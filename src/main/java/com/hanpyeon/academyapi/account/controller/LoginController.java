@@ -46,11 +46,9 @@ public class LoginController {
     @PostMapping("/login/refresh")
     @Operation(summary = "JWT 재발급 API", description = "쿠키의 Refresh Token 을 이용해 새로 발급받는 API 입니다.")
     public ResponseEntity<JwtResponse> regenerateJwtToken(
-            final @NotNull @CookieValue(REFRESH_TOKEN_NAME) String jwtRefreshToken,
             final HttpServletResponse httpServletResponse
     ) {
-        final String refreshToken = decodeToken(jwtRefreshToken);
-        final JwtDto jwtDto = jwtService.provideJwtByRefreshToken(refreshToken);
+        final JwtDto jwtDto = jwtService.provideJwtByRefreshToken("null");
         return createJwtResponse(httpServletResponse, jwtDto, 60);
     }
 
