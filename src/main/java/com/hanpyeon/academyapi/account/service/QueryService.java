@@ -25,6 +25,12 @@ public class QueryService {
                 .toList();
     }
 
+    public List<PreviewTeacher> loadALlTeachers() {
+        return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER).stream()
+                .map(PreviewTeacher::of)
+                .toList();
+    }
+
     public CursorResponse<PreviewTeacher> loadTeachers(final TeacherQueryDto teacherQueryDto) {
         final Pageable pageable = Pageable.ofSize(teacherQueryDto.pageSize());
         List<Member> teacherEntities;

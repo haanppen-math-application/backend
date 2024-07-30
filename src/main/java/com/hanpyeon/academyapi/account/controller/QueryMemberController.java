@@ -24,7 +24,7 @@ public class QueryMemberController {
     private final QueryService queryService;
 
     @GetMapping("/teachers")
-    @Operation(summary = "전체 선생 조회 API", description = "인증된 사용자면 모두 가능, \n" +
+    @Operation(summary = "페이징 선생 조회 API", description = "인증된 사용자면 모두 가능, \n" +
             "?cursorIndex={다음 커서}. 없을 시 초반부 검색\n" +
             "?size={페이지 크기 지정}. 기본 값 5 로 설정 \n" +
             "?name={찾고자 하는 이름} 시 검색, name이 없을시, 전체 조회\n")
@@ -39,7 +39,7 @@ public class QueryMemberController {
     }
 
     @GetMapping("/students")
-    @Operation(summary = "전체 학생 조회 API", description = "인증된 사용자면 모두 가능\n" +
+    @Operation(summary = "페이징 학생 조회 API", description = "인증된 사용자면 모두 가능\n" +
             "?cursorIndex={다음 커서}. 없을 시 초반부 검색\n" +
             "?size={페이지 크기 지정}. 기본 값 5 로 설정\n" +
             "?name : 이름을 이용한 검색 (없을 시, 전체 검색)\n" +
@@ -58,8 +58,16 @@ public class QueryMemberController {
     }
 
     @GetMapping("/students/all")
+    @Operation(summary = "전체 학생 조회 API")
     public ResponseEntity<List<PreviewStudent>> getAllStudents() {
         final List<PreviewStudent> students = queryService.loadAllStudents();
         return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/teachers/all")
+    @Operation(summary = "전체 선생 조회 API")
+    public ResponseEntity<List<PreviewTeacher>> getAllTeachers() {
+        final List<PreviewTeacher> teachers = queryService.loadALlTeachers();
+        return ResponseEntity.ok(teachers);
     }
 }
