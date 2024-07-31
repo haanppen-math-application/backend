@@ -2,10 +2,13 @@ package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.*;
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.cursor.CursorResponse;
+import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.paging.CursorResponse;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +34,17 @@ public class QueryService {
                 .toList();
     }
 
+    public Page<PreviewTeacher> loadTeachers(final Pageable pageable) {
+        return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER, pageable)
+                .map(PreviewTeacher::of);
+    }
+
+    public Page<PreviewStudent> loadStudents(final Pageable pageable) {
+        return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.STUDENT, pageable)
+                .map(PreviewStudent::of);
+
+    }
+
     public CursorResponse<PreviewTeacher> loadTeachers(final TeacherQueryDto teacherQueryDto) {
         final Pageable pageable = Pageable.ofSize(teacherQueryDto.pageSize());
         List<Member> teacherEntities;
@@ -41,7 +55,6 @@ public class QueryService {
         }
         final List<PreviewTeacher> previewTeachers = teacherEntities.stream().map(PreviewTeacher::of).toList();
         return new CursorResponse<>(previewTeachers, getNextCursorIndex(teacherEntities));
-
     }
 
     public CursorResponse<PreviewStudent> loadStudents(final StudentQueryDto studentQueryDto) {

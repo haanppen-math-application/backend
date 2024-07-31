@@ -1,14 +1,16 @@
 package com.hanpyeon.academyapi.account.controller;
 
-import com.hanpyeon.academyapi.account.dto.PreviewStudent;
-import com.hanpyeon.academyapi.account.dto.PreviewTeacher;
-import com.hanpyeon.academyapi.account.dto.StudentQueryDto;
-import com.hanpyeon.academyapi.account.dto.TeacherQueryDto;
+import com.hanpyeon.academyapi.account.dto.*;
 import com.hanpyeon.academyapi.account.service.QueryService;
-import com.hanpyeon.academyapi.cursor.CursorResponse;
+import com.hanpyeon.academyapi.paging.CursorResponse;
+import com.hanpyeon.academyapi.paging.PagedResponse;
+import com.hanpyeon.academyapi.security.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,7 @@ public class QueryMemberController {
     private final QueryService queryService;
 
     @GetMapping("/teachers")
-    @Operation(summary = "페이징 선생 조회 API", description = "인증된 사용자면 모두 가능, \n" +
+    @Operation(summary = "커서기반 선생 조회 API", description = "인증된 사용자면 모두 가능, \n" +
             "?cursorIndex={다음 커서}. 없을 시 초반부 검색\n" +
             "?size={페이지 크기 지정}. 기본 값 5 로 설정 \n" +
             "?name={찾고자 하는 이름} 시 검색, name이 없을시, 전체 조회\n")
@@ -38,8 +40,40 @@ public class QueryMemberController {
         return ResponseEntity.ok(teachers);
     }
 
+    @GetMapping("/teachers/paging")
+    @Operation(summary = "페이징 선생 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
+    @SecurityRequirement(name = "jwtAuth")
+    public ResponseEntity<PagedResponse<PreviewTeacher>> queryTeachers(
+            @PageableDefault(size = 5) final Pageable pageable
+    ) {
+        Page<PreviewTeacher> previewTeachers = queryService.loadTeachers(pageable);
+        return ResponseEntity.ok(PagedResponse.of(previewTeachers));
+    }
+
+    @GetMapping("/students/paging")
+    @Operation(summary = "페이징 학생 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
+    @SecurityRequirement(name = "jwtAuth")
+    public ResponseEntity<PagedResponse<PreviewStudent>> queryStudents(
+            @PageableDefault(size = 5) final Pageable pageable
+    ) {
+        Page<PreviewStudent> previewTeachers = queryService.loadStudents(pageable);
+        return ResponseEntity.ok(PagedResponse.of(previewTeachers));
+    }
+
+//    @GetMapping("/paging")
+//    @Operation(summary = "페이징 멤버 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
+//    @SecurityRequirement(name = "jwtAuth")
+//    public ResponseEntity<PagedResponse<?>> queryMembersByPaging(
+//            @PageableDefault(size = 5) final Pageable pageable,
+//            @RequestParam(required = false) String name
+//    ) {
+//        Page<?> previewTeachers = queryService.loadMembers(pageable, new MemberQueryDto(role, name));
+//        return ResponseEntity.ok(PagedResponse.of(previewTeachers));
+//    }
+
+
     @GetMapping("/students")
-    @Operation(summary = "페이징 학생 조회 API", description = "인증된 사용자면 모두 가능\n" +
+    @Operation(summary = "커서 기반 학생 조회 API", description = "인증된 사용자면 모두 가능\n" +
             "?cursorIndex={다음 커서}. 없을 시 초반부 검색\n" +
             "?size={페이지 크기 지정}. 기본 값 5 로 설정\n" +
             "?name : 이름을 이용한 검색 (없을 시, 전체 검색)\n" +

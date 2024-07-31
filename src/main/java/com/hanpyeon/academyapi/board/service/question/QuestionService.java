@@ -9,7 +9,7 @@ import com.hanpyeon.academyapi.board.service.question.access.QuestionAccessManag
 import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
-import com.hanpyeon.academyapi.cursor.CursorResponse;
+import com.hanpyeon.academyapi.paging.CursorResponse;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;

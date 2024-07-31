@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.cursor;
+package com.hanpyeon.academyapi.paging;
 
 import java.util.List;
 

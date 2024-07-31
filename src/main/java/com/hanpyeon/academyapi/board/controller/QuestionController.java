@@ -4,7 +4,7 @@ import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
-import com.hanpyeon.academyapi.cursor.CursorResponse;
+import com.hanpyeon.academyapi.paging.CursorResponse;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
