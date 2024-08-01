@@ -61,11 +61,11 @@ public class SecurityConfig {
                     request.requestMatchers("/api/login/refresh")
                             .permitAll();
                     request.requestMatchers("/api/logout")
-                                    .authenticated();
+                            .authenticated();
 //////////////////////////////////////////////////////////////////////////////////////////
                     // accounts
                     request.requestMatchers(HttpMethod.GET, "/api/accounts/my")
-                                    .authenticated();
+                            .authenticated();
 
                     request.requestMatchers(HttpMethod.POST, "/api/accounts")
                             .hasAnyAuthority(
@@ -129,6 +129,8 @@ public class SecurityConfig {
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
 
+                    request.requestMatchers(HttpMethod.GET, "/api/media/*")
+                            .permitAll();
                     request.requestMatchers(HttpMethod.GET, "/api/courses")
                             .authenticated();
 
