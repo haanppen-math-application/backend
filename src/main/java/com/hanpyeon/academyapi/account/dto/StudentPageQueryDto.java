@@ -5,7 +5,8 @@ import org.springframework.data.domain.Pageable;
 
 public record StudentPageQueryDto(
         String name,
-        Integer grade,
+        Integer startGrade,
+        Integer endGrade,
         Pageable pageable
 ) {
 }

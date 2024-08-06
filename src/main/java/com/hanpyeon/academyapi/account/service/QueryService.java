@@ -45,19 +45,9 @@ public class QueryService {
     public Page<PreviewStudent> loadStudents(final StudentPageQueryDto studentPageQueryDto) {
         Page<Member> members;
         if (Objects.isNull(studentPageQueryDto.name()) || studentPageQueryDto.name().isBlank()) {
-            if (Objects.isNull(studentPageQueryDto.grade())) {
-                // 이름 X, 학년 X ( 전체 조회 )
-                members = memberRepository.findMembersByRoleAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.pageable());
-            } else {
-                // 이름 X, 학년 O 인 경우
-                members = memberRepository.findMembersByRoleAndGradeAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.grade(), studentPageQueryDto.pageable());
-            }
-        } else if (Objects.isNull(studentPageQueryDto.grade())) {
-            // 이름 O, 학년 X
-            members = memberRepository.findMembersByRoleAndNameContainingAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.name(), studentPageQueryDto.pageable());
+            members = memberRepository.findMembersByRoleAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.startGrade(), studentPageQueryDto.endGrade(), studentPageQueryDto.pageable());
         } else {
-            // 이름 O, 학년 O
-            members = memberRepository.findMembersByRoleAndNameContainingAndGradeAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.name(), studentPageQueryDto.grade(), studentPageQueryDto.pageable());
+            members = memberRepository.findMembersByRoleAndNameContainingAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.name(), studentPageQueryDto.startGrade(), studentPageQueryDto.endGrade(), studentPageQueryDto.pageable());
         }
         return members.map(PreviewStudent::of);
     }

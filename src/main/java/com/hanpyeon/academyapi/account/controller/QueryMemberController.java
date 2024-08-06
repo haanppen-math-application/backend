@@ -57,9 +57,11 @@ public class QueryMemberController {
     public ResponseEntity<PagedResponse<PreviewStudent>> queryStudents(
             @PageableDefault(size = 5) final Pageable pageable,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) Integer grade
+            @RequestParam(required = false, defaultValue = "0") Integer startGrade,
+            @RequestParam(required = false, defaultValue = "11") Integer endGrade
+
     ) {
-        final StudentPageQueryDto studentPageQueryDto = new StudentPageQueryDto(name, grade, pageable);
+        final StudentPageQueryDto studentPageQueryDto = new StudentPageQueryDto(name, startGrade, endGrade, pageable);
         Page<PreviewStudent> previewTeachers = queryService.loadStudents(studentPageQueryDto);
         return ResponseEntity.ok(PagedResponse.of(previewTeachers));
     }
