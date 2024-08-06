@@ -48,6 +48,11 @@ public class QuestionService {
         return new CursorResponse<>(questionAccessManager.mapToPreview(questions), getNextCursor(questions, pageable.getPageSize()));
     }
 
+    public CursorResponse<QuestionPreview> loadMyQuestionsByCursor(final Long cursorIndex, final Long memberId, final Pageable pageable) {
+        final List<Question> questions = questionRepository.findQuestionsByIdIsGreaterThanEqualAndAndOwnerMemberId(cursorIndex, memberId, pageable);
+        return new CursorResponse<>(questionAccessManager.mapToPreview(questions), getNextCursor(questions, pageable.getPageSize()));
+    }
+
     private Long getNextCursor(final List<Question> questions, final Integer pageSize) {
         Long nextCursorIndex = null;
         if (questions.size() < pageSize) {

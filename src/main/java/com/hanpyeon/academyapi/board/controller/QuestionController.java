@@ -19,6 +19,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.awt.*;
+
 
 @AllArgsConstructor
 @RestController
@@ -61,6 +63,17 @@ public class QuestionController {
             @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
             @RequestParam(required = false, defaultValue = "0") final Long cursorIndex) {
         return ResponseEntity.ok(questionService.loadQuestionsByCursor(cursorIndex, entityFieldMappedPageRequest));
+    }
+
+    @Operation(summary = "나의 질문 조회")
+    @GetMapping("/my")
+    @SecurityRequirement(name = "jwtAuth")
+    public ResponseEntity<CursorResponse<QuestionPreview>> getMyQuestions(
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
+            @ParameterObject final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
+            @RequestParam(required = false, defaultValue = "0") final Long cursorIndex
+    ) {
+        return ResponseEntity.ok(questionService.loadMyQuestionsByCursor(cursorIndex, memberPrincipal.memberId(), entityFieldMappedPageRequest));
     }
 
     @Operation(summary = "댓글 수정 API", description = "질문 수정은 본인만 가능합니다")
