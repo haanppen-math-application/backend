@@ -2,9 +2,7 @@ package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.*;
 import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.paging.CursorResponse;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
@@ -34,15 +32,34 @@ public class QueryService {
                 .toList();
     }
 
-    public Page<PreviewTeacher> loadTeachers(final Pageable pageable) {
-        return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER, pageable)
+    public Page<PreviewTeacher> loadTeachers(final TeacherPageQueryDto teacherPageQueryDto) {
+        if (teacherPageQueryDto.name() == null || teacherPageQueryDto.name().isBlank()) {
+            return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER, teacherPageQueryDto.pageable())
+                    .map(PreviewTeacher::of);
+        }
+        return memberRepository.findMembersByRoleAndNameContainingAndRemovedIsFalse(Role.TEACHER, teacherPageQueryDto.name(), teacherPageQueryDto.pageable())
                 .map(PreviewTeacher::of);
     }
 
-    public Page<PreviewStudent> loadStudents(final Pageable pageable) {
-        return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.STUDENT, pageable)
-                .map(PreviewStudent::of);
-
+    // 동적 쿼리 필요성 확인
+    public Page<PreviewStudent> loadStudents(final StudentPageQueryDto studentPageQueryDto) {
+        Page<Member> members;
+        if (Objects.isNull(studentPageQueryDto.name()) || studentPageQueryDto.name().isBlank()) {
+            if (Objects.isNull(studentPageQueryDto.grade())) {
+                // 이름 X, 학년 X ( 전체 조회 )
+                members = memberRepository.findMembersByRoleAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.pageable());
+            } else {
+                // 이름 X, 학년 O 인 경우
+                members = memberRepository.findMembersByRoleAndGradeAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.grade(), studentPageQueryDto.pageable());
+            }
+        } else if (Objects.isNull(studentPageQueryDto.grade())) {
+            // 이름 O, 학년 X
+            members = memberRepository.findMembersByRoleAndNameContainingAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.name(), studentPageQueryDto.pageable());
+        } else {
+            // 이름 O, 학년 O
+            members = memberRepository.findMembersByRoleAndNameContainingAndGradeAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.name(), studentPageQueryDto.grade(), studentPageQueryDto.pageable());
+        }
+        return members.map(PreviewStudent::of);
     }
 
     public CursorResponse<PreviewTeacher> loadTeachers(final TeacherQueryDto teacherQueryDto) {
@@ -50,7 +67,7 @@ public class QueryService {
         List<Member> teacherEntities;
         if (Objects.isNull(teacherQueryDto.name())) {
             teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndRemovedIsFalse(teacherQueryDto.cursorIndex(), Role.TEACHER, pageable);
-        }else {
+        } else {
             teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndNameContainingAndRemovedIsFalse(teacherQueryDto.cursorIndex(), Role.TEACHER, pageable, teacherQueryDto.name());
         }
         final List<PreviewTeacher> previewTeachers = teacherEntities.stream().map(PreviewTeacher::of).toList();

@@ -4,7 +4,6 @@ import com.hanpyeon.academyapi.account.dto.*;
 import com.hanpyeon.academyapi.account.service.QueryService;
 import com.hanpyeon.academyapi.paging.CursorResponse;
 import com.hanpyeon.academyapi.paging.PagedResponse;
-import com.hanpyeon.academyapi.security.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -44,9 +43,11 @@ public class QueryMemberController {
     @Operation(summary = "페이징 선생 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<PagedResponse<PreviewTeacher>> queryTeachers(
-            @PageableDefault(size = 5) final Pageable pageable
+            @PageableDefault(size = 5) final Pageable pageable,
+            @RequestParam(required = false) String name
     ) {
-        Page<PreviewTeacher> previewTeachers = queryService.loadTeachers(pageable);
+        final TeacherPageQueryDto teacherQueryDto = new TeacherPageQueryDto(name, pageable);
+        Page<PreviewTeacher> previewTeachers = queryService.loadTeachers(teacherQueryDto);
         return ResponseEntity.ok(PagedResponse.of(previewTeachers));
     }
 
@@ -54,23 +55,14 @@ public class QueryMemberController {
     @Operation(summary = "페이징 학생 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<PagedResponse<PreviewStudent>> queryStudents(
-            @PageableDefault(size = 5) final Pageable pageable
+            @PageableDefault(size = 5) final Pageable pageable,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer grade
     ) {
-        Page<PreviewStudent> previewTeachers = queryService.loadStudents(pageable);
+        final StudentPageQueryDto studentPageQueryDto = new StudentPageQueryDto(name, grade, pageable);
+        Page<PreviewStudent> previewTeachers = queryService.loadStudents(studentPageQueryDto);
         return ResponseEntity.ok(PagedResponse.of(previewTeachers));
     }
-
-//    @GetMapping("/paging")
-//    @Operation(summary = "페이징 멤버 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
-//    @SecurityRequirement(name = "jwtAuth")
-//    public ResponseEntity<PagedResponse<?>> queryMembersByPaging(
-//            @PageableDefault(size = 5) final Pageable pageable,
-//            @RequestParam(required = false) String name
-//    ) {
-//        Page<?> previewTeachers = queryService.loadMembers(pageable, new MemberQueryDto(role, name));
-//        return ResponseEntity.ok(PagedResponse.of(previewTeachers));
-//    }
-
 
     @GetMapping("/students")
     @Operation(summary = "커서 기반 학생 조회 API", description = "인증된 사용자면 모두 가능\n" +
