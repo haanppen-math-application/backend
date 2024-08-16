@@ -43,6 +43,10 @@ public enum ErrorCode {
     NO_SUCH_COURSE(HttpStatus.BAD_REQUEST, "-405", "반을 찾을 수 없음"),
     INVALID_COURSE_ACCESS(HttpStatus.BAD_REQUEST, "-406", "잘못된 반 API 접근"),
 
+    NOT_EXIST_DIRECTORY(HttpStatus.BAD_REQUEST, "-501", "존재하지 않는 디렉토리"),
+    CANNOT_CREATE_DIRECTORY_WITH_THIS_USER(HttpStatus.BAD_REQUEST, "-502", "이 유저는 디렉터리 생성 불가"),
+    ITS_NOT_YOUR_DIRECTORY(HttpStatus.BAD_REQUEST, "-503", "당신의 디렉토리가 아닙니다"),
+    CANNOT_FIND_USER(HttpStatus.BAD_REQUEST, "-504", "찾을 수 없는 유저"),
 
     INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "-801", "파일 검증 실패"),
     NOT_SUPPORTED_MEDIA(HttpStatus.BAD_REQUEST, "-802", "지원하지 않는 타입의 파일"),
