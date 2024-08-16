@@ -1,0 +1,13 @@
+package com.hanpyeon.academyapi.dir.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.lang.NonNull;
+
+public record CreateDirectoryDto(
+        @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z]+$") String directoryName,
+        @NotBlank @Pattern(regexp = "^/+&") String directoryPath,
+        @NonNull Long ownerId,
+        Boolean canViewByEveryone
+) {
+}
