@@ -9,12 +9,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class DirectoryPathExistValidator implements DirectoryCreateValidator {
+class DirectoryDuplicateValidator implements DirectoryCreateValidator {
+
     private final DirectoryRepository directoryRepository;
 
     @Override
-    public void validate(final CreateDirectoryCommand createDirectoryCommand) {
-        directoryRepository.findDirectoryByPath(createDirectoryCommand.dirPath())
-                .orElseThrow(() -> new DirectoryException(ErrorCode.NOT_EXIST_DIRECTORY));
+    public void validate(CreateDirectoryCommand createDirectoryCommand) {
+        if (directoryRepository.findDirectoryByPath(createDirectoryCommand.newDirAbsolutePath()).isPresent()) {
+            throw new DirectoryException(ErrorCode.ALREADY_EXISTS_DIRECTORY_PATH);
+        }
     }
 }
