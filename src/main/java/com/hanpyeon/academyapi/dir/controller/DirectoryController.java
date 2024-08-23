@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.dir.dto.QueryDirectoryDto;
 import com.hanpyeon.academyapi.dir.service.DirectoryService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +27,7 @@ public class DirectoryController {
 
     @PostMapping
     @Operation(summary = "디렉토리를 새로 생성하는 api 입니다", description = "기본 디렉토리로 /, /teachers 가 존재합니다")
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> createDirectory(
             @RequestBody @Valid final CreateDirectoryRequest createDirectoryRequest,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
@@ -37,6 +39,7 @@ public class DirectoryController {
 
     @GetMapping
     @Operation(summary = "디렉토리를 조회하는 api 입니다", description = "dirPath를 작성하지 않을 시, / 의 디렉토리를 조회합니다")
+    @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<List<FileView>> queryCurrDirPath(
             @RequestParam(defaultValue = "/") final String dirPath,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
