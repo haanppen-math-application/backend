@@ -24,22 +24,26 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
         if (isOverManager(createDirectoryCommand.requestMember())) {
             return;
         }
-        if (isAccessibleForEveryOne(targetDirectory)) {
+        if (canModifyByEveryOne(targetDirectory)) {
             return;
         }
-        isRequestMemberIsOwner(targetDirectory, createDirectoryCommand.requestMember());
+        if (isRequestMemberIsOwner(targetDirectory, createDirectoryCommand.requestMember())) {
+            return;
+        }
+        throw new DirectoryException(ErrorCode.ITS_NOT_YOUR_DIRECTORY);
     }
 
-    private void isRequestMemberIsOwner(final Directory targetDirectory, final Member requestMember) {
+    private boolean isRequestMemberIsOwner(final Directory targetDirectory, final Member requestMember) {
         // 이전 디렉토리의 소유자가 맞는지 확인
         log.info(targetDirectory.getOwner().getId() + " " + requestMember.getId());
-        if (!targetDirectory.getId().equals(requestMember.getId())) {
-            throw new DirectoryException(ErrorCode.ITS_NOT_YOUR_DIRECTORY);
+        if (targetDirectory.getId().equals(requestMember.getId())) {
+            return true;
         }
+        return false;
     }
 
-    private boolean isAccessibleForEveryOne(final Directory directory) {
-        if (directory.getCanViewByEveryone()) {
+    private boolean canModifyByEveryOne(final Directory directory) {
+        if (directory.getCanModifyByEveryone()) {
             return true;
         }
         throw new DirectoryException(directory.getOwner().getName() + " 개인소유의 디렉토리 입니다.", ErrorCode.CANNOT_ACCESS_TO_THIS_DIRECTORY);
