@@ -59,7 +59,7 @@ class DirectoryControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/directories")
                         .header(JwtUtils.HEADER, jwtUtils.generateAccessToken(1l, role, "test"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(new DirectoryController.CreateDirectoryRequest("test", "test", false))))
+                .content(objectMapper.writeValueAsString(new DirectoryController.CreateDirectoryRequest("/test", "test", false, false))))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
@@ -68,7 +68,7 @@ class DirectoryControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/directories")
                         .header(JwtUtils.HEADER, jwtUtils.generateAccessToken(1l, Role.STUDENT, "test"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new DirectoryController.CreateDirectoryRequest("test", "test", false))))
+                        .content(objectMapper.writeValueAsString(new DirectoryController.CreateDirectoryRequest("test", "test", false, false))))
                 .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
