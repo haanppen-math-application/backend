@@ -17,7 +17,7 @@ public class DirectoryInitializer {
     @PostConstruct
     private void init() {
         final Member member = memberRepository.findMemberByIdAndRemovedIsFalse(1l).orElseThrow();
-        directoryRepository.save(new Directory(member, "/", false));
-        directoryRepository.save(new Directory(member, "/teachers/", true));
+        directoryRepository.save(new Directory(member, "/", false, true));
+        directoryRepository.save(new Directory(member, "/teachers/", true, true));
     }
 }
