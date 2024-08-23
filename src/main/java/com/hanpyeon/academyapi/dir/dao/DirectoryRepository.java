@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface DirectoryRepository extends JpaRepository<Directory, Long> {
     Optional<Directory> findDirectoryByPath(final String path);
-    @Query("SELECT e FROM Directory e WHERE e.path LIKE :dirPath AND e.path NOT LIKE :excludePath")
-    List<Directory> queryDirectoriesByPath(@Param("dirPath") final String dirPath, @Param("excludePath") final String excludePath);
+    @Query("SELECT e FROM Directory e WHERE e.path LIKE concat(:dirPath, '%', '/') AND e.path NOT LIKE concat(:dirPath, '%', '/', '%', '/')")
+    List<Directory> queryDirectoriesOneDepth(@Param("dirPath") final String dirPath);
 }

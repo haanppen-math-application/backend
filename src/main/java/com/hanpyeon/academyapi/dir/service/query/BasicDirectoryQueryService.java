@@ -42,8 +42,7 @@ class BasicDirectoryQueryService implements DirectoryQueryService {
         fileViews.addAll(directory.getMedias().stream().map(fileViewMapper::create).toList());
 
         // 포함된 디렉토리들 불러오기
-        final QueryDirectoryCommand queryDirectoryCommand = QueryDirectoryCommand.of(resolvedPath);
-        fileViews.addAll(loadDirectories(queryDirectoryCommand).stream().map(fileViewMapper::create).toList());
+        fileViews.addAll(loadDirectories(resolvedPath).stream().map(fileViewMapper::create).toList());
 
         return fileViews;
     }
@@ -70,13 +69,7 @@ class BasicDirectoryQueryService implements DirectoryQueryService {
         return false;
     }
 
-    private List<Directory> loadDirectories(final QueryDirectoryCommand command) {
-        return directoryRepository.queryDirectoriesByPath(command.includeDirPath, command.excludeDirPath);
+    private List<Directory> loadDirectories(final String targetPath) {
+        return directoryRepository.queryDirectoriesOneDepth(targetPath);
     }
-
-    private record QueryDirectoryCommand(String includeDirPath, String excludeDirPath) {
-        private static QueryDirectoryCommand of(final String command) {
-                return new QueryDirectoryCommand(command + "%/", command + "%/%/");
-            }
-        }
 }
