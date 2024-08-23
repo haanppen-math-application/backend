@@ -141,6 +141,13 @@ public class SecurityConfig {
                                             Role.TEACHER.getSecurityRole()
                                     );
 
+                    request.requestMatchers(HttpMethod.GET, "/api/directories")
+                                    .hasAnyAuthority(
+                                            Role.ADMIN.getSecurityRole(),
+                                            Role.MANAGER.getSecurityRole(),
+                                            Role.TEACHER.getSecurityRole()
+                                    );
+
                     request.requestMatchers(HttpMethod.GET)
                             .authenticated();
                     // 404 NOT FOUND EXCEPTION
