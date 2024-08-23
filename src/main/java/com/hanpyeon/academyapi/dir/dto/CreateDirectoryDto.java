@@ -6,8 +6,9 @@ import org.springframework.lang.NonNull;
 
 public record CreateDirectoryDto(
         @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z]+$") String directoryName,
-        @NotBlank @Pattern(regexp = "^/+&") String directoryPath,
+        @NotBlank @Pattern(regexp = "^/+&") String parentDirPath,
         @NonNull Long ownerId,
-        Boolean canViewByEveryone
+        Boolean canViewByEveryone,
+        Boolean canModifyByEveryone
 ) {
 }
