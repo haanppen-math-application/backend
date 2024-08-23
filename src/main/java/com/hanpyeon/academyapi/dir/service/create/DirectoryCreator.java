@@ -16,6 +16,6 @@ public class DirectoryCreator {
     @Transactional
     public Directory createDirectory(final CreateDirectoryCommand createDirectoryCommand) {
         directoryCreationValidateManger.validate(createDirectoryCommand);
-        return new Directory(createDirectoryCommand.requestMember(), createDirectoryCommand.newDirAbsolutePath(), createDirectoryCommand.canViewByEveryone());
+        return new Directory(createDirectoryCommand.requestMember(), createDirectoryCommand.newDirAbsolutePath(), createDirectoryCommand.canModifyByEveryone(), createDirectoryCommand.canViewByEveryone());
     }
 }

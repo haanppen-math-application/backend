@@ -22,6 +22,6 @@ public class DirectoryCreateCommandCreator {
         final Member member = memberRepository.findMemberByIdAndRemovedIsFalse(createDirectoryDto.ownerId())
                 .orElseThrow(() -> new DirectoryException(ErrorCode.CANNOT_FIND_USER));
         final String absoluteDirPath = directoryPathFormResolver.resolveToAbsolutePath(parentDirPath, createDirectoryDto.directoryName());
-        return new CreateDirectoryCommand(parentDirPath, createDirectoryDto.directoryName(), absoluteDirPath, createDirectoryDto.canViewByEveryone(), member);
+        return new CreateDirectoryCommand(parentDirPath, createDirectoryDto.directoryName(), absoluteDirPath, createDirectoryDto.canViewByEveryone(), createDirectoryDto.canModifyByEveryone(), member);
     }
 }
