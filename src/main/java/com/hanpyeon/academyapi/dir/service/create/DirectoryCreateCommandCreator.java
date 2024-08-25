@@ -13,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
-public class DirectoryCreateCommandCreator {
+class DirectoryCreateCommandCreator {
     private final MemberRepository memberRepository;
     private final DirectoryPathFormResolver directoryPathFormResolver;
 
