@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @ToString
+@Slf4j
 public class Directory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,5 +41,9 @@ public class Directory {
         this.path = path;
         this.canModifyByEveryone = canModifyByEveryone;
         this.canViewByEveryone = canViewByEveryone;
+    }
+
+    public void setPath(final String newPath) {
+        this.path = newPath;
     }
 }

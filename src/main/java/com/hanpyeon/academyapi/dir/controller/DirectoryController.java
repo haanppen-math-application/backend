@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.dir.controller;
 
 import com.hanpyeon.academyapi.dir.dto.CreateDirectoryDto;
+import com.hanpyeon.academyapi.dir.dto.UpdateDirectoryDto;
 import com.hanpyeon.academyapi.dir.dto.FileView;
 import com.hanpyeon.academyapi.dir.dto.QueryDirectoryDto;
 import com.hanpyeon.academyapi.dir.service.DirectoryService;
@@ -47,11 +48,29 @@ public class DirectoryController {
         return ResponseEntity.ok(directoryService.loadCurrFiles(new QueryDirectoryDto(dirPath, memberPrincipal.memberId())));
     }
 
+    @PutMapping
+    @Operation(summary = "디렉토리 수정하는 api 입니다" )
+    @SecurityRequirement(name = "jwtAuth")
+    public ResponseEntity<?> updateDirectory(
+            @RequestBody @Valid final UpdateDirectoryRequest renameDirectoryRequest,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final UpdateDirectoryDto updateDirectoryDto = new UpdateDirectoryDto(renameDirectoryRequest.targetDirPath(), renameDirectoryRequest.newDirName(), memberPrincipal.memberId());
+        directoryService.updateDirectory(updateDirectoryDto);
+        return ResponseEntity.ok(null);
+    }
+
     record CreateDirectoryRequest(
             @NotBlank @Pattern(regexp = "^/.*$") String directoryPath,
             @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String directoryName,
             @NotNull Boolean canViewByEveryone,
             @NotNull Boolean canModifyByEveryone
+    ) {
+    }
+
+    record UpdateDirectoryRequest(
+            @NotBlank @Pattern(regexp = "^/.*$") String targetDirPath,
+            @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String newDirName
     ) {
     }
 }

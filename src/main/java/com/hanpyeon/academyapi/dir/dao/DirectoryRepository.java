@@ -13,4 +13,7 @@ public interface DirectoryRepository extends JpaRepository<Directory, Long> {
     Optional<Directory> findDirectoryByPath(final String path);
     @Query("SELECT e FROM Directory e WHERE e.path LIKE concat(:dirPath, '%', '/') AND e.path NOT LIKE concat(:dirPath, '%', '/', '%', '/')")
     List<Directory> queryDirectoriesOneDepth(@Param("dirPath") final String dirPath);
+    @Query("SELECT e FROM Directory e WHERE e.path LIKE concat(:dirPath, '%')")
+    List<Directory> queryChildDirectories(@Param("dirPath") final String dirPath);
+    Boolean existsAllByPathIn(List<String> paths);
 }
