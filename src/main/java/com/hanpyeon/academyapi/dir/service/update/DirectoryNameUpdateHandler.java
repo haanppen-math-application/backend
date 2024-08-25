@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +22,7 @@ class DirectoryNameUpdateHandler implements DirectoryUpdateHandler {
     private final DirectoryRepository directoryRepository;
 
     /**
-     * @param updateDirectoryCommand
-     * 주어진 대상 디렉토리들을 모두 로드하여 엔티티자체에 새로운 이름을 반영하는게 아닌, 변경될 path를 미리 조회하여 violation 확인.
+     * @param updateDirectoryCommand 주어진 대상 디렉토리들을 모두 로드하여 엔티티자체에 새로운 이름을 반영하는게 아닌, 변경될 path를 미리 조회하여 violation 확인.
      */
     @Override
     @Transactional(propagation = Propagation.MANDATORY)

@@ -10,6 +10,7 @@ import com.hanpyeon.academyapi.dir.service.update.DirectoryUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
@@ -20,17 +21,17 @@ public class DirectoryService {
     private final DirectoryUpdateService directoryUpdateService;
     private final DirectoryCreateService directoryCreateService;
     @Transactional
-    public void addNewDirectory(final CreateDirectoryDto createDirectoryDto) {
+    public void addNewDirectory(@Validated final CreateDirectoryDto createDirectoryDto) {
         directoryCreateService.addNewDirectory(createDirectoryDto);
     }
 
     @Transactional(readOnly = true)
-    public List<FileView> loadCurrFiles(final QueryDirectoryDto queryDirectoryDto) {
+    public List<FileView> loadCurrFiles(@Validated final QueryDirectoryDto queryDirectoryDto) {
         return directoryQueryService.queryDirectory(queryDirectoryDto);
     }
 
     @Transactional
-    public void updateDirectory(final UpdateDirectoryDto updateDirectoryDto) {
+    public void updateDirectory(@Validated final UpdateDirectoryDto updateDirectoryDto) {
         directoryUpdateService.updateDirectory(updateDirectoryDto);
     }
 }

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 
 public record UpdateDirectoryDto(
         @NotBlank @Pattern(regexp = "^/+&") String targetDirPath,
-        @NotBlank @Pattern(regexp = "^/+&") @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z]+$") String newDirName,
+        @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z]+$") String newDirName,
         @NotNull Long requestMemberId
 ) {
 }
