@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UpdateCommandCreator {
+class UpdateCommandCreator {
     private final DirectoryPathFormResolver directoryPathFormResolver;
     private final DirectoryRepository directoryRepository;
     public UpdateDirectoryCommand getUpdateCommand(final UpdateDirectoryDto updateDirectoryDto) {

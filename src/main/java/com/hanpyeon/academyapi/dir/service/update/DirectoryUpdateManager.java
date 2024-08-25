@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DirectoryUpdateManager {
+class DirectoryUpdateManager {
     private final List<DirectoryUpdateHandler> updateHandlers;
 
     @Transactional
