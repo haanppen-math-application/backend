@@ -1,10 +1,8 @@
 package com.hanpyeon.academyapi.dir.service;
 
-import com.hanpyeon.academyapi.dir.dto.CreateDirectoryDto;
-import com.hanpyeon.academyapi.dir.dto.FileView;
-import com.hanpyeon.academyapi.dir.dto.QueryDirectoryDto;
-import com.hanpyeon.academyapi.dir.dto.UpdateDirectoryDto;
+import com.hanpyeon.academyapi.dir.dto.*;
 import com.hanpyeon.academyapi.dir.service.create.DirectoryCreateService;
+import com.hanpyeon.academyapi.dir.service.delete.DirectoryDeleteService;
 import com.hanpyeon.academyapi.dir.service.query.DirectoryQueryService;
 import com.hanpyeon.academyapi.dir.service.update.DirectoryUpdateService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +18,7 @@ public class DirectoryService {
     private final DirectoryQueryService directoryQueryService;
     private final DirectoryUpdateService directoryUpdateService;
     private final DirectoryCreateService directoryCreateService;
+    private final DirectoryDeleteService directoryDeleteService;
     @Transactional
     public void addNewDirectory(@Validated final CreateDirectoryDto createDirectoryDto) {
         directoryCreateService.addNewDirectory(createDirectoryDto);
@@ -33,5 +32,10 @@ public class DirectoryService {
     @Transactional
     public void updateDirectory(@Validated final UpdateDirectoryDto updateDirectoryDto) {
         directoryUpdateService.updateDirectory(updateDirectoryDto);
+    }
+
+    @Transactional
+    public void deleteDirectory(@Validated final DeleteDirectoryDto deleteDirectoryDto) {
+        directoryDeleteService.delete(deleteDirectoryDto);
     }
 }
