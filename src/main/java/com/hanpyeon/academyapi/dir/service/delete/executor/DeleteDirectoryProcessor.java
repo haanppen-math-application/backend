@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DeleteDirectoryProcessor {
-    private final List<DeleteDirectoryHandler> deleteDirectoryExecutors;
+    private final List<DeleteDirectoryHandler> deleteDirectoryHandlers;
 
     public Integer delete(DirectoryDeleteCommand directoryDeleteCommand) {
-        return deleteDirectoryExecutors.stream()
+        return deleteDirectoryHandlers.stream()
                 .filter(deleteDirectoryExecutor -> deleteDirectoryExecutor.applicable(directoryDeleteCommand.getRequestMember().getRole()))
                 .findFirst()
                 .orElseThrow(() -> new DirectoryException(directoryDeleteCommand.getRequestMember().getRole() + "사용자는 디렉토리를 삭제할 수 없습니다.", ErrorCode.DIRECTORY_CANNOT_DELETE))
