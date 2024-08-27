@@ -8,7 +8,7 @@ import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.repository.ImageRepository;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
-import com.hanpyeon.academyapi.media.validator.UploadImageValidator;
+import com.hanpyeon.academyapi.media.validator.UploadFileExtensionValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -25,7 +24,6 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
     private final MediaStorage mediaStorage;
-    private final UploadImageValidator uploadImageValidator;
     private final MediaMapper mediaMapper;
 
     /**
