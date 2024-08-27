@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 class DeleteByTeacherHandler implements DeleteDirectoryHandler {
-    private final DirectoryDepthDescendingSortResolver directoryDepthDescendingSortResolver;
+    private final DescendingSoryByDepthResolver descendingSoryByDepthResolver;
     private final DeleteDirectoryContentExecutor deleteDirectoryContentManager;
 
     @Override
@@ -29,7 +29,7 @@ class DeleteByTeacherHandler implements DeleteDirectoryHandler {
     }
 
     private Collection<Directory> getRemovableDirectories(DirectoryDeleteCommand directoryDeleteCommand) {
-        final List<Directory> descendingSortedDirectories = directoryDepthDescendingSortResolver.getDecsendingList(directoryDeleteCommand.getDirectories());
+        final List<Directory> descendingSortedDirectories = descendingSoryByDepthResolver.getDecsendingList(directoryDeleteCommand.getDirectories());
         final Set<Directory> unDeletableDirectories = getUnDeletableDirectories(descendingSortedDirectories, directoryDeleteCommand.getRequestMember());
 
         return descendingSortedDirectories.stream().filter(directory -> !unDeletableDirectories.contains(directory))

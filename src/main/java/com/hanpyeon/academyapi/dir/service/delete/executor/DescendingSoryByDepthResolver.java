@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-class DirectoryDepthResolver {
+class DescendingSoryByDepthResolver {
     public List<Directory> getDecsendingList(final List<Directory> directories) {
         return directories.stream()
                 .map(directory -> new DirectoryDepth(directory, this.getDepth(directory.getPath())))
