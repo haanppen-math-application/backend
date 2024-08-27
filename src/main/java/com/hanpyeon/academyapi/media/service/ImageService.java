@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -38,12 +39,13 @@ public class ImageService {
         if (!checkImagesPresence(imageFiles)) {
             return Collections.emptyList();
         }
+        final List<? extends UploadFile> uploadFiles = imageFiles.stream()
+                .filter(multipartFile -> !multipartFile.isEmpty())
+                .map(mediaMapper::createImageUploadFile)
+                .toList();
         return saveImageNames(
-                imageFiles.stream()
-                        .filter(multipartFile -> !multipartFile.isEmpty())
-                        .map(mediaMapper::createUploadFile)
-                        .map(uploadFile -> uploadFile.validateWith(uploadImageValidator))
-                        .map(uploadFile -> uploadFile.uploadTo(mediaStorage))
+                uploadFiles.stream()
+                        .map(uploadFile -> mediaStorage.store(uploadFile))
                         .toList()
         );
     }
