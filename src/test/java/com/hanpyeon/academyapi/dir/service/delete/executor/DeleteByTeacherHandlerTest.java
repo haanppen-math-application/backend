@@ -20,7 +20,7 @@ class DeleteByTeacherHandlerTest {
 
     @Mock
     DeleteDirectoryContentExecutor deleteDirectoryContentExecutor;
-    DirectoryDepthDescendingSortResolver directoryDepthResolver = new DirectoryDepthDescendingSortResolver();
+    DescendingSoryByDepthResolver directoryDepthResolver = new DescendingSoryByDepthResolver();
     DeleteByTeacherHandler deleteByTeacherHandler;
 
     @BeforeEach

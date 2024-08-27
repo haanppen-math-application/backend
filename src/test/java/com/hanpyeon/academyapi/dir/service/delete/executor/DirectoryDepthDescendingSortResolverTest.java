@@ -8,7 +8,7 @@ import java.util.List;
 
 class DirectoryDepthDescendingSortResolverTest {
 
-    private DirectoryDepthDescendingSortResolver directoryDepthDescendingSortResolver = new DirectoryDepthDescendingSortResolver();
+    private DescendingSoryByDepthResolver directoryDepthDescendingSortResolver = new DescendingSoryByDepthResolver();
 
     @Test
     void testDescending() {
