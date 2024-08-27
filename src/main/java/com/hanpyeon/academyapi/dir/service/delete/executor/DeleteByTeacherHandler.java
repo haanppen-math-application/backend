@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.dir.dao.Directory;
 import com.hanpyeon.academyapi.dir.service.delete.DirectoryDeleteCommand;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,8 +16,9 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 class DeleteByTeacherHandler implements DeleteDirectoryHandler {
-    private final DirectoryDepthResolver directoryDepthResolver;
+    private final DirectoryDepthDescendingSortResolver directoryDepthDescendingSortResolver;
     private final DeleteDirectoryContentExecutor deleteDirectoryContentManager;
 
     @Override
@@ -27,10 +29,10 @@ class DeleteByTeacherHandler implements DeleteDirectoryHandler {
     }
 
     private Collection<Directory> getRemovableDirectories(DirectoryDeleteCommand directoryDeleteCommand) {
-        final List<Directory> descendingSortedDirectories = directoryDepthResolver.getDecsendingList(directoryDeleteCommand.getDirectories());
+        final List<Directory> descendingSortedDirectories = directoryDepthDescendingSortResolver.getDecsendingList(directoryDeleteCommand.getDirectories());
         final Set<Directory> unDeletableDirectories = getUnDeletableDirectories(descendingSortedDirectories, directoryDeleteCommand.getRequestMember());
 
-        return descendingSortedDirectories.stream().filter(directory -> unDeletableDirectories.contains(directory))
+        return descendingSortedDirectories.stream().filter(directory -> !unDeletableDirectories.contains(directory))
                 .collect(Collectors.toList());
     }
 
@@ -39,10 +41,12 @@ class DeleteByTeacherHandler implements DeleteDirectoryHandler {
         for (final Directory directory : descendingSortedDirectories) {
             if (!isOwner(directory.getOwner(), requestMember)) {
                 unDeletableDirectories.add(directory);
+                log.info(directory.toString());
                 continue;
             }
             if (doesChildRemain(unDeletableDirectories, directory.getPath())) {
                 unDeletableDirectories.add(directory);
+                log.info(directory.toString());
             }
         }
         return unDeletableDirectories;
