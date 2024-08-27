@@ -1,9 +1,6 @@
 package com.hanpyeon.academyapi.dir.controller;
 
-import com.hanpyeon.academyapi.dir.dto.CreateDirectoryDto;
-import com.hanpyeon.academyapi.dir.dto.UpdateDirectoryDto;
-import com.hanpyeon.academyapi.dir.dto.FileView;
-import com.hanpyeon.academyapi.dir.dto.QueryDirectoryDto;
+import com.hanpyeon.academyapi.dir.dto.*;
 import com.hanpyeon.academyapi.dir.service.DirectoryService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,6 +57,19 @@ public class DirectoryController {
         return ResponseEntity.ok(null);
     }
 
+    @DeleteMapping
+    @Operation(summary = "디렉토리를 삭제하는 api", description = "하위 디렉토리가 포함된 디렉토리를 삭제하기 위해선 _ 필드를 true로 해주세요")
+    @SecurityRequirement(name = "jwtAuth")
+    public ResponseEntity<?> deleteDirectory(
+            @RequestBody @Valid DeleteDirectoryRequest deleteDirectoryRequest,
+            @AuthenticationPrincipal MemberPrincipal memberPrincipal
+    ) {
+        final DeleteDirectoryDto deleteDirectoryDto = new DeleteDirectoryDto(deleteDirectoryRequest.targetDirectory(), memberPrincipal.memberId(), deleteDirectoryRequest.deleteChildes);
+        directoryService.deleteDirectory(deleteDirectoryDto);
+        return ResponseEntity.ok(null);
+    }
+
+
     record CreateDirectoryRequest(
             @NotBlank @Pattern(regexp = "^/.*$") String directoryPath,
             @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String directoryName,
@@ -71,6 +81,12 @@ public class DirectoryController {
     record UpdateDirectoryRequest(
             @NotBlank @Pattern(regexp = "^/.*$") String targetDirPath,
             @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String newDirName
+    ) {
+    }
+
+    record DeleteDirectoryRequest(
+            @NotBlank @Pattern(regexp = "^/.*$") String targetDirectory,
+            @NotNull Boolean deleteChildes
     ) {
     }
 }
