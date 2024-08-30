@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
@@ -30,9 +32,17 @@ public class DirectoryMediaController {
             @RequestPart(value = "info") @Valid final MediaSaveRequest request,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final UploadMediaDto mediaSaveDto = new UploadMediaDto(multipartFile, request.fileName(), request.totalChunkCount(), request.currChunkIndex(), request.isLast(), memberPrincipal.memberId(), request.targetDirectoryPath());
+        final UploadMediaDto mediaSaveDto = new UploadMediaDto(
+                multipartFile,
+                request.fileName(),
+                request.totalChunkCount(),
+                request.currChunkIndex(),
+                request.isLast(),
+                memberPrincipal.memberId(),
+                request.targetDirectoryPath()
+        );
         final String storedPath = mediaService.uploadChunk(mediaSaveDto);
-        if (Objects.isNull(storedPath)){
+        if (Objects.isNull(storedPath)) {
             return ResponseEntity.accepted().build();
         }
         return ResponseEntity.created(null).build();
@@ -40,11 +50,11 @@ public class DirectoryMediaController {
 
     record MediaSaveRequest(
             @NotBlank @Pattern(regexp = "^/.*$") String targetDirectoryPath,
-            @NotBlank String fileName,
+            @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String fileName,
             @Nonnull Long totalChunkCount,
             @Nonnull Long currChunkIndex,
+            @Nonnull Long currChunkSize,
             @Nonnull Boolean isLast
-
     ) {
     }
 }
