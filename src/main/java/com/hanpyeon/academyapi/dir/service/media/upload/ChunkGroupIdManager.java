@@ -3,16 +3,13 @@ package com.hanpyeon.academyapi.dir.service.media.upload;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-@Slf4j
 final class ChunkGroupIdManager {
 
     private static Map<ChunkGroupInfo, Group> countPerChunkMap = new ConcurrentHashMap<>();
@@ -20,7 +17,6 @@ final class ChunkGroupIdManager {
     public String getGroupID(final ChunkGroupInfo chunkGroupInfo) {
         final Group groupSequence = countPerChunkMap.getOrDefault(chunkGroupInfo, Group.getUnique());
         countPerChunkMap.put(chunkGroupInfo, groupSequence);
-        log.debug("현재 그룹 아이디 : " + groupSequence.groupId.toString());
         return groupSequence.groupId.toString();
     }
 
