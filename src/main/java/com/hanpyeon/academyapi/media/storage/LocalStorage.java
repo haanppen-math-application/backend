@@ -24,8 +24,12 @@ import java.nio.file.*;
 @Component
 public class LocalStorage implements MediaStorage {
 
-    @Value("${server.local.storage}")
-    private String storagePath;
+//    @Value("${server.local.storage}")
+    protected final String storagePath;
+
+    public LocalStorage(@Value("${server.local.storage}") String storagePath) {
+        this.storagePath = storagePath;
+    }
 
     @Override
     public String store(final UploadFile uploadFile) {
