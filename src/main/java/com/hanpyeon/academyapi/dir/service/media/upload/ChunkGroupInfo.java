@@ -45,4 +45,12 @@ class ChunkGroupInfo {
     public boolean isAllReceived(final Long currentReceivedSize) {
         return this.totalChunkSize.equals(currentReceivedSize);
     }
+
+    public String getDirPath() {
+        return this.dirPath;
+    }
+
+    public String getFileName() {
+        return this.fileName;
+    }
 }
