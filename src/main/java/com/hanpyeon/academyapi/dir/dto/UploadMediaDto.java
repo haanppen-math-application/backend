@@ -14,6 +14,7 @@ public final class UploadMediaDto {
     private final String fileName;
     private final Long totalChunkCount;
     private final Long currChunkIndex;
+    private final Long currChunkSize;
     private final Boolean isLast;
     private final Long requestMemberId;
     private final String targetDirectory;

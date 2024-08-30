@@ -37,6 +37,7 @@ public class DirectoryMediaController {
                 request.fileName(),
                 request.totalChunkCount(),
                 request.currChunkIndex(),
+                request.currChunkSize(),
                 request.isLast(),
                 memberPrincipal.memberId(),
                 request.targetDirectoryPath()
