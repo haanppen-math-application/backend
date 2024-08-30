@@ -51,6 +51,12 @@ public enum ErrorCode {
     ILLEGAL_PATH(HttpStatus.BAD_REQUEST, "-506", "잘못된 디렉토리 경로 입니다."),
     CANNOT_ACCESS_TO_THIS_DIRECTORY(HttpStatus.BAD_REQUEST, "-507", "개인 소유의 디렉토리 입니다"),
     DIRECTORY_CANNOT_MODIFY(HttpStatus.BAD_REQUEST, "-508", "디렉토리 수정 불가"),
+    DIRECTORY_CANNOT_DELETE(HttpStatus.BAD_REQUEST, "-509", "디렉토리 삭제 불가"),
+
+    CHUNK_GROUP_EXCEPTION(HttpStatus.BAD_REQUEST, "-601", "해당 청크 수신 불가"),
+    CHUNK_SIZE_EXCEPTION(HttpStatus.BAD_REQUEST, "-602", "청크 부족"),
+    CHUNK_ACCESS_EXCEPTION(HttpStatus.BAD_REQUEST, "-603", "청크파일에 접근 불가"),
+
 
     INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "-801", "파일 검증 실패"),
     NOT_SUPPORTED_MEDIA(HttpStatus.BAD_REQUEST, "-802", "지원하지 않는 타입의 파일"),
