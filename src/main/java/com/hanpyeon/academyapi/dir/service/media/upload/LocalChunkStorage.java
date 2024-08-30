@@ -3,10 +3,8 @@ package com.hanpyeon.academyapi.dir.service.media.upload;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.storage.LocalStorage;
-import com.hanpyeon.academyapi.media.storage.MediaStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -57,6 +55,12 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
         }
     }
 
+    /**
+     * @param chunkGroupInfo
+     * ChunkStorage의 delete 오버헤드를 클라이언트가 감내해야할 이유 X
+     * 1. Async를 통한 비동기 로직 처리로 스레드를 더 소요 But 응답시간 단축
+     * 2. 스케쥴러를 통한 chunkFile 배치 삭제
+     */
     @Override
     public void removeChunks(ChunkGroupInfo chunkGroupInfo) {
         log.info("템프 파일 지우기 시작");
