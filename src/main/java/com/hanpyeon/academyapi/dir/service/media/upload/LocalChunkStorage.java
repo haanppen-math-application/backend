@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.storage.LocalStorage;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
+@Slf4j
 class LocalChunkStorage extends LocalStorage implements ChunkStorage {
 
     public LocalChunkStorage(@Value(value = "${server.local.chunk.storage}") String storagePath) {
@@ -30,6 +33,7 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
 
     @Override
     public String transferTo(MediaStorage mediaStorage, ChunkGroupInfo chunkGroupInfo, ChunkMerger chunkMerger) {
+        log.debug("전송 시도");
         final MergedUploadFile mergedUploadFile = chunkMerger.merge(this, chunkGroupInfo);
         final String filePath = mediaStorage.store(mergedUploadFile);
         mergedUploadFile.completed();
@@ -43,26 +47,37 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
 
     private List<Path> loadRelatedFiles(final ChunkGroupInfo chunkGroupInfo) {
         try {
+            final String groupId = chunkGroupInfo.getGroupId();
             Stream<Path> pathStream = Files.walk(Paths.get(this.storagePath));
-            return pathStream
-                    .filter(Files::isRegularFile)
-                    .filter(path -> path.getFileName().startsWith(chunkGroupInfo.getGroupId()))
-                    .collect(Collectors.toList());
+            final List<Path> resultPaths = new ArrayList<>();
+            final List<Path> paths = pathStream.collect(Collectors.toList());
+            for (final Path path : paths) {
+                if (!Files.isRegularFile(path)) {
+                    continue;
+                }
+                final String fileName = String.valueOf(path.getFileName());
+                if (fileName.startsWith(groupId)) {
+                    resultPaths.add(path);
+                }
+            }
+            return resultPaths;
         } catch (IOException e) {
             throw new ChunkException("청크파일 여는 중 예외 발생", ErrorCode.CHUNK_ACCESS_EXCEPTION);
         }
     }
 
     @Override
-    @Async
     public void removeChunks(ChunkGroupInfo chunkGroupInfo) {
+        log.info("템프 파일 지우기 시작");
         final List<Path> paths = loadRelatedFiles(chunkGroupInfo);
         try {
             for (final Path path : paths) {
+                log.info(path + "지워지기 성공!");
                 Files.deleteIfExists(path);
             }
         } catch (IOException e) {
             throw new ChunkException("청크파일 삭제 불가", ErrorCode.CHUNK_ACCESS_EXCEPTION);
         }
+        log.info("템프 파일 지우기 종료");
     }
 }
