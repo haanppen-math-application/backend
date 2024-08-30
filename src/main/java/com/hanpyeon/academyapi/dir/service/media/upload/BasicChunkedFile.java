@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 class BasicChunkedFile implements ChunkedFile {
@@ -14,6 +15,7 @@ class BasicChunkedFile implements ChunkedFile {
     private final MultipartFile multipartFile;
     private final ChunkGroupInfo chunkGroupInfo;
     private final Boolean isLast;
+    private String uniqueChunkName = null;
 
     @Override
     public ChunkGroupInfo getChunkGroupInfo() {
@@ -27,7 +29,10 @@ class BasicChunkedFile implements ChunkedFile {
 
     @Override
     public String getUniqueFileName() {
-        return chunkGroupInfo.getChunkUniqueId();
+        if (Objects.isNull(this.uniqueChunkName)) {
+            this.uniqueChunkName = this.chunkGroupInfo.getChunkUniqueId();
+        }
+        return uniqueChunkName;
     }
 
     @Override
