@@ -32,15 +32,6 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
     }
 
     @Override
-    public String transferTo(MediaStorage mediaStorage, ChunkGroupInfo chunkGroupInfo, ChunkMerger chunkMerger) {
-        log.debug("전송 시도");
-        final MergedUploadFile mergedUploadFile = chunkMerger.merge(this, chunkGroupInfo);
-        final String filePath = mediaStorage.store(mergedUploadFile);
-        mergedUploadFile.completed();
-        return filePath;
-    }
-
-    @Override
     public ChunkGroup loadRelatedChunkedFiles(final ChunkGroupInfo chunkGroupInfo) {
         return new ChunkGroup(chunkGroupInfo, loadRelatedFiles(chunkGroupInfo));
     }
