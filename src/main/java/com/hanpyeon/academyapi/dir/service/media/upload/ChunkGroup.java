@@ -36,7 +36,7 @@ public class ChunkGroup {
         return chunkGroupInfo;
     }
 
-    public void validate() {
+    public void validateAllChunkFileReceived() {
         if (this.getChunkGroupInfo().isAllReceived(this.currentReceivedFileSize)) {
             throw new ChunkException("청크들이 다운로드 되지 않음", ErrorCode.CHUNK_GROUP_EXCEPTION);
         }

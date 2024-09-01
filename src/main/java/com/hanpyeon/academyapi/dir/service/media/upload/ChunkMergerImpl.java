@@ -22,6 +22,7 @@ class ChunkMergerImpl implements ChunkMerger {
     @Override
     public MergedUploadFile merge(ChunkStorage chunkStorage, ChunkGroupInfo chunkGroupInfo) {
         final ChunkGroup chunkGroup = chunkStorage.loadRelatedChunkedFiles(chunkGroupInfo);
+        chunkGroup.validateAllChunkFileReceived();
         final InputStream totalInputStream = getCombinedInputStream(getAllInputStreams(chunkGroup.getChunkPaths()));
 
         return new MergedUploadFileImpl(chunkGroup.getChunkGroupInfo(), totalInputStream, chunkStorage);
