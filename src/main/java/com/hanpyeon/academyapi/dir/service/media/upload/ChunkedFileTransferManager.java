@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-class MergedFileTransferManager {
+class ChunkedFileTransferManager {
     private final ChunkMerger chunkMerger;
     private final MediaStorage mediaStorage;
 
