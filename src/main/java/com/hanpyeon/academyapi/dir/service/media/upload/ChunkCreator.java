@@ -8,14 +8,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class ChunkCreator {
     private final ChunkGroupInfoFactory chunkGroupFactory;
-    private final BasicChunkedFileFactory videoChunkedFileFactory;
+    private final BasicChunkedFileFactory basicChunkedFileFactory;
 
     public ChunkedFile create(final UploadMediaDto uploadMediaDto) {
         final ChunkGroupInfo chunkGroupInfo = chunkGroupFactory.create(uploadMediaDto);
-        return videoChunkedFileFactory.create(
-                uploadMediaDto.getFile(),
-                chunkGroupInfo,
-                uploadMediaDto.getIsLast()
-        );
+        return basicChunkedFileFactory.create(uploadMediaDto, chunkGroupInfo);
     }
 }
