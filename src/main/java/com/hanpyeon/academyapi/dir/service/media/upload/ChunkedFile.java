@@ -5,4 +5,6 @@ import com.hanpyeon.academyapi.media.service.UploadFile;
 interface ChunkedFile extends UploadFile {
     ChunkGroupInfo getChunkGroupInfo();
     boolean isLast();
+    void validateChunkIndex();
+    Long getChunkSize();
 }

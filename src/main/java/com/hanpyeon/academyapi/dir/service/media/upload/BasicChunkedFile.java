@@ -15,6 +15,7 @@ class BasicChunkedFile implements ChunkedFile {
     private final MultipartFile multipartFile;
     private final ChunkGroupInfo chunkGroupInfo;
     private final Boolean isLast;
+    private final Long chunkStartIndex;
     private String uniqueChunkName = null;
 
     @Override
@@ -25,6 +26,16 @@ class BasicChunkedFile implements ChunkedFile {
     @Override
     public boolean isLast() {
         return isLast;
+    }
+
+    @Override
+    public void validateChunkIndex() {
+        chunkGroupInfo.isMatchToCurrIndex(chunkStartIndex);
+    }
+
+    @Override
+    public Long getChunkSize() {
+        return multipartFile.getSize();
     }
 
     @Override
@@ -40,7 +51,7 @@ class BasicChunkedFile implements ChunkedFile {
         try {
             return multipartFile.getInputStream();
         } catch (IOException e) {
-            throw new ChunkException("청크 파일에 접근할 수 없음",ErrorCode.CHUNK_ACCESS_EXCEPTION);
+            throw new ChunkException("청크 파일에 접근할 수 없음", ErrorCode.CHUNK_ACCESS_EXCEPTION);
         }
     }
 
