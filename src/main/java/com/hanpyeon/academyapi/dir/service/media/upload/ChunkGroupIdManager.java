@@ -35,11 +35,23 @@ final class ChunkGroupIdManager {
         return true;
     }
 
+    public Long getGroupeNextChunkIndex(final ChunkGroupInfo chunkGroupInfo) {
+        final Group group = countPerChunkMap.get(chunkGroupInfo);
+        return group.nextChunkIndex;
+    }
+
+    public Long updateGroupNextChunkIndex(final ChunkGroupInfo chunkGroupInfo, final Long lastChunkSize) {
+        final Group group = countPerChunkMap.get(chunkGroupInfo);
+        group.nextChunkIndex += lastChunkSize;
+        return group.nextChunkIndex;
+    }
+
 
     @RequiredArgsConstructor
     private static class Group {
         private final UUID groupId;
         private Long chunkId = 0L;
+        private Long nextChunkIndex = 0L;
 
         Long getCurrentIndexAndIncrease() {
             return chunkId++;
