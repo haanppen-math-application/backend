@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @Slf4j
-public class ChunkGroupInfoImpl implements ChunkGroupInfo {
+class ChunkGroupInfoImpl implements ChunkGroupInfo {
     private final ChunkGroupIdManager chunkGroupIdManager;
     private final Long requestMemberId;
     private final String dirPath;

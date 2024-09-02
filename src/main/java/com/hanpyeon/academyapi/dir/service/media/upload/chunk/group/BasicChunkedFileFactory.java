@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class BasicChunkedFileFactory {
 
-    public ChunkedFile create(final UploadMediaDto uploadMediaDto, final ChunkGroupInfoImpl chunkGroupInfo) {
+    public ChunkedFile create(final UploadMediaDto uploadMediaDto, final ChunkGroupInfo chunkGroupInfo) {
         return new BasicChunkedFile(uploadMediaDto.getFile(),
                 chunkGroupInfo,
                 uploadMediaDto.getIsLast(),

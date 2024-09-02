@@ -13,13 +13,13 @@ import java.util.Objects;
 class BasicChunkedFile implements ChunkedFile {
 
     private final MultipartFile multipartFile;
-    private final ChunkGroupInfoImpl chunkGroupInfo;
+    private final ChunkGroupInfo chunkGroupInfo;
     private final Boolean isLast;
     private final Long chunkStartIndex;
     private String uniqueChunkName = null;
 
     @Override
-    public ChunkGroupInfoImpl getChunkGroupInfo() {
+    public ChunkGroupInfo getChunkGroupInfo() {
         return chunkGroupInfo;
     }
 

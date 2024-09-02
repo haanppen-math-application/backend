@@ -2,6 +2,9 @@ package com.hanpyeon.academyapi.dir.service.media.upload;
 
 import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkFactory;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

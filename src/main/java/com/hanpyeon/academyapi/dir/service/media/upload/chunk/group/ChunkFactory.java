@@ -11,7 +11,7 @@ public class ChunkFactory {
     private final BasicChunkedFileFactory basicChunkedFileFactory;
 
     public ChunkedFile create(final UploadMediaDto uploadMediaDto) {
-        final ChunkGroupInfoImpl chunkGroupInfo = chunkGroupFactory.create(uploadMediaDto);
+        final ChunkGroupInfo chunkGroupInfo = chunkGroupFactory.create(uploadMediaDto);
         return basicChunkedFileFactory.create(uploadMediaDto, chunkGroupInfo);
     }
 }

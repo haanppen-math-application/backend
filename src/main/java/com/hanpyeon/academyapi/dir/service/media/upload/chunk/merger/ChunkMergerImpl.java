@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.merger;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroup;
-import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfoImpl;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +23,13 @@ import java.util.List;
 class ChunkMergerImpl implements ChunkMerger {
 
     @Override
-    public MergedUploadFile merge(ChunkStorage chunkStorage, ChunkGroupInfoImpl chunkGroupInfo) {
+    public MergedUploadFile merge(ChunkStorage chunkStorage, ChunkGroupInfo chunkGroupInfo) {
         final ChunkGroup chunkGroup = this.getValidatedChunkGroup(chunkStorage, chunkGroupInfo);
         final InputStream totalInputStream = getCombinedInputStream(getAllInputStreams(chunkGroup.getChunkPaths()));
         return new MergedUploadFileImpl(chunkGroup.getChunkGroupInfo(), totalInputStream, chunkStorage);
     }
 
-    private ChunkGroup getValidatedChunkGroup(final ChunkStorage chunkStorage, final ChunkGroupInfoImpl chunkGroupInfo) {
+    private ChunkGroup getValidatedChunkGroup(final ChunkStorage chunkStorage, final ChunkGroupInfo chunkGroupInfo) {
         final ChunkGroup chunkGroup = chunkStorage.loadRelatedChunkedFiles(chunkGroupInfo);
         chunkGroup.validateAllChunkFileReceived();
         return chunkGroup;

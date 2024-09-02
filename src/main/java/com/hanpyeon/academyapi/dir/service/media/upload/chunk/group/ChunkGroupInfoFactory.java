@@ -11,9 +11,9 @@ class ChunkGroupInfoFactory {
     private final ChunkGroupIdManager chunkGroupIndexCounter;
     private final DirectoryPathFormResolver directoryPathFormResolver;
 
-    public ChunkGroupInfoImpl create(final UploadMediaDto uploadMediaDto) {
+    public ChunkGroupInfo create(final UploadMediaDto uploadMediaDto) {
         final String resolvedPath = getPath(uploadMediaDto.getTargetDirectory());
-        final ChunkGroupInfoImpl chunkGroupInfo = new ChunkGroupInfoImpl(chunkGroupIndexCounter,
+        final ChunkGroupInfo chunkGroupInfo = new ChunkGroupInfoImpl(chunkGroupIndexCounter,
                 uploadMediaDto.getRequestMemberId(),
                 resolvedPath,
                 uploadMediaDto.getFileName(),

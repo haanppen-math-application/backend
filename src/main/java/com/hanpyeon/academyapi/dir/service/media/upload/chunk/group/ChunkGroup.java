@@ -11,11 +11,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class ChunkGroup {
-    private final ChunkGroupInfoImpl chunkGroupInfo;
+    private final ChunkGroupInfo chunkGroupInfo;
     private final List<Path> chunkPaths;
     private final Long currentReceivedFileSize;
 
-    public ChunkGroup(ChunkGroupInfoImpl chunkGroupInfo, List<Path> chunkPaths) {
+    public ChunkGroup(ChunkGroupInfo chunkGroupInfo, List<Path> chunkPaths) {
         this.chunkGroupInfo = chunkGroupInfo;
         this.chunkPaths = chunkPaths;
         this.currentReceivedFileSize = chunkPaths.stream()
@@ -32,7 +32,7 @@ public class ChunkGroup {
         return chunkPaths;
     }
 
-    public ChunkGroupInfoImpl getChunkGroupInfo() {
+    public ChunkGroupInfo getChunkGroupInfo() {
         return chunkGroupInfo;
     }
 
