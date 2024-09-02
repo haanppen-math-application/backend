@@ -1,6 +1,10 @@
-package com.hanpyeon.academyapi.dir.service.media.upload;
+package com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
+import com.hanpyeon.academyapi.dir.service.media.upload.ChunkGroup;
+import com.hanpyeon.academyapi.dir.service.media.upload.ChunkGroupInfo;
+import com.hanpyeon.academyapi.dir.service.media.upload.ChunkedFile;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.storage.LocalStorage;
 import lombok.extern.slf4j.Slf4j;

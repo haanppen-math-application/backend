@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.dir.service.media.upload;
 
 import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

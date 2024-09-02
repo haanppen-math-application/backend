@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.merger;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.dir.service.media.upload.*;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
