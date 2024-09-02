@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.dir.service.media.upload;
+package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
 import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @Slf4j
-public class ChunkGroupInfo {
+public class ChunkGroupInfoImpl implements ChunkGroupInfo {
     private final ChunkGroupIdManager chunkGroupIdManager;
     private final Long requestMemberId;
     private final String dirPath;
@@ -21,7 +21,7 @@ public class ChunkGroupInfo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ChunkGroupInfo that = (ChunkGroupInfo) o;
+        ChunkGroupInfoImpl that = (ChunkGroupInfoImpl) o;
         return Objects.equals(requestMemberId, that.requestMemberId) &&
                 Objects.equals(dirPath, that.dirPath) &&
                 Objects.equals(fileName, that.fileName) &&
@@ -33,36 +33,44 @@ public class ChunkGroupInfo {
         return Objects.hash(requestMemberId, dirPath, fileName, totalChunkSize);
     }
 
+    @Override
     public void init() {
         this.getGroupId();
     }
 
+    @Override
     public String getGroupId() {
         return chunkGroupIdManager.getGroupID(this);
     }
 
+    @Override
     public String getChunkUniqueId() {
         final String groupId = getGroupId();
         final Long groupIndex = chunkGroupIdManager.getChunkId(this);
         return groupId + "_" + groupIndex;
     }
 
+    @Override
     public boolean clear() {
         return this.chunkGroupIdManager.removeGroupID(this);
     }
 
+    @Override
     public String getDirPath() {
         return this.dirPath;
     }
 
+    @Override
     public String getFileName() {
         return this.fileName;
     }
 
+    @Override
     public boolean isAllReceived(final Long receivedFileSize) {
         return this.totalChunkSize.equals(receivedFileSize);
     }
 
+    @Override
     public void isMatchToCurrIndex(final Long lastChunkIndex) {
         log.debug("그룹에 전송된 청크 index : " + lastChunkIndex);
         final Long groupReceivedChunkIndex = chunkGroupIdManager.getGroupeNextChunkIndex(this);
@@ -74,10 +82,12 @@ public class ChunkGroupInfo {
                 "\n" + "수신 시퀀스 : " + lastChunkIndex ,ErrorCode.CHUNK_GROUP_EXCEPTION);
     }
 
+    @Override
     public void updateGroupIndex(final Long lastChunkSize) {
         this.chunkGroupIdManager.updateGroupNextChunkIndex(this, lastChunkSize);
     }
 
+    @Override
     public RequireNextChunk isCompleted() {
         final Long nextChunkIndex = chunkGroupIdManager.getGroupeNextChunkIndex(this);
         if (nextChunkIndex + 1L == totalChunkSize) {

@@ -1,10 +1,9 @@
 package com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
-import com.hanpyeon.academyapi.dir.service.media.upload.ChunkGroup;
-import com.hanpyeon.academyapi.dir.service.media.upload.ChunkGroupInfo;
-import com.hanpyeon.academyapi.dir.service.media.upload.ChunkedFile;
-import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroup;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfoImpl;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.storage.LocalStorage;
 import lombok.extern.slf4j.Slf4j;
@@ -34,11 +33,11 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
     }
 
     @Override
-    public ChunkGroup loadRelatedChunkedFiles(final ChunkGroupInfo chunkGroupInfo) {
+    public ChunkGroup loadRelatedChunkedFiles(final ChunkGroupInfoImpl chunkGroupInfo) {
         return new ChunkGroup(chunkGroupInfo, loadRelatedFiles(chunkGroupInfo));
     }
 
-    private List<Path> loadRelatedFiles(final ChunkGroupInfo chunkGroupInfo) {
+    private List<Path> loadRelatedFiles(final ChunkGroupInfoImpl chunkGroupInfo) {
         try {
             final String groupId = chunkGroupInfo.getGroupId();
             Stream<Path> pathStream = Files.walk(Paths.get(this.storagePath));
@@ -66,7 +65,7 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
      * 2. 스케쥴러를 통한 chunkFile 배치 삭제
      */
     @Override
-    public void removeChunks(ChunkGroupInfo chunkGroupInfo) {
+    public void removeChunks(ChunkGroupInfoImpl chunkGroupInfo) {
         log.info("템프 파일 지우기 시작");
         final List<Path> paths = loadRelatedFiles(chunkGroupInfo);
         try {

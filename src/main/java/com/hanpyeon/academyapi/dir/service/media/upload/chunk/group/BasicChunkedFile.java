@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.dir.service.media.upload;
+package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -13,13 +13,13 @@ import java.util.Objects;
 class BasicChunkedFile implements ChunkedFile {
 
     private final MultipartFile multipartFile;
-    private final ChunkGroupInfo chunkGroupInfo;
+    private final ChunkGroupInfoImpl chunkGroupInfo;
     private final Boolean isLast;
     private final Long chunkStartIndex;
     private String uniqueChunkName = null;
 
     @Override
-    public ChunkGroupInfo getChunkGroupInfo() {
+    public ChunkGroupInfoImpl getChunkGroupInfo() {
         return chunkGroupInfo;
     }
 

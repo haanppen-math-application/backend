@@ -1,9 +1,9 @@
-package com.hanpyeon.academyapi.dir.service.media.upload;
+package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
 import com.hanpyeon.academyapi.media.service.UploadFile;
 
 public interface ChunkedFile extends UploadFile {
-    ChunkGroupInfo getChunkGroupInfo();
+    ChunkGroupInfoImpl getChunkGroupInfo();
     boolean isLast();
     void validateChunkIndex();
     Long getChunkSize();

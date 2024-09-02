@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.dir.service.media.upload.chunk.merger;
 
-import com.hanpyeon.academyapi.dir.service.media.upload.ChunkGroupInfo;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfoImpl;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import lombok.RequiredArgsConstructor;
 
@@ -9,7 +9,7 @@ import java.io.InputStream;
 @RequiredArgsConstructor
 class MergedUploadFileImpl implements MergedUploadFile {
 
-    private final ChunkGroupInfo chunkGroupInfo;
+    private final ChunkGroupInfoImpl chunkGroupInfo;
     private final InputStream inputStream;
     private final ChunkStorage temporarySavedStorage;
 

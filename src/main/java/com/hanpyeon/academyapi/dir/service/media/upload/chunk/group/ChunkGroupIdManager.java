@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.dir.service.media.upload;
+package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -14,15 +14,15 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 final class ChunkGroupIdManager {
 
-    private static Map<ChunkGroupInfo, Group> countPerChunkMap = new ConcurrentHashMap<>();
+    private static Map<ChunkGroupInfoImpl, Group> countPerChunkMap = new ConcurrentHashMap<>();
 
-    public String getGroupID(final ChunkGroupInfo chunkGroupInfo) {
+    public String getGroupID(final ChunkGroupInfoImpl chunkGroupInfo) {
         final Group groupSequence = countPerChunkMap.getOrDefault(chunkGroupInfo, Group.getUnique());
         countPerChunkMap.put(chunkGroupInfo, groupSequence);
         return groupSequence.groupId.toString();
     }
 
-    public Long getChunkId(final ChunkGroupInfo chunkGroupInfo) {
+    public Long getChunkId(final ChunkGroupInfoImpl chunkGroupInfo) {
         final Group group = countPerChunkMap.get(chunkGroupInfo);
         if (Objects.isNull(group)) {
             throw new ChunkException("해당 청크의 소속을 알 수 없습니다.",ErrorCode.CHUNK_GROUP_EXCEPTION);
@@ -30,19 +30,19 @@ final class ChunkGroupIdManager {
         return group.getCurrentIndexAndIncrease();
     }
 
-    public boolean removeGroupID(final ChunkGroupInfo chunkGroupInfo) {
+    public boolean removeGroupID(final ChunkGroupInfoImpl chunkGroupInfo) {
         if (Objects.isNull(countPerChunkMap.remove(chunkGroupInfo))) {
             throw new ChunkException("이미 다운로드 된 청크 입니다.", ErrorCode.CHUNK_GROUP_EXCEPTION);
         }
         return true;
     }
 
-    public Long getGroupeNextChunkIndex(final ChunkGroupInfo chunkGroupInfo) {
+    public Long getGroupeNextChunkIndex(final ChunkGroupInfoImpl chunkGroupInfo) {
         final Group group = countPerChunkMap.get(chunkGroupInfo);
         return group.nextChunkIndex;
     }
 
-    public Long updateGroupNextChunkIndex(final ChunkGroupInfo chunkGroupInfo, final Long lastChunkSize) {
+    public Long updateGroupNextChunkIndex(final ChunkGroupInfoImpl chunkGroupInfo, final Long lastChunkSize) {
         final Group group = countPerChunkMap.get(chunkGroupInfo);
         log.info(lastChunkSize.toString());
         group.nextChunkIndex += lastChunkSize + 1L;

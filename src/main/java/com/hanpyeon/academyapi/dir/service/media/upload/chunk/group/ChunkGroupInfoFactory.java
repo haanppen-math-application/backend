@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.dir.service.media.upload;
+package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
 import com.hanpyeon.academyapi.dir.service.form.resolver.DirectoryPathFormResolver;
@@ -11,9 +11,9 @@ class ChunkGroupInfoFactory {
     private final ChunkGroupIdManager chunkGroupIndexCounter;
     private final DirectoryPathFormResolver directoryPathFormResolver;
 
-    public ChunkGroupInfo create(final UploadMediaDto uploadMediaDto) {
+    public ChunkGroupInfoImpl create(final UploadMediaDto uploadMediaDto) {
         final String resolvedPath = getPath(uploadMediaDto.getTargetDirectory());
-        final ChunkGroupInfo chunkGroupInfo = new ChunkGroupInfo(chunkGroupIndexCounter,
+        final ChunkGroupInfoImpl chunkGroupInfo = new ChunkGroupInfoImpl(chunkGroupIndexCounter,
                 uploadMediaDto.getRequestMemberId(),
                 resolvedPath,
                 uploadMediaDto.getFileName(),
