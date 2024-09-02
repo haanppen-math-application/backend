@@ -94,11 +94,12 @@ class ChunkGroupInfoImpl implements ChunkGroupInfo {
     }
 
     @Override
-    public RequireNextChunk isCompleted() {
-        final Long nextChunkIndex = chunkGroupIdManager.getGroupeNextChunkIndex(this);
-        if (nextChunkIndex + 1L == totalChunkSize) {
-            return RequireNextChunk.completed();
-        }
-        return RequireNextChunk.needMore(nextChunkIndex);
+    public Long getRequiringChunkSize() {
+        return totalChunkSize - chunkGroupIdManager.getGroupeNextChunkIndex(this) + 1L;
+    }
+
+    @Override
+    public Long getNextChunkIndex() {
+        return chunkGroupIdManager.getGroupeNextChunkIndex(this);
     }
 }
