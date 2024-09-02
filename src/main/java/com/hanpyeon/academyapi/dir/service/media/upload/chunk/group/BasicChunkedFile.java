@@ -34,8 +34,8 @@ class BasicChunkedFile implements ChunkedFile {
     }
 
     @Override
-    public Long getChunkSize() {
-        return multipartFile.getSize();
+    public void updateCurrentInfoChunkIndex() {
+        this.chunkGroupInfo.updateGroupIndex(multipartFile.getSize());
     }
 
     @Override
