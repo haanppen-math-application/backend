@@ -57,6 +57,6 @@ class BasicChunkedFile implements ChunkedFile {
 
     @Override
     public String getExtension() {
-        return null;
+        return chunkGroupInfo.getExtension();
     }
 }
