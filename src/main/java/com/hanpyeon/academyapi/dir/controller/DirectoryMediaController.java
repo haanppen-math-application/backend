@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.dir.controller;
 
+import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
 import com.hanpyeon.academyapi.dir.service.MediaService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -42,9 +43,9 @@ public class DirectoryMediaController {
                 memberPrincipal.memberId(),
                 request.targetDirectoryPath()
         );
-        final String storedPath = mediaService.uploadChunk(mediaSaveDto);
-        if (Objects.isNull(storedPath)) {
-            return ResponseEntity.accepted().build();
+        final RequireNextChunk requireNextChunk = mediaService.uploadChunk(mediaSaveDto);
+        if (requireNextChunk.getNeedMore()) {
+            return ResponseEntity.accepted().body(requireNextChunk);
         }
         return ResponseEntity.created(null).build();
     }

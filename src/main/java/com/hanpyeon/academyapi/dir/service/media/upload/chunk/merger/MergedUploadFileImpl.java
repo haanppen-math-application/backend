@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.dir.service.media.upload.chunk.merger;
+package com.hanpyeon.academyapi.dir.service.media.upload.chunk.merge;
 
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
