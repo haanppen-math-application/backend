@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.media.validator;
 
-import org.springframework.web.multipart.MultipartFile;
+import com.hanpyeon.academyapi.media.service.UploadFile;
 
 public interface UploadFileValidator {
-    boolean validate(MultipartFile file);
+    boolean validate(UploadFile uploadFile);
 }

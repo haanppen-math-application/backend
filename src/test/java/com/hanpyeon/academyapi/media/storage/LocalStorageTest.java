@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.media.storage;
 
+import com.hanpyeon.academyapi.media.service.ImageUploadFile;
 import jakarta.transaction.Transactional;
 import org.apache.http.entity.ContentType;
 import org.junit.jupiter.api.BeforeAll;
@@ -47,7 +48,7 @@ class LocalStorageTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String newFileName = localStorage.store(new MockMultipartFile("hee2", "temp.png", String.valueOf(ContentType.IMAGE_PNG), imageInputStream.readAllBytes()), "hee1.png");
+        String newFileName = localStorage.store(new ImageUploadFile(new MockMultipartFile("hee1.png", "origin.png", null, imageInputStream)));
     }
 
 }

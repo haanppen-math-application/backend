@@ -8,7 +8,7 @@ import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.repository.ImageRepository;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
-import com.hanpyeon.academyapi.media.validator.UploadImageValidator;
+import com.hanpyeon.academyapi.media.validator.UploadFileExtensionValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,6 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
     private final MediaStorage mediaStorage;
-    private final UploadImageValidator uploadImageValidator;
     private final MediaMapper mediaMapper;
 
     /**
@@ -38,12 +37,13 @@ public class ImageService {
         if (!checkImagesPresence(imageFiles)) {
             return Collections.emptyList();
         }
+        final List<? extends UploadFile> uploadFiles = imageFiles.stream()
+                .filter(multipartFile -> !multipartFile.isEmpty())
+                .map(mediaMapper::createImageUploadFile)
+                .toList();
         return saveImageNames(
-                imageFiles.stream()
-                        .filter(multipartFile -> !multipartFile.isEmpty())
-                        .map(mediaMapper::createUploadFile)
-                        .map(uploadFile -> uploadFile.validateWith(uploadImageValidator))
-                        .map(uploadFile -> uploadFile.uploadTo(mediaStorage))
+                uploadFiles.stream()
+                        .map(uploadFile -> mediaStorage.store(uploadFile))
                         .toList()
         );
     }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -34,6 +35,7 @@ public class Directory {
     @CreationTimestamp
     private LocalDateTime createdTime;
     @OneToMany
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Media> medias;
 
     public Directory(Member owner, String path, Boolean canModifyByEveryone, Boolean canViewByEveryone) {
@@ -41,6 +43,10 @@ public class Directory {
         this.path = path;
         this.canModifyByEveryone = canModifyByEveryone;
         this.canViewByEveryone = canViewByEveryone;
+    }
+
+    public void add(final Media media) {
+        medias.add(media);
     }
 
     public void setPath(final String newPath) {

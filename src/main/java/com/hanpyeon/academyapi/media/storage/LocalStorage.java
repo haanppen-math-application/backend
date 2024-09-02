@@ -2,39 +2,42 @@ package com.hanpyeon.academyapi.media.storage;
 
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.dto.MediaDto;
-import com.hanpyeon.academyapi.media.exception.MediaStoreException;
 import com.hanpyeon.academyapi.media.exception.NoSuchMediaException;
 import com.hanpyeon.academyapi.media.exception.NotSupportedMediaException;
+import com.hanpyeon.academyapi.media.exception.StorageException;
+import com.hanpyeon.academyapi.media.service.UploadFile;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.OutputStream;
+import java.nio.file.*;
 
 @Component
+@Primary
 public class LocalStorage implements MediaStorage {
 
-    @Value("${server.local.storage}")
-    private String storagePath;
+    //    @Value("${server.local.storage}")
+    protected final String storagePath;
+
+    public LocalStorage(@Value("${server.local.storage}") String storagePath) {
+        this.storagePath = storagePath;
+    }
 
     @Override
-    public String store(final MultipartFile multipartFile, final String newFileName) {
-        final Path path = resolveFilePath(newFileName);
-        try {
-            multipartFile.transferTo(path);
-            return newFileName;
+    public String store(final UploadFile uploadFile) {
+        final Path path = resolveFilePath(uploadFile.getUniqueFileName());
+        try (final OutputStream outputStream = Files.newOutputStream(path, StandardOpenOption.CREATE_NEW)) {
+            uploadFile.getInputStream().transferTo(outputStream);
         } catch (IOException e) {
-            throw new MediaStoreException(ErrorCode.MEDIA_STORE_EXCEPTION);
+            throw new StorageException("서버 상에서 오류가 발생했습니다. 다시 시도해주세요", ErrorCode.MEDIA_STORE_EXCEPTION);
         }
+        return uploadFile.getUniqueFileName();
     }
 
     @Override
