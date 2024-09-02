@@ -54,7 +54,7 @@ public enum ErrorCode {
     DIRECTORY_CANNOT_DELETE(HttpStatus.BAD_REQUEST, "-509", "디렉토리 삭제 불가"),
 
     CHUNK_GROUP_EXCEPTION(HttpStatus.BAD_REQUEST, "-601", "해당 청크 수신 불가"),
-    CHUNK_SIZE_EXCEPTION(HttpStatus.BAD_REQUEST, "-602", "청크 부족"),
+    CHUNK_SIZE_EXCEPTION(HttpStatus.BAD_REQUEST, "-602", "청크 사이즈 문제"),
     CHUNK_ACCESS_EXCEPTION(HttpStatus.BAD_REQUEST, "-603", "청크파일에 접근 불가"),
 
 
