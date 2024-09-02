@@ -13,12 +13,14 @@ class ChunkGroupInfoFactory {
 
     public ChunkGroupInfo create(final UploadMediaDto uploadMediaDto) {
         final String resolvedPath = getPath(uploadMediaDto.getTargetDirectory());
-        return new ChunkGroupInfo(chunkGroupIndexCounter,
+        final ChunkGroupInfo chunkGroupInfo = new ChunkGroupInfo(chunkGroupIndexCounter,
                 uploadMediaDto.getRequestMemberId(),
                 resolvedPath,
                 uploadMediaDto.getFileName(),
                 uploadMediaDto.getTotalChunkCount()
         );
+        chunkGroupInfo.init();
+        return chunkGroupInfo;
     }
 
     private String getPath(final String requestPath) {

@@ -33,6 +33,10 @@ class ChunkGroupInfo {
         return Objects.hash(requestMemberId, dirPath, fileName, totalChunkSize);
     }
 
+    public void init() {
+        this.getGroupId();
+    }
+
     public String getGroupId() {
         return chunkGroupIdManager.getGroupID(this);
     }
