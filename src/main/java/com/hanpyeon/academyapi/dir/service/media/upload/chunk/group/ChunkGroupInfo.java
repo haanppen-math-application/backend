@@ -15,6 +15,7 @@ public interface ChunkGroupInfo {
     String getDirPath();
 
     String getFileName();
+    String getExtension();
 
     boolean isAllReceived(final Long receivedFileSize);
 

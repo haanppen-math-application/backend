@@ -16,6 +16,7 @@ class ChunkGroupInfoImpl implements ChunkGroupInfo {
     private final String dirPath;
     private final String fileName;
     private final Long totalChunkSize;
+    private final String fileExtension;
 
     @Override
     public boolean equals(Object o) {
@@ -63,6 +64,11 @@ class ChunkGroupInfoImpl implements ChunkGroupInfo {
     @Override
     public String getFileName() {
         return this.fileName;
+    }
+
+    @Override
+    public String getExtension() {
+        return fileExtension;
     }
 
     @Override

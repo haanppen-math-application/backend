@@ -17,7 +17,8 @@ class ChunkGroupInfoFactory {
                 uploadMediaDto.getRequestMemberId(),
                 resolvedPath,
                 uploadMediaDto.getFileName(),
-                uploadMediaDto.getTotalChunkCount()
+                uploadMediaDto.getTotalChunkCount(),
+                getExtension(uploadMediaDto.getFile().getOriginalFilename())
         );
         chunkGroupInfo.init();
         return chunkGroupInfo;
@@ -25,5 +26,13 @@ class ChunkGroupInfoFactory {
 
     private String getPath(final String requestPath) {
         return directoryPathFormResolver.resolveToAbsolutePath(requestPath);
+    }
+
+    private String getExtension(final String fileName) {
+        final int dotLastIndex = fileName.lastIndexOf('.');
+        if (dotLastIndex == -1) {
+            return fileName;
+        }
+        return fileName.substring(dotLastIndex);
     }
 }

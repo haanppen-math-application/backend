@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.dir.service.media.upload.chunk.merge;
+package com.hanpyeon.academyapi.dir.service.media.upload.chunk.merger;
 
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
@@ -15,7 +15,7 @@ class MergedUploadFileImpl implements MergedUploadFile {
 
     @Override
     public String getUniqueFileName() {
-        return "result_" + chunkGroupInfo.getGroupId() + chunkGroupInfo.getFileName();
+        return "result_" + chunkGroupInfo.getGroupId() + chunkGroupInfo.getExtension();
     }
 
     @Override

@@ -19,7 +19,7 @@ public class DirectoryMediaUpdateManager {
     @Transactional
     public void update(final ChunkGroupInfo chunkGroupInfo, final String savedPath) {
         final Directory directory = this.findTargetDirectory(chunkGroupInfo.getDirPath());
-        final Media media = create(chunkGroupInfo.getFileName(), savedPath);
+        final Media media = create(chunkGroupInfo.getFileName() + chunkGroupInfo.getExtension(), savedPath);
         directory.add(media);
     }
 
