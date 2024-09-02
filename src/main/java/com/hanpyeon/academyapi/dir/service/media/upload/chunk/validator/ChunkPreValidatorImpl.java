@@ -10,7 +10,7 @@ class ChunkPreValidatorImpl implements ChunkPreValidator {
 
     @Override
     public void preValidate(ChunkedFile chunkedFile) {
-        this.validateChunkStartIndex(chunkedFile);
+//        this.validateChunkStartIndex(chunkedFile);
     }
 
     private void validateChunkStartIndex(final ChunkedFile chunkedFile) {
