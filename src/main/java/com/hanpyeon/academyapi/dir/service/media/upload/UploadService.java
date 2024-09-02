@@ -3,9 +3,10 @@ package com.hanpyeon.academyapi.dir.service.media.upload;
 import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkFactory;
-import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorageUploader;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.validator.ChunkValidateManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,24 +21,28 @@ public class UploadService {
     private final @Qualifier(value = "chunkStorage") ChunkStorage chunkStorage;
     private final ChunkedFileTransferManager chunkedFileTransferManager;
     private final DirectoryMediaUpdateManager directoryMediaUpdateManager;
+    private final ChunkValidateManager chunkValidateManager;
+    private final ChunkStorageUploader chunkStorageUploader;
 
     public RequireNextChunk upload(final UploadMediaDto uploadMediaDto) {
-        final ChunkedFile chunkedFile = chunkFactory.create(uploadMediaDto);
-        final RequireNextChunk requireNextChunk = this.uploadToChunkStorage(chunkedFile);
-
-        if (requireNextChunk.getNeedMore()) {
-            return requireNextChunk;
+        final ChunkedFile chunkedFile = getValidatedChunkedFile(uploadMediaDto);
+        uploadToChunkStorage(chunkedFile);
+        if (chunkedFile.isLast()) {
+            final String savedFileName = chunkedFileTransferManager.sendToMediaStorage(chunkStorage, chunkedFile.getChunkGroupInfo());
+            directoryMediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), savedFileName);
+            return RequireNextChunk.completed();
         }
-        final String savedFileName = chunkedFileTransferManager.sendToMediaStorage(chunkStorage, chunkedFile.getChunkGroupInfo());
-        directoryMediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), savedFileName);
-        return requireNextChunk;
+        return RequireNextChunk.needMore(1L);
     }
 
-    private RequireNextChunk uploadToChunkStorage(final ChunkedFile chunkedFile) {
-        chunkedFile.validateChunkIndex();
-        chunkStorage.save(chunkedFile);
-        final ChunkGroupInfo groupInfo = chunkedFile.getChunkGroupInfo();
-        groupInfo.updateGroupIndex(chunkedFile.getChunkSize());
-        return groupInfo.isCompleted();
+    private ChunkedFile getValidatedChunkedFile(final UploadMediaDto uploadMediaDto) {
+        final ChunkedFile chunkedFile = chunkFactory.create(uploadMediaDto);
+        chunkValidateManager.preValidate(chunkedFile);
+        return chunkedFile;
+    }
+
+    private void uploadToChunkStorage(final ChunkedFile chunkedFile) {
+        chunkStorageUploader.upload(chunkedFile, chunkStorage);
+        chunkValidateManager.postValidate(chunkedFile, chunkStorage);
     }
 }
