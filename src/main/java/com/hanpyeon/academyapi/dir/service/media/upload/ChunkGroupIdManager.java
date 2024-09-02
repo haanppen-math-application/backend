@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.dir.service.media.upload;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
+@Slf4j
 final class ChunkGroupIdManager {
 
     private static Map<ChunkGroupInfo, Group> countPerChunkMap = new ConcurrentHashMap<>();
@@ -42,7 +44,10 @@ final class ChunkGroupIdManager {
 
     public Long updateGroupNextChunkIndex(final ChunkGroupInfo chunkGroupInfo, final Long lastChunkSize) {
         final Group group = countPerChunkMap.get(chunkGroupInfo);
-        group.nextChunkIndex += lastChunkSize;
+        log.info(lastChunkSize.toString());
+        group.nextChunkIndex += lastChunkSize + 1L;
+        log.info(lastChunkSize.toString());
+        log.info(group.nextChunkIndex.toString());
         return group.nextChunkIndex;
     }
 

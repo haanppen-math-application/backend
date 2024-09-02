@@ -1,5 +1,7 @@
-package com.hanpyeon.academyapi.dir.service.media.upload;
+package com.hanpyeon.academyapi.dir.service.media.upload.chunk.merger;
 
+import com.hanpyeon.academyapi.dir.service.media.upload.ChunkGroupInfo;
+import com.hanpyeon.academyapi.dir.service.media.upload.ChunkStorage;
 import lombok.RequiredArgsConstructor;
 
 import java.io.InputStream;
