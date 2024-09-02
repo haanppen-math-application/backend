@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-class ChunkCreator {
+class ChunkFactory {
     private final ChunkGroupInfoFactory chunkGroupFactory;
     private final BasicChunkedFileFactory basicChunkedFileFactory;
 

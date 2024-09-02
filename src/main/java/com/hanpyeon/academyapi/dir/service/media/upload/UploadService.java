@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UploadService {
 
-    private final ChunkCreator chunkCreator;
+    private final ChunkFactory chunkFactory;
     private final @Qualifier(value = "chunkStorage") ChunkStorage chunkStorage;
     private final ChunkedFileTransferManager chunkedFileTransferManager;
     private final DirectoryMediaUpdateManager directoryMediaUpdateManager;
 
     public RequireNextChunk upload(final UploadMediaDto uploadMediaDto) {
-        final ChunkedFile chunkedFile = chunkCreator.create(uploadMediaDto);
+        final ChunkedFile chunkedFile = chunkFactory.create(uploadMediaDto);
         final RequireNextChunk requireNextChunk = this.uploadToChunkStorage(chunkedFile);
 
         if (requireNextChunk.getNeedMore()) {
