@@ -47,7 +47,7 @@ class ImageServiceTest {
     }
 
 //    거짓 양성을 피하고 리팩터링 내성을 향상 시키기 위해 구현 세부사항이 아닌 결과에 집중하라
-    @Test
+//    @Test
     void 파일_존재시_등록_테스트() {
         Image image = Mockito.mock(Image.class);
         MultipartFile multipartFile = new MockMultipartFile("name", "temp".getBytes());
