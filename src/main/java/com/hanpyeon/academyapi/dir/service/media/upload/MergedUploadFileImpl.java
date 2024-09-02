@@ -13,7 +13,7 @@ class MergedUploadFileImpl implements MergedUploadFile {
 
     @Override
     public String getUniqueFileName() {
-        return chunkGroupInfo.getGroupId() + chunkGroupInfo.getFileName();
+        return "result_" + chunkGroupInfo.getGroupId() + chunkGroupInfo.getFileName();
     }
 
     @Override
