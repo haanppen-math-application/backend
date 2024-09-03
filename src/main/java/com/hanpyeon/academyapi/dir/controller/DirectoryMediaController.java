@@ -43,8 +43,11 @@ public class DirectoryMediaController {
                 request.targetDirectoryPath()
         );
         final RequireNextChunk requireNextChunk = mediaService.uploadChunk(mediaSaveDto);
-        if (requireNextChunk.getNeedMore()) {
+        if (requireNextChunk.getNeedMore() && requireNextChunk.getInformation() == null) {
             return ResponseEntity.accepted().body(requireNextChunk);
+        }
+        if (requireNextChunk.getNeedMore() && requireNextChunk.getInformation() != null) {
+            return ResponseEntity.badRequest().body(requireNextChunk);
         }
         return ResponseEntity.created(null).build();
     }
