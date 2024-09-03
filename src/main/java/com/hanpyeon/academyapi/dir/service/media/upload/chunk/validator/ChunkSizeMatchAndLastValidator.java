@@ -9,23 +9,23 @@ import org.springframework.stereotype.Service;
 public class ChunkSizeMatchAndLastValidator implements ChunkValidator {
     @Override
     public void validate(ChunkedFile chunkedFile) {
-        if (isIllegalIntermediateChunk(chunkedFile)) {
+        if (!isLegalIntermediateChunk(chunkedFile)) {
             throw new ChunkException("마지막 청크 입니다, isLast 필드를 true 로 해주세요",ErrorCode.CHUNK_ILLEGAL_REQUEST_EXCEPTION);
         }
-        if (isIllegalLastChunk(chunkedFile)) {
+        if (!isLegalLastChunk(chunkedFile)) {
             throw new ChunkException("마지막 청크가 아닙니다, isLast 필드를 false 로 해주세요",ErrorCode.CHUNK_ILLEGAL_REQUEST_EXCEPTION);
         }
     }
 
-    private boolean isIllegalIntermediateChunk(final ChunkedFile chunkedFile) {
-        return !chunkedFile.isLast() && isFulfillChunkGroup(chunkedFile);
+    private boolean isLegalIntermediateChunk(final ChunkedFile chunkedFile) {
+        return !chunkedFile.isLast() && !fulfillChunkGroup(chunkedFile);
     }
 
-    private boolean isIllegalLastChunk(final ChunkedFile chunkedFile) {
-        return chunkedFile.isLast() && isFulfillChunkGroup(chunkedFile);
+    private boolean isLegalLastChunk(final ChunkedFile chunkedFile) {
+        return chunkedFile.isLast() && fulfillChunkGroup(chunkedFile);
     }
 
-    private boolean isFulfillChunkGroup(final ChunkedFile chunkedFile) {
+    private boolean fulfillChunkGroup(final ChunkedFile chunkedFile) {
         final Long requireSize = chunkedFile.getRemainSizeWithThisChunk();
         if (requireSize == 0) {
             return true;
