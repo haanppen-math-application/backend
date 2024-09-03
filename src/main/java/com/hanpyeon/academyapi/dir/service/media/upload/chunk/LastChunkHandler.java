@@ -6,7 +6,7 @@ import com.hanpyeon.academyapi.dir.service.media.upload.DirectoryMediaUpdateMana
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorageUploader;
-import com.hanpyeon.academyapi.dir.service.media.upload.chunk.validator.ChunkPostValidator;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.validator.ChunkValidateManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +16,8 @@ class LastChunkHandler extends ChunkProcessor {
     private final ChunkedFileTransferManager chunkedFileTransferManager;
     private final DirectoryMediaUpdateManager directoryMediaUpdateManager;
 
-    public LastChunkHandler(
-            ChunkPostValidator chunkPostValidator,
-            ChunkStorageUploader chunkStorageUploader,
-            ChunkedFileTransferManager chunkedFileTransferManager,
-            DirectoryMediaUpdateManager directoryMediaUpdateManager
-    ) {
-        super(chunkPostValidator, chunkStorageUploader);
+    public LastChunkHandler(ChunkStorageUploader chunkStorageUploader, ChunkValidateManager chunkValidateManager, ChunkedFileTransferManager chunkedFileTransferManager, DirectoryMediaUpdateManager directoryMediaUpdateManager) {
+        super(chunkStorageUploader, chunkValidateManager);
         this.chunkedFileTransferManager = chunkedFileTransferManager;
         this.directoryMediaUpdateManager = directoryMediaUpdateManager;
     }
