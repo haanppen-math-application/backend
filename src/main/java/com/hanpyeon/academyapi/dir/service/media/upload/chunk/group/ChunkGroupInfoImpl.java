@@ -72,8 +72,8 @@ class ChunkGroupInfoImpl implements ChunkGroupInfo {
     }
 
     @Override
-    public boolean isAllReceived(final Long receivedFileSize) {
-        return this.totalChunkSize.equals(receivedFileSize);
+    public boolean chunkIndexFulfilled() {
+        return this.totalChunkSize + 1L == chunkGroupIdManager.getGroupeNextChunkIndex(this);
     }
 
     @Override

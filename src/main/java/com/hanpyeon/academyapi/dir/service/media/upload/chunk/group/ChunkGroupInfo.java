@@ -16,7 +16,7 @@ public interface ChunkGroupInfo {
 
     String getExtension();
 
-    boolean isAllReceived(final Long receivedFileSize);
+    boolean chunkIndexFulfilled();
 
     void isMatchToCurrIndex(final Long lastChunkIndex);
 
