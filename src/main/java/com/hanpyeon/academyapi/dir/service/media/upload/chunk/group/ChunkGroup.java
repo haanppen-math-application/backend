@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Slf4j
 public class ChunkGroup {
     private final ChunkGroupInfo chunkGroupInfo;
     private final List<Path> chunkPaths;
@@ -37,7 +39,7 @@ public class ChunkGroup {
     }
 
     public void validateAllChunkFileReceived() {
-        if (this.getChunkGroupInfo().chunkIndexFulfilled() && groupReceivedFileSize.equals(chunkGroupInfo.getNextChunkIndex() - 1L)) {
+        if (!this.getChunkGroupInfo().chunkIndexFulfilled() || !groupReceivedFileSize.equals(chunkGroupInfo.getNextChunkIndex() - 1L)) {
             throw new ChunkException("청크 다운로드 중 실패 발생", ErrorCode.CHUNK_GROUP_EXCEPTION);
         }
     }
