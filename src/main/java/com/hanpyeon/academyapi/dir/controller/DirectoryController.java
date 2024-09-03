@@ -61,7 +61,7 @@ public class DirectoryController {
     @Operation(summary = "디렉토리를 삭제하는 api", description = "하위 디렉토리가 포함된 디렉토리를 삭제하기 위해선 _ 필드를 true로 해주세요")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> deleteDirectory(
-            @RequestBody @Valid DeleteDirectoryRequest deleteDirectoryRequest,
+            @ModelAttribute @Valid DeleteDirectoryRequest deleteDirectoryRequest,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal
     ) {
         final DeleteDirectoryDto deleteDirectoryDto = new DeleteDirectoryDto(deleteDirectoryRequest.targetDirectory(), memberPrincipal.memberId(), deleteDirectoryRequest.deleteChildes);

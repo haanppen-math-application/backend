@@ -29,6 +29,8 @@ class DirectoryDeleteCommandCreator {
 
     private List<Directory> getAssociatedDirectories(final String targetPath) {
         final String path = directoryPathFormResolver.resolveToAbsolutePath(targetPath);
+        directoryRepository.findDirectoryByPath(path)
+                .orElseThrow(() -> new DirectoryException(path + " : 디렉토리를 찾을 수 없습니다",ErrorCode.NOT_EXIST_DIRECTORY));
         final List<Directory> directories = directoryRepository.queryChildDirectories(path);
         return directories;
     }
