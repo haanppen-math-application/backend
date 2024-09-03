@@ -5,15 +5,15 @@ import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupIn
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorageUploader;
-import com.hanpyeon.academyapi.dir.service.media.upload.chunk.validator.ChunkPostValidator;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.validator.ChunkValidateManager;
 import org.springframework.stereotype.Service;
 
 @Service
-class IntermediateChunkHandlerImpl extends ChunkProcessor {
+class IntermediateChunkHandler extends ChunkProcessor {
 
 
-    public IntermediateChunkHandlerImpl(ChunkPostValidator chunkPostValidator, ChunkStorageUploader chunkStorageUploader) {
-        super(chunkPostValidator, chunkStorageUploader);
+    public IntermediateChunkHandler(ChunkStorageUploader chunkStorageUploader, ChunkValidateManager chunkValidateManager) {
+        super(chunkStorageUploader, chunkValidateManager);
     }
 
     @Override
@@ -21,7 +21,7 @@ class IntermediateChunkHandlerImpl extends ChunkProcessor {
         final ChunkGroupInfo chunkGroupInfo = chunkedFile.getChunkGroupInfo();
         final Long needSize = chunkGroupInfo.getRequiringChunkSize();
         final Long nextChunkIndex = chunkGroupInfo.getNextChunkIndex();
-        return RequireNextChunk.needMore(nextChunkIndex, needSize);
+        return RequireNextChunk.need(nextChunkIndex, needSize);
     }
 
     @Override
