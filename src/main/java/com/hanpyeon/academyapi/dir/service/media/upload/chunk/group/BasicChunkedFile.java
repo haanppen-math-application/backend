@@ -25,7 +25,7 @@ class BasicChunkedFile implements ChunkedFile {
 
     @Override
     public boolean isLast() {
-        return isLast;
+        return isLast && chunkGroupInfo.getRequiringChunkSize() == 0L && chunkGroupInfo.chunkIndexFulfilled();
     }
 
     @Override
