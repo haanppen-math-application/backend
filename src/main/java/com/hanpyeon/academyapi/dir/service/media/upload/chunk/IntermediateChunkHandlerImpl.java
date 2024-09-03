@@ -19,7 +19,6 @@ class IntermediateChunkHandlerImpl extends ChunkProcessor {
     @Override
     protected RequireNextChunk handle(ChunkedFile chunkedFile, ChunkStorage chunkStorage) {
         final ChunkGroupInfo chunkGroupInfo = chunkedFile.getChunkGroupInfo();
-        chunkedFile.updateCurrentInfoChunkIndex();
         final Long needSize = chunkGroupInfo.getRequiringChunkSize();
         final Long nextChunkIndex = chunkGroupInfo.getNextChunkIndex();
         return RequireNextChunk.needMore(nextChunkIndex, needSize);
