@@ -13,12 +13,12 @@ import java.util.List;
 public class ChunkGroup {
     private final ChunkGroupInfo chunkGroupInfo;
     private final List<Path> chunkPaths;
-    private final Long currentReceivedFileSize;
+    private final Long groupReceivedFileSize;
 
     public ChunkGroup(ChunkGroupInfo chunkGroupInfo, List<Path> chunkPaths) {
         this.chunkGroupInfo = chunkGroupInfo;
         this.chunkPaths = chunkPaths;
-        this.currentReceivedFileSize = chunkPaths.stream()
+        this.groupReceivedFileSize = chunkPaths.stream()
                 .mapToLong(path -> {
                     try {
                         return Files.size(path);
@@ -37,8 +37,8 @@ public class ChunkGroup {
     }
 
     public void validateAllChunkFileReceived() {
-        if (this.getChunkGroupInfo().isAllReceived(this.currentReceivedFileSize)) {
-            throw new ChunkException("청크들이 다운로드 되지 않음", ErrorCode.CHUNK_GROUP_EXCEPTION);
+        if (this.getChunkGroupInfo().chunkIndexFulfilled() && groupReceivedFileSize.equals(chunkGroupInfo.getNextChunkIndex() - 1L)) {
+            throw new ChunkException("청크 다운로드 중 실패 발생", ErrorCode.CHUNK_GROUP_EXCEPTION);
         }
     }
 }
