@@ -3,9 +3,11 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.validator;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class ChunkSizeMatchAndLastValidator implements ChunkValidator {
     @Override
     public void validate(ChunkedFile chunkedFile) {
@@ -18,15 +20,22 @@ public class ChunkSizeMatchAndLastValidator implements ChunkValidator {
     }
 
     private boolean isLegalIntermediateChunk(final ChunkedFile chunkedFile) {
-        return !chunkedFile.isLast() && !fulfillChunkGroup(chunkedFile);
+        if (chunkedFile.isLast()) {
+            return true;
+        }
+        return !fulfillChunkGroup(chunkedFile);
     }
 
     private boolean isLegalLastChunk(final ChunkedFile chunkedFile) {
-        return chunkedFile.isLast() && fulfillChunkGroup(chunkedFile);
+        if (!chunkedFile.isLast()) {
+            return true;
+        }
+        return fulfillChunkGroup(chunkedFile);
     }
 
     private boolean fulfillChunkGroup(final ChunkedFile chunkedFile) {
         final Long requireSize = chunkedFile.getRemainSizeWithThisChunk();
+        log.info("필요한 사이즈 : "+requireSize);
         if (requireSize == 0) {
             return true;
         }
