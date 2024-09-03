@@ -37,14 +37,13 @@ final class ChunkGroupIdManager {
 
     public Long getGroupeNextChunkIndex(final ChunkGroupInfo chunkGroupInfo) {
         final Group group = getGroup(chunkGroupInfo);
-        return group.nextChunkIndex;
+        return group.nextChunkIndex + 1L;
     }
 
     public Long updateGroupNextChunkIndex(final ChunkGroupInfo chunkGroupInfo, final Long lastChunkSize) {
         final Group group = getGroup(chunkGroupInfo);
         log.info(lastChunkSize.toString());
-        group.nextChunkIndex += lastChunkSize + 1L;
-        log.info(lastChunkSize.toString());
+        group.nextChunkIndex += lastChunkSize;
         log.info(group.nextChunkIndex.toString());
         return group.nextChunkIndex;
     }
