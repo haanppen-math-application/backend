@@ -34,6 +34,15 @@ class BasicChunkedFile implements ChunkedFile {
     }
 
     @Override
+    public void validateCurrSize() {
+        final Long groupRemainSize = this.chunkGroupInfo.getRequiringChunkSize();
+        final Long sizeDiff = this.multipartFile.getSize() - groupRemainSize;
+        if (sizeDiff > 0) {
+            throw new ChunkException("초과되는 청크 도착 : " + sizeDiff, ErrorCode.CHUNK_SIZE_EXCEPTION);
+        }
+    }
+
+    @Override
     public void updateCurrentInfoChunkIndex() {
         this.chunkGroupInfo.updateGroupIndex(multipartFile.getSize());
     }
