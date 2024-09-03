@@ -40,7 +40,7 @@ public class ChunkGroup {
 
     public void validateAllChunkFileReceived() {
         if (!this.getChunkGroupInfo().chunkIndexFulfilled() || !groupReceivedFileSize.equals(chunkGroupInfo.getNextChunkIndex() - 1L)) {
-            throw new ChunkException("청크 다운로드 중 실패 발생", ErrorCode.CHUNK_GROUP_EXCEPTION);
+            throw new ChunkException("청크 합치는 중 문제 발생, 처음부터 다시 시작해 주세요", ErrorCode.CHUNK_GROUP_EXCEPTION);
         }
     }
 }
