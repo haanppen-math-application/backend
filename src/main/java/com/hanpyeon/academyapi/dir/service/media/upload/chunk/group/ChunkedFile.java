@@ -6,6 +6,6 @@ public interface ChunkedFile extends UploadFile {
     ChunkGroupInfo getChunkGroupInfo();
     boolean isLast();
     void validateChunkIndex();
-    void validateCurrSize();
+    Long getRemainSizeWithThisChunk();
     void updateCurrentInfoChunkIndex();
 }

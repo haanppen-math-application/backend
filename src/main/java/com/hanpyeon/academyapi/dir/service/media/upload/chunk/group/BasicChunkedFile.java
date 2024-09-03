@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.util.Objects;
 
 @RequiredArgsConstructor
+@Slf4j
 class BasicChunkedFile implements ChunkedFile {
 
     private final MultipartFile multipartFile;
@@ -25,7 +27,10 @@ class BasicChunkedFile implements ChunkedFile {
 
     @Override
     public boolean isLast() {
-        return isLast && chunkGroupInfo.getRequiringChunkSize() == 0L && chunkGroupInfo.chunkIndexFulfilled();
+        log.info("남은 청크 사이즈 : "+chunkGroupInfo.getRequiringChunkSize());
+        log.info("인덱스 다 채워졌니 : "+ chunkGroupInfo.chunkIndexFulfilled());
+        return isLast;
+//                && chunkGroupInfo.getRequiringChunkSize() == 0L && chunkGroupInfo.chunkIndexFulfilled();
     }
 
     @Override
@@ -34,12 +39,10 @@ class BasicChunkedFile implements ChunkedFile {
     }
 
     @Override
-    public void validateCurrSize() {
+    public Long getRemainSizeWithThisChunk() {
         final Long groupRemainSize = this.chunkGroupInfo.getRequiringChunkSize();
-        final Long sizeDiff = this.multipartFile.getSize() - groupRemainSize;
-        if (sizeDiff > 0) {
-            throw new ChunkException("초과되는 청크 도착 : " + sizeDiff, ErrorCode.CHUNK_SIZE_EXCEPTION);
-        }
+        final Long sizeDiff = groupRemainSize - this.multipartFile.getSize();
+        return sizeDiff;
     }
 
     @Override
