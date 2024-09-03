@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-class ChunkValidateManager {
+public class ChunkValidateManager {
     private final List<ChunkValidator> chunkValidators;
 
     public void validate(final ChunkedFile chunkedFile) {
