@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
-import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,7 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @Slf4j
-class ChunkGroupInfoImpl implements ChunkGroupInfo {
+class BasicChunkGroupInfo implements ChunkGroupInfo {
     private final ChunkGroupIdManager chunkGroupIdManager;
     private final Long requestMemberId;
     private final String dirPath;
@@ -22,7 +21,7 @@ class ChunkGroupInfoImpl implements ChunkGroupInfo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ChunkGroupInfoImpl that = (ChunkGroupInfoImpl) o;
+        BasicChunkGroupInfo that = (BasicChunkGroupInfo) o;
         return Objects.equals(requestMemberId, that.requestMemberId) &&
                 Objects.equals(dirPath, that.dirPath) &&
                 Objects.equals(fileName, that.fileName) &&
@@ -73,6 +72,8 @@ class ChunkGroupInfoImpl implements ChunkGroupInfo {
 
     @Override
     public boolean chunkIndexFulfilled() {
+        log.debug("목표 : " + (this.totalChunkSize + 1L));
+        log.debug("현재까지 다운된 양 : " + chunkGroupIdManager.getGroupeNextChunkIndex(this));
         return this.totalChunkSize + 1L == chunkGroupIdManager.getGroupeNextChunkIndex(this);
     }
 
@@ -85,7 +86,7 @@ class ChunkGroupInfoImpl implements ChunkGroupInfo {
             return;
         }
         throw new ChunkException("청크 순서 오류. 현재 필요 시퀀스 : " + groupReceivedChunkIndex +
-                "\n" + "수신 시퀀스 : " + lastChunkIndex ,ErrorCode.CHUNK_GROUP_EXCEPTION);
+                "\n" + "수신 시퀀스 : " + lastChunkIndex, ErrorCode.CHUNK_GROUP_EXCEPTION);
     }
 
     @Override
@@ -95,6 +96,7 @@ class ChunkGroupInfoImpl implements ChunkGroupInfo {
 
     @Override
     public Long getRequiringChunkSize() {
+        log.info("목표 사이즈 : " + totalChunkSize);
         return totalChunkSize - chunkGroupIdManager.getGroupeNextChunkIndex(this) + 1L;
     }
 
