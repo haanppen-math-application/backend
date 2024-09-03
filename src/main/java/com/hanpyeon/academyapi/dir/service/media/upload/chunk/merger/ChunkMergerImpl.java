@@ -31,7 +31,13 @@ class ChunkMergerImpl implements ChunkMerger {
 
     private ChunkGroup getValidatedChunkGroup(final ChunkStorage chunkStorage, final ChunkGroupInfo chunkGroupInfo) {
         final ChunkGroup chunkGroup = chunkStorage.loadRelatedChunkedFiles(chunkGroupInfo);
-        chunkGroup.validateAllChunkFileReceived();
+        try {
+            chunkGroup.validateAllChunkFileReceived();
+        } catch (ChunkException chunkException) {
+            chunkStorage.removeChunks(chunkGroupInfo);
+            chunkGroupInfo.clear();
+            throw chunkException;
+        }
         return chunkGroup;
     }
 

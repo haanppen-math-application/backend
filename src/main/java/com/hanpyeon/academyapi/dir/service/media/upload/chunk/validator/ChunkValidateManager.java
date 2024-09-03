@@ -1,21 +1,19 @@
 package com.hanpyeon.academyapi.dir.service.media.upload.chunk.validator;
 
-import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
+import com.amazonaws.services.ec2.model.transform.LaunchTemplateElasticInferenceAcceleratorStaxUnmarshaller;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service
+import java.util.List;
+
 @RequiredArgsConstructor
+@Service
 public class ChunkValidateManager {
-    private final ChunkPostValidator chunkPostValidator;
-    private final ChunkPreValidator chunkPreValidator;
+    private final List<ChunkValidator> chunkValidators;
 
-    public void postValidate(final ChunkedFile chunkedFile, final ChunkStorage chunkStorage) {
-        this.chunkPostValidator.postValidate(chunkedFile, chunkStorage);
-    }
-
-    public void preValidate(final ChunkedFile chunkedFile){
-        this.chunkPreValidator.preValidate(chunkedFile);
+    public void validate(final ChunkedFile chunkedFile) {
+        chunkValidators.stream()
+                .forEach(chunkValidator -> chunkValidator.validate(chunkedFile));
     }
 }

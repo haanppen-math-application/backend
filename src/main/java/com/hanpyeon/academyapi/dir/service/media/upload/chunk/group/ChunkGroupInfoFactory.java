@@ -13,7 +13,7 @@ class ChunkGroupInfoFactory {
 
     public ChunkGroupInfo create(final UploadMediaDto uploadMediaDto) {
         final String resolvedPath = getPath(uploadMediaDto.getTargetDirectory());
-        final ChunkGroupInfo chunkGroupInfo = new ChunkGroupInfoImpl(chunkGroupIndexCounter,
+        final ChunkGroupInfo chunkGroupInfo = new BasicChunkGroupInfo(chunkGroupIndexCounter,
                 uploadMediaDto.getRequestMemberId(),
                 resolvedPath,
                 uploadMediaDto.getFileName(),

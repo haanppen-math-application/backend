@@ -6,14 +6,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-class ChunkPreValidatorImpl implements ChunkPreValidator {
+class ChunkIndexValidatorImpl implements ChunkValidator {
 
     @Override
-    public void preValidate(ChunkedFile chunkedFile) {
-//        this.validateChunkStartIndex(chunkedFile);
-    }
-
-    private void validateChunkStartIndex(final ChunkedFile chunkedFile) {
+    public void validate(ChunkedFile chunkedFile) {
         chunkedFile.validateChunkIndex();
     }
 }

@@ -24,10 +24,7 @@ final class ChunkGroupIdManager {
     }
 
     public Long getChunkId(final ChunkGroupInfo chunkGroupInfo) {
-        final Group group = countPerChunkMap.get(chunkGroupInfo);
-        if (Objects.isNull(group)) {
-            throw new ChunkException("해당 청크의 소속을 알 수 없습니다.", ErrorCode.CHUNK_GROUP_EXCEPTION);
-        }
+        final Group group = getGroup(chunkGroupInfo);
         return group.getCurrentIndexAndIncrease();
     }
 
@@ -39,17 +36,27 @@ final class ChunkGroupIdManager {
     }
 
     public Long getGroupeNextChunkIndex(final ChunkGroupInfo chunkGroupInfo) {
-        final Group group = countPerChunkMap.get(chunkGroupInfo);
-        return group.nextChunkIndex;
+        final Group group = getGroup(chunkGroupInfo);
+        if (group.nextChunkIndex == 0L) {
+            return 0L;
+        }
+        return group.nextChunkIndex + 1L;
     }
 
     public Long updateGroupNextChunkIndex(final ChunkGroupInfo chunkGroupInfo, final Long lastChunkSize) {
-        final Group group = countPerChunkMap.get(chunkGroupInfo);
-        log.info(lastChunkSize.toString());
-        group.nextChunkIndex += lastChunkSize + 1L;
-        log.info(lastChunkSize.toString());
-        log.info(group.nextChunkIndex.toString());
+        final Group group = getGroup(chunkGroupInfo);
+        log.debug("갱신전그룹 nextIndex : " +group.nextChunkIndex.toString());
+        group.nextChunkIndex += lastChunkSize;
+        log.debug("갱신된그룹 nextIndex : " + group.nextChunkIndex);
         return group.nextChunkIndex;
+    }
+
+    private Group getGroup(final ChunkGroupInfo chunkGroupInfo) {
+        final Group group = countPerChunkMap.get(chunkGroupInfo);
+        if (Objects.isNull(group)) {
+            throw new ChunkException("해당 청크의 소속을 알 수 없습니다.", ErrorCode.CHUNK_GROUP_EXCEPTION);
+        }
+        return group;
     }
 
 

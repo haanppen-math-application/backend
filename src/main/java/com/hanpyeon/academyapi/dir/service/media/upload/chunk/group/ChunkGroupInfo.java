@@ -1,7 +1,5 @@
 package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
-import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
-
 public interface ChunkGroupInfo {
 
     void init();
@@ -15,13 +13,16 @@ public interface ChunkGroupInfo {
     String getDirPath();
 
     String getFileName();
+
     String getExtension();
 
-    boolean isAllReceived(final Long receivedFileSize);
+    boolean chunkIndexFulfilled();
 
     void isMatchToCurrIndex(final Long lastChunkIndex);
 
     void updateGroupIndex(final Long lastChunkSize);
 
-    RequireNextChunk isCompleted();
+    Long getRequiringChunkSize();
+
+    Long getNextChunkIndex();
 }

@@ -56,6 +56,8 @@ public enum ErrorCode {
     CHUNK_GROUP_EXCEPTION(HttpStatus.BAD_REQUEST, "-601", "해당 청크 수신 불가"),
     CHUNK_SIZE_EXCEPTION(HttpStatus.BAD_REQUEST, "-602", "청크 사이즈 문제"),
     CHUNK_ACCESS_EXCEPTION(HttpStatus.BAD_REQUEST, "-603", "청크파일에 접근 불가"),
+    CHUNK_HANDLE_EXCEPTION(HttpStatus.BAD_REQUEST, "-604", "청크 파일 처리 불가"),
+    CHUNK_ILLEGAL_REQUEST_EXCEPTION(HttpStatus.BAD_REQUEST, "-605", "잘못된 청크 전송"),
 
 
     INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "-801", "파일 검증 실패"),

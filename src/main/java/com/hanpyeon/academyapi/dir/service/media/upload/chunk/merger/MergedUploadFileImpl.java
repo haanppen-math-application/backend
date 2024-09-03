@@ -25,7 +25,7 @@ class MergedUploadFileImpl implements MergedUploadFile {
 
     @Override
     public String getExtension() {
-        return null;
+        return chunkGroupInfo.getExtension();
     }
 
     @Override

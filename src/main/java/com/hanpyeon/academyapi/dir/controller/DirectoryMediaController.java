@@ -38,7 +38,6 @@ public class DirectoryMediaController {
                 request.fileName(),
                 request.totalChunkCount(),
                 request.currChunkIndex(),
-                request.currChunkSize(),
                 request.isLast(),
                 memberPrincipal.memberId(),
                 request.targetDirectoryPath()
@@ -55,7 +54,6 @@ public class DirectoryMediaController {
             @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String fileName,
             @Nonnull Long totalChunkCount,
             @Nonnull Long currChunkIndex,
-            @Nonnull Long currChunkSize,
             @Nonnull Boolean isLast
     ) {
     }
