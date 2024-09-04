@@ -24,7 +24,7 @@ class LoadMemosAdapter implements QueryMemosPort {
                         memo.getId(),
                         memo.getProgressed(),
                         memo.getHomework(),
-                        memo.getTargetDate().toLocalDate(),
+                        memo.getTargetDate(),
                         null,
                         null)
                 );

@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public record MemoRegisterCommand(
@@ -8,7 +8,7 @@ public record MemoRegisterCommand(
         Long targetCourseId,
         String progressed,
         String homeWork,
-        LocalDateTime registerTargetDateTime,
+        LocalDate registerTargetDate,
         List<Long> courseMediaIds,
         List<Long> conceptMediaIds
 ) {

@@ -29,7 +29,7 @@ class RegisterMemoAdapter implements RegisterMemoPort {
     private com.hanpyeon.academyapi.course.adapter.out.Memo mapToMemoEntity(final Memo memo, final Course course) {
         return new com.hanpyeon.academyapi.course.adapter.out.Memo(
                 course,
-                memo.getRegisterTargetDateTime(),
+                memo.getTargetDate(),
                 memo.getProgressed(),
                 memo.getHomework()
         );

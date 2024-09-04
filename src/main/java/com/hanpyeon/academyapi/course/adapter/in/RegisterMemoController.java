@@ -10,9 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class RegisterMemoController {
     @Operation(summary = "반에 메모를 등록하는 API", description = "메모 등록은 담당 선생님만 가능")
     public ResponseEntity<?> addMemo(
             @AuthenticationPrincipal @NotNull final MemberPrincipal memberPrincipal,
-            @Valid final RegisterMemoRequest registerMemoRequest
+            @RequestBody @Valid final RegisterMemoRequest registerMemoRequest
     ) {
         memoRegisterUseCase.register(registerMemoRequest.createMemoRegisterCommand(memberPrincipal.memberId()));
         return ResponseEntity.ok().build();
@@ -37,7 +39,7 @@ public class RegisterMemoController {
             Long targetCourseId,
             String progressed,
             String homework,
-            LocalDateTime registerTargetDateTime,
+            LocalDate registerTargetDateTime,
             List<Long> courseMediaIds,
             List<Long> conceptMediaIds
     ) {
