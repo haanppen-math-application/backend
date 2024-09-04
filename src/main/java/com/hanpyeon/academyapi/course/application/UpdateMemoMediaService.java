@@ -10,6 +10,7 @@ import com.hanpyeon.academyapi.course.domain.MemoMedia;
 import com.hanpyeon.academyapi.course.domain.Memo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class UpdateMemoMediaService implements UpdateMemoMediaUseCase {
     private final UpdateMemoMediaPort updateMemoMediaPort;
 
     @Override
+    @Transactional
     public void updateMediaMemo(UpdateMediaMemoCommand updateMediaMemoCommand) {
         final Memo targetMemo = loadMemoPort.loadMemo(updateMediaMemoCommand.memoId()) ;
         final List<Media> selectedMediasWithSequence = loadMediasPort.loadMedias(updateMediaMemoCommand.mediaId());
