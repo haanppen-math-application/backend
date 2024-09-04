@@ -35,7 +35,7 @@ public class ChunkSizeMatchAndLastValidator implements ChunkValidator {
 
     private boolean fulfillChunkGroup(final ChunkedFile chunkedFile) {
         final Long requireSize = chunkedFile.getRemainSizeWithThisChunk();
-        log.info("필요한 사이즈 : "+requireSize);
+        log.debug("필요한 사이즈 : "+requireSize);
         if (requireSize == 0) {
             return true;
         }
