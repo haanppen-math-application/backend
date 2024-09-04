@@ -97,7 +97,7 @@ class BasicChunkGroupInfo implements ChunkGroupInfo {
     @Override
     public Long getRequiringChunkSize() {
         log.info("목표 사이즈 : " + totalChunkSize);
-        return totalChunkSize - chunkGroupIdManager.getGroupeNextChunkIndex(this) + 1L;
+        return totalChunkSize - chunkGroupIdManager.getGroupReceivedChunkSize(this);
     }
 
     @Override
