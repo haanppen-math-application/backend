@@ -1,12 +1,12 @@
 package com.hanpyeon.academyapi.course.domain;
 
-import com.hanpyeon.academyapi.course.application.port.in.CourseRegisterUseCase;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -16,12 +16,17 @@ public class Memo {
     private LocalDate targetDate;
     private String progressed;
     private String homework;
+    private List<MemoMedia> medias;
 
-    public static Memo createNewMemo(final LocalDate targetDate, final String progressed, final String homework) {
-        return new Memo(null, null, targetDate, progressed, homework);
+    public void setMedias(List<MemoMedia> medias) {
+        this.medias = medias;
     }
 
-    public static Memo createByEntity(final Long memoId, final Course course, final LocalDate targetDate, final String progressed, final String homework) {
-        return new Memo(memoId, course, targetDate, progressed, homework);
+    public static Memo createNewMemo(final LocalDate targetDate, final String progressed, final String homework) {
+        return new Memo(null, null, targetDate, progressed, homework, new ArrayList<>());
+    }
+
+    public static Memo createByEntity(final Long memoId, final Course course, final LocalDate targetDate, final String progressed, final String homework, final List<MemoMedia> medias) {
+        return new Memo(memoId, course, targetDate, progressed, homework, medias);
     }
 }
