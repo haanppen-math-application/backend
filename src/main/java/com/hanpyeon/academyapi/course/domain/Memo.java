@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,15 +13,15 @@ import java.time.LocalDateTime;
 public class Memo {
     private Long memoId;
     private Course course;
-    private LocalDateTime registerTargetDateTime;
+    private LocalDate targetDate;
     private String progressed;
     private String homework;
 
-    public static Memo createNewMemo(final LocalDateTime registerTargetDateTime, final String progressed, final String homework) {
-        return new Memo(null, null, registerTargetDateTime, progressed, homework);
+    public static Memo createNewMemo(final LocalDate targetDate, final String progressed, final String homework) {
+        return new Memo(null, null, targetDate, progressed, homework);
     }
 
-    public static Memo createByEntity(final Long memoId, final Course course, final LocalDateTime registerTargetDateTime, final String progressed, final String homework) {
-        return new Memo(memoId, course, registerTargetDateTime, progressed, homework);
+    public static Memo createByEntity(final Long memoId, final Course course, final LocalDate targetDate, final String progressed, final String homework) {
+        return new Memo(memoId, course, targetDate, progressed, homework);
     }
 }

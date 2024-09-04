@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name = "MEMO")
@@ -19,7 +20,7 @@ class Memo {
     @Column(name = "REGISTERED_DATE")
     private LocalDateTime registeredDateTime;
     @Column(name = "TARGET_DATE")
-    private LocalDateTime targetDate;
+    private LocalDate targetDate;
     @ManyToOne
     @JoinColumn(name = "courseId")
     private Course course;
@@ -36,7 +37,7 @@ class Memo {
     private List<Image> courseMedia;
 */
 
-    Memo(final Course course, final LocalDateTime targetDate, final String progressed, final String homework) {
+    Memo(final Course course, final LocalDate targetDate, final String progressed, final String homework) {
         this.course = course;
         this.targetDate = targetDate;
         this.progressed = progressed;

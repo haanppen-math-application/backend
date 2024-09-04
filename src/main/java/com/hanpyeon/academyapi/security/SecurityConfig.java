@@ -133,26 +133,28 @@ public class SecurityConfig {
                             .permitAll();
                     request.requestMatchers(HttpMethod.GET, "/api/courses")
                             .authenticated();
+                    request.requestMatchers(HttpMethod.GET, "/api/courses/memos")
+                            .authenticated();
 
                     request.requestMatchers(HttpMethod.POST, "/api/directories")
-                                    .hasAnyAuthority(
-                                            Role.ADMIN.getSecurityRole(),
-                                            Role.MANAGER.getSecurityRole(),
-                                            Role.TEACHER.getSecurityRole()
-                                    );
+                            .hasAnyAuthority(
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole()
+                            );
 
                     request.requestMatchers(HttpMethod.GET, "/api/directories")
-                                    .hasAnyAuthority(
-                                            Role.ADMIN.getSecurityRole(),
-                                            Role.MANAGER.getSecurityRole(),
-                                            Role.TEACHER.getSecurityRole()
-                                    );
+                            .hasAnyAuthority(
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole()
+                            );
                     request.requestMatchers(HttpMethod.PUT, "/api/directories")
-                                    .hasAnyAuthority(
-                                            Role.ADMIN.getSecurityRole(),
-                                            Role.MANAGER.getSecurityRole(),
-                                            Role.TEACHER.getSecurityRole()
-                                    );
+                            .hasAnyAuthority(
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole()
+                            );
 
                     request.requestMatchers(HttpMethod.GET)
                             .authenticated();
