@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.course.application.dto.MemoRegisterCommand;
 import com.hanpyeon.academyapi.course.application.exception.InvalidCourseAccessException;
 import com.hanpyeon.academyapi.course.application.exception.NoSuchCourseException;
 import com.hanpyeon.academyapi.course.application.port.out.LoadCourseTeacherIdPort;
+import com.hanpyeon.academyapi.course.application.port.out.QueryMemoByCourseIdAndDatePort;
 import com.hanpyeon.academyapi.course.application.port.out.RegisterMemoPort;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
@@ -25,6 +27,8 @@ class MemoRegisterServiceTest {
     LoadCourseTeacherIdPort loadCourseTeacherIdPort;
     @Mock
     RegisterMemoPort registerMemoPort;
+    @Mock
+    QueryMemoByCourseIdAndDatePort queryMemoByCourseIdAndDatePort;
     @InjectMocks
     MemoRegisterService memoRegisterService;
 
@@ -37,7 +41,7 @@ class MemoRegisterServiceTest {
 
         Mockito.when(loadCourseTeacherIdPort.loadTeacherId(courseId))
                 .thenReturn(teacherId);
-        MemoRegisterCommand memoRegisterCommand = new MemoRegisterCommand(teacherId, courseId, "test", "test", LocalDateTime.now(), Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+        MemoRegisterCommand memoRegisterCommand = new MemoRegisterCommand(teacherId, courseId, "test", "test", LocalDate.now(), Collections.EMPTY_LIST, Collections.EMPTY_LIST);
 
         assertThat(memoRegisterService.register(memoRegisterCommand))
                 .isEqualTo(0l);
@@ -50,7 +54,7 @@ class MemoRegisterServiceTest {
 
         Mockito.when(loadCourseTeacherIdPort.loadTeacherId(courseId))
                 .thenReturn(1234l);
-        MemoRegisterCommand memoRegisterCommand = new MemoRegisterCommand(teacherId, courseId, "test", "test", LocalDateTime.now(), Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+        MemoRegisterCommand memoRegisterCommand = new MemoRegisterCommand(teacherId, courseId, "test", "test", LocalDate.now(), Collections.EMPTY_LIST, Collections.EMPTY_LIST);
 
         assertThatThrownBy(() -> memoRegisterService.register(memoRegisterCommand))
                 .isInstanceOf(InvalidCourseAccessException.class);
