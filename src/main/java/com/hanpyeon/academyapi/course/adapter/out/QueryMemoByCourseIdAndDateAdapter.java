@@ -24,11 +24,14 @@ public class QueryMemoByCourseIdAndDateAdapter implements QueryMemoByCourseIdAnd
                 command.getLocalDate()
         );
         validate(memos);
+        if (memos.size() == 0) {
+            return null;
+        }
         return mapTomMemoView(memos.get(0));
     }
 
     private void validate(List<com.hanpyeon.academyapi.course.adapter.out.Memo> memos) {
-        if (memos.size() > 1 || memos.isEmpty()) {
+        if (memos.size() > 1) {
             throw new CourseException("두개 이상의 메모가 발견됐습니다 : "+ memos.size(),ErrorCode.MEMO_DUPLICATED_EXCEPTION);
         }
     }
@@ -38,7 +41,7 @@ public class QueryMemoByCourseIdAndDateAdapter implements QueryMemoByCourseIdAnd
                 memo.getId(),
                 memo.getProgressed(),
                 memo.getHomework(),
-                memo.getTargetDate().toLocalDate(),
+                memo.getTargetDate(),
                 null,
                 null
         );

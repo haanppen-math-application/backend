@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +28,10 @@ public class QueryMemoByCourseIdAndDateController {
             @ModelAttribute @Valid final QueryMemoByCourseIdAndDateRequest queryMemoByCourseIdAndDateRequest
     ) {
         final MemoQueryByCourseIdAndDateCommand command = queryMemoByCourseIdAndDateRequest.createCommand();
+        final MemoView memoView = queryMemoByCourseIdAndDateUseCase.loadSingleMemo(command);
+        if (Objects.isNull(memoView)) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(queryMemoByCourseIdAndDateUseCase.loadSingleMemo(command));
     }
 
