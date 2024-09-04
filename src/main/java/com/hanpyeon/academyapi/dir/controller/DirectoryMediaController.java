@@ -30,7 +30,7 @@ public class DirectoryMediaController {
     @PostMapping(value = "/api/directory/media", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "서버의 디렉토리 서비스에 파일을 저장하는 api 입니다.")
     public ResponseEntity<?> saveMedia(
-            @RequestPart(value = "video") @Nonnull final MultipartFile multipartFile,
+            @RequestPart(value = "media") @Nonnull final MultipartFile multipartFile,
             @RequestPart(value = "info") @Valid final MediaSaveRequest request,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
