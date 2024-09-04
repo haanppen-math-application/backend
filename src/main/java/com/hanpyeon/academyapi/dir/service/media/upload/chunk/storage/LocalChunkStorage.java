@@ -65,16 +65,16 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
      */
     @Override
     public void removeChunks(ChunkGroupInfo chunkGroupInfo) {
-        log.info("템프 파일 지우기 시작");
+        log.debug("템프 파일 지우기 시작");
         final List<Path> paths = loadRelatedFiles(chunkGroupInfo);
         try {
             for (final Path path : paths) {
-                log.info(path + "지워지기 성공!");
+                log.debug(path + "지워지기 성공!");
                 Files.deleteIfExists(path);
             }
         } catch (IOException e) {
             throw new ChunkException("청크파일 삭제 불가", ErrorCode.CHUNK_ACCESS_EXCEPTION);
         }
-        log.info("템프 파일 지우기 종료");
+        log.debug("템프 파일 지우기 종료");
     }
 }

@@ -6,11 +6,13 @@ import com.hanpyeon.academyapi.dir.service.media.upload.DirectoryMediaUpdateMana
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 class LastChunkHandler implements ChunkHandler {
     private final ChunkedFileTransferManager chunkedFileTransferManager;
     private final DirectoryMediaUpdateManager directoryMediaUpdateManager;
@@ -18,6 +20,7 @@ class LastChunkHandler implements ChunkHandler {
     @Override
     @Transactional
     public RequireNextChunk handle(ChunkedFile chunkedFile, ChunkStorage chunkStorage) {
+        log.debug("RUNNED");
         final String savedFileName = chunkedFileTransferManager.sendToMediaStorage(chunkStorage, chunkedFile.getChunkGroupInfo());
         directoryMediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), savedFileName);
         return RequireNextChunk.completed();

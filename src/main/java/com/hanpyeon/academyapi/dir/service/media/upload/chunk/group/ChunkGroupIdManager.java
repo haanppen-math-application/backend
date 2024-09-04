@@ -47,8 +47,14 @@ final class ChunkGroupIdManager {
         final Group group = getGroup(chunkGroupInfo);
         log.debug("갱신전그룹 nextIndex : " +group.nextChunkIndex.toString());
         group.nextChunkIndex += lastChunkSize;
+        group.receivedChunkCount += lastChunkSize;
         log.debug("갱신된그룹 nextIndex : " + group.nextChunkIndex);
         return group.nextChunkIndex;
+    }
+
+    public Long getGroupReceivedChunkSize(final ChunkGroupInfo chunkGroupInfo) {
+        final Group group = getGroup(chunkGroupInfo);
+        return group.receivedChunkCount;
     }
 
     private Group getGroup(final ChunkGroupInfo chunkGroupInfo) {
@@ -65,6 +71,7 @@ final class ChunkGroupIdManager {
         private final UUID groupId;
         private Long chunkId = 0L;
         private Long nextChunkIndex = 0L;
+        private Long receivedChunkCount = 0L;
 
         Long getCurrentIndexAndIncrease() {
             return chunkId++;

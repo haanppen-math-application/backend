@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 class BasicChunkedFileFactory {
 
     public ChunkedFile create(final UploadMediaDto uploadMediaDto, final ChunkGroupInfo chunkGroupInfo) {
-        return new BasicChunkedFile(uploadMediaDto.getFile(),
+        return new BasicChunkedFile(
+                uploadMediaDto.getFile(),
                 chunkGroupInfo,
+                uploadMediaDto.getRequestMemberId(),
                 uploadMediaDto.getIsLast(),
                 uploadMediaDto.getCurrChunkIndex()
         );
