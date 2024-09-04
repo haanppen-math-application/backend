@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
 import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
-import com.hanpyeon.academyapi.course.application.port.in.AddMediaToMemoUseCase;
+import com.hanpyeon.academyapi.course.application.port.in.UpdateMediaMemoUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UpdateMemoMediaController {
 
-    private final AddMediaToMemoUseCase addMediaToMemoUseCase;
+    private final UpdateMediaMemoUseCase addMediaToMemoUseCase;
 
     @PutMapping("/api/course/memo/media")
     @Operation(summary = "메모에 관련된 영상을 업데이트 하는 api", description = "요청 시 순서에 맞게 미디어 파일을 보내야 합니다")
