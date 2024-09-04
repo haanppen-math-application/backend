@@ -16,6 +16,7 @@ class BasicChunkedFile implements ChunkedFile {
 
     private final MultipartFile multipartFile;
     private final ChunkGroupInfo chunkGroupInfo;
+    private final Long requestMemberId;
     private final Boolean isLast;
     private final Long chunkStartIndex;
     private String uniqueChunkName = null;
@@ -27,10 +28,12 @@ class BasicChunkedFile implements ChunkedFile {
 
     @Override
     public boolean isLast() {
-        log.info("남은 청크 사이즈 : "+chunkGroupInfo.getRequiringChunkSize());
-        log.info("인덱스 다 채워졌니 : "+ chunkGroupInfo.chunkIndexFulfilled());
         return isLast;
-//                && chunkGroupInfo.getRequiringChunkSize() == 0L && chunkGroupInfo.chunkIndexFulfilled();
+    }
+
+    @Override
+    public Long getRequestMemberId() {
+        return this.requestMemberId;
     }
 
     @Override
