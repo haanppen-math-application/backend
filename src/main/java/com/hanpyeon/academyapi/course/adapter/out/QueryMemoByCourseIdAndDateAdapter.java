@@ -4,7 +4,6 @@ import com.hanpyeon.academyapi.course.application.dto.MemoQueryByCourseIdAndDate
 import com.hanpyeon.academyapi.course.application.dto.MemoView;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemoByCourseIdAndDatePort;
-import com.hanpyeon.academyapi.course.domain.Memo;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,7 @@ import java.util.List;
 public class QueryMemoByCourseIdAndDateAdapter implements QueryMemoByCourseIdAndDatePort {
 
     private final MemoRepository memoRepository;
+    private final QueryMemoMediaAdapter queryMemoMediaAdapter;
 
     @Override
     public MemoView query(MemoQueryByCourseIdAndDateCommand command) {
@@ -42,8 +42,7 @@ public class QueryMemoByCourseIdAndDateAdapter implements QueryMemoByCourseIdAnd
                 memo.getProgressed(),
                 memo.getHomework(),
                 memo.getTargetDate(),
-                null,
-                null
+                queryMemoMediaAdapter.queryMedias(memo.getId())
         );
     }
 }
