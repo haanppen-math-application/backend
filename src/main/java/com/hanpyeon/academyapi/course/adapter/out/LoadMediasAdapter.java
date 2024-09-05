@@ -29,7 +29,7 @@ public class LoadMediasAdapter implements LoadMediasPort {
     private List<com.hanpyeon.academyapi.media.entity.Media> loadRelatedMedias(final List<String> medias) {
         final List<com.hanpyeon.academyapi.media.entity.Media> mediaEntities = mediaRepository.findAllBySrcIn(medias);
         if (medias.size() != mediaEntities.size()) {
-            throw new NoSuchMediaException(ErrorCode.NO_SUCH_MEDIA);
+            throw new NoSuchMediaException("미디어를 찾을 수 없거나, 중복된 파일이 존재합니다", ErrorCode.NO_SUCH_MEDIA);
         }
         return Collections.unmodifiableList(mediaEntities);
     }
