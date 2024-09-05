@@ -8,7 +8,6 @@ public record MemoView(
         String progressed,
         String homework,
         LocalDate targetDate,
-        List<String> conceptVideoSrc,
-        List<String> courseVideoSrc
+        List<MemoMediaView> memoMedias
 ) {
 }
