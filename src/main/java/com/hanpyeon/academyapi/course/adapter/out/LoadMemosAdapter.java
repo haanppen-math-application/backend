@@ -4,6 +4,8 @@ import com.hanpyeon.academyapi.course.application.dto.MemoQueryCommand;
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryRequest;
 import com.hanpyeon.academyapi.course.application.dto.MemoView;
 import com.hanpyeon.academyapi.course.application.exception.NoSuchCourseException;
+import com.hanpyeon.academyapi.course.application.port.out.LoadMemoMediaPort;
+import com.hanpyeon.academyapi.course.application.port.out.QueryMemoMediaPort;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemosPort;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 class LoadMemosAdapter implements QueryMemosPort {
     private final MemoRepository memoRepository;
     private final CourseRepository courseRepository;
+    private final QueryMemoMediaPort queryMemoMediaPort;
 
     @Override
     public Slice<MemoView> loadMemos(final MemoQueryCommand memoQueryCommand) {
@@ -25,8 +28,7 @@ class LoadMemosAdapter implements QueryMemosPort {
                         memo.getProgressed(),
                         memo.getHomework(),
                         memo.getTargetDate(),
-                        null,
-                        null)
+                        queryMemoMediaPort.queryMedias(memo.getId()))
                 );
     }
 
