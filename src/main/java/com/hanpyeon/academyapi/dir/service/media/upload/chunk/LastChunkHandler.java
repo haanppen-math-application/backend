@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.dir.service.media.upload.chunk;
 
-import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
+import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.dir.service.media.upload.ChunkedFileTransferManager;
 import com.hanpyeon.academyapi.dir.service.media.upload.DirectoryMediaUpdateManager;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
@@ -19,11 +19,12 @@ class LastChunkHandler implements ChunkHandler {
 
     @Override
     @Transactional
-    public RequireNextChunk handle(ChunkedFile chunkedFile, ChunkStorage chunkStorage) {
+    public ChunkStoreResult handle(ChunkedFile chunkedFile, ChunkStorage chunkStorage) {
         log.debug("RUNNED");
         final String savedFileName = chunkedFileTransferManager.sendToMediaStorage(chunkStorage, chunkedFile.getChunkGroupInfo());
         directoryMediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), savedFileName);
-        return RequireNextChunk.completed();
+        final String userDefinedFileName = chunkedFile.getChunkGroupInfo().getFileName();
+        return ChunkStoreResult.completed(savedFileName, userDefinedFileName);
     }
 
     @Override

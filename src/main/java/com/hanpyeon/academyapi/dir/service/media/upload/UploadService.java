@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.dir.service.media.upload;
 
-import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
+import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.ChunkHandlerManager;
@@ -24,7 +24,7 @@ public class UploadService {
     private final ChunkHandlerManager chunkHandlerManager;
     private final ChunkValidateManager chunkValidateManager;
 
-    public RequireNextChunk upload(final UploadMediaDto uploadMediaDto) {
+    public ChunkStoreResult upload(final UploadMediaDto uploadMediaDto) {
         final ChunkedFile chunkedFile = chunkFactory.create(uploadMediaDto);
         try {
             chunkValidateManager.validate(chunkedFile);
@@ -34,9 +34,9 @@ public class UploadService {
         return chunkHandlerManager.process(chunkedFile, chunkStorage);
     }
 
-    private RequireNextChunk createRequireInfo(final ChunkGroupInfo chunkGroupInfo, final ChunkException chunkException) {;
+    private ChunkStoreResult createRequireInfo(final ChunkGroupInfo chunkGroupInfo, final ChunkException chunkException) {;
         final Long remain = chunkGroupInfo.getRequiringChunkSize();
         final Long nextIndex = chunkGroupInfo.getNextChunkIndex();
-        return RequireNextChunk.need(nextIndex, remain, chunkException.getMessage());
+        return ChunkStoreResult.error(nextIndex, remain, chunkException.getMessage());
     }
 }

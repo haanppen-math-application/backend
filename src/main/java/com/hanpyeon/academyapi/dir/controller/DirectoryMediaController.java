@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.dir.controller;
 
-import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
+import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
 import com.hanpyeon.academyapi.dir.service.MediaService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,11 +41,11 @@ public class DirectoryMediaController {
                 memberPrincipal.memberId(),
                 request.targetDirectoryPath()
         );
-        final RequireNextChunk requireNextChunk = mediaService.uploadChunk(mediaSaveDto);
-        if (requireNextChunk.getNeedMore() && requireNextChunk.getInformation() == null) {
+        final ChunkStoreResult requireNextChunk = mediaService.uploadChunk(mediaSaveDto);
+        if (requireNextChunk.getNeedMore() && requireNextChunk.getErrorInformation() == null) {
             return ResponseEntity.accepted().body(requireNextChunk);
         }
-        if (requireNextChunk.getNeedMore() && requireNextChunk.getInformation() != null) {
+        if (requireNextChunk.getNeedMore() && requireNextChunk.getErrorInformation() != null) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(requireNextChunk);
         }
         return ResponseEntity.created(null).build();

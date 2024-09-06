@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.dir.service.media.upload.chunk;
 
-import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
+import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
@@ -20,13 +20,13 @@ public class ChunkHandlerManager {
     private final List<ChunkHandler> chunkPostHandlers;
     private final ChunkStorageUploader chunkStorageUploader;
 
-    public RequireNextChunk process(final ChunkedFile chunkedFile, final ChunkStorage chunkStorage) {
+    public ChunkStoreResult process(final ChunkedFile chunkedFile, final ChunkStorage chunkStorage) {
         log.debug("RUNNED");
         chunkStorageUploader.upload(chunkedFile, chunkStorage);
         return handle(chunkedFile, chunkStorage);
     }
 
-    private RequireNextChunk handle(final ChunkedFile chunkedFile, final ChunkStorage chunkStorage) {
+    private ChunkStoreResult handle(final ChunkedFile chunkedFile, final ChunkStorage chunkStorage) {
         return chunkPostHandlers.stream()
                 .filter(chunkPostHandler -> chunkPostHandler.applicable(chunkedFile))
                 .findAny()
