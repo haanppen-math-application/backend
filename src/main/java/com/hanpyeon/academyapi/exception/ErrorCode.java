@@ -47,6 +47,7 @@ public enum ErrorCode {
     MEMO_NOT_EXIST(HttpStatus.BAD_REQUEST, "-408", "찾을 수 없는 메모"),
     MEMO_MEDIA_SEQUENCE(HttpStatus.BAD_REQUEST, "-409", "메모의 미디어에 순서가 부여되지 않음"),
     MEMO_MEDIA_DUPLICATED(HttpStatus.BAD_REQUEST, "-410", "중복된 영상 파일"),
+    MEMO_CANNOT_DELETE(HttpStatus.BAD_REQUEST, "-411", "지울 수 없음"),
 
     NOT_EXIST_DIRECTORY(HttpStatus.BAD_REQUEST, "-501", "존재하지 않는 디렉토리"),
     CANNOT_CREATE_DIRECTORY_WITH_THIS_USER(HttpStatus.BAD_REQUEST, "-502", "이 유저는 디렉터리 생성 불가"),

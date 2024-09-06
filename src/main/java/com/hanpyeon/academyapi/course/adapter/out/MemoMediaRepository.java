@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 interface MemoMediaRepository extends JpaRepository<MemoMedia, Long> {
-    List<MemoMedia> deleteMemoMediaByMemo_Id(final Long memoId);
+    void deleteMemoMediaByMemo_Id(final Long memoId);
     List<MemoMedia> findAllByMemo_Id(final Long memoId);
 }
