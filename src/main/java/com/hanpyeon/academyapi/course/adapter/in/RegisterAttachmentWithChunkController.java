@@ -34,12 +34,15 @@ public class RegisterAttachmentWithChunkController {
         final RegisterAttachmentChunkCommand command = request.createCommand(memberPrincipal.memberId());
         final AttachmentChunkResult result = registerAttachmentUseCase.register(command);
 
-        if (result.isUploaded()) {
+        return getResponse(result);
+    }
+
+    private ResponseEntity<RegisterAttachmentChunkResponse> getResponse(final AttachmentChunkResult result) {
+        if (result.getIsUploaded()) {
             return ResponseEntity.created(null).build();
         }
-
         final RegisterAttachmentChunkResponse response = RegisterAttachmentChunkResponse.of(result);
-        if (result.isWrongChunk()) {
+        if (result.getIsWrongChunk()) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
         }
         return ResponseEntity.accepted().body(response);
@@ -65,17 +68,19 @@ public class RegisterAttachmentWithChunkController {
     }
 
     record RegisterAttachmentChunkResponse(
+            Long nextChunkIndex,
+            Long remainSize,
+            Boolean needMore,
             Boolean isWrongChunk,
-            String information,
-            Long nextRequireChunkIndex,
-            Long remainSize
+            String errorMessage
     ) {
         static RegisterAttachmentChunkResponse of(final AttachmentChunkResult result) {
             return new RegisterAttachmentChunkResponse(
-                    result.isWrongChunk(),
-                    result.information(),
-                    result.nextRequireChunkIndex(),
-                    result.nextRequireChunkIndex()
+                    result.getNextRequireChunkIndex(),
+                    result.getRemainSize(),
+                    result.getNeedMore(),
+                    result.getIsWrongChunk(),
+                    result.getErrorMessage()
             );
         }
     }
