@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.dir.controller;
 
-import com.hanpyeon.academyapi.dir.dto.RequireNextChunk;
+import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
 import com.hanpyeon.academyapi.dir.service.MediaService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Objects;
-
 @RestController
 @RequiredArgsConstructor
 public class DirectoryMediaController {
@@ -29,28 +27,44 @@ public class DirectoryMediaController {
 
     @PostMapping(value = "/api/directory/media", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "서버의 디렉토리 서비스에 파일을 저장하는 api 입니다.")
-    public ResponseEntity<?> saveMedia(
+    public ResponseEntity<MediaSaveResponse> saveMedia(
             @RequestPart(value = "media") @Nonnull final MultipartFile multipartFile,
             @RequestPart(value = "info") @Valid final MediaSaveRequest request,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final UploadMediaDto mediaSaveDto = new UploadMediaDto(
-                multipartFile,
-                request.fileName(),
-                request.totalChunkCount(),
-                request.currChunkIndex(),
-                request.isLast(),
-                memberPrincipal.memberId(),
-                request.targetDirectoryPath()
-        );
-        final RequireNextChunk requireNextChunk = mediaService.uploadChunk(mediaSaveDto);
-        if (requireNextChunk.getNeedMore() && requireNextChunk.getInformation() == null) {
-            return ResponseEntity.accepted().body(requireNextChunk);
+        final UploadMediaDto mediaSaveDto = request.create(multipartFile, memberPrincipal.memberId());
+        final ChunkStoreResult chunkStoreResult = mediaService.uploadChunk(mediaSaveDto);
+
+        return mapToResponse(chunkStoreResult);
+    }
+
+    private ResponseEntity<MediaSaveResponse> mapToResponse(final ChunkStoreResult chunkStoreResult) {
+        final MediaSaveResponse mediaSaveResponse = MediaSaveResponse.of(chunkStoreResult);
+        if (!chunkStoreResult.getIsCompleted() && !chunkStoreResult.getIsWrongChunk()) {
+            return ResponseEntity.accepted().body(mediaSaveResponse);
         }
-        if (requireNextChunk.getNeedMore() && requireNextChunk.getInformation() != null) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(requireNextChunk);
+        if (chunkStoreResult.getIsWrongChunk()) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(mediaSaveResponse);
         }
         return ResponseEntity.created(null).build();
+    }
+
+    record MediaSaveResponse(
+            Long nextChunkIndex,
+            Long remainSize,
+            Boolean needMore,
+            Boolean isWrongChunk,
+            String errorMessage
+    ) {
+        static MediaSaveResponse of(final ChunkStoreResult result) {
+            return new MediaSaveResponse(
+                    result.getNextChunkIndex(),
+                    result.getRemainSize(),
+                    result.getNeedMore(),
+                    result.getIsWrongChunk(),
+                    result.getErrorInformation()
+            );
+        }
     }
 
     record MediaSaveRequest(
@@ -60,5 +74,17 @@ public class DirectoryMediaController {
             @Nonnull Long currChunkIndex,
             @Nonnull Boolean isLast
     ) {
+
+        UploadMediaDto create(final MultipartFile multipartFile, final Long requestMemberId) {
+            return new UploadMediaDto(
+                    multipartFile,
+                    fileName(),
+                    totalChunkCount(),
+                    currChunkIndex(),
+                    isLast(),
+                    requestMemberId,
+                    targetDirectoryPath()
+            );
+        }
     }
 }

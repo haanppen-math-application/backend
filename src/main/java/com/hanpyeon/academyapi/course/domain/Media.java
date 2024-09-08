@@ -16,10 +16,10 @@ public class Media {
     public static Media createByEntity(final String mediaName, final String mediaSource, final Long mediaSize) {
         return new Media(mediaName, mediaSource, mediaSize);
     }
-    public MemoMedia mapToMemoMedia(final Integer sequence) {
-        if (Objects.isNull(sequence)) {
-            throw new CourseException(ErrorCode.MEMO_NOT_EXIST);
-        }
-        return MemoMedia.createByMedia(this, sequence);
-    }
+//    public MemoMedia mapToMemoMedia(final Integer sequence) {
+//        if (Objects.isNull(sequence)) {
+//            throw new CourseException(ErrorCode.MEMO_NOT_EXIST);
+//        }
+//        return MemoMedia.createByMedia(this, sequence);
+//    }
 }

@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class QueryMemoMediaAdapter implements QueryMemoMediaPort {
     private final MemoMediaRepository memoMediaRepository;
+    private final QueryMemoMediaAttachmentAdapter queryMemoMediaAttachmentAdapter;
 
     @Override
     public List<MemoMediaView> queryMedias(Long memoId) {
@@ -28,9 +29,9 @@ public class QueryMemoMediaAdapter implements QueryMemoMediaPort {
         return memoMedias.stream()
                 .map(memoMedia -> {
                     final Media media = memoMedia.getMedia();
-                    final MemoMediaView view = new MemoMediaView(media.getMediaName(), media.getSrc(), memoMedia.getSequence());
+                    final MemoMediaView view = new MemoMediaView(memoMedia.getId(), media.getMediaName(), media.getSrc(), memoMedia.getSequence(), queryMemoMediaAttachmentAdapter.query(memoMedia.getId()));
                     log.debug(view.toString());
-                    return new MemoMediaView(media.getMediaName(), media.getSrc(), memoMedia.getSequence());
+                    return view;
                 })
                 .collect(Collectors.toList());
     }
