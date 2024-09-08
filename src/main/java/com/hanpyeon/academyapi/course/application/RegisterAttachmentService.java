@@ -26,6 +26,7 @@ public class RegisterAttachmentService implements RegisterAttachmentUseCase {
         log.debug(result.toString());
         if (result.getIsCompleted()) {
             // 데이터베이스 업로드 로직
+            registerMediaAttachmentPort.register(registerAttachmentCommand.memoMediaId(), result.getStoredName());
         }
         return AttachmentChunkResult.of(result);
     }
