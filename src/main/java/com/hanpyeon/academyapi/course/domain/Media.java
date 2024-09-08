@@ -14,7 +14,7 @@ public class Media {
     private final String mediaSource;
     private final Long mediaSize;
     public static Media createByEntity(final String mediaName, final String mediaSource, final Long mediaSize) {
-        return new Media(mediaNamOe, mediaSource, mediaSize);
+        return new Media(mediaName, mediaSource, mediaSize);
     }
 //    public MemoMedia mapToMemoMedia(final Integer sequence) {
 //        if (Objects.isNull(sequence)) {
