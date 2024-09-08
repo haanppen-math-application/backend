@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class MemoMediaAttachment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long memoId;
+    private Long attachmentId;
 
     @ManyToOne
     @JoinColumn(name = "MEMO_MEDIA_ID", nullable = false)
