@@ -32,7 +32,7 @@ public class MemoRegisterService implements MemoRegisterUseCase {
         isOwner(teacherId, memoRegisterCommand.requestMemberId());
         isDuplicated(memoRegisterCommand.targetCourseId(), memoRegisterCommand.registerTargetDate());
 
-        final Memo memo = Memo.createNewMemo(memoRegisterCommand.registerTargetDate(), memoRegisterCommand.progressed(), memoRegisterCommand.homeWork());
+        final Memo memo = Memo.createNewMemo(memoRegisterCommand.registerTargetDate(), memoRegisterCommand.title(), memoRegisterCommand.content());
         return registerMemoPort.register(memo, memoRegisterCommand.targetCourseId());
     }
 
