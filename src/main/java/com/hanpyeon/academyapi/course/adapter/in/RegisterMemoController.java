@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.course.application.dto.MemoRegisterCommand;
 import com.hanpyeon.academyapi.course.application.port.in.MemoRegisterUseCase;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequestMapping
@@ -36,22 +35,20 @@ public class RegisterMemoController {
     }
 
     record RegisterMemoRequest(
-            Long targetCourseId,
-            String progressed,
-            String homework,
-            LocalDate registerTargetDateTime,
-            List<Long> courseMediaIds,
-            List<Long> conceptMediaIds
+            @Nonnull Long targetCourseId,
+            @Nonnull String title,
+            @Nonnull String content,
+            @Nonnull LocalDate registerTargetDateTime
+//            List<Long> courseMediaIds,
+//            List<Long> conceptMediaIds
     ) {
         MemoRegisterCommand createMemoRegisterCommand(final Long requestMemberId) {
             return new MemoRegisterCommand(
                     requestMemberId,
                     this.targetCourseId,
-                    this.progressed,
-                    this.homework,
-                    this.registerTargetDateTime,
-                    this.courseMediaIds,
-                    this.conceptMediaIds);
+                    this.title,
+                    this.content,
+                    this.registerTargetDateTime);
         }
     }
 }

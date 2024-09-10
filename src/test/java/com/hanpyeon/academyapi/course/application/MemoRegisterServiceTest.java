@@ -41,7 +41,7 @@ class MemoRegisterServiceTest {
 
         Mockito.when(loadCourseTeacherIdPort.loadTeacherId(courseId))
                 .thenReturn(teacherId);
-        MemoRegisterCommand memoRegisterCommand = new MemoRegisterCommand(teacherId, courseId, "test", "test", LocalDate.now(), Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+        MemoRegisterCommand memoRegisterCommand = new MemoRegisterCommand(teacherId, courseId, "test", "test", LocalDate.now());
 
         assertThat(memoRegisterService.register(memoRegisterCommand))
                 .isEqualTo(0l);
@@ -54,7 +54,7 @@ class MemoRegisterServiceTest {
 
         Mockito.when(loadCourseTeacherIdPort.loadTeacherId(courseId))
                 .thenReturn(1234l);
-        MemoRegisterCommand memoRegisterCommand = new MemoRegisterCommand(teacherId, courseId, "test", "test", LocalDate.now(), Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+        MemoRegisterCommand memoRegisterCommand = new MemoRegisterCommand(teacherId, courseId, "test", "test", LocalDate.now());
 
         assertThatThrownBy(() -> memoRegisterService.register(memoRegisterCommand))
                 .isInstanceOf(InvalidCourseAccessException.class);
