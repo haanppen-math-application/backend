@@ -14,8 +14,8 @@ public class Memo {
     private Long memoId;
     private Course course;
     private LocalDate targetDate;
-    private String progressed;
-    private String homework;
+    private String title;
+    private String content;
     private List<MemoMedia> medias;
 
     public void setMedias(List<MemoMedia> medias) {

@@ -30,8 +30,8 @@ class RegisterMemoAdapter implements RegisterMemoPort {
         return new com.hanpyeon.academyapi.course.adapter.out.Memo(
                 course,
                 memo.getTargetDate(),
-                memo.getProgressed(),
-                memo.getHomework()
+                memo.getTitle(),
+                memo.getContent()
         );
     }
 }
