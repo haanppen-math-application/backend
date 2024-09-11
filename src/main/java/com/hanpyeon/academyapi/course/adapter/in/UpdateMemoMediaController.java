@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
+import com.hanpyeon.academyapi.course.application.dto.MemoMediaDto;
 import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateMemoMediaUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,10 +33,23 @@ class UpdateMemoMediaController {
 
     record UpdateMemoMediaRequest(
             @Nonnull Long memoId,
-            @Nonnull List<String> mediaSource
+            @Nonnull List<MediaInfo> mediaInfos
     ) {
         UpdateMediaMemoCommand toCommand() {
-            return new UpdateMediaMemoCommand(memoId, mediaSource);
+            final List<MemoMediaDto> dtos = mediaInfos.stream()
+                    .map(mediaInfo -> mediaInfo.toDto())
+                    .collect(Collectors.toList());
+            return new UpdateMediaMemoCommand(memoId, dtos);
+        }
+
+        record MediaInfo(
+                String mediaSource,
+                Boolean isNew,
+                Long memoMediaId
+        ){
+            MemoMediaDto toDto() {
+                return new MemoMediaDto(mediaSource, isNew, memoMediaId);
+            }
         }
     }
 }
