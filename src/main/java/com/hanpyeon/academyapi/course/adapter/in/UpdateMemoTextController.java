@@ -30,11 +30,12 @@ public class UpdateMemoTextController {
 
     @Getter
     record MemoTextModifyRequest(
+            Long memoId,
             String title,
             String content
     ) {
         ModifyMemoTextCommand mapToCommand(final Long requestMemberId) {
-            return new ModifyMemoTextCommand(title, content, requestMemberId);
+            return new ModifyMemoTextCommand(memoId, title, content, requestMemberId);
         }
     }
 }
