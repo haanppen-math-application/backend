@@ -17,7 +17,7 @@ class UpdateMemoTextController {
 
     private final ModifyMemoTextUseCase modifyMemoTextUseCase;
 
-    @PutMapping("/api/courses/memos")
+    @PutMapping("/api/course/memo")
     public ResponseEntity<?> putMemo(
             @RequestBody @Valid MemoTextModifyRequest memoTextModifyRequest,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal
@@ -26,7 +26,7 @@ class UpdateMemoTextController {
         modifyMemoTextUseCase.modify(command);
         return ResponseEntity.ok().build();
     }
-    
+
     record MemoTextModifyRequest(
             Long memoId,
             String title,
