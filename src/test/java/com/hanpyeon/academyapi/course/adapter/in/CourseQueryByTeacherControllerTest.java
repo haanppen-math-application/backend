@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@WebMvcTest(controllers = QueryCourseByTeacherController.class,
+@WebMvcTest(controllers = QueryCourseByTeacherIdController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class, JwtAuthenticationFilter.class})
