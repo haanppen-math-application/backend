@@ -9,6 +9,8 @@ public record MediaDto(
         @NotNull
         InputStream data,
         @NotNull
-        MediaType mediaType
+        MediaType mediaType,
+        @NotNull
+        Long fileSize
 ) {
 }
