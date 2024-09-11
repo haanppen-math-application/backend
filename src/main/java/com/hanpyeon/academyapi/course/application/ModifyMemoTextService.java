@@ -9,6 +9,7 @@ import com.hanpyeon.academyapi.course.domain.Memo;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -18,6 +19,7 @@ public class ModifyMemoTextService implements ModifyMemoTextUseCase {
     private final UpdateMemoTextPort updateMemoTextPort;
 
     @Override
+    @Transactional
     public void modify(@Validated ModifyMemoTextCommand command) {
         final Memo targetMemo = loadMemoPort.loadMemo(command.memoId());
         validateOwner(command.requestMemberId(), targetMemo.getCourse().getTeacher().id());
