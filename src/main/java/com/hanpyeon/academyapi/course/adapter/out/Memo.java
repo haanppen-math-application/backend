@@ -24,10 +24,10 @@ class Memo {
     @ManyToOne
     @JoinColumn(name = "courseId")
     private Course course;
-    @Column(name = "PROGRESSED")
-    private String progressed;
-    @Column(name = "HOMEWORK")
-    private String homework;
+    @Column(name = "TITLE")
+    private String title;
+    @Column(name = "CONTENT")
+    private String content;
 
 /*
     // 영상 로직
@@ -36,11 +36,17 @@ class Memo {
     @OneToMany(mappedBy = "")
     private List<Image> courseMedia;
 */
+    void setTitle(final String title) {
+        this.title = title;
+    }
+    void setContent(final String content) {
+        this.content = content;
+    }
 
     Memo(final Course course, final LocalDate targetDate, final String progressed, final String homework) {
         this.course = course;
         this.targetDate = targetDate;
-        this.progressed = progressed;
-        this.homework = homework;
+        this.title = progressed;
+        this.content = homework;
     }
 }

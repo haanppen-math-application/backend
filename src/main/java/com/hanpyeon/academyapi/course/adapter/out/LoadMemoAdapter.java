@@ -30,7 +30,7 @@ public class LoadMemoAdapter implements LoadMemoPort {
         final com.hanpyeon.academyapi.course.adapter.out.Memo targetMemo = memoRepository.findById(memoId)
                 .orElseThrow(() -> new CourseException("존재하지 않는 메모 : " + memoId, ErrorCode.MEMO_NOT_EXIST));
         final Course course = courseMapper.mapToCourseDomain(targetMemo.getCourse());
-        return Memo.createByEntity(targetMemo.getId(), course, targetMemo.getTargetDate(), targetMemo.getProgressed(), targetMemo.getHomework(), loadMemoMedia(memoId));
+        return Memo.createByEntity(targetMemo.getId(), course, targetMemo.getTargetDate(), targetMemo.getTitle(), targetMemo.getContent(), loadMemoMedia(memoId));
     }
 
     private List<MemoMedia> loadMemoMedia(final Long memoId) {
