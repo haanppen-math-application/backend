@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class QueryCourseByTeacherController {
+class QueryCourseByTeacherController {
     private final LoadCoursesByTeacherQuery loadCoursesQuery;
     @GetMapping(value = "/api/courses/my")
     public ResponseEntity<List<CoursePreview>> queryMyCourses(

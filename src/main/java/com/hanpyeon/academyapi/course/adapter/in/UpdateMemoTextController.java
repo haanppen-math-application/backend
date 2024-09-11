@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class UpdateMemoTextController {
+class UpdateMemoTextController {
 
     private final ModifyMemoTextUseCase modifyMemoTextUseCase;
 

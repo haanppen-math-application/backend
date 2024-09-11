@@ -18,7 +18,7 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-public class QueryMemoByCourseIdAndDateController {
+class QueryMemoByCourseIdAndDateController {
 
     private final QueryMemoByCourseIdAndDateUseCase queryMemoByCourseIdAndDateUseCase;
     @GetMapping(value = "/api/courses/memos")

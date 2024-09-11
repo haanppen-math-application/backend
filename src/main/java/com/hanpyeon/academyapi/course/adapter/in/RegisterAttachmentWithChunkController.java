@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-public class RegisterAttachmentWithChunkController {
+class RegisterAttachmentWithChunkController {
 
     private final RegisterAttachmentUseCase registerAttachmentUseCase;
 

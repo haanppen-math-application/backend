@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/manage/courses")
 @RequiredArgsConstructor
-public class AddStudentToCourseController {
+class AddStudentToCourseController {
 
     private final AddStudentToCourseUseCase addStudentToCourseUseCase;
 
