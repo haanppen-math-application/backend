@@ -54,13 +54,13 @@ public class LocalStorage implements MediaStorage {
             throw new NoSuchMediaException(ErrorCode.NO_SUCH_MEDIA);
         }
         try {
-            return new MediaDto(fileResource.getInputStream(), MediaType.parseMediaType(Files.probeContentType(fileResource.getFile().toPath())));
+            return new MediaDto(fileResource.getInputStream(), MediaType.parseMediaType(Files.probeContentType(fileResource.getFile().toPath())), fileResource.contentLength());
         } catch (IOException | InvalidMediaTypeException | InvalidPathException | SecurityException e) {
             throw new NotSupportedMediaException("지원하지 않는 이미지 입니다.", ErrorCode.NOT_SUPPORTED_MEDIA);
         }
     }
 
-    private Path resolveFilePath(final String fileName) {
+    protected final Path resolveFilePath(final String fileName) {
         return Paths.get(storagePath)
                 .toAbsolutePath()
                 .normalize()

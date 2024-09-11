@@ -139,6 +139,8 @@ public class SecurityConfig {
 
                     request.requestMatchers(HttpMethod.GET, "/api/media/*")
                             .permitAll();
+                    request.requestMatchers(HttpMethod.GET, "/api/media/stream/*")
+                            .permitAll();
                     request.requestMatchers(HttpMethod.GET, "/api/courses")
                             .authenticated();
                     request.requestMatchers(HttpMethod.GET, "/api/courses/memos")
