@@ -22,6 +22,14 @@ public class Memo {
         this.medias = medias;
     }
 
+    public void setTitle(final String title) {
+        this.title = title;
+    }
+
+    public void setContent(final String content) {
+        this.content = content;
+    }
+
     public static Memo createNewMemo(final LocalDate targetDate, final String progressed, final String homework) {
         return new Memo(null, null, targetDate, progressed, homework, new ArrayList<>());
     }
