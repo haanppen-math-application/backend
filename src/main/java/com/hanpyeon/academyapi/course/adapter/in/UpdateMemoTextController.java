@@ -4,7 +4,6 @@ import com.hanpyeon.academyapi.course.application.dto.ModifyMemoTextCommand;
 import com.hanpyeon.academyapi.course.application.port.in.ModifyMemoTextUseCase;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,8 +26,7 @@ class UpdateMemoTextController {
         modifyMemoTextUseCase.modify(command);
         return ResponseEntity.ok().build();
     }
-
-    @Getter
+    
     record MemoTextModifyRequest(
             Long memoId,
             String title,
