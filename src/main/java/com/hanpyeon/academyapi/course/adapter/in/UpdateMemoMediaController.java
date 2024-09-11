@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class UpdateMemoMediaController {
+class UpdateMemoMediaController {
 
     private final UpdateMemoMediaUseCase updateMemoMediaUseCase;
 

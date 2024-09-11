@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
-public class RegisterMemoController {
+class RegisterMemoController {
 
     private final MemoRegisterUseCase memoRegisterUseCase;
 

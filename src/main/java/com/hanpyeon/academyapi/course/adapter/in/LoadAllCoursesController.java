@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class LoadAllCoursesController {
+class LoadAllCoursesController {
     private final QueryAllCourseUseCase queryAllCourseUseCase;
 
     @GetMapping("/api/courses")

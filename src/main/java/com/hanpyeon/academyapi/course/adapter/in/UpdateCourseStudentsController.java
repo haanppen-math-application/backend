@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class UpdateCourseStudentsController {
+class UpdateCourseStudentsController {
 
     private final UpdateCourseStudentsUseCase updateCourseStudentsUseCase;
 

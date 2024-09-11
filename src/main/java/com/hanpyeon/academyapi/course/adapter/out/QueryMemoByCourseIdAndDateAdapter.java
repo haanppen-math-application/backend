@@ -39,8 +39,8 @@ public class QueryMemoByCourseIdAndDateAdapter implements QueryMemoByCourseIdAnd
     private MemoView mapTomMemoView(final com.hanpyeon.academyapi.course.adapter.out.Memo memo) {
         return new MemoView(
                 memo.getId(),
-                memo.getProgressed(),
-                memo.getHomework(),
+                memo.getTitle(),
+                memo.getContent(),
                 memo.getTargetDate(),
                 queryMemoMediaAdapter.queryMedias(memo.getId())
         );

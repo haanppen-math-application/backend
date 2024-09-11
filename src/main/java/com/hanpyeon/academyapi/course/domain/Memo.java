@@ -14,12 +14,20 @@ public class Memo {
     private Long memoId;
     private Course course;
     private LocalDate targetDate;
-    private String progressed;
-    private String homework;
+    private String title;
+    private String content;
     private List<MemoMedia> medias;
 
     public void setMedias(List<MemoMedia> medias) {
         this.medias = medias;
+    }
+
+    public void setTitle(final String title) {
+        this.title = title;
+    }
+
+    public void setContent(final String content) {
+        this.content = content;
     }
 
     public static Memo createNewMemo(final LocalDate targetDate, final String progressed, final String homework) {

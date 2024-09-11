@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class QueryCourseByStudentController {
+class QueryCourseByStudentController {
     private final LoadCoursesByStudentQuery loadCoursesByStudentQuery;
 
     @GetMapping("/api/courses/students/{studentId}")

@@ -1,10 +1,8 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryCommand;
-import com.hanpyeon.academyapi.course.application.dto.MemoQueryRequest;
 import com.hanpyeon.academyapi.course.application.dto.MemoView;
 import com.hanpyeon.academyapi.course.application.exception.NoSuchCourseException;
-import com.hanpyeon.academyapi.course.application.port.out.LoadMemoMediaPort;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemoMediaPort;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemosPort;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -25,8 +23,8 @@ class LoadMemosAdapter implements QueryMemosPort {
         return memoRepository.findByCourseId(memoQueryCommand.courseId(), memoQueryCommand.pageable())
                 .map(memo -> new MemoView(
                         memo.getId(),
-                        memo.getProgressed(),
-                        memo.getHomework(),
+                        memo.getTitle(),
+                        memo.getContent(),
                         memo.getTargetDate(),
                         queryMemoMediaPort.queryMedias(memo.getId()))
                 );
