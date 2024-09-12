@@ -9,6 +9,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +25,10 @@ class UpdateMemoMediaController {
     @Operation(summary = "메모에 관련된 영상을 업데이트 하는 api", description = "요청 시 순서에 맞게 미디어 파일을 보내야 합니다")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateMemoMedia(
-            @RequestBody @Valid UpdateMemoMediaController.UpdateMemoMediaRequest updateMemoMediaRequest
+            @RequestBody @Valid UpdateMemoMediaController.UpdateMemoMediaRequest updateMemoMediaRequest,
+            @AuthenticationPrincipal @Nonnull final Long requestMemberId
     ) {
-        final UpdateMediaMemoCommand command = updateMemoMediaRequest.toCommand();
+        final UpdateMediaMemoCommand command = updateMemoMediaRequest.toCommand(requestMemberId);
         updateMemoMediaUseCase.updateMediaMemo(command);
         return ResponseEntity.ok().build();
     }
@@ -35,11 +37,11 @@ class UpdateMemoMediaController {
             @Nonnull Long memoId,
             @Nonnull List<MediaInfo> mediaInfos
     ) {
-        UpdateMediaMemoCommand toCommand() {
+        UpdateMediaMemoCommand toCommand(final Long requestMemberId) {
             final List<MemoMediaDto> dtos = mediaInfos.stream()
                     .map(mediaInfo -> mediaInfo.toDto())
                     .collect(Collectors.toList());
-            return new UpdateMediaMemoCommand(memoId, dtos);
+            return new UpdateMediaMemoCommand(memoId, dtos, requestMemberId);
         }
 
         record MediaInfo(
