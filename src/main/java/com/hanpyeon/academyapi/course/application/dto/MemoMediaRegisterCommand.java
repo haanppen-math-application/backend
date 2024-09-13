@@ -1,7 +1,9 @@
 package com.hanpyeon.academyapi.course.application.dto;
 
-public record MemoMediaDto(
+public record MemoMediaRegisterCommand(
         String mediaSource,
         Boolean isNew,
-        Long memoMediaId) {
+        Long memoMediaId,
+        Integer sequence
+) {
 }

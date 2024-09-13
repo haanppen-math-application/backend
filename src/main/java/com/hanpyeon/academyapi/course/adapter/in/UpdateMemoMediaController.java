@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
-import com.hanpyeon.academyapi.course.application.dto.MemoMediaDto;
+import com.hanpyeon.academyapi.course.application.dto.MemoMediaRegisterCommand;
 import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateMemoMediaUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,7 +38,7 @@ class UpdateMemoMediaController {
             @Nonnull List<MediaInfo> mediaInfos
     ) {
         UpdateMediaMemoCommand toCommand(final Long requestMemberId) {
-            final List<MemoMediaDto> dtos = mediaInfos.stream()
+            final List<MemoMediaRegisterCommand> dtos = mediaInfos.stream()
                     .map(mediaInfo -> mediaInfo.toDto())
                     .collect(Collectors.toList());
             return new UpdateMediaMemoCommand(memoId, dtos, requestMemberId);
@@ -47,10 +47,11 @@ class UpdateMemoMediaController {
         record MediaInfo(
                 String mediaSource,
                 Boolean isNew,
-                Long memoMediaId
+                Long memoMediaId,
+                Integer sequence
         ){
-            MemoMediaDto toDto() {
-                return new MemoMediaDto(mediaSource, isNew, memoMediaId);
+            MemoMediaRegisterCommand toDto() {
+                return new MemoMediaRegisterCommand(mediaSource, isNew, memoMediaId, sequence);
             }
         }
     }
