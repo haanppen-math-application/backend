@@ -35,22 +35,22 @@ class UpdateMemoMediaController {
 
     record UpdateMemoMediaRequest(
             @Nonnull Long memoId,
-            @Nonnull List<MediaInfo> mediaInfos
+            @Nonnull List<MediaRegisterRequest> mediaRegisterRequests
     ) {
         UpdateMediaMemoCommand toCommand(final Long requestMemberId) {
-            final List<MemoMediaRegisterCommand> dtos = mediaInfos.stream()
-                    .map(mediaInfo -> mediaInfo.toDto(memoId))
+            final List<MemoMediaRegisterCommand> dtos = mediaRegisterRequests.stream()
+                    .map(mediaInfo -> mediaInfo.toCommand(memoId))
                     .collect(Collectors.toList());
             return new UpdateMediaMemoCommand(memoId, dtos, requestMemberId);
         }
 
-        record MediaInfo(
+        record MediaRegisterRequest(
                 String mediaSource,
                 Boolean isNew,
                 Long memoMediaId,
                 Integer sequence
         ){
-            MemoMediaRegisterCommand toDto(final Long memoId) {
+            MemoMediaRegisterCommand toCommand(final Long memoId) {
                 return new MemoMediaRegisterCommand(memoId, mediaSource, isNew, memoMediaId, sequence);
             }
         }
