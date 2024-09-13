@@ -39,7 +39,7 @@ class UpdateMemoMediaController {
     ) {
         UpdateMediaMemoCommand toCommand(final Long requestMemberId) {
             final List<MemoMediaRegisterCommand> dtos = mediaInfos.stream()
-                    .map(mediaInfo -> mediaInfo.toDto())
+                    .map(mediaInfo -> mediaInfo.toDto(memoId))
                     .collect(Collectors.toList());
             return new UpdateMediaMemoCommand(memoId, dtos, requestMemberId);
         }
@@ -50,8 +50,8 @@ class UpdateMemoMediaController {
                 Long memoMediaId,
                 Integer sequence
         ){
-            MemoMediaRegisterCommand toDto() {
-                return new MemoMediaRegisterCommand(mediaSource, isNew, memoMediaId, sequence);
+            MemoMediaRegisterCommand toDto(final Long memoId) {
+                return new MemoMediaRegisterCommand(memoId, mediaSource, isNew, memoMediaId, sequence);
             }
         }
     }
