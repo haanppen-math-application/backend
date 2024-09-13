@@ -2,7 +2,6 @@ package com.hanpyeon.academyapi.course.application.media.handler;
 
 import com.hanpyeon.academyapi.course.application.dto.MemoMediaRegisterCommand;
 import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
-import com.hanpyeon.academyapi.course.application.media.validate.MemoMediaContainerValidateManager;
 import com.hanpyeon.academyapi.course.domain.MemoMedia;
 import com.hanpyeon.academyapi.course.domain.MemoMediaContainer;
 import lombok.RequiredArgsConstructor;
@@ -13,15 +12,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MemoMediaContainerManager {
+public class MemoMediaContainerCreator {
     private final MemoMediaCommandManager memoMediaCommandManager;
-    private final MemoMediaContainerValidateManager containerValidateManager;
 
     public MemoMediaContainer createContainer(final UpdateMediaMemoCommand command) {
         final List<MemoMedia> memoMedias = loadMemoMedia(command.mediaSequences());
-        final MemoMediaContainer container = MemoMediaContainer.of(memoMedias, command.memoId());
-        containerValidateManager.validate(container);
-        return container;
+        return MemoMediaContainer.of(memoMedias, command.memoId());
     }
 
     private List<MemoMedia> loadMemoMedia(final List<MemoMediaRegisterCommand> commands) {
