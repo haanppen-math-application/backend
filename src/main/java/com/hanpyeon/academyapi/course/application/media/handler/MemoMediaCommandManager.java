@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MemoMediaCommandManager {
+class MemoMediaCommandManager {
 
     private final List<MemoMediaCommandHandler> memoMediaUpdateHandlers;
 
