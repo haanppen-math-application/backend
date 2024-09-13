@@ -49,6 +49,7 @@ public enum ErrorCode {
     MEMO_MEDIA_DUPLICATED(HttpStatus.BAD_REQUEST, "-410", "중복된 영상 파일"),
     MEMO_CANNOT_DELETE(HttpStatus.BAD_REQUEST, "-411", "지울 수 없음"),
     MEMO_CANNOT_MODIFY(HttpStatus.BAD_REQUEST, "-412", "수정 불가"),
+    MEMO_MEDIA_UPDATE_EXCEPTION(HttpStatus.BAD_REQUEST, "-413", "메모 미디어 업데이트 불가"),
 
     CANNOT_FIND_ATTACHMENT(HttpStatus.BAD_REQUEST, "-412", "첨부파일을 찾을 수 없음"),
     CANNOT_DELETE_ATTACHMENT(HttpStatus.BAD_REQUEST, "-412", "첨부파일 지울 수 없음"),

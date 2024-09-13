@@ -27,6 +27,10 @@ class MemoMedia {
         this.sequence = sequence;
     }
 
+    void setSequence(final Integer sequence) {
+        this.sequence = sequence;
+    }
+
     static MemoMedia of(final Memo memo, final Media media, final Integer sequence) {
         return new MemoMedia(memo, media, sequence);
     }

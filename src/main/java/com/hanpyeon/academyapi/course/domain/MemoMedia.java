@@ -6,7 +6,7 @@ import lombok.Getter;
 public class MemoMedia extends Media {
     private final Integer sequence;
 
-    public MemoMedia(String mediaName, String mediaSource, Long mediaSize, Integer sequence) {
+    private MemoMedia(String mediaName, String mediaSource, Long mediaSize, Integer sequence) {
         super(mediaName, mediaSource, mediaSize);
         this.sequence = sequence;
     }
