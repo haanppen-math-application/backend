@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
 import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
-import com.hanpyeon.academyapi.course.application.port.in.LoadCoursesByTeacherQuery;
+import com.hanpyeon.academyapi.course.application.port.in.QueryCourseByMemberIdUseCase;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-class QueryCourseByTeacherController {
-    private final LoadCoursesByTeacherQuery loadCoursesQuery;
+class QueryCourseByMemberIdController {
+    private final QueryCourseByMemberIdUseCase queryCourseByMemberIdUseCase;
     @GetMapping(value = "/api/courses/my")
     public ResponseEntity<List<CoursePreview>> queryMyCourses(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
             ) {
-        return ResponseEntity.ok(loadCoursesQuery.loadCoursePreviews(memberPrincipal.memberId()));
+        return ResponseEntity.ok(queryCourseByMemberIdUseCase.loadCoursePreviews(memberPrincipal.memberId()));
     }
 }

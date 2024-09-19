@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
 import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
-import com.hanpyeon.academyapi.course.application.port.in.LoadCoursesByTeacherQuery;
+import com.hanpyeon.academyapi.course.application.port.in.QueryCourseByMemberIdUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 class QueryCourseByTeacherIdController {
-    private final LoadCoursesByTeacherQuery loadCoursesQuery;
+    private final QueryCourseByMemberIdUseCase loadCoursesQuery;
 
     @GetMapping(value = "/api/courses/teachers/{teacherId}")
     @SecurityRequirement(name = "jwtAuth")
