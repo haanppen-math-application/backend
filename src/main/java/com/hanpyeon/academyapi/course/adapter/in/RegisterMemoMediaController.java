@@ -18,7 +18,7 @@ public class RegisterMemoMediaController {
 
     private final RegisterMemoMediaUseCase registerMemoMediaUseCase;
 
-    @PostMapping("/api/cours/memo/media")
+    @PostMapping("/api/course/memo/media")
     public ResponseEntity<?> addMemoMedia(
             @RequestBody @Valid final RegisterMemoMediaRequest request,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal
