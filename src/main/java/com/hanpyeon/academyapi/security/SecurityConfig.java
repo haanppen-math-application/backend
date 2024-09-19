@@ -120,11 +120,7 @@ public class SecurityConfig {
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
                     request.requestMatchers(HttpMethod.GET, "/api/courses/my")
-                            .hasAnyAuthority(
-                                    Role.TEACHER.getSecurityRole(),
-                                    Role.MANAGER.getSecurityRole(),
-                                    Role.ADMIN.getSecurityRole()
-                            );
+                                    .authenticated();
 
 
                     // 반 삭제 API는 매니저만 사용가능 하도록 구현
