@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
+import com.hanpyeon.academyapi.course.application.dto.MemoQueryCommand;
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryRequest;
 import com.hanpyeon.academyapi.course.application.dto.MemoView;
 import com.hanpyeon.academyapi.course.application.port.in.LoadMemoQuery;
@@ -8,7 +9,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,7 +28,7 @@ class QueryMemoByCourseIdController {
 
     private final LoadMemoQuery loadMemoQuery;
 
-    @GetMapping("/api/courses/{courseId}/memos/{pageIndex}")
+    @GetMapping("/api/courses/{courseId}/memos")
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "반의 메모들을 조회하기 위한 API", description = "해당 API는 로그인된 사용자면 모두 가능합니다. \n" +
             "(1) 페이지 번호를 반드시 명시해 주세요.(default = 0)\n" +
@@ -32,10 +36,10 @@ class QueryMemoByCourseIdController {
             "(3) 페이지를 하나씩 늘려가며 요청할것\n" +
             "(4) 존재하지 않는 반에 대한 요청은 에러처리 됩니다")
     public ResponseEntity<Slice<MemoView>> loadMemos(
-            @NonNull @PathVariable Integer pageIndex,
+            @PageableDefault(size = 10, direction = Sort.Direction.DESC, sort = "TARGET_DATE") Pageable pageable,
             @Nonnull @PathVariable Long courseId
             ) {
-        final MemoQueryRequest command = new MemoQueryRequest(pageIndex, courseId);
+        final MemoQueryCommand command = new MemoQueryCommand(pageable, courseId);
         return ResponseEntity.ok(loadMemoQuery.loadMemos(command));
     }
 }

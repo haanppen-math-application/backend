@@ -20,16 +20,7 @@ public class LoadMemoQueryService implements LoadMemoQuery {
     private final QueryMemosPort queryMemosPort;
 
     @Override
-    public Slice<MemoView> loadMemos(final @Valid MemoQueryRequest memoQueryRequest) {;
-        final MemoQueryCommand command = this.createCommand(memoQueryRequest);
+    public Slice<MemoView> loadMemos(final @Valid MemoQueryCommand command) {;
         return queryMemosPort.loadMemos(command);
-    }
-
-    private Pageable createPageable(final Integer pageIndex) {
-        return PageRequest.of(pageIndex, 5, Sort.by(Sort.Direction.ASC, "TARGET_DATE"));
-    }
-
-    private MemoQueryCommand createCommand(final MemoQueryRequest memoQueryRequest) {
-        return new MemoQueryCommand(createPageable(memoQueryRequest.pageIndex()), memoQueryRequest.courseId());
     }
 }
