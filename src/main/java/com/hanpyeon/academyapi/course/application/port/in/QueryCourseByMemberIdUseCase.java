@@ -4,6 +4,6 @@ import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
 
 import java.util.List;
 
-public interface LoadCoursesByTeacherQuery {
-    List<CoursePreview> loadCoursePreviews(final Long teacherId);
+public interface QueryCourseByMemberIdUseCase {
+    List<CoursePreview> loadCoursePreviews(final Long memberId);
 }

@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
-import com.hanpyeon.academyapi.course.application.port.in.LoadCoursesByTeacherQuery;
+import com.hanpyeon.academyapi.course.application.port.in.QueryCourseByMemberIdUseCase;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class CourseQueryByTeacherControllerTest {
     @Autowired
     MockMvc mockMvc;
     @MockBean
-    LoadCoursesByTeacherQuery loadCoursesByTeacherQuery;
+    QueryCourseByMemberIdUseCase loadCoursesByTeacherQuery;
 
     @Test
     void 요청_테스트() throws Exception {
