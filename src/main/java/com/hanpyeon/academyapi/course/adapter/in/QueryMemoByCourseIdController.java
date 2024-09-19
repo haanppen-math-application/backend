@@ -36,7 +36,7 @@ class QueryMemoByCourseIdController {
             "(3) 페이지를 하나씩 늘려가며 요청할것\n" +
             "(4) 존재하지 않는 반에 대한 요청은 에러처리 됩니다")
     public ResponseEntity<Slice<MemoView>> loadMemos(
-            @PageableDefault(size = 10, direction = Sort.Direction.DESC, sort = "TARGET_DATE") Pageable pageable,
+            @PageableDefault(size = 10, direction = Sort.Direction.DESC, sort = "targetDate") Pageable pageable,
             @Nonnull @PathVariable Long courseId
             ) {
         final MemoQueryCommand command = new MemoQueryCommand(pageable, courseId);
