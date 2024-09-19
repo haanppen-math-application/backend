@@ -145,6 +145,12 @@ public class SecurityConfig {
                             .authenticated();
                     request.requestMatchers(HttpMethod.GET, "/api/courses/memos")
                             .authenticated();
+                    request.requestMatchers(HttpMethod.POST, "/api/course/memo/media")
+                            .hasAnyAuthority(
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole(),
+                                    Role.ADMIN.getSecurityRole());
+
 
                     request.requestMatchers(HttpMethod.POST, "/api/directories")
                             .hasAnyAuthority(
