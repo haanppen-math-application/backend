@@ -72,7 +72,8 @@ public class DirectoryMediaController {
             @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String fileName,
             @Nonnull Long totalChunkCount,
             @Nonnull Long currChunkIndex,
-            @Nonnull Boolean isLast
+            @Nonnull Boolean isLast,
+            @Nonnull String extension
     ) {
 
         UploadMediaDto create(final MultipartFile multipartFile, final Long requestMemberId) {
@@ -83,7 +84,8 @@ public class DirectoryMediaController {
                     currChunkIndex(),
                     isLast(),
                     requestMemberId,
-                    targetDirectoryPath()
+                    targetDirectoryPath(),
+                    extension()
             );
         }
     }
