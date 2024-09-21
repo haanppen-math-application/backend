@@ -24,10 +24,9 @@ class QueryCourseByStudentIDHandler implements QueryCourseByMemberIdHandler {
     @Override
     public boolean applicable(Long memberId) {
         try {
-            loadStudentsPort.loadStudents(List.of(memberId));
+            return !loadStudentsPort.loadStudents(List.of(memberId)).isEmpty();
         } catch (BusinessException exception) {
             return false;
         }
-        return false;
     }
 }
