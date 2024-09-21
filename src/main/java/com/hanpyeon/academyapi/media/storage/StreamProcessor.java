@@ -28,7 +28,7 @@ public class StreamProcessor {
         try {
             inputStream.skip(startIndex);
             final AssembledStreamInfo info = sliceInputStream(inputStream, endIndex - startIndex + 1);
-            return new ChunkedMediaDto(info.inputStream, info.totalByteSize, startIndex, endIndex);
+            return new ChunkedMediaDto(info.inputStream, info.totalByteSize, startIndex, startIndex + info.totalByteSize - 1);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
