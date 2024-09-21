@@ -53,7 +53,8 @@ class RegisterAttachmentWithChunkController {
             @Nonnull MultipartFile chunkedFile,
             @Nonnull Long totalChunkCount,
             @Nonnull Long currChunkIndex,
-            @Nonnull Boolean isLast
+            @Nonnull Boolean isLast,
+            @Nonnull String extension
     ) {
         RegisterAttachmentChunkCommand createCommand(final Long requestMemberId) {
             return new RegisterAttachmentChunkCommand(
@@ -62,7 +63,8 @@ class RegisterAttachmentWithChunkController {
                     chunkedFile(),
                     totalChunkCount(),
                     currChunkIndex(),
-                    isLast()
+                    isLast(),
+                    extension()
             );
         }
     }

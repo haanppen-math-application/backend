@@ -14,6 +14,7 @@ public class AttachmentUploadChunkFile {
     private final Long currChunkIndex;
     private final Boolean isLast;
     private final Long requestMemberId;
+    private final String extension;
 
     public static AttachmentUploadChunkFile of(final RegisterAttachmentChunkCommand command) {
         return new AttachmentUploadChunkFile(
@@ -22,7 +23,8 @@ public class AttachmentUploadChunkFile {
                 command.totalChunkCount(),
                 command.currChunkIndex(),
                 command.isLast(),
-                command.requestMemberId()
+                command.requestMemberId(),
+                command.extension()
         );
     }
 }

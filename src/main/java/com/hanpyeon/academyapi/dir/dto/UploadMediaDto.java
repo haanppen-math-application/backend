@@ -17,5 +17,6 @@ public final class UploadMediaDto {
     private final Boolean isLast;
     private final Long requestMemberId;
     private final String targetDirectory;
+    private final String extension;
 }
 

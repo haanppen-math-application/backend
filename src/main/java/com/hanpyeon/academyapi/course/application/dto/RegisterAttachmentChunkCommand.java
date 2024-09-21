@@ -9,6 +9,7 @@ public record RegisterAttachmentChunkCommand(
         @Nonnull MultipartFile chunkedFile,
         @Nonnull Long totalChunkCount,
         @Nonnull Long currChunkIndex,
-        @Nonnull Boolean isLast
+        @Nonnull Boolean isLast,
+        @Nonnull String extension
 ){
 }

@@ -2,6 +2,8 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
 import com.hanpyeon.academyapi.dir.service.form.resolver.DirectoryPathFormResolver;
+import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.media.exception.MediaException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ class ChunkGroupInfoFactory {
                 resolvedPath,
                 uploadMediaDto.getFileName(),
                 uploadMediaDto.getTotalChunkCount(),
-                getExtension(uploadMediaDto.getFile().getOriginalFilename())
+                getExtension(uploadMediaDto.getExtension())
         );
         chunkGroupInfo.init();
         return chunkGroupInfo;
@@ -28,11 +30,11 @@ class ChunkGroupInfoFactory {
         return directoryPathFormResolver.resolveToAbsolutePath(requestPath);
     }
 
-    private String getExtension(final String fileName) {
-        final int dotLastIndex = fileName.lastIndexOf('.');
-        if (dotLastIndex == -1) {
-            return fileName;
+    private String getExtension(final String extension) {
+        final int dotLastIndex = extension.lastIndexOf('.');
+        if (dotLastIndex == 0) {
+            return extension;
         }
-        return fileName.substring(dotLastIndex);
+        throw new MediaException("확장자 필드에 .을 포함해 주세요 ex) .mp4 ", ErrorCode.MEDIA_STORE_EXCEPTION);
     }
 }
