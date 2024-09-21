@@ -25,12 +25,12 @@ class ChunkMergerImpl implements ChunkMerger {
     @Override
     public MergedUploadFile merge(ChunkStorage chunkStorage, ChunkGroupInfo chunkGroupInfo) {
         final ChunkGroup chunkGroup = this.getValidatedChunkGroup(chunkStorage, chunkGroupInfo);
-        final InputStream totalInputStream = getCombinedInputStream(getAllInputStreams(chunkGroup.getChunkPaths()));
+        final InputStream totalInputStream = getCombinedInputStream(chunkGroup.getSequentialChunkInputStream());
         return new MergedUploadFileImpl(chunkGroup.getChunkGroupInfo(), totalInputStream, chunkStorage);
     }
 
     private ChunkGroup getValidatedChunkGroup(final ChunkStorage chunkStorage, final ChunkGroupInfo chunkGroupInfo) {
-        final ChunkGroup chunkGroup = chunkStorage.loadRelatedChunkedFiles(chunkGroupInfo);
+        final ChunkGroup chunkGroup = chunkStorage.loadSequentialRelatedChunkedFiles(chunkGroupInfo);
         try {
             chunkGroup.validateAllChunkFileReceived();
         } catch (ChunkException chunkException) {
@@ -39,18 +39,6 @@ class ChunkMergerImpl implements ChunkMerger {
             throw chunkException;
         }
         return chunkGroup;
-    }
-
-    private List<InputStream> getAllInputStreams(final List<Path> paths) {
-        final List<InputStream> inputStreams = new ArrayList<>();
-        try {
-            for (final Path path : paths) {
-                inputStreams.add(Files.newInputStream(path, StandardOpenOption.READ));
-            }
-            return Collections.unmodifiableList(inputStreams);
-        } catch (IOException e) {
-            throw new ChunkException(e + "청크 파일을 열 수 없음", ErrorCode.CHUNK_SIZE_EXCEPTION);
-        }
     }
 
     private InputStream getCombinedInputStream(final List<InputStream> inputStreams) {

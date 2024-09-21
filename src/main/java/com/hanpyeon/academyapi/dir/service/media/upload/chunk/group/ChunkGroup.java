@@ -2,36 +2,26 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 
-@RequiredArgsConstructor
 @Slf4j
 public class ChunkGroup {
     private final ChunkGroupInfo chunkGroupInfo;
-    private final List<Path> chunkPaths;
+    private final List<InputStream> chunkInputStreams;
     private final Long groupReceivedFileSize;
 
-    public ChunkGroup(ChunkGroupInfo chunkGroupInfo, List<Path> chunkPaths) {
+    public ChunkGroup(ChunkGroupInfo chunkGroupInfo, List<InputStream> chunkPaths, Long totalSize) {
         this.chunkGroupInfo = chunkGroupInfo;
-        this.chunkPaths = chunkPaths;
-        this.groupReceivedFileSize = chunkPaths.stream()
-                .mapToLong(path -> {
-                    try {
-                        return Files.size(path);
-                    } catch (IOException e) {
-                        throw new ChunkException("다운로드 된 청크들의 사이즈를 확인할 수 없습니다", ErrorCode.CHUNK_SIZE_EXCEPTION);
-                    }
-                }).sum();
+        this.chunkInputStreams = chunkPaths;
+        this.groupReceivedFileSize = totalSize;
     }
 
-    public List<Path> getChunkPaths() {
-        return chunkPaths;
+    public List<InputStream> getSequentialChunkInputStream() {
+        return Collections.unmodifiableList(chunkInputStreams);
     }
 
     public ChunkGroupInfo getChunkGroupInfo() {

@@ -11,10 +11,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,29 +34,43 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
     }
 
     @Override
-    public ChunkGroup loadRelatedChunkedFiles(final ChunkGroupInfo chunkGroupInfo) {
-        return new ChunkGroup(chunkGroupInfo, loadRelatedFiles(chunkGroupInfo));
+    public ChunkGroup loadSequentialRelatedChunkedFiles(final ChunkGroupInfo chunkGroupInfo) {
+        return new ChunkGroup(chunkGroupInfo, loadSequentialFiles(chunkGroupInfo), getTotalSize(chunkGroupInfo));
     }
 
-    private List<Path> loadRelatedFiles(final ChunkGroupInfo chunkGroupInfo) {
+    private Stream<Path> loadPaths(final ChunkGroupInfo chunkGroupInfo) {
+        final String groupId = chunkGroupInfo.getGroupId();
         try {
-            final String groupId = chunkGroupInfo.getGroupId();
-            Stream<Path> pathStream = Files.walk(Paths.get(this.storagePath));
-            final List<Path> resultPaths = new ArrayList<>();
-            final List<Path> paths = pathStream.collect(Collectors.toList());
-            for (final Path path : paths) {
-                if (!Files.isRegularFile(path)) {
-                    continue;
-                }
-                final String fileName = String.valueOf(path.getFileName());
-                if (fileName.startsWith(groupId)) {
-                    resultPaths.add(path);
-                }
-            }
-            return resultPaths;
+            return Files.walk(Paths.get(this.storagePath))
+                    .filter(Files::isRegularFile)
+                    .filter(path -> String.valueOf(path.getFileName()).startsWith(groupId));
         } catch (IOException e) {
             throw new ChunkException("청크파일 여는 중 예외 발생", ErrorCode.CHUNK_ACCESS_EXCEPTION);
         }
+    }
+
+    private Long getTotalSize(final ChunkGroupInfo chunkGroupInfo) {
+        return loadPaths(chunkGroupInfo)
+                .mapToLong(path -> {
+                    try {
+                        return Files.size(path);
+                    } catch (IOException e) {
+                        throw new ChunkException("다운로드 된 청크들의 사이즈를 확인할 수 없습니다", ErrorCode.CHUNK_SIZE_EXCEPTION);
+                    }
+                }).sum();
+    }
+
+    private List<InputStream> loadSequentialFiles(final ChunkGroupInfo chunkGroupInfo) {
+        return loadPaths(chunkGroupInfo)
+                .sorted()
+                .map(path -> {
+                    try {
+                        return Files.newInputStream(path, StandardOpenOption.READ);
+                    } catch (IOException e) {
+                        throw new ChunkException("청크 접근중 에러 발생" + e.getMessage(), ErrorCode.CHUNK_ACCESS_EXCEPTION);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     /**
@@ -66,15 +81,15 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
     @Override
     public void removeChunks(ChunkGroupInfo chunkGroupInfo) {
         log.debug("템프 파일 지우기 시작");
-        final List<Path> paths = loadRelatedFiles(chunkGroupInfo);
-        try {
-            for (final Path path : paths) {
-                log.debug(path + "지워지기 성공!");
-                Files.deleteIfExists(path);
-            }
-        } catch (IOException e) {
-            throw new ChunkException("청크파일 삭제 불가", ErrorCode.CHUNK_ACCESS_EXCEPTION);
-        }
+        loadPaths(chunkGroupInfo)
+                .forEach(path -> {
+                    try {
+                        Files.deleteIfExists(path);
+                        log.debug(path + "지워지기 성공!");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
         log.debug("템프 파일 지우기 종료");
     }
 }
