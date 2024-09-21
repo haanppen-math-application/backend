@@ -1,5 +1,7 @@
 package com.hanpyeon.academyapi.course.domain;
 
+import com.hanpyeon.academyapi.course.application.dto.MemoMediaSequenceModifyCommand;
+import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +21,11 @@ public class MemoMediaContainer {
         return Collections.unmodifiableList(this.memoMedias);
     }
 
+    public void updateSequence(final MemoMediaSequenceModifyCommand sequenceModifyCommand) {
+        for (final MemoMedia memoMedia : memoMedias) {
+            memoMedia.setSequence(sequenceModifyCommand.memoMediaId(), sequenceModifyCommand.sequence());
+        }
+    }
 
     public static MemoMediaContainer of(final List<MemoMedia> memoMedias, final Long memoId) {
         return new MemoMediaContainer(memoMedias, memoId);

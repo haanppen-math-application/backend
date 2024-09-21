@@ -6,7 +6,7 @@ import java.util.List;
 
 public record UpdateMediaMemoCommand(
         @Nonnull Long memoId,
-        @Nonnull List<MemoMediaRegisterCommand> mediaSequences,
+        @Nonnull List<MemoMediaSequenceModifyCommand> mediaSequences,
         @Nonnull Long requestMemberId
 ) {
 }

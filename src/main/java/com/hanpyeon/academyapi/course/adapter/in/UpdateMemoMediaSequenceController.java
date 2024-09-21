@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
-import com.hanpyeon.academyapi.course.application.dto.MemoMediaRegisterCommand;
+import com.hanpyeon.academyapi.course.application.dto.MemoMediaSequenceModifyCommand;
 import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateMemoMediaUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-class UpdateMemoMediaController {
+class UpdateMemoMediaSequenceController {
 
     private final UpdateMemoMediaUseCase updateMemoMediaUseCase;
 
@@ -25,7 +25,7 @@ class UpdateMemoMediaController {
     @Operation(summary = "메모에 관련된 영상을 업데이트 하는 api", description = "요청 시 순서에 맞게 미디어 파일을 보내야 합니다")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateMemoMedia(
-            @RequestBody @Valid UpdateMemoMediaController.UpdateMemoMediaRequest updateMemoMediaRequest,
+            @RequestBody @Valid UpdateMemoMediaRequest updateMemoMediaRequest,
             @AuthenticationPrincipal @Nonnull final Long requestMemberId
     ) {
         final UpdateMediaMemoCommand command = updateMemoMediaRequest.toCommand(requestMemberId);
@@ -35,23 +35,21 @@ class UpdateMemoMediaController {
 
     record UpdateMemoMediaRequest(
             @Nonnull Long memoId,
-            @Nonnull List<MediaRegisterRequest> mediaRegisterRequests
+            @Nonnull List<MediaSequenceModifyRequest> sequenceModifyRequests
     ) {
         UpdateMediaMemoCommand toCommand(final Long requestMemberId) {
-            final List<MemoMediaRegisterCommand> dtos = mediaRegisterRequests.stream()
+            final List<MemoMediaSequenceModifyCommand> dtos = sequenceModifyRequests.stream()
                     .map(mediaInfo -> mediaInfo.toCommand(memoId))
                     .collect(Collectors.toList());
             return new UpdateMediaMemoCommand(memoId, dtos, requestMemberId);
         }
 
-        record MediaRegisterRequest(
-                String mediaSource,
-                Boolean isNew,
+        record MediaSequenceModifyRequest(
                 Long memoMediaId,
                 Integer sequence
         ){
-            MemoMediaRegisterCommand toCommand(final Long memoId) {
-                return new MemoMediaRegisterCommand(memoId, mediaSource, isNew, memoMediaId, sequence);
+            MemoMediaSequenceModifyCommand toCommand(final Long memoId) {
+                return new MemoMediaSequenceModifyCommand(memoId, memoMediaId, sequence);
             }
         }
     }
