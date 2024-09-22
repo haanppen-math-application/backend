@@ -62,7 +62,7 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
 
     private List<InputStream> loadSequentialFiles(final ChunkGroupInfo chunkGroupInfo) {
         return loadPaths(chunkGroupInfo)
-                .sorted((path1, path2) -> String.valueOf(path1.getFileName()).compareTo(String.valueOf(path2)))
+                .sorted((path1, path2) -> String.valueOf(path2.getFileName()).compareTo(String.valueOf(path1.getFileName())))
                 .map(path -> {
                     try {
                         return Files.newInputStream(path, StandardOpenOption.READ);
