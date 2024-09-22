@@ -60,11 +60,16 @@ class LocalChunkStorage extends LocalStorage implements ChunkStorage {
                 }).sum();
     }
 
+    private Integer getSequence(final Path path, final ChunkGroupInfo chunkGroupInfo) {
+        final String sequenceValue = String.valueOf(path.getFileName()).replace(chunkGroupInfo.getGroupId(), "").replace("_", "");
+        return Integer.parseInt(sequenceValue);
+    }
+
     private List<InputStream> loadSequentialFiles(final ChunkGroupInfo chunkGroupInfo) {
         return loadPaths(chunkGroupInfo)
                 .sorted((path1, path2) -> {
-                    final int path1Sequence = Integer.parseInt(String.valueOf(path1.getFileName()).replace(chunkGroupInfo.getGroupId(), ""));
-                    final int path2Sequence = Integer.parseInt(String.valueOf(path2.getFileName()).replace(chunkGroupInfo.getGroupId(), ""));
+                    final int path1Sequence = getSequence(path1, chunkGroupInfo);
+                    final int path2Sequence = getSequence(path2, chunkGroupInfo);
                     return path1Sequence - path2Sequence;
 //                    return String.valueOf(path2.getFileName()).compareTo(String.valueOf(path1.getFileName()))
                 })
