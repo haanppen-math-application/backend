@@ -5,8 +5,7 @@ import jakarta.annotation.Nonnull;
 import java.util.List;
 
 public record UpdateMediaMemoCommand(
-        @Nonnull Long memoId,
-        @Nonnull List<MemoMediaRegisterCommand> mediaSequences,
+        @Nonnull List<MemoMediaUpdateSequenceCommand> mediaSequences,
         @Nonnull Long requestMemberId
 ) {
 }

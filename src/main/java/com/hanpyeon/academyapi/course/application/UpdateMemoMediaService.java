@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.application;
 
+import com.hanpyeon.academyapi.course.application.dto.MemoMediaUpdateSequenceCommand;
 import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
-import com.hanpyeon.academyapi.course.application.media.handler.MemoMediaContainerCreator;
 import com.hanpyeon.academyapi.course.application.media.validate.MemoMediaContainerValidateManager;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateMemoMediaUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.UpdateMemoMediaContainerPort;
@@ -23,6 +23,9 @@ public class UpdateMemoMediaService implements UpdateMemoMediaUseCase {
     @Transactional
     public void updateMediaMemo(UpdateMediaMemoCommand updateMediaMemoCommand) {
         final MemoMediaContainer container = containerCreator.createContainer(updateMediaMemoCommand);
+
+        updateMediaMemoCommand.mediaSequences().stream()
+                        .forEach(mediaSequence -> container.updateMemoMediaSequence(mediaSequence));
         containerValidateManager.validate(container);
         updateMemoMediaContainerPort.save(container);
     }
