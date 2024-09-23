@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.MemoMediaUpdateSequenceCommand;
 import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
 import com.hanpyeon.academyapi.course.application.media.validate.MemoMediaContainerValidateManager;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateMemoMediaUseCase;
