@@ -17,7 +17,7 @@ public class LoadMemoMediaAdapter implements LoadMemoMediaPort {
         return memoMediaRepository.findAllByMemo_Id(memoId)
                 .stream().map(memoMedia ->  {
                     final com.hanpyeon.academyapi.media.entity.Media media = memoMedia.getMedia();
-                    return MemoMedia.createByEntity(media.getMediaName(), media.getSrc(), null, memoMedia.getSequence());
+                    return MemoMedia.createByEntity(memoMedia.getId(), media.getMediaName(), media.getSrc(), null, memoMedia.getSequence());
                 })
                 .collect(Collectors.toList());
     }

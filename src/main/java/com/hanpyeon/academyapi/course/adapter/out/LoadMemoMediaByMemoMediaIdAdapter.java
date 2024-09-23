@@ -16,6 +16,7 @@ class LoadMemoMediaByMemoMediaIdAdapter implements LoadMemoMediaByMemoMediaIdPor
         final com.hanpyeon.academyapi.course.adapter.out.MemoMedia memoMedia = memoMediaRepository.findMemoMediaByIdAndMemo_Id(memoMediaId, memoId)
                 .orElseThrow(() -> new MemoMediaException("존재하지 않는 메모-미디어 입니다.", ErrorCode.MEMO_MEDIA_UPDATE_EXCEPTION));
         return MemoMedia.createByEntity(
+                memoMedia.getId(),
                 memoMedia.getMedia().getMediaName(),
                 memoMedia.getMedia().getSrc(),
                 null,

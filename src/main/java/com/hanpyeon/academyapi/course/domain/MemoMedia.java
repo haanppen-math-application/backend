@@ -4,17 +4,28 @@ import lombok.Getter;
 
 @Getter
 public class MemoMedia extends Media {
-    private final Integer sequence;
+    private final Long memoMediaId;
+    private Integer sequence;
 
-    private MemoMedia(String mediaName, String mediaSource, Long mediaSize, Integer sequence) {
+    private MemoMedia(Long memoMediaId, String mediaName, String mediaSource, Long mediaSize, Integer sequence) {
         super(mediaName, mediaSource, mediaSize);
+        this.memoMediaId = memoMediaId;
         this.sequence = sequence;
     }
 
-    public static MemoMedia createByEntity(final String mediaName, final String mediaSource, final Long mediaSize, final Integer sequence) {
-        return new MemoMedia(mediaName, mediaSource, mediaSize, sequence);
+    boolean updateSequence(final Long memoMediaId, final Integer newSequence) {
+        if (this.memoMediaId == memoMediaId) {
+            this.sequence = newSequence;
+            return true;
+        }
+        return false;
     }
+
+    public static MemoMedia createByEntity(final Long memoMediaId, final String mediaName, final String mediaSource, final Long mediaSize, final Integer sequence) {
+        return new MemoMedia(memoMediaId, mediaName, mediaSource, mediaSize, sequence);
+    }
+
     public static MemoMedia createByMedia(final Media media, final Integer sequence) {
-        return new MemoMedia(media.getMediaName(), media.getMediaSource(), media.getMediaSize(), sequence);
+        return new MemoMedia(null, media.getMediaName(), media.getMediaSource(), media.getMediaSize(), sequence);
     }
 }
