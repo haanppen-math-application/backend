@@ -13,6 +13,23 @@ public class MemoMedia extends Media {
         this.sequence = sequence;
     }
 
+    /**
+     * @param memoMediaId
+     * @return 자신의 memoMediaId 와 일치할 때 Sequence 를 리턴. 일치하지 않을 시, null 리턴
+     */
+    Integer getSequence(final Long memoMediaId) {
+        if (this.memoMediaId == memoMediaId) {
+            return this.sequence;
+        }
+        return null;
+    }
+
+    void updateSequenceUpperThan(final int targetSequence) {
+        if (this.sequence > targetSequence) {
+            this.sequence --;
+        }
+    }
+
     boolean updateSequence(final Long memoMediaId, final Integer newSequence) {
         if (this.memoMediaId == memoMediaId) {
             this.sequence = newSequence;

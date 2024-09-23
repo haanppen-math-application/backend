@@ -23,4 +23,9 @@ class MemoMediaContainerCreator {
         }
         return MemoMediaContainer.of(memoMedias, command.memoId());
     }
+
+    public MemoMediaContainer createContainer(final Long memoId) {
+        final List<MemoMedia> memoMedias = loadMemoMediaPort.loadMedia(memoId);
+        return MemoMediaContainer.of(memoMedias, memoId);
+    }
 }
