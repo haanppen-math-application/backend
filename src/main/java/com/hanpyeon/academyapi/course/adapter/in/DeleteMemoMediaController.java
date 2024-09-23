@@ -16,7 +16,7 @@ public class DeleteMemoMediaController {
 
     private final DeleteMemoMediaUseCase deleteMemoMediaUseCase;
 
-    @DeleteMapping("/api/course/memo/{memoId/media/{memoMediaId}")
+    @DeleteMapping("/api/course/memo/{memoId}/media/{memoMediaId}")
     public ResponseEntity<?> deleteMemoMedia(
             @PathVariable Long memoMediaId,
             @PathVariable Long memoId,
