@@ -14,11 +14,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
-@PropertySource("service.password.default=1234")
+@ActiveProfiles("test")
 public class PasswordHandlerTest {
     private static final String OTHER = "OTHER";
     private static final String DEFAULT = "DEFAULT";
