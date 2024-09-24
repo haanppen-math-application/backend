@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
 
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class JwtUtils {
     public static final String HEADER = "Authorization";
     public static String TOKEN_TYPE = "Bearer";
+    private final String MEMBER_NAME = "memberName";
+    private final String MEMBER_ROLE = "memberRole";
     @Value("${server.jwt.algorithm}")
     private String encryptAlgorithm;
     @Value("${server.jwt.key}")
@@ -23,15 +26,13 @@ public class JwtUtils {
     private Long expirationTime;
     private SignatureAlgorithm signatureAlgorithm;
     private SecretKey secretKey;
-    private final String MEMBER_NAME = "memberName";
-    private final String MEMBER_ROLE = "memberRole";
     private JwtParser jwtParser;
 
     @PostConstruct
     public void initJwt() {
         this.signatureAlgorithm = SignatureAlgorithm.forName(this.encryptAlgorithm);
-        final byte[] decodedBytes = this.jwtKey.getBytes();
-        this.secretKey = new SecretKeySpec(decodedBytes, 0, decodedBytes.length, encryptAlgorithm);
+        final byte[] decodedBytes = Base64.getDecoder().decode(this.jwtKey.getBytes());
+        this.secretKey = new SecretKeySpec(decodedBytes, 0, decodedBytes.length, signatureAlgorithm.getJcaName());
         this.jwtParser = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build();
