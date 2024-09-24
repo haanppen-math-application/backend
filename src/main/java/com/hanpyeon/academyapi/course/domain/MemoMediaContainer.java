@@ -50,14 +50,8 @@ public class MemoMediaContainer {
     }
 
     public void updateMemoMediaSequence(final MemoMediaUpdateSequenceCommand command) {
-        int updatedCount = 0;
         for (final MemoMedia memoMedia : memoMedias) {
-            if (memoMedia.updateSequence(command.memoMediaId(), command.sequence())) {
-                updatedCount++;
-            }
-        }
-        if (updatedCount == 0 || updatedCount > 1) {
-            throw new MemoMediaException("변경된 횟수 : " + updatedCount, ErrorCode.MEMO_MEDIA_SEQUENCE);
+            memoMedia.updateSequence(command.memoMediaId(), command.sequence());
         }
     }
 
