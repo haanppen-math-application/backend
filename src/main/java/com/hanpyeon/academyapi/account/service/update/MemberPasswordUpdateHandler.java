@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
-public class MemberPasswordUpdateHandler implements AccountUpdateHandler {
+class MemberPasswordUpdateHandler implements AccountUpdateHandler {
     private final PasswordHandler passwordHandler;
 
     @Override

@@ -5,7 +5,7 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccountGradeUpdateHandler implements AccountUpdateHandler {
+class AccountGradeUpdateHandler implements AccountUpdateHandler {
     @Override
     public void update(AccountUpdateDto accountUpdateDto, Member member) {
         if (accountUpdateDto.grade() == null) {

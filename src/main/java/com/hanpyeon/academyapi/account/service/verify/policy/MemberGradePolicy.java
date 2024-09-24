@@ -7,7 +7,7 @@ import com.hanpyeon.academyapi.security.Role;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MemberGradePolicy implements AccountPolicy {
+class MemberGradePolicy implements AccountPolicy {
     @Override
     public void verify(Member member) {
         if (member.getRole().equals(Role.STUDENT)) {
