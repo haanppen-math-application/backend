@@ -18,7 +18,7 @@ class MemoMedia {
     private Media media;
     @ManyToOne
     private Memo memo;
-    @JoinColumn(name = "MEMO_MEDIA_SEQUENCE", nullable = false)
+    @JoinColumn(name = "sequence", nullable = false)
     private Integer sequence;
 
     private MemoMedia(final Memo memo, final Media media, final Integer sequence) {
