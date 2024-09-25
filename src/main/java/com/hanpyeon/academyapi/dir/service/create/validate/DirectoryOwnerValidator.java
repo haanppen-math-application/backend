@@ -34,9 +34,7 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
     }
 
     private boolean isRequestMemberIsOwner(final Directory targetDirectory, final Member requestMember) {
-        // 이전 디렉토리의 소유자가 맞는지 확인
-        log.info(targetDirectory.getOwner().getId() + " " + requestMember.getId());
-        if (targetDirectory.getId().equals(requestMember.getId())) {
+        if (targetDirectory.getOwner().getId().equals(requestMember.getId())) {
             return true;
         }
         return false;
