@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -50,6 +51,7 @@ class RegisterAttachmentWithChunkController {
 
     record RegisterAttachmentWithChunkRequest(
             @Nonnull Long memoMediaId,
+            @NotBlank String fileName,
             @Nonnull MultipartFile chunkedFile,
             @Nonnull Long totalChunkCount,
             @Nonnull Long currChunkIndex,
@@ -61,6 +63,7 @@ class RegisterAttachmentWithChunkController {
                     requestMemberId,
                     memoMediaId(),
                     chunkedFile(),
+                    fileName(),
                     totalChunkCount(),
                     currChunkIndex(),
                     isLast(),

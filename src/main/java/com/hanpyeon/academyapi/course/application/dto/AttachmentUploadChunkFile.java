@@ -19,7 +19,7 @@ public class AttachmentUploadChunkFile {
     public static AttachmentUploadChunkFile of(final RegisterAttachmentChunkCommand command) {
         return new AttachmentUploadChunkFile(
                 command.chunkedFile(),
-                command.chunkedFile().getOriginalFilename(),
+                command.fileName(),
                 command.totalChunkCount(),
                 command.currChunkIndex(),
                 command.isLast(),
