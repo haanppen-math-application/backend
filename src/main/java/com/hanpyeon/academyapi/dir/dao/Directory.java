@@ -24,14 +24,14 @@ public class Directory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "directory_onwer", nullable = false)
+    @JoinColumn(name = "directory_owner", nullable = false)
     private Member owner;
     @Column(name = "directory_path", nullable = false, unique = true)
     private String path;
-    @Column(name = "directory_modifiable", nullable = false)
-    private Boolean canViewByEveryone;
     @Column(name = "directory_viewable", nullable = false)
-    private Boolean canModifyByEveryone;
+    private Boolean canViewByEveryone;
+    @Column(name = "directory_addable", nullable = false)
+    private Boolean canAddByEveryone;
     @CreationTimestamp
     private LocalDateTime createdTime;
     @OneToMany
@@ -41,7 +41,7 @@ public class Directory {
     public Directory(Member owner, String path, Boolean canModifyByEveryone, Boolean canViewByEveryone) {
         this.owner = owner;
         this.path = path;
-        this.canModifyByEveryone = canModifyByEveryone;
+        this.canAddByEveryone = canModifyByEveryone;
         this.canViewByEveryone = canViewByEveryone;
     }
 

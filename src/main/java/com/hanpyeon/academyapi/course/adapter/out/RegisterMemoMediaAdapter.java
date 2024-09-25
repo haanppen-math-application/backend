@@ -20,7 +20,7 @@ class RegisterMemoMediaAdapter implements RegisterMemoMediaPort {
     private final MemoRepository memoRepository;
     private final MemoMediaRepository memoMediaRepository;
     @Override
-    @Transactional(propagation = Propagation.MANDATORY)
+    @Transactional
     public void register(String mediaSource, Long memoId) {
         final Media media = mediaRepository.findBySrc(mediaSource)
                 .orElseThrow(() -> new NoSuchMediaException(ErrorCode.NO_SUCH_MEDIA));
