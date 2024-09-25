@@ -1,6 +1,6 @@
-package com.hanpyeon.academyapi.account.service.verify.policy;
+package com.hanpyeon.academyapi.account.service.policy;
 
-import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.account.service.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +11,8 @@ import java.util.List;
 public class AccountPolicyManager {
     private final List<AccountPolicy> policies;
 
-    public void verify(final Member member) {
+    public void check(final Account account) {
         policies.stream()
-                .forEach(policy -> policy.verify(member));
+                .forEach(policy -> policy.verify(account));
     }
 }

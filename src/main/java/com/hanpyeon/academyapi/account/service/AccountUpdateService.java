@@ -5,11 +5,10 @@ import com.hanpyeon.academyapi.account.dto.ModifyStudentRequest;
 import com.hanpyeon.academyapi.account.dto.ModifyTeacherRequest;
 import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
 import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.account.exceptions.AccessDeniedException;
 import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.service.update.AccountUpdateManager;
-import com.hanpyeon.academyapi.account.service.verify.policy.AccountPolicyManager;
+import com.hanpyeon.academyapi.account.service.policy.AccountPolicyManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class AccountUpdateService {
 
         final Member member = getMember(accountUpdateDto.targetMemberId());
         accountUpdateManager.update(accountUpdateDto, member);
-        accountPolicyManager.verify(member);
+        accountPolicyManager.check(member);
         return member.getId();
     }
 
