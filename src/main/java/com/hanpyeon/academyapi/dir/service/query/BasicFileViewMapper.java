@@ -13,7 +13,7 @@ public class BasicFileViewMapper implements FileViewMapper {
     @Override
     public FileView create(Directory directory) {
         final String parsedDirName = parseDirName(directory.getPath());
-        return new FileView(parsedDirName, true, directory.getPath(), directory.getCreatedTime(), directory.getCanViewByEveryone(), directory.getCanModifyByEveryone());
+        return new FileView(parsedDirName, true, directory.getPath(), directory.getCreatedTime(), directory.getCanViewByEveryone(), directory.getCanAddByEveryone());
     }
 
     @Override

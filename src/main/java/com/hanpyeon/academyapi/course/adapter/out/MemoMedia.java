@@ -4,10 +4,12 @@ import com.hanpyeon.academyapi.media.entity.Media;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @Getter
+@ToString
 class MemoMedia {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

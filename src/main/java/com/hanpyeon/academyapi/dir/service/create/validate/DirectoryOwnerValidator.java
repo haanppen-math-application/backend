@@ -24,7 +24,7 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
         if (isOverManager(createDirectoryCommand.requestMember())) {
             return;
         }
-        if (canModifyByEveryOne(targetDirectory)) {
+        if (canAddByEveryOne(targetDirectory)) {
             return;
         }
         if (isRequestMemberIsOwner(targetDirectory, createDirectoryCommand.requestMember())) {
@@ -42,8 +42,8 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
         return false;
     }
 
-    private boolean canModifyByEveryOne(final Directory directory) {
-        if (directory.getCanModifyByEveryone()) {
+    private boolean canAddByEveryOne(final Directory directory) {
+        if (directory.getCanAddByEveryone()) {
             return true;
         }
         throw new DirectoryException(directory.getOwner().getName() + " 개인소유의 디렉토리 입니다.", ErrorCode.CANNOT_ACCESS_TO_THIS_DIRECTORY);

@@ -25,6 +25,7 @@ class UpdateMemoMediaContainerAdapter implements UpdateMemoMediaContainerPort {
     @Transactional(propagation = Propagation.MANDATORY)
     public void save(MemoMediaContainer memoMediaContainer) {
         final List<MemoMedia> unmodifiableMedias = memoMediaContainer.getMemoMedias();
+
         unmodifiableMedias.stream()
                 .forEach(memoMedia -> this.update(memoMedia));
     }

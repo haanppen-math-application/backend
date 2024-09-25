@@ -21,7 +21,7 @@ public class ChunkTargetDirectoryValidator implements ChunkValidator {
     @Override
     public void validate(ChunkedFile chunkedFile) {
         final Directory targetDirectory = getDirectory(chunkedFile);
-        if (targetDirectory.getCanModifyByEveryone()) {
+        if (targetDirectory.getCanAddByEveryone()) {
             return;
         }
         if (isOwner(chunkedFile.getRequestMemberId(), targetDirectory)) {
