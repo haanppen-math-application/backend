@@ -30,7 +30,7 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
         if (isRequestMemberIsOwner(targetDirectory, createDirectoryCommand.requestMember())) {
             return;
         }
-        throw new DirectoryException(ErrorCode.ITS_NOT_YOUR_DIRECTORY);
+        throw new DirectoryException("디렉토리 ACCESS 권한 부재", ErrorCode.ITS_NOT_YOUR_DIRECTORY);
     }
 
     private boolean isRequestMemberIsOwner(final Directory targetDirectory, final Member requestMember) {
@@ -46,7 +46,7 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
         if (directory.getCanAddByEveryone()) {
             return true;
         }
-        throw new DirectoryException(directory.getOwner().getName() + " 개인소유의 디렉토리 입니다.", ErrorCode.CANNOT_ACCESS_TO_THIS_DIRECTORY);
+        return false;
     }
 
     private boolean isOverManager(final Member requestMember) {
