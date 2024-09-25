@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-class AccountRole {
+public class AccountRole {
     private final Role role;
 
     private static void validate(final Role role) {
@@ -20,7 +20,7 @@ class AccountRole {
         }
     }
 
-    public static AccountRole of(final Role role) {
+    static AccountRole of(final Role role) {
         validate(role);
         return new AccountRole(role);
     }

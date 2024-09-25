@@ -40,7 +40,7 @@ class DeleteCourseServiceTest {
                 .grade(11)
                 .phoneNumber("123123")
                 .registeredDate(LocalDateTime.now())
-                .password("test")
+                .encryptedPassword("test")
                 .build());
         memberRepository.save(Member.builder()
                 .role(Role.STUDENT)
@@ -48,7 +48,7 @@ class DeleteCourseServiceTest {
                 .grade(11)
                 .phoneNumber("123")
                 .registeredDate(LocalDateTime.now())
-                .password("test")
+                .encryptedPassword("test")
                 .build());
 
         // 선생 초기화
@@ -57,7 +57,7 @@ class DeleteCourseServiceTest {
                 .name("test21")
                 .phoneNumber("1213")
                 .registeredDate(LocalDateTime.now())
-                .password("test")
+                .encryptedPassword("test")
                 .build());
 
         // 수업 등록

@@ -1,18 +1,24 @@
 package com.hanpyeon.academyapi.account.service.update;
 
-import com.hanpyeon.academyapi.account.dto.AccountUpdateDto;
-import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
+import com.hanpyeon.academyapi.account.service.Account;
+import com.hanpyeon.academyapi.account.service.AccountAbstractFactory;
+import com.hanpyeon.academyapi.account.service.AccountName;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Component
-class MemberNameUpdateHandler implements AccountUpdateHandler {
+@RequiredArgsConstructor
+class MemberNameUpdateHandler implements AccountUpdateCommandHandler {
+    private final AccountAbstractFactory accountAbstractFactory;
+
     @Override
-    public void update(AccountUpdateDto accountUpdateDto, Member member) {
-        final String newName = accountUpdateDto.name();
-        if (Objects.nonNull(newName) && !member.getName().equals(newName)) {
-            member.setName(newName);
+    public void update(Account targetAccount, AccountUpdateCommand updateCommand) {
+        if (Objects.nonNull(updateCommand.name())) {
+            final AccountName accountName = accountAbstractFactory.getName(updateCommand.name());
+            targetAccount.updateAccountName(accountName);
         }
     }
 }

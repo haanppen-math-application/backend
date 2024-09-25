@@ -30,7 +30,7 @@ class CourseRepositoryTest {
                 .name("student")
                 .grade(11)
                 .phoneNumber("test")
-                .password("weqrew")
+                .encryptedPassword("weqrew")
                 .registeredDate(LocalDateTime.now())
                 .role(Role.STUDENT)
                 .build());
@@ -38,7 +38,7 @@ class CourseRepositoryTest {
                 .name("student")
                 .grade(11)
                 .phoneNumber("test1")
-                .password("weqrew")
+                .encryptedPassword("weqrew")
                 .registeredDate(LocalDateTime.now())
                 .role(Role.STUDENT)
                 .build());
@@ -46,7 +46,7 @@ class CourseRepositoryTest {
                 .name("teacher")
                 .grade(11)
                 .phoneNumber("teacher1")
-                .password("weqrew")
+                .encryptedPassword("weqrew")
                 .registeredDate(LocalDateTime.now())
                 .role(Role.TEACHER)
                 .build());

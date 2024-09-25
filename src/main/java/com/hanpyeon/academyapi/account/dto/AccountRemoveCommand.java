@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.account.dto;
 
 import java.util.List;
 
-public record AccountRemoveDto(
+public record AccountRemoveCommand(
         List<Long> targetIds
 ) {
 }

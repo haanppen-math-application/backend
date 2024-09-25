@@ -1,41 +1,46 @@
 package com.hanpyeon.academyapi.account.service;
 
-import com.hanpyeon.academyapi.security.Role;
+import com.hanpyeon.academyapi.account.exceptions.AccountException;
+import com.hanpyeon.academyapi.account.service.password.AccountPassword;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import java.awt.*;
-
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Account {
     private final Long id;
-    private final AccountPhoneNumber phoneNumber;
-    private final AccountName accountName;
-    private final AccountRole accountRole;
-    private final AccountGrade grade;
-    private final AccountPassword password;
+    private AccountPhoneNumber phoneNumber;
+    private AccountName accountName;
+    private AccountRole accountRole;
+    private AccountGrade grade;
+    private AccountPassword password;
 
-    public String getPhoneNumber() {
-        return this.phoneNumber.getPhoneNumber();
+    public void updateAccountName(AccountName accountName) {
+        this.accountName = accountName;
     }
 
-    public String getName() {
-        return this.accountName.getName();
+    public void updateGrade(AccountGrade grade) {
+        this.grade = grade;
     }
 
-    public int getGrade() {
-        return this.grade.getGrade();
+    public void changePassword(final String rawPassword, final AccountPassword accountNewPassword) {
+        if (this.password.isMatch(rawPassword)) {
+            this.password = accountNewPassword;
+            return;
+        }
+        throw new AccountException(ErrorCode.INVALID_PASSWORD_EXCEPTION);
     }
 
-    public Role getRole() {
-        return this.accountRole.getRole();
+    public void setPhoneNumber(AccountPhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getEncryptedPassword() {
-        return this.password.getEncryptedPassword();
-    }
-
-    static Account of(final AccountPhoneNumber phoneNumber, final AccountName name, final AccountRole role, final AccountGrade grade, final AccountPassword password) {
+    public static Account of(final AccountPhoneNumber phoneNumber, final AccountName name, final AccountRole role, final AccountGrade grade, final AccountPassword password) {
         return new Account(null, phoneNumber, name, role, grade, password);
+    }
+    public static Account of(final Long accountId, final AccountPhoneNumber phoneNumber, final AccountName name, final AccountRole role, final AccountGrade grade, final AccountPassword password) {
+        return new Account(accountId, phoneNumber, name, role, grade, password);
     }
 }

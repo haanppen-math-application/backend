@@ -5,15 +5,16 @@ import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Objects;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-class AccountName {
+public class AccountName {
     private static final int MAX_LENGTH = 10;
     private static final int MIN_LENGTH = 1;
-    private String name;
+    private final String name;
 
     private static void validate(final String name) {
         if (Objects.isNull(name)) {
@@ -24,7 +25,7 @@ class AccountName {
         }
     }
 
-    public static AccountName of(final String name) {
+    static AccountName of(final String name) {
         validate(name);
         return new AccountName(name);
     }

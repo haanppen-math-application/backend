@@ -23,6 +23,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
@@ -62,16 +64,23 @@ public class AccountController {
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
             @RequestBody @Valid AccountUpdateRequest accountUpdateRequest
     ) {
-        final Long id = accountUpdateService.updateAccount(
-                new AccountUpdateDto(
-                        memberPrincipal.memberId(),
-                        accountUpdateRequest.phoneNumber(),
-                        accountUpdateRequest.name(),
-                        null,
-                        accountUpdateRequest.prevPassword(),
-                        accountUpdateRequest.newPassword())
-        );
-        return ResponseEntity.ok(id);
+        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(memberPrincipal.memberId());
+        accountUpdateService.updateAccount(accountUpdateCommand);
+        return ResponseEntity.ok().build();
+    }
+
+    public record AccountUpdateRequest(
+            @NotNull
+            @Pattern(regexp = "^[0-9]+$")
+            String phoneNumber,
+            @NotNull
+            String name,
+            String prevPassword,
+            String newPassword
+    ) {
+        AccountUpdateCommand toCommand(final Long targetMemberId) {
+            return new AccountUpdateCommand(targetMemberId, phoneNumber(), name(), null, prevPassword(), newPassword());
+        }
     }
 
     @GetMapping(value = "/my")
@@ -87,23 +96,67 @@ public class AccountController {
     public ResponseEntity<?> deleteAccounts(
             @RequestBody @NonNull AccountRemoveRequest accountRemoveRequest
     ) {
-        final AccountRemoveDto accountRemoveDto = new AccountRemoveDto(accountRemoveRequest.targetIds());
-        accountRemoveService.removeAccount(accountRemoveDto);
+        final AccountRemoveCommand accountRemoveCommand = accountRemoveRequest.toCommand();
+        accountRemoveService.removeAccount(accountRemoveCommand);
         return ResponseEntity.ok(null);
+    }
+
+    record AccountRemoveRequest(
+            @NonNull List<Long> targetIds
+    ) {
+        AccountRemoveCommand toCommand() {
+            return new AccountRemoveCommand(targetIds());
+        }
     }
 
     @PutMapping("/student")
     @Operation(summary = "학생 수정 API", description = "선생님, 원장님이 학생 정보를 수정하는 API")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> modifyStudent(@RequestBody @Valid ModifyStudentRequest modifyStudentRequest) {
-        accountUpdateService.updateAccount(modifyStudentRequest);
+        final AccountUpdateCommand updateCommand = modifyStudentRequest.toCommand();
+        accountUpdateService.updateAccount(updateCommand);
         return ResponseEntity.ok(null);
     }
+
+    public record ModifyStudentRequest(
+            @NotNull
+            Long studentId,
+            @NotNull
+            @NotBlank
+            String name,
+            @NotNull
+            @NotBlank
+            @Pattern(regexp = "^[0-9]+$")
+            String phoneNumber,
+            @NotNull
+            Integer grade
+    ) {
+        AccountUpdateCommand toCommand() {
+            return new AccountUpdateCommand(studentId(), phoneNumber(), name(), grade(), null, null);
+        }
+    }
+
+
     @PutMapping("/teacher")
     @Operation(summary = "선생 수정 API", description = "원장님만 사용가능한 API")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> modifyTeacher(@RequestBody @Valid ModifyTeacherRequest modifyTeacherRequest) {
-        accountUpdateService.updateAccount(modifyTeacherRequest);
+        final AccountUpdateCommand accountUpdateCommand = modifyTeacherRequest.toCommand();
+        accountUpdateService.updateAccount(accountUpdateCommand);
         return ResponseEntity.ok(null);
+    }
+
+    public record ModifyTeacherRequest(
+            @NotNull
+            Long targetId,
+            @NotNull
+            String name,
+            @NotNull
+            @Pattern(regexp = "^[0-9]+$")
+            String phoneNumber
+    ) {
+        AccountUpdateCommand toCommand() {
+            return new AccountUpdateCommand(targetId(), phoneNumber(),name(), null, null, null);
+        }
     }
 }

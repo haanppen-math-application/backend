@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.account.service;
+package com.hanpyeon.academyapi.account.service.password;
 
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -9,18 +9,17 @@ import lombok.Getter;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-class AccountPassword {
+public class AccountPassword {
     private static final int MAX_LENGTH = 20;
     private static final int MIN_LENGTH = 4;
-
+    private final PasswordHandler passwordHandler;
     private String encryptedPassword;
 
-
-    boolean isMatch(final String rawPassword, final PasswordHandler passwordHandler) {
+    public boolean isMatch(final String rawPassword) {
         return passwordHandler.matches(rawPassword, encryptedPassword);
     }
 
-    private static void validate(final String rawPassword) {
+    protected static void validate(final String rawPassword) {
         if (rawPassword.isBlank()) {
             return;
         }
@@ -29,8 +28,12 @@ class AccountPassword {
         }
     }
 
-    public static AccountPassword of(final String rawPassword, final PasswordHandler passwordHandler) {
+    static AccountPassword createNew(final String rawPassword, final PasswordHandler passwordHandler) {
         validate(rawPassword);
-        return new AccountPassword(passwordHandler.getEncodedPassword(rawPassword));
+        return new AccountPassword(passwordHandler, passwordHandler.getEncodedPassword(rawPassword));
+    }
+
+    static AccountPassword load(final String encryptedPassword, final PasswordHandler passwordHandler) {
+        return new AccountPassword(passwordHandler, encryptedPassword);
     }
 }

@@ -5,15 +5,16 @@ import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-class AccountPhoneNumber {
+public class AccountPhoneNumber {
     private static final String PREFIX = "010";
     private static final String PHONE_NUMBER_REGEX ="^[0-9]+$";
     private static final int LENGTH = 11;
 
-    private String phoneNumber;
+    private final String phoneNumber;
 
     private static void validate(final String phoneNumber) {
         if (phoneNumber == null) {
@@ -30,7 +31,7 @@ class AccountPhoneNumber {
         }
     }
 
-    public static AccountPhoneNumber of(final String phoneNumber) {
+    static AccountPhoneNumber of(final String phoneNumber) {
         validate(phoneNumber);
         return new AccountPhoneNumber(phoneNumber);
     }

@@ -14,7 +14,7 @@ class NoDuplicatedPhoneNumberPolicy implements AccountPolicy {
     private final MemberRepository memberRepository;
     @Override
     public void verify(Account account) {
-        if (memberRepository.existsByPhoneNumberAndRemovedIsFalse(account.getPhoneNumber())) {
+        if (memberRepository.existsByPhoneNumberAndRemovedIsFalse(account.getPhoneNumber().getPhoneNumber())) {
             throw new AccountException("이미 등록된 전화번호", ErrorCode.ACCOUNT_POLICY);
         }
     }
