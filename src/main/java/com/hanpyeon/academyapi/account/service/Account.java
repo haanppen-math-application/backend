@@ -23,6 +23,7 @@ public class Account {
 
     public void updateGrade(AccountGrade grade) {
         this.grade = grade;
+        grade.validate(accountRole);
     }
 
     public void changePassword(final String rawPassword, final AccountPassword accountNewPassword) {

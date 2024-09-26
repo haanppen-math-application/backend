@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class AccountGrade {
@@ -15,8 +17,19 @@ public class AccountGrade {
     private static final int GRADE_MAX = 11;
     private final Integer grade;
 
+    void validate(final AccountRole accountRole) {
+        if (accountRole.getRole().equals(Role.STUDENT)) {
+            if (Objects.isNull(this.grade)) {
+                throw new AccountException("학생은 grade가 Null일 수 없습니다.", ErrorCode.ACCOUNT_POLICY);
+            }
+        }
+    }
+
 
     private static void validate(final Integer grade) {
+        if (Objects.isNull(grade)) {
+            return;
+        }
         if (grade < GRADE_MIN || grade > GRADE_MAX) {
             throw new AccountException(ErrorCode.ACCOUNT_POLICY);
         }

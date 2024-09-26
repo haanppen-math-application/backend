@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 public class AccountPasswordFactory {
     private final PasswordHandler passwordHandler;
 
-    public AccountPassword createWithEntity(final String rawPassword) {
-        return AccountPassword.createNew(rawPassword, passwordHandler);
+    public AccountPassword createWithEntity(final String encryptedPassword) {
+        return AccountPassword.load(encryptedPassword, passwordHandler);
     }
 
     public AccountPassword createNew(final String rawPassword) {

@@ -18,6 +18,6 @@ class AccountLoader {
     @Transactional(propagation = Propagation.MANDATORY)
     public Account loadAccount(final Long targetMemberId) {
         return accountMapper.mapToAccount(memberRepository.findMemberByIdAndRemovedIsFalse(targetMemberId)
-                .orElseThrow(() -> new AccountException(ErrorCode.NOT_REGISTERED_MEMBER)));
+                .orElseThrow(() -> new AccountException("찾을 수 없음", ErrorCode.NOT_REGISTERED_MEMBER)));
     }
 }

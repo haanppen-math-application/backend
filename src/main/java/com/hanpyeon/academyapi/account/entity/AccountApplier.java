@@ -15,6 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountApplier {
     private final MemberRepository memberRepository;
     private final AccountMapper accountMapper;
+
+    /**
+     * @param account Account의 필드가 null이 아님이 보장되야 합니다.
+     */
     @Transactional(propagation = Propagation.MANDATORY)
     public void applyAccount(final Account account) {
         final Member member = memberRepository.findMemberByIdAndRemovedIsFalse(account.getId())
@@ -30,5 +34,4 @@ public class AccountApplier {
         final Member member = accountMapper.mapToMember(account);
         memberRepository.save(member);
     }
-
 }
