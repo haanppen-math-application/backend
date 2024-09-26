@@ -24,6 +24,7 @@ public class AccountUpdateService {
         accountApplier.applyAccount(targetAccount);
     }
 
+    @Transactional(readOnly = true)
     public MyAccountInfo getMyInfo(final Long requestMemberId) {
         final Account account = accountLoader.loadAccount(requestMemberId);
         return new MyAccountInfo(account.getAccountName().getName(), account.getPhoneNumber().getPhoneNumber(), account.getAccountRole().getRole(), account.getGrade().getGrade());
