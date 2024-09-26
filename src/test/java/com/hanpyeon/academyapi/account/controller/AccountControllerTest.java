@@ -1,17 +1,14 @@
 package com.hanpyeon.academyapi.account.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.account.mapper.RegisterMapper;
+import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
-import com.hanpyeon.academyapi.account.service.RegisterService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -42,13 +39,11 @@ public class AccountControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    RegisterService studentRegisterService;
-    @MockBean
-    RegisterMapper registerMapper;
-    @MockBean
     AccountUpdateService accountUpdateService;
     @MockBean
     AccountRemoveService accountRemoveService;
+    @MockBean
+    AccountRegisterService accountRegisterService;
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")

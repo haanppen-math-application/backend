@@ -5,7 +5,7 @@ src/main/resources/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
+src/test/java/com/hanpyeon/academyapi/account/TestAccountAdder.java
 ### STS ###
 .apt_generated
 .classpath

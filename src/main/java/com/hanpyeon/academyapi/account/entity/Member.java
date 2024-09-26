@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -35,6 +36,7 @@ public class Member {
     private Boolean removed = false;
 
     @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime registeredDate;
 
     public void setName(final String name) {
@@ -55,10 +57,10 @@ public class Member {
     }
 
     @Builder
-    private Member(String phoneNumber, String name, String password, Integer grade, Role role, LocalDateTime registeredDate) {
+    private Member(String phoneNumber, String name, String encryptedPassword, Integer grade, Role role, LocalDateTime registeredDate) {
         this.phoneNumber = phoneNumber;
         this.name = name;
-        this.password = password;
+        this.password = encryptedPassword;
         this.grade = grade;
         this.role = role;
         this.registeredDate = registeredDate;

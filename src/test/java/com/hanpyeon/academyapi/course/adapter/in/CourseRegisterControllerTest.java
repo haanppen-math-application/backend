@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.course.adapter.in;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.course.application.port.in.CourseRegisterUseCase;
+import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.JwtAuthenticationToken;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
@@ -41,7 +42,7 @@ class CourseRegisterControllerTest {
     @BeforeEach
     void init() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        securityContext.setAuthentication(JwtAuthenticationToken.authenticated("test", new MemberPrincipal(1l, "test"), null));
+        securityContext.setAuthentication(JwtAuthenticationToken.authenticated("test", new MemberPrincipal(1l, "test", Role.STUDENT), null));
     }
 
     @Test

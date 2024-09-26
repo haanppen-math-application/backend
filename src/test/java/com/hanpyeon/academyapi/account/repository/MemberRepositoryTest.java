@@ -23,7 +23,7 @@ class MemberRepositoryTest {
                 .name("student")
                 .grade(11)
                 .phoneNumber("test")
-                .password("weqrew")
+                .encryptedPassword("weqrew")
                 .registeredDate(LocalDateTime.now())
                 .role(Role.STUDENT)
                 .build());
@@ -31,7 +31,7 @@ class MemberRepositoryTest {
                 .name("student")
                 .grade(11)
                 .phoneNumber("test1")
-                .password("weqrew")
+                .encryptedPassword("weqrew")
                 .registeredDate(LocalDateTime.now())
                 .role(Role.TEACHER)
                 .build());
@@ -39,9 +39,9 @@ class MemberRepositoryTest {
 
     @Test
     void 역할_조회_테스트() {
-        assertThat(memberRepository.findMembersByRoleAndRemovedIsFalse(Role.STUDENT).size())
+        assertThat(memberRepository.findMembersByRole(Role.STUDENT).size())
                 .isEqualTo(1);
-        assertThat(memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER).size())
+        assertThat(memberRepository.findMembersByRole(Role.TEACHER).size())
                 .isEqualTo(1);
     }
 }

@@ -1,7 +1,5 @@
 package com.hanpyeon.academyapi.account.dto;
 
-import com.hanpyeon.academyapi.account.entity.Member;
-
 import java.time.LocalDateTime;
 
 public record PreviewTeacher(
@@ -10,12 +8,12 @@ public record PreviewTeacher(
         String phoneNumber,
         LocalDateTime registeredDateTime
 ) {
-    public static PreviewTeacher of(final Member member) {
+    public static PreviewTeacher of(final MemberInfo memberInfo) {
         return new PreviewTeacher(
-                member.getId(),
-                member.getName(),
-                member.getPhoneNumber(),
-                member.getRegisteredDate()
+                memberInfo.id(),
+                memberInfo.name(),
+                memberInfo.phoneNumber(),
+                memberInfo.registeredDateTime()
         );
     }
 }

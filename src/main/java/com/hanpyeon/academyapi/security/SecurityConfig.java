@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.security.exceptionhandler.JwtEntryPointHandler;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
@@ -182,8 +184,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2B);
+    PasswordEncoder passwordEncoder(
+            @Value("${server.password.encryption.version}") String encryptVersion,
+            @Value("${server.password.encryption.strength}") int strength)
+    {
+        return new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.valueOf(encryptVersion), strength);
     }
 
     @Bean

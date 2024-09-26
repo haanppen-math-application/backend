@@ -49,8 +49,8 @@ class LoginServiceTest {
     @Test
     void 비밀번호_에러처리() {
         member = Member.builder()
-                .password("010001010")
-                .password("12345")
+                .encryptedPassword("010001010")
+                .encryptedPassword("12345")
                 .build();
 
         Mockito.when(memberRepository.findMemberByPhoneNumberAndRemovedIsFalse(Mockito.anyString()))
@@ -66,8 +66,7 @@ class LoginServiceTest {
     void 비밀번호_성공처리() {
         member = Member.builder()
                 .name("1")
-                .password("010001010")
-                .password("12345")
+                .encryptedPassword("010001010")
                 .role(Role.STUDENT)
                 .build();
 
