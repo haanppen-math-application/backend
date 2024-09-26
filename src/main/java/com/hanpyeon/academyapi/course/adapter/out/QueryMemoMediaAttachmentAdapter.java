@@ -17,7 +17,7 @@ public class QueryMemoMediaAttachmentAdapter implements QueryMemoMediaAttachment
     @Override
     public List<AttachmentView> query(Long memoMediaId) {
         return mediaAttachmentRepository.findAllByMemoMedia_Id(memoMediaId).stream()
-                .map(memoMediaAttachment -> new AttachmentView(memoMediaAttachment.getAttachmentId(), memoMediaAttachment.getMedia().getMediaName()))
+                .map(memoMediaAttachment -> new AttachmentView(memoMediaAttachment.getAttachmentId(), memoMediaAttachment.getMedia().getMediaName(), memoMediaAttachment.getMedia().getSrc()))
                 .collect(Collectors.toList());
     }
 }

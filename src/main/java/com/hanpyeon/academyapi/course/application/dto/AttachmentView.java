@@ -8,4 +8,5 @@ import lombok.RequiredArgsConstructor;
 public class AttachmentView {
     private final Long attachmentId;
     private final String fileName;
+    private final String mediaSource;
 }
