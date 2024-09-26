@@ -8,6 +8,8 @@ import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 @RequiredArgsConstructor
 class AccountGradeUpdateHandler implements AccountUpdateCommandHandler {
@@ -15,7 +17,7 @@ class AccountGradeUpdateHandler implements AccountUpdateCommandHandler {
 
     @Override
     public void update(Account targetAccount, AccountUpdateCommand updateCommand) {
-        if (targetAccount.getAccountRole().getRole().equals(Role.STUDENT)) {
+        if (Objects.nonNull(updateCommand.grade())) {
             final AccountGrade accountGrade = accountAbstractFactory.getGrade(updateCommand.grade());
             targetAccount.updateGrade(accountGrade);
         }
