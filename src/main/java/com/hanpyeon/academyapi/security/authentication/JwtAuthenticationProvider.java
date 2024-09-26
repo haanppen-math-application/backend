@@ -4,7 +4,10 @@ import com.hanpyeon.academyapi.security.JwtUtils;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.exception.ExpiredJwtAuthenticationException;
 import com.hanpyeon.academyapi.security.exception.IllegalJwtAuthenticationException;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -35,10 +38,11 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         try {
             Claims claims = jwtUtils.parseToken(token);
 
-            MemberPrincipal memberPrincipal = new MemberPrincipal(getMemberId(claims), getMemberName(claims));
-            return JwtAuthenticationToken.authenticated(token, memberPrincipal, getMemberRole(claims));
+            final MemberPrincipal memberPrincipal = new MemberPrincipal(getMemberId(claims), getMemberName(claims), getExactRole(claims));
+            return JwtAuthenticationToken.authenticated(token, memberPrincipal, getAuthority(claims));
 
-        } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException exception) {
+        } catch (UnsupportedJwtException | MalformedJwtException | SignatureException |
+                 IllegalArgumentException exception) {
             throw new IllegalJwtAuthenticationException("사용할 수 없는 JWT 입니다.");
         } catch (ExpiredJwtException exception) {
             throw new ExpiredJwtAuthenticationException("토큰을 재발급 받아주세요");
@@ -62,13 +66,18 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                 });
     }
 
-    private Collection<? extends GrantedAuthority> getMemberRole(Claims claims) {
-        Role role = jwtUtils.getMemberRole(claims).stream()
+    private Collection<? extends GrantedAuthority> getAuthority(Claims claims) {
+        final Role role = this.getExactRole(claims);
+        return List.of(new SimpleGrantedAuthority(role.getSecurityRole()));
+    }
+
+    private Role getExactRole(Claims claims) {
+        return jwtUtils.getMemberRole(claims).stream()
                 .findAny()
                 .orElseThrow(() -> {
-                    throw new IllegalJwtAuthenticationException("Cannot Find MemberRole");
-                });
-        return List.of(new SimpleGrantedAuthority(role.getSecurityRole()));
+                            throw new IllegalJwtAuthenticationException("Cannot Find MemberRole");
+                        }
+                );
     }
 
     @Override
