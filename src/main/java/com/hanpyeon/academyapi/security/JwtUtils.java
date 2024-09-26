@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.security;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class JwtUtils {
     public void initJwt() {
         this.signatureAlgorithm = SignatureAlgorithm.forName(this.encryptAlgorithm);
         final byte[] decodedBytes = Base64.getDecoder().decode(this.jwtKey.getBytes());
-        this.secretKey = new SecretKeySpec(decodedBytes, 0, decodedBytes.length, signatureAlgorithm.getJcaName());
+        this.secretKey = Keys.hmacShaKeyFor(decodedBytes);
         this.jwtParser = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build();

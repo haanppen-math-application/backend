@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
+@Transactional(propagation = Propagation.MANDATORY)
 public class AccountApplier {
     private final MemberRepository memberRepository;
     private final AccountMapper accountMapper;
@@ -19,7 +20,6 @@ public class AccountApplier {
     /**
      * @param account Account의 필드가 null이 아님이 보장되야 합니다.
      */
-    @Transactional(propagation = Propagation.MANDATORY)
     public void applyAccount(final Account account) {
         final Member member = memberRepository.findMemberByIdAndRemovedIsFalse(account.getId())
                 .orElseThrow(() -> new AccountException(ErrorCode.NO_SUCH_MEMBER));
@@ -29,7 +29,6 @@ public class AccountApplier {
         member.setGrade(account.getGrade().getGrade());
     }
 
-    @Transactional(propagation = Propagation.MANDATORY)
     public void save(final Account account) {
         final Member member = accountMapper.mapToMember(account);
         memberRepository.save(member);

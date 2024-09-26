@@ -49,9 +49,10 @@ class AccountUpdateServiceTest {
     @Transactional
     void testModifyCommand(final String phoneNumber, final String newName, final int newGrade, final String prevPassword, final String nextPassword) {
         final Long targetMemberId = initData();
-        final AccountUpdateCommand accountUpdateCommand = new AccountUpdateCommand(targetMemberId, "01022223333", "newName", 5, prevPassword, "testsdwqeqeqw");
+        final AccountUpdateCommand accountUpdateCommand = new AccountUpdateCommand(targetMemberId, phoneNumber, newName, newGrade, prevPassword, nextPassword);
         accountUpdateService.updateAccount(accountUpdateCommand);
         final MyAccountInfo accountInfo = accountUpdateService.getMyInfo(accountUpdateCommand.targetMemberId());
+        System.out.println(accountInfo);
         Assertions.assertThat(accountInfo.userName().equals(accountUpdateCommand.name()));
         Assertions.assertThat(accountInfo.phoneNumber().equals(accountUpdateCommand.phoneNumber()));
         Assertions.assertThat(accountInfo.grade().equals(accountUpdateCommand.grade()));
@@ -59,11 +60,11 @@ class AccountUpdateServiceTest {
 
     static Stream<Arguments> provideLegalArguments() {
         return Stream.of(
+                Arguments.of("01022222222", "tesst", 1, prevPassword, ""),
                 Arguments.of("01022222222", "tesst", 1, prevPassword, "test"),
-                Arguments.of("01022222222", "tesst", 1, prevPassword, "test"),
-                Arguments.of("01012345678", "tesst", 1, prevPassword, "test"),
-                Arguments.of("01012345678", "tesst", 0, prevPassword, "test"),
-                Arguments.of("01012345678", "tesst", 11, prevPassword, "test")
+                Arguments.of(null, "tesst", 1, prevPassword, "test"),
+                Arguments.of("01012345678", null, 0, prevPassword, "test"),
+                Arguments.of("01012345678", "tesst", 11, null, null)
         );
     }
     @Transactional
@@ -80,7 +81,7 @@ class AccountUpdateServiceTest {
         return Stream.of(
                 Arguments.of("010222222222", "tesst", 1, prevPassword, "test"),
                 Arguments.of("0102222222", "tesst", 1, prevPassword, "test"),
-                Arguments.of("01012345678", "tesst", 1, prevPassword, "test"),
+                Arguments.of("01012345678", "tesstqwedwqewqeqweqw", 1, prevPassword, "test"),
                 Arguments.of("01012345678", "tesst", -1, "test", "test"),
                 Arguments.of("01012345678", "tesst", 12, "test", "test")
         );

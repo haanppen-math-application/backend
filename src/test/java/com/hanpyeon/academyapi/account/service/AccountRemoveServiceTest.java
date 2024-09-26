@@ -30,7 +30,7 @@ class AccountRemoveServiceTest {
         initTestData();
         Assertions.assertEquals(memberRepository.findAll().size(), 4);
         accountRemoveService.removeAccount(new AccountRemoveCommand(List.of(1L, 2L)));
-        Assertions.assertEquals(memberRepository.findMembersByRoleAndRemovedIsFalse(Role.STUDENT).size(), 2);
+        Assertions.assertEquals(memberRepository.findMembersByRole(Role.STUDENT).size(), 2);
     }
 
     void initTestData() {

@@ -13,13 +13,13 @@ public record PreviewStudent(
         LocalDateTime registeredDateTime
 ) {
 
-    public static PreviewStudent of(final Member member) {
+    public static PreviewStudent of(final MemberInfo memberInfo) {
         return new PreviewStudent(
-                member.getId(),
-                member.getName(),
-                member.getPhoneNumber(),
-                member.getGrade(),
-                member.getRegisteredDate()
+                memberInfo.id(),
+                memberInfo.name(),
+                memberInfo.phoneNumber(),
+                memberInfo.grade(),
+                memberInfo.registeredDateTime()
         );
     }
 }
