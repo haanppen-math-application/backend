@@ -10,6 +10,7 @@ import com.hanpyeon.academyapi.media.entity.Media;
 import com.hanpyeon.academyapi.media.exception.MediaException;
 import com.hanpyeon.academyapi.media.repository.MediaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 class UpdateMemoMediaContainerAdapter implements UpdateMemoMediaContainerPort {
     private final MemoMediaRepository memoMediaRepository;
 
@@ -33,6 +35,8 @@ class UpdateMemoMediaContainerAdapter implements UpdateMemoMediaContainerPort {
     private void update(final MemoMedia memoMediaDomain) {
         final com.hanpyeon.academyapi.course.adapter.out.MemoMedia memoMedia = memoMediaRepository.findById(memoMediaDomain.getMemoMediaId())
                         .orElseThrow(() -> new MemoMediaException("해당 수업 미디어를 찾을 수 없음", ErrorCode.MEMO_MEDIA_UPDATE_EXCEPTION));
+        log.debug(memoMedia.toString());
         memoMedia.setSequence(memoMediaDomain.getSequence());
+        log.debug(memoMedia.toString());
     }
 }
