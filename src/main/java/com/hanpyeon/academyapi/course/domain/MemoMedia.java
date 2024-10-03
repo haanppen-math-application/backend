@@ -17,11 +17,7 @@ public class MemoMedia extends Media {
         this.sequence = sequence;
     }
 
-    /**
-     * @param memoMediaId
-     * @return 자신의 memoMediaId 와 일치할 때 Sequence 를 리턴. 일치하지 않을 시, null 리턴
-     */
-    int getSequence() {
+    public int getSequence() {
         return this.sequence;
     }
 
