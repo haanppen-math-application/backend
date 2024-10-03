@@ -21,21 +21,18 @@ public class MemoMedia extends Media {
      * @param memoMediaId
      * @return 자신의 memoMediaId 와 일치할 때 Sequence 를 리턴. 일치하지 않을 시, null 리턴
      */
-    Integer getSequence(final Long memoMediaId) {
-        if (this.memoMediaId == memoMediaId) {
-            return this.sequence;
-        }
-        return null;
+    int getSequence() {
+        return this.sequence;
     }
 
     void updateSequenceUpperThan(final int targetSequence) {
-        if (this.sequence > targetSequence) {
+        if (this.sequence.intValue() > targetSequence) {
             this.sequence --;
         }
     }
 
     boolean updateSequence(final Long memoMediaId, final Integer newSequence) {
-        if (this.memoMediaId == memoMediaId) {
+        if (this.memoMediaId.equals(memoMediaId)) {
             this.sequence = newSequence;
             log.debug(memoMediaId + " : " + this.sequence + "->" + newSequence);
             return true;
