@@ -28,16 +28,17 @@ public class MemoMediaContainer {
         int deletedSequence = -1;
         MemoMedia deleteTargetMemoMedia = null;
         for (final MemoMedia memoMedia : memoMedias) {
-            final Integer sequence = memoMedia.getSequence(memoMediaId);
-            if (Objects.isNull(sequence)) {
-                continue;
+            if (memoMedia.getMemoMediaId().equals(memoMediaId)) {
+                deleteTargetMemoMedia = memoMedia;
+                deletedSequence = memoMedia.getSequence();
+                deleteCount ++;
             }
-            deleteTargetMemoMedia = memoMedia;
-            deletedSequence = sequence;
-            deleteCount ++;
         }
         if (deleteCount > 1) {
             throw new MemoMediaException("두개 이상 삭제되선 안됩니다", ErrorCode.MEMO_MEDIA_UPDATE_EXCEPTION);
+        }
+        if (deleteCount == 0) {
+            throw new MemoMediaException("일치하는 메모-미디어를 찾을 수 없음", ErrorCode.MEMO_MEDIA_UPDATE_EXCEPTION);
         }
         memoMedias.remove(deleteTargetMemoMedia);
         updateMemoMediaSequences(deletedSequence);

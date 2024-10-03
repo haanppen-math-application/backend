@@ -23,6 +23,7 @@ public class UpdateMemoMediaService implements UpdateMemoMediaUseCase {
     public void updateMediaMemo(UpdateMediaMemoCommand updateMediaMemoCommand) {
         final MemoMediaContainer container = containerCreator.createContainer(updateMediaMemoCommand);
 
+        log.debug(updateMediaMemoCommand.toString());
         updateMediaMemoCommand.mediaSequences().stream()
                         .forEach(mediaSequence -> container.updateMemoMediaSequence(mediaSequence));
         containerValidateManager.validate(container);
