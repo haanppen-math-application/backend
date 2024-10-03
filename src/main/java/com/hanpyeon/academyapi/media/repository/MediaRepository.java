@@ -16,4 +16,11 @@ public interface MediaRepository extends JpaRepository<Media, Long> {
 
     @Query("SELECT new java.lang.String(m.mediaName) FROM Media m where m.src = :src")
     Optional<String> findFileNameBySrc(@Param("src") final String src);
+
+    @Query("SELECT new java.lang.Long(member.id) FROM Media media INNER JOIN Member member ON member.id = media.member.id WHERE media.src = :src")
+    Optional<Long> findOwnerId(@Param("src") final String src);
+
+    @Query("DELETE Media media where media.src = :src")
+    void deleteByMediaSrc(@Param("src") final String src);
+
 }

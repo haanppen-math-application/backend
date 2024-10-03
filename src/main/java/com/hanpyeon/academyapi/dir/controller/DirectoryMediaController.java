@@ -14,9 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -36,6 +34,14 @@ public class DirectoryMediaController {
         final ChunkStoreResult chunkStoreResult = mediaService.uploadChunk(mediaSaveDto);
 
         return mapToResponse(chunkStoreResult);
+    }
+
+    @DeleteMapping(value = "/api/directory/media")
+    public ResponseEntity<?> deleteMedia(
+            @RequestParam(required = true) final String mediaSrc,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        return ResponseEntity.noContent().build();
     }
 
     private ResponseEntity<MediaSaveResponse> mapToResponse(final ChunkStoreResult chunkStoreResult) {

@@ -22,7 +22,7 @@ class LastChunkHandler implements ChunkHandler {
     public ChunkStoreResult handle(ChunkedFile chunkedFile, ChunkStorage chunkStorage) {
         log.debug("RUNNED");
         final String savedFileName = chunkedFileTransferManager.sendToMediaStorage(chunkStorage, chunkedFile.getChunkGroupInfo());
-        directoryMediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), savedFileName);
+        directoryMediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), savedFileName, chunkedFile.getRequestMemberId());
         final String userDefinedFileName = chunkedFile.getChunkGroupInfo().getFileName();
         return ChunkStoreResult.completed(savedFileName, userDefinedFileName);
     }
