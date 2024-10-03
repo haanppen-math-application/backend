@@ -1,8 +1,12 @@
 package com.hanpyeon.academyapi.course.domain;
 
 import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
+@ToString
+@Slf4j
 public class MemoMedia extends Media {
     private final Long memoMediaId;
     private Integer sequence;
@@ -33,6 +37,7 @@ public class MemoMedia extends Media {
     boolean updateSequence(final Long memoMediaId, final Integer newSequence) {
         if (this.memoMediaId == memoMediaId) {
             this.sequence = newSequence;
+            log.debug(memoMediaId + " : " + this.sequence + "->" + newSequence);
             return true;
         }
         return false;
