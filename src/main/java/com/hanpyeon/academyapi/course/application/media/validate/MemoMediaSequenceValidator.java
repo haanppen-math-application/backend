@@ -17,7 +17,7 @@ public class MemoMediaSequenceValidator implements MemoMediaContainerValidator {
         for (int requireSequence = 0; requireSequence < memoMedias.size(); requireSequence++) {
             boolean currSequenceFounded = false;
             for (final MemoMedia memoMedia : memoMedias) {
-                if (memoMedia.getSequence().intValue() == requireSequence) {
+                if (memoMedia.getSequence() == requireSequence) {
                     currSequenceFounded = true;
                 }
             }
