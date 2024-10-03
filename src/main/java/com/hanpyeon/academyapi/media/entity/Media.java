@@ -28,6 +28,7 @@ public class Media {
     private String src;
 
     @ManyToOne
+    @JoinColumn(name = "media_owner")
     private Member member;
 
     public Media(String mediaName, String src, Member member) {

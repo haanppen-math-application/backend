@@ -1,5 +1,8 @@
 package com.hanpyeon.academyapi.dir.service.media.upload;
 
+import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.account.exceptions.AccountException;
+import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.dir.dao.Directory;
 import com.hanpyeon.academyapi.dir.dao.DirectoryRepository;
 import com.hanpyeon.academyapi.dir.exception.DirectoryException;
@@ -15,16 +18,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class DirectoryMediaUpdateManager {
 
     private final DirectoryRepository directoryRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
-    public void update(final ChunkGroupInfo chunkGroupInfo, final String savedPath) {
+    public void update(final ChunkGroupInfo chunkGroupInfo, final String savedPath, final Long memberId) {
         final Directory directory = this.findTargetDirectory(chunkGroupInfo.getDirPath());
-        final Media media = create(chunkGroupInfo.getFileName() + chunkGroupInfo.getExtension(), savedPath);
+        final Media media = create(chunkGroupInfo.getFileName() + chunkGroupInfo.getExtension(), savedPath, memberId);
         directory.add(media);
     }
 
-    private Media create(final String fileName, final String savedPath) {
-        return new Media(fileName, savedPath);
+    private Media create(final String fileName, final String savedPath, final Long memberId) {
+        final Member member = memberRepository.findMemberByIdAndRemovedIsFalse(memberId)
+                .orElseThrow(() -> new AccountException(ErrorCode.NO_SUCH_MEMBER));
+        return new Media(fileName, savedPath, member);
     }
 
     private Directory findTargetDirectory(final String resolvedDirPath) {
