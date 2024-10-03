@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
+import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.course.domain.MemoMedia;
 import com.hanpyeon.academyapi.course.domain.MemoMediaContainer;
 import com.hanpyeon.academyapi.media.entity.Media;
@@ -35,10 +36,10 @@ class UpdateMemoMediaContainerAdapterTest {
         final Long memoId = 1l;
         final Memo memo = new Memo(new Course(), null, "", "");
         memoRepository.save(memo);
-
-        final Media media1 = new Media("test", "1");
-        final Media media2 = new Media("test", "2");
-        final Media media3 = new Media("test", "3");
+        final Member member = Member.builder().build();
+        final Media media1 = new Media("test", "1", member);
+        final Media media2 = new Media("test", "2", member);
+        final Media media3 = new Media("test", "3", member);
 
         mediaRepository.saveAll(List.of(media1, media2, media3));
 
