@@ -6,20 +6,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-
-/**
- * no more used
- */
 @Component
-class QuestionContentUpdateHandler extends QuestionUpdateHandler {
-
+public class QuestionTitleUpdateHandler extends QuestionUpdateHandler{
     @Override
     boolean applicable(QuestionUpdateDto questionUpdateDto) {
-        return Objects.nonNull(questionUpdateDto.content());
+        return Objects.nonNull(questionUpdateDto.title());
     }
 
     @Override
     void process(Question question, QuestionUpdateDto questionUpdateDto) {
-        question.changeContent(questionUpdateDto.content());
+        question.changeTitle(questionUpdateDto.title());
     }
 }

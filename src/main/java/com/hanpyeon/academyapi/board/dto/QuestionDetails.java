@@ -9,6 +9,7 @@ import java.util.List;
 @Builder
 public record QuestionDetails(
         Long questionId,
+        String title,
         String content,
         Boolean solved,
         Long viewCount,

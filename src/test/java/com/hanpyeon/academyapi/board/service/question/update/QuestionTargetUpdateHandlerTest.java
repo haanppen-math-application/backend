@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.board.service.question.update;
 
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
+import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,14 +19,14 @@ class QuestionTargetUpdateHandlerTest {
 
     @Test
     void 업데이트_가능_테스트() {
-        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l, Collections.emptyList());
+        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l, Role.STUDENT, "test", "test", Collections.emptyList());
 
         assertEquals(targetUpdateHandler.applicable(questionUpdateDto), true);
     }
 
     @Test
     void 업데이트_불가_테스트() {
-        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l,  null, 3l, Collections.emptyList());
+        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l,  null, 3l, Role.STUDENT, "test", "test", Collections.emptyList());
 
         assertEquals(targetUpdateHandler.applicable(questionUpdateDto), false);
     }

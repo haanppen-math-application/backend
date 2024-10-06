@@ -8,6 +8,7 @@ import java.util.List;
 public record QuestionUpdateRequestDto(
         @NotNull
         Long questionId,
+        String title,
         String content,
         Long targetMemberId,
         List<MultipartFile> images

@@ -76,14 +76,14 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.loadMyQuestionsByCursor(cursorIndex, memberPrincipal.memberId(), entityFieldMappedPageRequest));
     }
 
-    @Operation(summary = "댓글 수정 API", description = "질문 수정은 본인만 가능합니다")
+    @Operation(summary = "질문 수정 API", description = "질문 수정은 본인만 가능합니다")
     @SecurityRequirement(name = "jwtAuth")
-    @PatchMapping("/{questionId}")
+    @PutMapping("/{questionId}")
     public ResponseEntity<?> updateQuestion(
             @Valid @ModelAttribute final QuestionUpdateRequestDto questionUpdateRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId());
+        final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         return ResponseEntity.ok(questionService.updateQuestion(questionUpdateDto));
     }
 

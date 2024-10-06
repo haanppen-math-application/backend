@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.media.MediaMapper;
 import com.hanpyeon.academyapi.media.entity.Image;
+import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +26,10 @@ public class BoardMapper {
                 .build();
     }
 
-    public Question createQuestion(final Member requestMember, final Member targetMember, final List<Image> images) {
+    public Question createQuestion(final Member requestMember, final Member targetMember, final List<Image> images, final String title, final String content) {
         return Question.builder()
+                .title(title)
+                .content(content)
                 .ownerMember(requestMember)
                 .targetMember(targetMember)
                 .images(images)
@@ -36,6 +39,8 @@ public class BoardMapper {
     public QuestionDetails createQuestionDetails(final Question question) {
         return QuestionDetails.builder()
                 .questionId(question.getId())
+                .title(question.getTitle())
+                .content(question.getContent())
                 .solved(question.getSolved())
                 .viewCount(question.getViewCount())
                 .registeredMember(createMemberDetails(question.getOwnerMember()))
@@ -74,11 +79,10 @@ public class BoardMapper {
 
     public QuestionPreview createQuestionPreview(final Question question) {
         return QuestionPreview.builder()
+                .title(question.getTitle())
+                .registeredDateTime(question.getRegisteredDateTime())
                 .questionId(question.getId())
                 .solved(question.getSolved())
-                .images(question.getImages().stream()
-                        .map(mediaMapper::createImageUrlDto)
-                        .toList())
                 .commentCount(question.getComments().size())
                 .viewCount(question.getViewCount())
                 .owner(createMemberDetails(question.getOwnerMember()))
@@ -118,8 +122,11 @@ public class BoardMapper {
                 .commentId(commentId)
                 .build();
     }
-    public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequestDto questionUpdateRequestDto, final Long requestMemberId) {
+    public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequestDto questionUpdateRequestDto, final Long requestMemberId, final Role memberRole) {
         return QuestionUpdateDto.builder()
+                .memberRole(memberRole)
+                .title(questionUpdateRequestDto.title())
+                .content(questionUpdateRequestDto.content())
                 .requestMemberId(requestMemberId)
                 .targetMemberId(questionUpdateRequestDto.targetMemberId())
                 .images(questionUpdateRequestDto.images())

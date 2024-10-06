@@ -1,16 +1,15 @@
 package com.hanpyeon.academyapi.board.dto;
 
-import com.hanpyeon.academyapi.media.dto.ImageUrlDto;
 import lombok.Builder;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Builder
 public record QuestionPreview(
         Long questionId,
-        String content,
+        String title,
+        LocalDateTime registeredDateTime,
         Boolean solved,
-        List<ImageUrlDto> images,
         Integer commentCount,
         Long viewCount,
         MemberDetails owner,

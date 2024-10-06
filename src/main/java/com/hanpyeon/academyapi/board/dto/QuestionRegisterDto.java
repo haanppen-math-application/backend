@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.board.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,5 +12,7 @@ public record QuestionRegisterDto(
         Long requestMemberId,
         @NotNull
         Long targetMemberId,
+        String title,
+        String content,
         List<MultipartFile> images
 ) {}

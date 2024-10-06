@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.board.dto;
 
+import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,10 @@ public record QuestionUpdateDto(
         Long targetMemberId,
         @NotNull
         Long requestMemberId,
+        @NotNull
+        Role memberRole,
+        String content,
+        String title,
         List<MultipartFile> images
 ) {
     @Override
