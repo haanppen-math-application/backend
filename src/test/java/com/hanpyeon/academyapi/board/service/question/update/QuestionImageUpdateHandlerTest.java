@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.board.service.question.update;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.media.service.ImageService;
+import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,7 +27,7 @@ class QuestionImageUpdateHandlerTest {
 
     @Test
     void 업데이트_가능_테스트() {
-        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l, List.of(Mockito.mock(MultipartFile.class)));
+        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l, Role.STUDENT, "test", "test", List.of(Mockito.mock(MultipartFile.class)));
 
         assertThat(questionImageUpdateHandler.applicable(questionUpdateDto))
                 .isTrue();
@@ -34,8 +35,8 @@ class QuestionImageUpdateHandlerTest {
 
     @Test
     void 업데이트_불가_테스트() {
-        final QuestionUpdateDto emptyImagesDto = new QuestionUpdateDto(1l, 2l, 3l, Collections.emptyList());
-        final QuestionUpdateDto nullImagesDto = new QuestionUpdateDto(1l, 2l, 3l, null);
+        final QuestionUpdateDto emptyImagesDto = new QuestionUpdateDto(1l, 2l, 3l, Role.STUDENT, "test", "test", Collections.emptyList());
+        final QuestionUpdateDto nullImagesDto = new QuestionUpdateDto(1l, 2l, 3l,Role.STUDENT, "test", "test", null);
 
 
         assertThat(questionImageUpdateHandler.applicable(emptyImagesDto))
@@ -47,7 +48,7 @@ class QuestionImageUpdateHandlerTest {
     @Test
     void 이미지_업데이트_테스트() {
         final List<MultipartFile> multipartFiles = List.of(Mockito.mock(MultipartFile.class));
-        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l, multipartFiles);
+        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l,Role.STUDENT, "test", "test", multipartFiles);
         final Question question = Mockito.mock(Question.class);
 
         questionImageUpdateHandler.update(question, questionUpdateDto);

@@ -8,6 +8,7 @@ import com.hanpyeon.academyapi.board.service.question.access.QuestionAccessManag
 import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
+import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
@@ -128,33 +129,33 @@ class QuestionServiceTest {
 
     private static Stream<Arguments> provideLegalQuestionUpdateDto() {
         return Stream.of(
-                Arguments.of(new QuestionUpdateDto(2l, 1L, 3L,  null))
+                Arguments.of(new QuestionUpdateDto(2l, 1L, 3L, Role.STUDENT, "test", "test", null))
         );
     }
 
     private static Stream<Arguments> provideIllegalQuestionUpdateDto() {
         return Stream.of(
-                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, null)),
-                Arguments.of(new QuestionUpdateDto(2l, 12L, null, null)),
-                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, null))
+                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, Role.STUDENT, "test", "test", null)),
+                Arguments.of(new QuestionUpdateDto(2l, 12L, null, Role.STUDENT, "test", "test", null)),
+                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, Role.STUDENT, "test", "test", null))
         );
     }
 
 
     private static Stream<Arguments> provideLegalQuestionRegisterDto() {
         return Stream.of(
-                Arguments.of(new QuestionRegisterDto(1L, 2L, null)),
-                Arguments.of(new QuestionRegisterDto(1L, 1L, Collections.emptyList()))
+                Arguments.of(new QuestionRegisterDto(1L, 2L, "test", "test", null)),
+                Arguments.of(new QuestionRegisterDto(1L, 1L, "test", "test", Collections.emptyList()))
         );
     }
 
 
     private static Stream<Arguments> provideIllegalQuestionRegisterDto() {
         return Stream.of(
-                Arguments.of(new QuestionRegisterDto(null, 1L, null)),
-                Arguments.of(new QuestionRegisterDto(null, null, null)),
-                Arguments.of(new QuestionRegisterDto(2L, null, null)),
-                Arguments.of(new QuestionRegisterDto(2L, null, null))
+                Arguments.of(new QuestionRegisterDto(null, 1L, "test", "test", null)),
+                Arguments.of(new QuestionRegisterDto(null, null, "test", "test", null)),
+                Arguments.of(new QuestionRegisterDto(2L, null, "test", "test", null)),
+                Arguments.of(new QuestionRegisterDto(2L, null, "test", "test", null))
         );
     }
 }
