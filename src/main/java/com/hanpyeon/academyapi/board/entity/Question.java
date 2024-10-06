@@ -44,8 +44,8 @@ public class Question {
     private Question(LocalDateTime registeredDateTime, List<Image> images, String title, String content, Member ownerMember, Member targetMember, List<Comment> comments) {
         this.registeredDateTime = registeredDateTime;
         this.images = images;
-//        this.title = title;
-//        this.content = content;
+        this.title = title;
+        this.content = content;
         this.ownerMember = ownerMember;
         this.targetMember = targetMember;
         this.comments = comments;

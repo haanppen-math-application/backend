@@ -25,8 +25,10 @@ public class BoardMapper {
                 .build();
     }
 
-    public Question createQuestion(final Member requestMember, final Member targetMember, final List<Image> images) {
+    public Question createQuestion(final Member requestMember, final Member targetMember, final List<Image> images, final String title, final String content) {
         return Question.builder()
+                .title(title)
+                .content(content)
                 .ownerMember(requestMember)
                 .targetMember(targetMember)
                 .images(images)
