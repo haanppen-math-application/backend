@@ -14,10 +14,10 @@ public class MemoMediaAttachment {
     private Long attachmentId;
 
     @ManyToOne
-    @JoinColumn(name = "MEMO_MEDIA_ID", nullable = false)
+    @JoinColumn(name = "MEMO_MEDIA_ID")
     private MemoMedia memoMedia;
     @ManyToOne
-    @JoinColumn(name = "MEDIA_ID", nullable = false)
+    @JoinColumn(name = "MEDIA_ID")
     private Media media;
 
     private MemoMediaAttachment(MemoMedia memoMedia, Media media) {
@@ -27,5 +27,10 @@ public class MemoMediaAttachment {
 
     static MemoMediaAttachment of(final MemoMedia memoMedia, final Media media) {
         return new MemoMediaAttachment(memoMedia, media);
+    }
+
+    public void setNull() {
+        this.memoMedia = null;
+        this.media = null;
     }
 }

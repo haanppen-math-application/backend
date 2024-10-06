@@ -35,7 +35,6 @@ public class Directory {
     @CreationTimestamp
     private LocalDateTime createdTime;
     @OneToMany
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Media> medias;
 
     public Directory(Member owner, String path, Boolean canModifyByEveryone, Boolean canViewByEveryone) {

@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.media.repository;
 
 import com.hanpyeon.academyapi.media.entity.Media;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,4 @@ public interface MediaRepository extends JpaRepository<Media, Long> {
 
     @Query("SELECT new java.lang.Long(member.id) FROM Media media INNER JOIN Member member ON member.id = media.member.id WHERE media.src = :src")
     Optional<Long> findOwnerId(@Param("src") final String src);
-
-    @Query("DELETE Media media where media.src = :src")
-    void deleteByMediaSrc(@Param("src") final String src);
-
 }

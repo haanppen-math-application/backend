@@ -10,16 +10,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-class MemoMedia {
+public class MemoMedia {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MEMO_MEDIA_ID")
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "MEDIA", nullable = false)
+    @JoinColumn(name = "MEDIA")
     private Media media;
     @ManyToOne
-    @JoinColumn(name = "MEMO_MEMO_ID", nullable = false)
+    @JoinColumn(name = "MEMO_MEMO_ID")
     private Memo memo;
     private Integer sequence;
 
@@ -31,6 +31,11 @@ class MemoMedia {
 
     void setSequence(final Integer sequence) {
         this.sequence = sequence;
+    }
+
+    public void setNull() {
+        this.media = null;
+        this.memo = null;
     }
 
     static MemoMedia of(final Memo memo, final Media media, final Integer sequence) {

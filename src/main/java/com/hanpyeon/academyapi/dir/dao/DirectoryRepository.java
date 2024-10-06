@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.dir.dao;
 
+import com.hanpyeon.academyapi.media.entity.Media;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +17,5 @@ public interface DirectoryRepository extends JpaRepository<Directory, Long> {
     @Query("SELECT e FROM Directory e WHERE e.path LIKE concat(:dirPath, '%')")
     List<Directory> queryChildDirectories(@Param("dirPath") final String dirPath);
     Boolean existsAllByPathIn(List<String> paths);
+    List<Directory> findDirectoriesByMediasContaining(final Media media);
 }
