@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.dir.controller;
 
 import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
+import com.hanpyeon.academyapi.dir.dto.DeleteMediaDto;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
 import com.hanpyeon.academyapi.dir.service.MediaService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -41,6 +42,7 @@ public class DirectoryMediaController {
             @RequestParam(required = true) final String mediaSrc,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
+        mediaService.deleteMedia(new DeleteMediaDto(mediaSrc, memberPrincipal));
         return ResponseEntity.noContent().build();
     }
 

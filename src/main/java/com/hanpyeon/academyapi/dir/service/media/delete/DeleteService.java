@@ -2,7 +2,6 @@ package com.hanpyeon.academyapi.dir.service.media.delete;
 
 import com.hanpyeon.academyapi.dir.dto.DeleteMediaDto;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import com.hanpyeon.academyapi.media.entity.Media;
 import com.hanpyeon.academyapi.media.exception.MediaException;
 import com.hanpyeon.academyapi.media.repository.MediaRepository;
 import com.hanpyeon.academyapi.security.Role;
@@ -35,5 +34,4 @@ public class DeleteService {
         }
         throw new MediaException("권한 없음", ErrorCode.MEDIA_ACCESS_EXCEPTION);
     }
-
 }
