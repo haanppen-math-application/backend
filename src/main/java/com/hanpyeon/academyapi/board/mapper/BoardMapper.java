@@ -36,6 +36,8 @@ public class BoardMapper {
     public QuestionDetails createQuestionDetails(final Question question) {
         return QuestionDetails.builder()
                 .questionId(question.getId())
+                .title(question.getTitle())
+                .content(question.getContent())
                 .solved(question.getSolved())
                 .viewCount(question.getViewCount())
                 .registeredMember(createMemberDetails(question.getOwnerMember()))
@@ -74,11 +76,10 @@ public class BoardMapper {
 
     public QuestionPreview createQuestionPreview(final Question question) {
         return QuestionPreview.builder()
+                .title(question.getTitle())
+                .registeredDateTime(question.getRegisteredDateTime())
                 .questionId(question.getId())
                 .solved(question.getSolved())
-                .images(question.getImages().stream()
-                        .map(mediaMapper::createImageUrlDto)
-                        .toList())
                 .commentCount(question.getComments().size())
                 .viewCount(question.getViewCount())
                 .owner(createMemberDetails(question.getOwnerMember()))
