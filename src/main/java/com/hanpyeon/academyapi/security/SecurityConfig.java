@@ -15,7 +15,6 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
@@ -106,7 +105,8 @@ public class SecurityConfig {
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
-
+                    request.requestMatchers(HttpMethod.PUT, "/api/board/questions/*")
+                            .authenticated();
                     request.requestMatchers(HttpMethod.POST, "/api/board/questions")
                             .hasAuthority(
                                     Role.STUDENT.getSecurityRole());
@@ -114,15 +114,15 @@ public class SecurityConfig {
 //                            .authenticated();
 //                    request.requestMatchers(HttpMethod.GET, "/api/board/questions")
 //                            .authenticated();
-                    request.requestMatchers(HttpMethod.PATCH, "/api/board/questions/*")
-                            .hasAnyAuthority(
-                                    Role.STUDENT.getSecurityRole());
+//                    request.requestMatchers(HttpMethod.PATCH, "/api/board/questions/*")
+//                            .hasAnyAuthority(
+//                                    Role.STUDENT.getSecurityRole());
                     request.requestMatchers(HttpMethod.DELETE, "/api/board/questions/*")
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
                     request.requestMatchers(HttpMethod.GET, "/api/courses/my")
-                                    .authenticated();
+                            .authenticated();
 
 
                     // 반 삭제 API는 매니저만 사용가능 하도록 구현
