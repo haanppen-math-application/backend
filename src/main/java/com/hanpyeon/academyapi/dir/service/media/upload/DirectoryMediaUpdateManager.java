@@ -9,6 +9,7 @@ import com.hanpyeon.academyapi.dir.exception.DirectoryException;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Media;
+import com.hanpyeon.academyapi.media.repository.MediaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +20,13 @@ public class DirectoryMediaUpdateManager {
 
     private final DirectoryRepository directoryRepository;
     private final MemberRepository memberRepository;
+    private final MediaRepository mediaRepository;
 
     @Transactional
     public void update(final ChunkGroupInfo chunkGroupInfo, final String savedPath, final Long memberId) {
         final Directory directory = this.findTargetDirectory(chunkGroupInfo.getDirPath());
         final Media media = create(chunkGroupInfo.getFileName() + chunkGroupInfo.getExtension(), savedPath, memberId);
+        mediaRepository.save(media);
         directory.add(media);
     }
 

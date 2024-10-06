@@ -34,5 +34,6 @@ public class Media {
     public Media(String mediaName, String src, Member member) {
         this.mediaName = mediaName;
         this.src = src;
+        this.member = member;
     }
 }

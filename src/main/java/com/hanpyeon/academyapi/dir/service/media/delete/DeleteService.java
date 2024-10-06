@@ -25,7 +25,7 @@ public class DeleteService {
         if (memberPrincipal.role().equals(Role.MANAGER) || memberPrincipal.role().equals(Role.ADMIN)) {
             return;
         }
-        final Long ownerId = mediaRepository.findOwnerId(mediaSrc).get();
+        final Long ownerId = mediaRepository.findOwnerId(mediaSrc).orElse(null);
         if (ownerId == null) {
             return;
         }
