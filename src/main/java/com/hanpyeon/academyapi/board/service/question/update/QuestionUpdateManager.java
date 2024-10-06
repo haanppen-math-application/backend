@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
 import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.security.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +18,16 @@ public class QuestionUpdateManager {
     private final QuestionValidateManager questionValidateManager;
 
     public void update(final Question targetQuestion, final QuestionUpdateDto questionUpdateDto) {
-        verifyAccess(targetQuestion.getOwnerMember().getId(), questionUpdateDto.requestMemberId());
+        verifyAccess(targetQuestion.getOwnerMember().getId(), questionUpdateDto.requestMemberId(), questionUpdateDto.memberRole());
         questionUpdateHandlers.stream()
                 .forEach(questionUpdateHandler -> questionUpdateHandler.update(targetQuestion, questionUpdateDto));
         questionValidateManager.validate(targetQuestion);
     }
 
-    private void verifyAccess(final Long ownedMemberId, final Long requestMemberId) {
+    private void verifyAccess(final Long ownedMemberId, final Long requestMemberId, final Role role) {
+        if (role.equals(Role.ADMIN) || role.equals(Role.TEACHER) || role.equals(Role.MANAGER)) {
+            return;
+        }
         if (!requestMemberId.equals(ownedMemberId)) {
             throw new RequestDeniedException("본인 질문이 아닙니다", ErrorCode.DENIED_EXCEPTION);
         }

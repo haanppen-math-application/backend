@@ -83,7 +83,7 @@ public class QuestionController {
             @Valid @ModelAttribute final QuestionUpdateRequestDto questionUpdateRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId());
+        final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         return ResponseEntity.ok(questionService.updateQuestion(questionUpdateDto));
     }
 

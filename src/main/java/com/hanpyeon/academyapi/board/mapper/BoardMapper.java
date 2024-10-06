@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.media.MediaMapper;
 import com.hanpyeon.academyapi.media.entity.Image;
+import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -121,8 +122,9 @@ public class BoardMapper {
                 .commentId(commentId)
                 .build();
     }
-    public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequestDto questionUpdateRequestDto, final Long requestMemberId) {
+    public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequestDto questionUpdateRequestDto, final Long requestMemberId, final Role memberRole) {
         return QuestionUpdateDto.builder()
+                .memberRole(memberRole)
                 .title(questionUpdateRequestDto.title())
                 .content(questionUpdateRequestDto.content())
                 .requestMemberId(requestMemberId)
