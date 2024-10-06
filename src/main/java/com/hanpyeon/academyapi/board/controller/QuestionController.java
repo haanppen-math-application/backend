@@ -4,7 +4,7 @@ import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.*;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
-import com.hanpyeon.academyapi.paging.CursorResponse;
+import com.hanpyeon.academyapi.paging.PagedResponse;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.awt.*;
 
 
 @AllArgsConstructor
@@ -59,21 +57,19 @@ public class QuestionController {
             "?sort=date 로 날짜 오름차순 \n")
     @GetMapping
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<CursorResponse<QuestionPreview>> getQuestionsWithPagination(
-            @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
-            @RequestParam(required = false, defaultValue = "0") final Long cursorIndex) {
-        return ResponseEntity.ok(questionService.loadQuestionsByCursor(cursorIndex, entityFieldMappedPageRequest));
+    public ResponseEntity<PagedResponse<QuestionPreview>> getQuestionsWithPagination(
+            @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
+        return ResponseEntity.ok(questionService.loadQuestionsByOffset(entityFieldMappedPageRequest));
     }
 
     @Operation(summary = "나의 질문 조회")
     @GetMapping("/my")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<CursorResponse<QuestionPreview>> getMyQuestions(
+    public ResponseEntity<PagedResponse<QuestionPreview>> getMyQuestions(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
-            @ParameterObject final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
-            @RequestParam(required = false, defaultValue = "0") final Long cursorIndex
+            @ParameterObject final EntityFieldMappedPageRequest entityFieldMappedPageRequest
     ) {
-        return ResponseEntity.ok(questionService.loadMyQuestionsByCursor(cursorIndex, memberPrincipal.memberId(), entityFieldMappedPageRequest));
+        return ResponseEntity.ok(questionService.loadMyQuestionsByOffset(memberPrincipal.memberId(), entityFieldMappedPageRequest));
     }
 
     @Operation(summary = "질문 수정 API", description = "질문 수정은 본인만 가능합니다")
