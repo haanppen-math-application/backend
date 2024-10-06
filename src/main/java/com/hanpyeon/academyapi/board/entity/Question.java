@@ -50,9 +50,13 @@ public class Question {
         this.targetMember = targetMember;
         this.comments = comments;
     }
-//    public void changeContent(final String content) {
-//        this.content = content;
-//    }
+    public void changeTitle(final String title) {
+        this.title = title;
+    }
+
+    public void changeContent(final String content) {
+        this.content = content;
+    }
 
     public int addComment(final Comment comment) {
         this.comments.add(comment);

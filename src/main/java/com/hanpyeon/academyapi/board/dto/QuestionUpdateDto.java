@@ -14,6 +14,8 @@ public record QuestionUpdateDto(
         Long targetMemberId,
         @NotNull
         Long requestMemberId,
+        String content,
+        String title,
         List<MultipartFile> images
 ) {
     @Override

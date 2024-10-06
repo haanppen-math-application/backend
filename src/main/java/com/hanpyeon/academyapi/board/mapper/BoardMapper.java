@@ -123,6 +123,8 @@ public class BoardMapper {
     }
     public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequestDto questionUpdateRequestDto, final Long requestMemberId) {
         return QuestionUpdateDto.builder()
+                .title(questionUpdateRequestDto.title())
+                .content(questionUpdateRequestDto.content())
                 .requestMemberId(requestMemberId)
                 .targetMemberId(questionUpdateRequestDto.targetMemberId())
                 .images(questionUpdateRequestDto.images())
