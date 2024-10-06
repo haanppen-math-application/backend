@@ -1,17 +1,14 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -41,7 +38,7 @@ class QuestionControllerTest {
     @MockBean
     QuestionService questionService;
 
-    @Test
+    // targetMemberId가 null 일 수 있도록 요구사항 변경됨에 따라 테스트 안함
     void 질문_등록시_targetMemberId_없음_에러_테스트() throws Exception {
         mockMvc.perform(multipart("/api/board/questions")
                 .param("content", "내용")
@@ -59,7 +56,7 @@ class QuestionControllerTest {
 //    }
 
     @Test
-    void 질문_등록_이미지_포함_성공_테스트() throws Exception {
+    void 이미지포함_질문등록_성공_테스트() throws Exception {
         MockMultipartFile image = new MockMultipartFile(
                 "image",
                 "helwijadw".getBytes());
@@ -67,7 +64,7 @@ class QuestionControllerTest {
                 .file(image)
                 .param("title", "제목")
                 .param("content", "내용")
-        ).andExpect(status().isBadRequest());
+        ).andExpect(status().isCreated());
     }
 
     @Test
