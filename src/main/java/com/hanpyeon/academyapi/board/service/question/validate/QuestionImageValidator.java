@@ -13,9 +13,9 @@ class QuestionImageValidator implements QuestionValidator {
     private final ImageService imageService;
     @Override
     public void validate(Question question) {
-        if (question.getImages().size() > 1) {
+        if (question.getImages().size() > 3) {
             imageService.removeImage(question.getImages());
-            throw new QuestionValidationException("게시글에 들어갈 수 있는 이미지 갯수는 최대 1개", ErrorCode.QUESTION_IMAGE_OVER_LENGTH);
+            throw new QuestionValidationException("게시글에 들어갈 수 있는 이미지 갯수는 최대 3개", ErrorCode.QUESTION_IMAGE_OVER_LENGTH);
         }
     }
 }

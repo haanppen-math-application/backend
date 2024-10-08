@@ -20,6 +20,8 @@ public class BoardMapper {
 
     public QuestionRegisterDto createRegisterDto(final QuestionRegisterRequestDto questionRegisterRequestDto, final Long userId) {
         return QuestionRegisterDto.builder()
+                .title(questionRegisterRequestDto.title())
+                .content(questionRegisterRequestDto.content())
                 .requestMemberId(userId)
                 .targetMemberId(questionRegisterRequestDto.targetMemberId())
                 .images(questionRegisterRequestDto.images())
