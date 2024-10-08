@@ -58,8 +58,9 @@ public class QuestionController {
     @GetMapping
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<PagedResponse<QuestionPreview>> getQuestionsWithPagination(
-            @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest) {
-        return ResponseEntity.ok(questionService.loadQuestionsByOffset(entityFieldMappedPageRequest));
+            @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
+            @RequestParam(required = false) final String title) {
+        return ResponseEntity.ok(questionService.loadQuestionsByOffset(entityFieldMappedPageRequest, title));
     }
 
     @Operation(summary = "나의 질문 조회")
@@ -67,9 +68,10 @@ public class QuestionController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<PagedResponse<QuestionPreview>> getMyQuestions(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
-            @ParameterObject final EntityFieldMappedPageRequest entityFieldMappedPageRequest
+            @ParameterObject final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
+            @RequestParam(required = false) final String title
     ) {
-        return ResponseEntity.ok(questionService.loadMyQuestionsByOffset(memberPrincipal.memberId(), entityFieldMappedPageRequest));
+        return ResponseEntity.ok(questionService.loadMyQuestionsByOffset(memberPrincipal.memberId(), entityFieldMappedPageRequest, title));
     }
 
     @Operation(summary = "질문 수정 API", description = "질문 수정은 본인만 가능합니다")

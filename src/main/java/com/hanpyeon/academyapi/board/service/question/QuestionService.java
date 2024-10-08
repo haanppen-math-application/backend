@@ -15,9 +15,12 @@ import com.hanpyeon.academyapi.paging.PagedResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.Objects;
 
 @Component
 @AllArgsConstructor
@@ -45,14 +48,24 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
-    public PagedResponse<QuestionPreview> loadQuestionsByOffset(final Pageable pageable) {
-        final Page<Question> questions = questionRepository.findAllBy(pageable);
+    public PagedResponse<QuestionPreview> loadQuestionsByOffset(final Pageable pageable, final String title) {
+        Page<Question> questions;
+        if (Objects.isNull(title) || title.isBlank()) {
+            questions = questionRepository.findAllBy(pageable);
+        }else {
+            questions = questionRepository.findAllByTitleContaining(title, pageable);
+        }
         return PagedResponse.of(questions.map(question -> boardMapper.createQuestionPreview(question)));
     }
 
     @Transactional(readOnly = true)
-    public PagedResponse<QuestionPreview> loadMyQuestionsByOffset(final Long memberId, final Pageable pageable) {
-        final Page<Question> questions = questionRepository.findQuestionsByOwnerMemberId(memberId, pageable);
+    public PagedResponse<QuestionPreview> loadMyQuestionsByOffset(final Long memberId, final Pageable pageable, final String title) {
+        Page<Question> questions;
+        if (Objects.isNull(title) || title.isBlank()) {
+            questions = questionRepository.findQuestionsByOwnerMemberId(memberId, pageable);
+        } else {
+            questions = questionRepository.findQuestionsByOwnerMemberIdAndTitleContaining(memberId, title, pageable);
+        }
         return PagedResponse.of(questions.map(question -> boardMapper.createQuestionPreview(question)));
     }
 
