@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.account.controller;
 
 import com.hanpyeon.academyapi.account.dto.*;
+import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
@@ -33,6 +34,15 @@ public class AccountController {
     private final AccountRegisterService accountRegisterService;
     private final AccountUpdateService accountUpdateService;
     private final AccountRemoveService accountRemoveService;
+    private final AccountPasswordRefreshService accountPasswordRefreshService;
+
+    @PostMapping("/password/verification")
+    public ResponseEntity<?> authenticateForRefreshPassword(
+            @RequestParam(required = true) String phoneNumber
+    ) {
+        accountPasswordRefreshService.generateVerificationCode(phoneNumber);
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping
     @Operation(summary = "계정 등록", description = "어플리케이션에 계정을 등록하기 위한 API 입니다 ")
