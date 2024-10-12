@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -70,6 +69,11 @@ public class Comment {
     public void deAdopt() {
         question.singleUnsolved();
         question.clearCommentsAdoptedStatus();
+    }
+
+    public void delete() {
+        this.question = null;
+        this.images.clear();
     }
     public void setContent(final String content) {
         this.content = content;
