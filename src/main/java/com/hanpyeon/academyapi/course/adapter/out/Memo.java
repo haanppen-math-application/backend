@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "MEMO")
 @NoArgsConstructor
@@ -28,6 +29,8 @@ class Memo {
     private String title;
     @Column(name = "CONTENT")
     private String content;
+    @OneToMany(mappedBy = "memo")
+    private List<MemoMedia> memoMedias;
 
 /*
     // 영상 로직
@@ -41,6 +44,10 @@ class Memo {
     }
     void setContent(final String content) {
         this.content = content;
+    }
+    void delete() {
+        this.course = null;
+        memoMedias.stream().forEach(memoMedia -> memoMedia.setNull());
     }
 
     Memo(final Course course, final LocalDate targetDate, final String progressed, final String homework) {
