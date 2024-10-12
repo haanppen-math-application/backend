@@ -23,9 +23,9 @@ class LoadStudentsAdapter implements LoadStudentsPort {
         int requestMemberCount = memberIds.size();
 
         List<Student> students = loadAllStudent(memberIds);
-        if (students.size() != requestMemberCount) {
-            throw new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER);
-        }
+//        if (students.size() != requestMemberCount) {
+//            throw new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER);
+//        }
         return students;
     }
 
