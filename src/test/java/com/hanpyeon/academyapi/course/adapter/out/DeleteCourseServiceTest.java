@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest
+@ActiveProfiles("test")
 @Import({CourseMapper.class, LoadCourseAdapter.class, DeleteCourseAdapter.class, DeleteCourseStudentAdapter.class, DeleteCourseService.class})
 class DeleteCourseServiceTest {
 
@@ -72,9 +75,10 @@ class DeleteCourseServiceTest {
     }
 
     @Test
+    @Transactional
     void test() {
         List<Course> courses = courseRepository.findAll();
-        deleteCourseUseCase.delete(new DeleteCourseCommand(courses.get(0).getId()));
+        deleteCourseUseCase.delete(new DeleteCourseCommand(courses.get(0).getId(), Role.ADMIN, 1L));
         assertThat(courseStudentRepository.count())
                 .isEqualTo(0);
         assertThat(courseRepository.count())
