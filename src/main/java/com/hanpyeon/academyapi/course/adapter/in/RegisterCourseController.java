@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.course.adapter.in;
 
 import com.hanpyeon.academyapi.course.application.dto.CourseRegisterDto;
 import com.hanpyeon.academyapi.course.application.port.in.CourseRegisterUseCase;
+import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -32,7 +33,7 @@ class RegisterCourseController {
             @Valid @RequestBody final CourseRegisterRequestDto courseRegisterRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final CourseRegisterDto courseRegisterDto = CourseRegisterRequestDto.mapToRegisterDto(courseRegisterRequestDto, memberPrincipal.memberId());
+        final CourseRegisterDto courseRegisterDto = CourseRegisterRequestDto.mapToRegisterDto(courseRegisterRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         final Long createdCourseId = courseRegisterUseCase.register(courseRegisterDto);
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -46,12 +47,13 @@ class RegisterCourseController {
             @NotNull Long teacherId,
             List<Long> students
     ) {
-        private static CourseRegisterDto mapToRegisterDto(final CourseRegisterRequestDto courseRegisterRequestDto, final Long requestMemberId) {
+        private static CourseRegisterDto mapToRegisterDto(final CourseRegisterRequestDto courseRegisterRequestDto, final Long requestMemberId, final Role role) {
             return new CourseRegisterDto(
                     courseRegisterRequestDto.courseName(),
                     courseRegisterRequestDto.teacherId(),
                     courseRegisterRequestDto.students(),
-                    requestMemberId
+                    requestMemberId,
+                    role
             );
         }
     }
