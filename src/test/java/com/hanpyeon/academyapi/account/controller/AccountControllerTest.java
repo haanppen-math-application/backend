@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.account.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
@@ -44,6 +45,8 @@ public class AccountControllerTest {
     AccountRemoveService accountRemoveService;
     @MockBean
     AccountRegisterService accountRegisterService;
+    @MockBean
+    AccountPasswordRefreshService accountPasswordRefreshService;
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")

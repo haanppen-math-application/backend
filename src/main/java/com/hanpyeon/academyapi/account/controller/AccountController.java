@@ -55,8 +55,6 @@ public class AccountController {
         return ResponseEntity.ok(new ChangedPasswordResponse(changedPassword.phoneNumber(), changedPassword.changedPassword()));
     }
 
-    @RequiredArgsConstructor
-    @Getter
     record ChangedPasswordResponse(
             String phoneNumber,
             String changedPassword) {
