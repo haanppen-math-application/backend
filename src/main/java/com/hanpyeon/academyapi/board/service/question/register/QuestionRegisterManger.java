@@ -32,7 +32,12 @@ public class QuestionRegisterManger {
 
     private Question preProcess(final QuestionRegisterDto questionRegisterDto) {
         final Member requestMember = memberManager.getMemberWithRoleValidated(questionRegisterDto.requestMemberId(), Role.STUDENT);
-        final Member targetMember = memberManager.getMemberWithRoleValidated(questionRegisterDto.targetMemberId(), Role.TEACHER, Role.MANAGER);
+        Member targetMember;
+        if (questionRegisterDto.targetMemberId() == null) {
+            targetMember = null;
+        } else {
+            targetMember = memberManager.getMemberWithRoleValidated(questionRegisterDto.targetMemberId(), Role.TEACHER, Role.MANAGER);
+        }
         final List<Image> images = imageService.saveImage(questionRegisterDto.images());
 
         return boardMapper.createQuestion(requestMember, targetMember, images, questionRegisterDto.title(), questionRegisterDto.content());
