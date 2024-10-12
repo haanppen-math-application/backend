@@ -30,11 +30,11 @@ public class QueryMemberController {
             "?size={페이지 크기 지정}. 기본 값 5 로 설정 \n" +
             "?name={찾고자 하는 이름} 시 검색, name이 없을시, 전체 조회\n")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<CursorResponse<PreviewTeacher>> queryTeachers(
-            @RequestParam(required = false, defaultValue = "5") Integer size,
-            @RequestParam(required = false) String name
+    public ResponseEntity<CursorResponse<PreviewTeacher>> queryTeachers(@RequestParam(required = false, defaultValue = "0") Long cursorIndex,
+                                                                        @RequestParam(required = false, defaultValue = "5") Integer size,
+                                                                        @RequestParam(required = false) String name
     ) {
-        final TeacherQueryDto teacherQueryDto = new TeacherQueryDto(size, name);
+        final TeacherQueryDto teacherQueryDto = new TeacherQueryDto(cursorIndex, size, name);
         CursorResponse<PreviewTeacher> teachers = queryService.loadTeachers(teacherQueryDto);
         return ResponseEntity.ok(teachers);
     }
