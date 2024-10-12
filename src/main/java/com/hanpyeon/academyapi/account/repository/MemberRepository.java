@@ -30,27 +30,27 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m WHERE m.role = :targetRole AND m.removed = FALSE")
     List<MemberInfo> findMembersByRole(@Param("targetRole") final Role role);
 
-    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m WHERE m.name LIKE %:targetName AND m.id >= :cursorIndex AND m.role = :targetRole")
+    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m WHERE m.name LIKE %:targetName AND m.id >= :cursorIndex AND m.role = :targetRole AND m.removed = FALSE ")
     List<MemberInfo> findMembersByIdGreaterThanEqualAndRoleAndNameContainingAndRemovedIsFalse(@Param("cursorIndex") final Long cursorId, @Param("targetRole") final Role role, final Pageable pageable, @Param("targetName") final String name);
 
-    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m WHERE m.id >= :cursorIndex AND m.role = :targetRole")
+    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m WHERE m.id >= :cursorIndex AND m.role = :targetRole AND m.removed = FALSE")
     List<MemberInfo> findMembersByIdGreaterThanEqualAndRoleAndRemovedIsFalse(@Param("cursorIndex") final Long cursorId, @Param("targetRole") final Role role, final Pageable pageable);
 
-    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM  Member m WHERE m.id >= :cursorIndex AND m.role = :targetRole AND m.grade BETWEEN :includedStartGrade AND :includedEndGrade")
+    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM  Member m WHERE m.id >= :cursorIndex AND m.role = :targetRole AND m.grade BETWEEN :includedStartGrade AND :includedEndGrade AND m.removed = FALSE")
     List<MemberInfo> findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndRemovedIsFalse(@Param("cursorIndex") final Long cursorId, @Param("targetRole") final Role role, final Pageable pageable, @Param("includedStartGrade") final Integer startGrade, @Param("includedEndGrade") final Integer endGrade);
 
-    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m WHERE m.id >= :cursorIndex AND m.role = :targetRole AND m.grade BETWEEN :includedStartGrade AND  :includedEndGrade AND m.name LIKE %:targetName%")
+    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m WHERE m.id >= :cursorIndex AND m.role = :targetRole AND m.grade BETWEEN :includedStartGrade AND  :includedEndGrade AND m.name LIKE %:targetName% AND m.removed = FALSE")
     List<MemberInfo> findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndNameContainingAndRemovedIsFalse(@Param("cursorIndex") final Long cursorId, @Param("targetRole") final Role role, final Pageable pageable, @Param("includedStartGrade") final Integer startGrade, @Param("includedEndGrade") final Integer endGrade, @Param("targetName") final String name);
 
-    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole")
+    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole AND m.removed = FALSE")
     Page<MemberInfo> findMembersByRoleAndRemovedIsFalse(@Param("targetRole") final Role role, final Pageable pageable);
 
-    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole AND m.grade BETWEEN :includedStartGrade AND :includedEndGrade")
+    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole AND m.grade BETWEEN :includedStartGrade AND :includedEndGrade AND m.removed = FALSE")
     Page<MemberInfo> findMembersByRoleAndGradeBetweenAndRemovedIsFalse(@Param("targetRole") final Role role, @Param("includedStartGrade") final Integer startGrade, @Param("includedEndGrade") final Integer endGrade, final Pageable pageable);
 
-    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole AND m.name LIKE %:targetName% AND m.grade BETWEEN :includedStartGrade AND :includedEndGrade")
+    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole AND m.name LIKE %:targetName% AND m.grade BETWEEN :includedStartGrade AND :includedEndGrade AND m.removed = FALSE")
     Page<MemberInfo> findMembersByRoleAndNameContainingAndGradeBetweenAndRemovedIsFalse(@Param("targetRole") final Role role, @Param("targetName") final String name, @Param("includedStartGrade") final Integer startGrade, @Param("includedEndGrade") final Integer endGrade, final Pageable pageable);
 
-    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole AND m.name LIKE %:targetName%")
+    @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole AND m.name LIKE %:targetName% AND m.removed = FALSE")
     Page<MemberInfo> findMembersByRoleAndNameContainingAndRemovedIsFalse(@Param("targetRole") final Role role, @Param("targetName") final String name, final Pageable pageable);
 }
