@@ -135,7 +135,7 @@ public class BoardMapper {
                 .build();
     }
 
-    public QuestionDeleteDto createQuestionDeleteDto(final QuestionDeleteRequestDto questionDeleteRequestDto, final Long requestMemberId) {
-        return new QuestionDeleteDto(questionDeleteRequestDto.questionId(), requestMemberId);
+    public QuestionDeleteDto createQuestionDeleteDto(final QuestionDeleteRequestDto questionDeleteRequestDto, final Long requestMemberId, final Role role) {
+        return new QuestionDeleteDto(questionDeleteRequestDto.questionId(), role, requestMemberId);
     }
 }

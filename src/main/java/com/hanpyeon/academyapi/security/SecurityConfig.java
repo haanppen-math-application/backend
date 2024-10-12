@@ -124,7 +124,9 @@ public class SecurityConfig {
 //                                    Role.STUDENT.getSecurityRole());
                     request.requestMatchers(HttpMethod.DELETE, "/api/board/questions/*")
                             .hasAnyAuthority(
+                                    Role.STUDENT.getSecurityRole(),
                                     Role.MANAGER.getSecurityRole(),
+                                    Role.ADMIN.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
                     request.requestMatchers(HttpMethod.GET, "/api/courses/my")
                             .authenticated();

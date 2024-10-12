@@ -92,7 +92,7 @@ public class QuestionController {
             @ModelAttribute @Valid final QuestionDeleteRequestDto questionDeleteRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final QuestionDeleteDto questionDeleteDto = boardMapper.createQuestionDeleteDto(questionDeleteRequestDto, memberPrincipal.memberId());
+        final QuestionDeleteDto questionDeleteDto = boardMapper.createQuestionDeleteDto(questionDeleteRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         questionService.deleteQuestion(questionDeleteDto);
         return ResponseEntity.noContent().build();
     }

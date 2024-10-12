@@ -115,15 +115,15 @@ class QuestionServiceTest {
 
     private static Stream<Arguments> provideIllegalQuestionDeleteDto() {
         return Stream.of(
-                Arguments.of(new QuestionDeleteDto(null, null)),
-                Arguments.of(new QuestionDeleteDto(1l, null)),
-                Arguments.of(new QuestionDeleteDto(null, 2l))
+                Arguments.of(new QuestionDeleteDto(null, Role.ADMIN, null)),
+                Arguments.of(new QuestionDeleteDto(1l, Role.MANAGER, null)),
+                Arguments.of(new QuestionDeleteDto(null, Role.ADMIN, 2l))
         );
     }
 
     private static Stream<Arguments> provideLegalQuestionDeleteDto() {
         return Stream.of(
-                Arguments.of(new QuestionDeleteDto(2l, 1l))
+                Arguments.of(new QuestionDeleteDto(2l, Role.TEACHER, 1L))
         );
     }
 
