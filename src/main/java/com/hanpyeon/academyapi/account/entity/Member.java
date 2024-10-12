@@ -18,7 +18,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String phoneNumber;
 
     @Column(nullable = false)
@@ -58,10 +58,6 @@ public class Member {
     public void setGrade(final Integer grade) {
         this.grade = grade;
     }
-
-    public void setRemoved(final Boolean removeStatus) {
-        this.removed = removeStatus;
-    }
     public void setPhoneNumber(final String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -82,6 +78,10 @@ public class Member {
         this.verifyMessageSendCount = 0;
         this.verificationCode = null;
         this.isVerifying = false;
+    }
+    public void remove() {
+        this.phoneNumber = null;
+        this.removed = true;
     }
 
     @Builder
@@ -105,5 +105,9 @@ public class Member {
                 ", userRole=" + role +
                 ", localDateTime=" + registeredDate +
                 '}';
+    }
+
+    public static Member none() {
+        return Member.builder().build();
     }
 }

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -58,6 +59,12 @@ public class BoardMapper {
     }
 
     public MemberDetails createMemberDetails(final Member member) {
+        if (Objects.isNull(member)) {
+            return null;
+        }
+        if (member.getRemoved()) {
+            return null;
+        }
         return MemberDetails.builder()
                 .memberId(member.getId())
                 .memberName(member.getName())
