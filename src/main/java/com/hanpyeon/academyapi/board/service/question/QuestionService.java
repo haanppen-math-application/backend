@@ -10,8 +10,10 @@ import com.hanpyeon.academyapi.board.service.question.access.QuestionAccessManag
 import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
 import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
+import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.paging.PagedResponse;
+import com.hanpyeon.academyapi.security.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -79,8 +81,18 @@ public class QuestionService {
     @Transactional
     public void deleteQuestion(@Validated final QuestionDeleteDto questionDeleteDto) {
         final Question question = findQuestion(questionDeleteDto.questionId());
+        validate(question, questionDeleteDto);
         questionDeleteManager.delete(question, questionDeleteDto.requestMemberId());
         questionRepository.delete(question);
+    }
+
+    private void validate(final Question question, final QuestionDeleteDto questionDeleteDto) {
+        if (questionDeleteDto.role().equals(Role.STUDENT)) {
+            if (question.getOwnerMember().getId().equals(questionDeleteDto.requestMemberId())) {
+                return;
+            }
+            throw new CourseException("학생은 본인 질문만 삭제할 수 있습니다", ErrorCode.INVALID_COURSE_ACCESS);
+        }
     }
 
     private Question findQuestion(final Long questionId) {
