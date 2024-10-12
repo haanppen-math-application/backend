@@ -65,6 +65,11 @@ public class SecurityConfig {
                             .authenticated();
 //////////////////////////////////////////////////////////////////////////////////////////
                     // accounts
+                    request.requestMatchers(HttpMethod.POST, "/api/accounts/password/verification")
+                            .permitAll();
+                    request.requestMatchers(HttpMethod.PUT, "/api/accounts/password/verification")
+                            .permitAll();
+
                     request.requestMatchers(HttpMethod.GET, "/api/accounts/my")
                             .authenticated();
 

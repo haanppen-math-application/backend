@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -39,6 +40,18 @@ public class Member {
     @CreationTimestamp
     private LocalDateTime registeredDate;
 
+    @Column(name = "verify_code", nullable = true)
+    private String verificationCode;
+
+    @Column(name = "verify_message_send_count", nullable = true)
+    private Integer verifyMessageSendCount = 0;
+
+    @Column(name = "verify_message_request_time", nullable = true)
+    private LocalDateTime verifyDateTime;
+
+    @Column(name = "verify_status", nullable = true)
+    private Boolean isVerifying = false;
+
     public void setName(final String name) {
         this.name = name;
     }
@@ -54,6 +67,21 @@ public class Member {
     }
     public void setPassword(final String password) {
         this.password = password;
+    }
+    public void setVerificationCode(final String verificationCode) {
+        this.verificationCode = verificationCode;
+        this.verifyDateTime = LocalDateTime.now();
+        if (Objects.isNull(verifyMessageSendCount)) {
+            verifyMessageSendCount = 0;
+        }
+        isVerifying = true;
+        verifyMessageSendCount ++;
+    }
+    public void resetVerifyInfo() {
+        this.verifyDateTime = null;
+        this.verifyMessageSendCount = 0;
+        this.verificationCode = null;
+        this.isVerifying = false;
     }
 
     @Builder

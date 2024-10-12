@@ -15,6 +15,7 @@ public enum ErrorCode {
     NOT_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "-006", "등록되지 않은 사용자"),
     NOT_OWNED_ACCOUNT(HttpStatus.FORBIDDEN, "-007", "계정 내용 변경은 소유자만 가능"),
     ACCOUNT_POLICY(HttpStatus.BAD_REQUEST, "-008", "계정 정책 위반"),
+    ACCOUNT_VERIFICATION_EXCEPTION(HttpStatus.BAD_REQUEST, "-009", "본인 인증 실패"),
 
     METHOD_ARGUMENT_NOT_VALID_EXCEPTION(HttpStatus.BAD_REQUEST, "-101", "잘못된 JSON 필드"),
     HTTP_MESSAGE_NOT_READABLE(HttpStatus.BAD_REQUEST, "-102", "부적절한 API 요청 형식"),

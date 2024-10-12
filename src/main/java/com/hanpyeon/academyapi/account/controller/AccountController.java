@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.account.controller;
 
 import com.hanpyeon.academyapi.account.dto.*;
+import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
@@ -15,6 +16,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,6 +36,29 @@ public class AccountController {
     private final AccountRegisterService accountRegisterService;
     private final AccountUpdateService accountUpdateService;
     private final AccountRemoveService accountRemoveService;
+    private final AccountPasswordRefreshService accountPasswordRefreshService;
+
+    @PostMapping("/password/verification")
+    public ResponseEntity<?> authenticateForRefreshPassword(
+            @RequestParam(required = true) String phoneNumber
+    ) {
+        accountPasswordRefreshService.generateVerificationCode(phoneNumber);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/password/verification")
+    public ResponseEntity<ChangedPasswordResponse> changePassword(
+            @RequestParam(required = true) final String phoneNumber,
+            @RequestParam(required = true) final String verificationCode
+    ) {
+        final ChangedPassword changedPassword = accountPasswordRefreshService.verifyCode(new VerifyAccountCode(phoneNumber, verificationCode));
+        return ResponseEntity.ok(new ChangedPasswordResponse(changedPassword.phoneNumber(), changedPassword.changedPassword()));
+    }
+
+    record ChangedPasswordResponse(
+            String phoneNumber,
+            String changedPassword) {
+    }
 
     @PostMapping
     @Operation(summary = "계정 등록", description = "어플리케이션에 계정을 등록하기 위한 API 입니다 ")
