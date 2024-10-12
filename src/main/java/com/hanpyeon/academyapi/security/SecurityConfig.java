@@ -132,7 +132,10 @@ public class SecurityConfig {
 
                     // 반 삭제 API는 매니저만 사용가능 하도록 구현
                     request.requestMatchers(HttpMethod.DELETE, "/api/manage/courses/*")
-                            .hasAnyAuthority(Role.MANAGER.getSecurityRole());
+                            .hasAnyAuthority(
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole());
 
                     // DELETE Method 경우 아래 Matcher 는 사용되지 않음
                     request.requestMatchers("/api/manage/courses/**")
