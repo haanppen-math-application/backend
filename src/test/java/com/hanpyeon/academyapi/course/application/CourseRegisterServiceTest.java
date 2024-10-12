@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.course.application.port.out.LoadTeacherPort;
 import com.hanpyeon.academyapi.course.application.port.out.RegisterCoursePort;
 import com.hanpyeon.academyapi.course.domain.Student;
 import com.hanpyeon.academyapi.course.domain.Teacher;
+import com.hanpyeon.academyapi.security.Role;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,7 +33,7 @@ class CourseRegisterServiceTest {
 
     @Test
     void 등록_테스트() {
-        CourseRegisterDto courseRegisterDto = new CourseRegisterDto("1", null, null, null);
+        CourseRegisterDto courseRegisterDto = new CourseRegisterDto("1", 1l, null, 1l, Role.TEACHER);
 
 
         Mockito.when(registerCoursePort.register(Mockito.any()))
