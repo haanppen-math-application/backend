@@ -37,6 +37,7 @@ public enum ErrorCode {
 
     ILLEGAL_QUESTION_EXCEPTION(HttpStatus.BAD_REQUEST, "-309", "잘못된 질문입니다."),
     ILLEGAL_COMMENT_EXCEPTION(HttpStatus.BAD_REQUEST, "-310", "잘못된 댓글입니다."),
+    COMMENT_EXCEPTION(HttpStatus.BAD_REQUEST, "-311", "잘못된 댓글 접근입니다."),
 
 
     ILLEGAL_COURSE_NAME(HttpStatus.BAD_REQUEST, "-401", "잘못된 반 이름"),

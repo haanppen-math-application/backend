@@ -33,7 +33,7 @@ class CommentServiceTest {
 
     @BeforeEach
     void init() {
-        this.commentService = new CommentService(commentRepository, commentRegisterManager, commentContentManager, commentDeleteManager, imageService);
+        this.commentService = new CommentService(commentRepository, commentRegisterManager, commentContentManager, imageService);
     }
 
     @Test

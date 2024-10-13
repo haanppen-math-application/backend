@@ -105,6 +105,7 @@ public class SecurityConfig {
                                     Role.TEACHER.getSecurityRole());
                     request.requestMatchers(HttpMethod.DELETE, "/api/board/comments/*")
                             .hasAnyAuthority(
+                                    Role.ADMIN.getSecurityRole(),
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
                     request.requestMatchers(HttpMethod.PATCH, "/api/board/comments/*")

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @WarnLoggable
-@Component
 public class CommentDeleteManager {
     private final MemberRepository memberRepository;
     private final ImageService imageService;

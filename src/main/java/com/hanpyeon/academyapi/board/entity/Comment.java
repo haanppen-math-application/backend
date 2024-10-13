@@ -73,6 +73,7 @@ public class Comment {
 
     public void delete() {
         this.question = null;
+        this.registeredMember = null;
         this.images.clear();
     }
     public void setContent(final String content) {
