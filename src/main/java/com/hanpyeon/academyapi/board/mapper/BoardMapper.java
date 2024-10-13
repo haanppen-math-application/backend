@@ -59,6 +59,9 @@ public class BoardMapper {
     }
 
     public MemberDetails createMemberDetails(final Member member) {
+        if (Objects.isNull(member)) {
+            return null;
+        }
         return MemberDetails.builder()
                 .memberId(member.getId())
                 .memberName(member.getName())
