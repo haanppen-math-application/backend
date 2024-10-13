@@ -107,11 +107,12 @@ public class BoardMapper {
                 .content(content)
                 .build();
     }
-    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto commentUpdateRequestDto, final Long requestMemberId) {
+    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto commentUpdateRequestDto, final Long requestMemberId, final Role role) {
         return CommentUpdateDto.builder()
                 .commentId(commentUpdateRequestDto.commentId())
                 .content(commentUpdateRequestDto.content())
                 .images(commentUpdateRequestDto.images())
+                .role(role)
                 .requestMemberId(requestMemberId)
                 .build();
     }
@@ -125,10 +126,11 @@ public class BoardMapper {
                 .build();
     }
 
-    public CommentDeleteDto createCommentDeleteDto(final Long commentId, final Long requestMemberId) {
+    public CommentDeleteDto createCommentDeleteDto(final Long commentId, final Long requestMemberId, final Role role) {
         return CommentDeleteDto.builder()
                 .requestMemberId(requestMemberId)
                 .commentId(commentId)
+                .role(role)
                 .build();
     }
     public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequestDto questionUpdateRequestDto, final Long requestMemberId, final Role memberRole) {
