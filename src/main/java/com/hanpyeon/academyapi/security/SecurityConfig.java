@@ -81,7 +81,8 @@ public class SecurityConfig {
                     request.requestMatchers(HttpMethod.DELETE, "/api/accounts")
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
-                                    Role.ADMIN.getSecurityRole()
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole()
                             );
                     request.requestMatchers(HttpMethod.PUT, "/api/accounts/teacher")
                             .hasAnyAuthority(
