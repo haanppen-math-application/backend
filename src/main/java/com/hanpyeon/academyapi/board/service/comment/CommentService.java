@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
 import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
+import com.hanpyeon.academyapi.board.exception.BoardException;
 import com.hanpyeon.academyapi.board.exception.NoSuchCommentException;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
 import com.hanpyeon.academyapi.board.dao.CommentRepository;
@@ -13,6 +14,7 @@ import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManag
 import com.hanpyeon.academyapi.board.service.comment.register.CommentRegisterManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.service.ImageService;
+import com.hanpyeon.academyapi.security.Role;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -28,7 +30,6 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final CommentRegisterManager commentRegisterManager;
     private final CommentContentManager commentContentManager;
-    private final CommentDeleteManager commentDeleteManager;
     private final ImageService imageService;
 
     @Transactional
@@ -53,8 +54,13 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(@Validated final CommentDeleteDto commentDeleteDto) {
-        Comment comment = findComment(commentDeleteDto.commentId());
-        commentDeleteManager.remove(comment, commentDeleteDto.requestMemberId());
+        final Comment comment = findComment(commentDeleteDto.commentId());
+        if (commentDeleteDto.role().equals(Role.TEACHER)) {
+            if (!comment.getRegisteredMember().getId().equals(commentDeleteDto.requestMemberId())) {
+                throw new BoardException("선생님은 본인 댓글만 삭제 가능", ErrorCode.COMMENT_EXCEPTION);
+            }
+        }
+        comment.delete();
         commentRepository.delete(comment);
     }
 
