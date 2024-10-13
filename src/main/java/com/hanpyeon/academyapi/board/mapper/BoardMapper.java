@@ -111,7 +111,6 @@ public class BoardMapper {
         return CommentUpdateDto.builder()
                 .commentId(commentUpdateRequestDto.commentId())
                 .content(commentUpdateRequestDto.content())
-                .images(commentUpdateRequestDto.images())
                 .role(role)
                 .requestMemberId(requestMemberId)
                 .build();

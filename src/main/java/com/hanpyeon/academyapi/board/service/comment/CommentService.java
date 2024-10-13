@@ -43,12 +43,8 @@ public class CommentService {
     public void updateComment(@Validated final CommentUpdateDto commentUpdateDto) {
         final Comment comment = findComment(commentUpdateDto.commentId());
         validateOwnedMember(comment, commentUpdateDto.requestMemberId(), commentUpdateDto.role());
-
-        if (commentUpdateDto.images() != null) {
-            imageService.updateImage(comment, commentUpdateDto.images());
-        }
         if (commentUpdateDto.content() != null) {
-            commentContentManager.changeContentTo(comment, commentUpdateDto.content());
+            comment.setContent(commentUpdateDto.content());
         }
     }
 

@@ -12,8 +12,6 @@ public record CommentUpdateDto(
         @NotNull Long requestMemberId,
         Role role,
         @NotNull Long commentId,
-        String title,
-        String content,
-        List<MultipartFile> images
+        String content
 ) {
 }

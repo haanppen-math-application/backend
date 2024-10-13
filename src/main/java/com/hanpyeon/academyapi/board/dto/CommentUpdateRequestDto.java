@@ -11,16 +11,13 @@ public record CommentUpdateRequestDto(
         @NotNull
         Long commentId,
         @Schema(description = "바뀐 전체 본문을 보내야 합니다.")
-        String content,
-        @Schema(description = "전체 이미지를 재전송 해야 합니다.")
-        List<MultipartFile> images
+        String content
 ) {
     @Override
     public String toString() {
         return "CommentUpdateRequestDto{" +
                 "commentId=" + commentId +
                 ", content='" + content + '\'' +
-                ", images=" + images +
                 '}';
     }
 }
