@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.account.entity;
 
+import com.hanpyeon.academyapi.course.adapter.out.CourseStudent;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -52,12 +55,18 @@ public class Member {
     @Column(name = "verify_status", nullable = true)
     private Boolean isVerifying = false;
 
+    @OneToMany(mappedBy = "member")
+    private List<CourseStudent> courseStudent = new ArrayList<>();
+
+
     public void setName(final String name) {
         this.name = name;
     }
+
     public void setGrade(final Integer grade) {
         this.grade = grade;
     }
+
     public void setPhoneNumber(final String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -79,9 +88,12 @@ public class Member {
         this.verificationCode = null;
         this.isVerifying = false;
     }
+
     public void remove() {
         this.phoneNumber = null;
         this.removed = true;
+        this.courseStudent.stream()
+                .forEach(courseStudent1 -> courseStudent1.delete());
     }
 
     @Builder

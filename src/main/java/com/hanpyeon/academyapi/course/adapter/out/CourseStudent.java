@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @ToString
-class CourseStudent {
+public class CourseStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,11 +22,11 @@ class CourseStudent {
     private LocalDateTime registeredDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "course_id")
     private Course courseEntity;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "student_id")
     private Member member;
 
     private CourseStudent(final Member student, final Course courseEntity) {
@@ -38,5 +38,10 @@ class CourseStudent {
         final CourseStudent courseStudent = new CourseStudent(student, courseEntity);
         courseEntity.addCourseStudent(courseStudent);
         return new CourseStudent(student, courseEntity);
+    }
+
+    public void delete() {
+        this.member = null;
+        this.courseEntity = null;
     }
 }

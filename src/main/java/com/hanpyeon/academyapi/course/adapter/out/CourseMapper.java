@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 class CourseMapper {
     Teacher mapToTeacher(final Member member) {
-        if (member.getRemoved()) {
-            return Teacher.none();
-        }
         if (member.getRole().equals(Role.STUDENT)) {
             throw new InvalidTargetException("학생은 반을 관리할 수 없습니다",ErrorCode.INVALID_MEMBER_TARGET);
         }
@@ -21,9 +18,6 @@ class CourseMapper {
     }
 
     Student mapToStudent(final Member member) {
-        if (member.getRemoved()) {
-            return Student.none();
-        }
         if (member.getRole().equals(Role.STUDENT)) {
             return new Student(member.getId(), member.getName(), member.getGrade());
         }
