@@ -10,15 +10,13 @@ public record QuestionUpdateRequestDto(
         Long questionId,
         String title,
         String content,
-        Long targetMemberId,
-        List<MultipartFile> images
+        Long targetMemberId
 ) {
     @Override
     public String toString() {
         return "QuestionUpdateRequestDto{" +
                 "content='" + content + '\'' +
                 ", targetMemberId=" + targetMemberId +
-                ", images=" + images +
                 '}';
     }
 }

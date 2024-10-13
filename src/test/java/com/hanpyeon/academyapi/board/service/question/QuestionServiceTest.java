@@ -129,15 +129,15 @@ class QuestionServiceTest {
 
     private static Stream<Arguments> provideLegalQuestionUpdateDto() {
         return Stream.of(
-                Arguments.of(new QuestionUpdateDto(2l, 1L, 3L, Role.STUDENT, "test", "test", null))
+                Arguments.of(new QuestionUpdateDto(2l, 1L, 3L, Role.STUDENT, "test", "test"))
         );
     }
 
     private static Stream<Arguments> provideIllegalQuestionUpdateDto() {
         return Stream.of(
-                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, Role.STUDENT, "test", "test", null)),
-                Arguments.of(new QuestionUpdateDto(2l, 12L, null, Role.STUDENT, "test", "test", null)),
-                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, Role.STUDENT, "test", "test", null))
+                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, Role.STUDENT, "test", "test")),
+                Arguments.of(new QuestionUpdateDto(2l, 12L, null, Role.STUDENT, "test", "test")),
+                Arguments.of(new QuestionUpdateDto(null, 12L, 2l, Role.STUDENT, "test", "test"))
         );
     }
 
