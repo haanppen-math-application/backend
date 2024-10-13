@@ -18,15 +18,13 @@ public record QuestionUpdateDto(
         @NotNull
         Role memberRole,
         String content,
-        String title,
-        List<MultipartFile> images
+        String title
 ) {
     @Override
     public String toString() {
         return "QuestionUpdateDto{" +
                 ", targetMemberId=" + targetMemberId +
                 ", requestMemberId=" + requestMemberId +
-                ", images=" + images +
                 '}';
     }
 }

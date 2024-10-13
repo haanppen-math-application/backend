@@ -26,8 +26,6 @@ class CommentServiceTest {
     CommentContentManager commentContentManager;
     @Mock
     ImageService imageService;
-    @Mock
-    CommentDeleteManager commentDeleteManager;
 
     CommentService commentService;
 

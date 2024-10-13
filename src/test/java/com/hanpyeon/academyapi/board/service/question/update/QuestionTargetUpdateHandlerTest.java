@@ -19,14 +19,14 @@ class QuestionTargetUpdateHandlerTest {
 
     @Test
     void 업데이트_가능_테스트() {
-        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l, Role.STUDENT, "test", "test", Collections.emptyList());
+        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l, 2l, 3l, Role.STUDENT, "test", "test");
 
         assertEquals(targetUpdateHandler.applicable(questionUpdateDto), true);
     }
 
     @Test
     void 업데이트_불가_테스트() {
-        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l,  null, 3l, Role.STUDENT, "test", "test", Collections.emptyList());
+        final QuestionUpdateDto questionUpdateDto = new QuestionUpdateDto(1l,  null, 3l, Role.STUDENT, "test", "test");
 
         assertEquals(targetUpdateHandler.applicable(questionUpdateDto), false);
     }

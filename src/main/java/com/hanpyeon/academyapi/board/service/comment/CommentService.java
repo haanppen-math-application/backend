@@ -42,24 +42,16 @@ public class CommentService {
     @Transactional
     public void updateComment(@Validated final CommentUpdateDto commentUpdateDto) {
         final Comment comment = findComment(commentUpdateDto.commentId());
-        validateOwnedMember(comment, commentUpdateDto.requestMemberId());
-
-        if (commentUpdateDto.images() != null) {
-            imageService.updateImage(comment, commentUpdateDto.images());
-        }
+        validateOwnedMember(comment, commentUpdateDto.requestMemberId(), commentUpdateDto.role());
         if (commentUpdateDto.content() != null) {
-            commentContentManager.changeContentTo(comment, commentUpdateDto.content());
+            comment.setContent(commentUpdateDto.content());
         }
     }
 
     @Transactional
     public void deleteComment(@Validated final CommentDeleteDto commentDeleteDto) {
         final Comment comment = findComment(commentDeleteDto.commentId());
-        if (commentDeleteDto.role().equals(Role.TEACHER)) {
-            if (!comment.getRegisteredMember().getId().equals(commentDeleteDto.requestMemberId())) {
-                throw new BoardException("선생님은 본인 댓글만 삭제 가능", ErrorCode.COMMENT_EXCEPTION);
-            }
-        }
+        validateOwnedMember(comment, commentDeleteDto.requestMemberId(), commentDeleteDto.role());
         comment.delete();
         commentRepository.delete(comment);
     }
@@ -69,10 +61,11 @@ public class CommentService {
                 .orElseThrow(() -> new NoSuchCommentException(ErrorCode.NO_SUCH_COMMENT));
     }
 
-    private void validateOwnedMember(final Comment targetComment, final Long requestMemberId) {
-        final Long questionRegisteredMemberId = targetComment.getRegisteredMember().getId();
-        if (!questionRegisteredMemberId.equals(requestMemberId)) {
-            throw new RequestDeniedException("본인이 작성한 댓글이 아닙니다", ErrorCode.DENIED_EXCEPTION);
+    private void validateOwnedMember(final Comment targetComment, final Long requestMemberId, final Role requestMemberRole) {
+        if (requestMemberRole.equals(Role.TEACHER)) {
+            if (!targetComment.getRegisteredMember().getId().equals(requestMemberId)) {
+                throw new BoardException("선생님은 본인 댓글만 접근 가능", ErrorCode.COMMENT_EXCEPTION);
+            }
         }
     }
 }

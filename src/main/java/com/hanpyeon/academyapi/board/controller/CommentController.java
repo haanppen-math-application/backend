@@ -46,7 +46,7 @@ public class CommentController {
     public ResponseEntity<?> updateComment(
             @Valid @ModelAttribute CommentUpdateRequestDto commentUpdateRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, memberPrincipal.memberId());
+        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }
@@ -57,7 +57,7 @@ public class CommentController {
     public ResponseEntity<?> deleteComment(
             @NotNull @PathVariable final Long commentId,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        CommentDeleteDto commentDeleteDto = boardMapper.createCommentDeleteDto(commentId, memberPrincipal.memberId());
+        CommentDeleteDto commentDeleteDto = boardMapper.createCommentDeleteDto(commentId, memberPrincipal.memberId(), memberPrincipal.role());
         commentService.deleteComment(commentDeleteDto);
         return ResponseEntity.noContent().build();
     }
