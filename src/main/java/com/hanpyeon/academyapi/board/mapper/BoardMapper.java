@@ -135,6 +135,7 @@ public class BoardMapper {
                 .title(questionUpdateRequestDto.title())
                 .content(questionUpdateRequestDto.content())
                 .requestMemberId(requestMemberId)
+                .questionId(questionUpdateRequestDto.questionId())
                 .targetMemberId(questionUpdateRequestDto.targetMemberId())
                 .build();
     }
