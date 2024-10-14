@@ -76,9 +76,9 @@ public class QuestionController {
 
     @Operation(summary = "질문 수정 API", description = "질문 수정은 본인만 가능합니다")
     @SecurityRequirement(name = "jwtAuth")
-    @PutMapping("/{questionId}")
+    @PutMapping
     public ResponseEntity<?> updateQuestion(
-            @Valid @ModelAttribute final QuestionUpdateRequestDto questionUpdateRequestDto,
+            @Valid @RequestBody final QuestionUpdateRequestDto questionUpdateRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());

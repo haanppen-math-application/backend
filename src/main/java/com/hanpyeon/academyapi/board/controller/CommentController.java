@@ -41,7 +41,7 @@ public class CommentController {
     }
 
     @Operation(summary = "댓글 내용 수정 API")
-    @PatchMapping(value = "/{commentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PatchMapping(value = "/{commentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateComment(
             @Valid @ModelAttribute CommentUpdateRequestDto commentUpdateRequestDto,
