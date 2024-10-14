@@ -41,10 +41,10 @@ public class CommentController {
     }
 
     @Operation(summary = "댓글 내용 수정 API")
-    @PatchMapping(value = "/{commentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateComment(
-            @Valid @ModelAttribute CommentUpdateRequestDto commentUpdateRequestDto,
+            @Valid @RequestBody CommentUpdateRequestDto commentUpdateRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         commentService.updateComment(commentUpdateDto);
