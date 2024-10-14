@@ -20,4 +20,6 @@ public interface MediaRepository extends JpaRepository<Media, Long> {
 
     @Query("SELECT new java.lang.Long(member.id) FROM Media media INNER JOIN Member member ON member.id = media.member.id WHERE media.src = :src")
     Optional<Long> findOwnerId(@Param("src") final String src);
+
+    Boolean existsBySrc(final String src);
 }

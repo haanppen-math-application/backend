@@ -12,11 +12,14 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.*;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @Primary
@@ -57,6 +60,19 @@ public class LocalStorage implements MediaStorage {
             return new MediaDto(fileResource.getInputStream(), MediaType.parseMediaType(Files.probeContentType(fileResource.getFile().toPath())), fileResource.contentLength());
         } catch (IOException | InvalidMediaTypeException | InvalidPathException | SecurityException e) {
             throw new NotSupportedMediaException("지원하지 않는 이미지 입니다.", ErrorCode.NOT_SUPPORTED_MEDIA);
+        }
+    }
+
+    @Override
+    public Set<String> loadAllFileNames() {
+        final Path storagePath = resolveFilePath("");
+        try {
+            return Files.walk(storagePath)
+                    .filter(Files::isRegularFile)
+                    .map(path -> path.toFile().getName())
+                    .collect(Collectors.toSet());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
