@@ -1,7 +1,9 @@
 package com.hanpyeon.academyapi.media.entity;
 
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.course.adapter.out.MemoMedia;
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;

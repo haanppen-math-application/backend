@@ -2,6 +2,8 @@ package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.media.entity.Media;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -22,6 +24,8 @@ public class MemoMedia {
     @JoinColumn(name = "MEMO_MEMO_ID")
     private Memo memo;
     private Integer sequence;
+    @OneToMany(mappedBy = "memoMedia")
+    private List<MemoMediaAttachment> memoMediaAttachments = new ArrayList<>();
 
     private MemoMedia(final Memo memo, final Media media, final Integer sequence) {
         this.memo = memo;
@@ -36,6 +40,8 @@ public class MemoMedia {
     public void setNull() {
         this.media = null;
         this.memo = null;
+        this.memoMediaAttachments.stream()
+                .forEach(memoMediaAttachment -> memoMediaAttachment.setNull());
     }
 
     static MemoMedia of(final Memo memo, final Media media, final Integer sequence) {
