@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountScheduler {
     private final MemberRepository memberRepository;
 
-    @Scheduled(cron = "0 0 0 * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void resetVerificationStatus() {
         memberRepository.findAll().stream()

@@ -27,7 +27,9 @@ public class ChunkTargetDirectoryValidator implements ChunkValidator {
         if (isOwner(chunkedFile.getRequestMemberId(), targetDirectory)) {
             return;
         }
-        if (isSuperUser(chunkedFile.getRequestMemberId()))
+        if (isSuperUser(chunkedFile.getRequestMemberId())) {
+            return;
+        }
         throw new DirectoryException("디렉토리가 잠겨있거나, 본인 소유가 아닙니다", ErrorCode.ITS_NOT_YOUR_DIRECTORY);
     }
 
