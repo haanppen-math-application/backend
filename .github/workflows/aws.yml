@@ -29,17 +29,17 @@ jobs:
     - name: copy file to server via ssh key
       uses: appleboy/scp-action@v0.1.7
       with:
-        host: ${{ secrets.AWS_HOST }}
-        username: ${{ secrets.AWS_USERNAME }}
-        key: ${{ secrets.AWS_SSH_KEY }}
+        host: ${{ secrets.AWS_HOST_DEPLOY }}
+        username: ${{ secrets.AWS_USERNAME_DEPLOY }}
+        key: ${{ secrets.AWS_SSH_KEY_DEPLOY }}
         source: "build/libs/*"
         target: "/home/ubuntu/apiserver"
         
     - name: ssh access to ec2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.AWS_HOST }}
-        username: ${{ secrets.AWS_USERNAME }}
-        key: ${{ secrets.AWS_SSH_KEY }}
+        host: ${{ secrets.AWS_HOST_DEPLOY }}
+        username: ${{ secrets.AWS_USERNAME_DEPLOY }}
+        key: ${{ secrets.AWS_SSH_KEY_DEPLOY }}
         script: |
           sudo systemctl restart apiserver.service
