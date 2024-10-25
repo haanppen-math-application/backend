@@ -24,7 +24,7 @@ public class AwsStorage implements MediaStorage {
 
     public AwsStorage(
             final AmazonS3 amazonS3Client,
-            @Value("${cloud.aws.s3.bucket}}") final String bucketName
+            @Value("${cloud.aws.s3.bucket}") final String bucketName
     ) {
         this.amazonS3Client = amazonS3Client;
         this.bucketName = bucketName;
