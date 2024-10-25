@@ -21,11 +21,8 @@ import java.nio.file.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
-@Primary
 public class LocalStorage implements MediaStorage {
 
-    //    @Value("${server.local.storage}")
     protected final String storagePath;
 
     public LocalStorage(@Value("${server.local.storage}") String storagePath) {

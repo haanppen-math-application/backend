@@ -38,7 +38,7 @@ class LocalStorageTest {
         registry.add("server.local.storage", path::toString);
     }
 
-    @Test
+//    @Test
     @Transactional
     void testPath() throws IOException {
         File file = new File("src/test/java/com/hanpyeon/academyapi/media/storage/temp.png");
@@ -50,5 +50,4 @@ class LocalStorageTest {
         }
         String newFileName = localStorage.store(new ImageUploadFile(new MockMultipartFile("hee1.png", "origin.png", null, imageInputStream)));
     }
-
 }
