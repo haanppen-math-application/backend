@@ -7,12 +7,14 @@ import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.service.UploadFile;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MimeTypeUtils;
 
 @Service
 @Primary
@@ -53,7 +55,7 @@ public class AwsStorage implements MediaStorage {
     @Override
     public MediaDto loadFile(String fileName) {
         final S3Object s3Object = amazonS3Client.getObject(bucketName, fileName);
-        final MediaDto mediaDto = new MediaDto(s3Object.getObjectContent(), MediaType.parseMediaType(fileName),
+        final MediaDto mediaDto = new MediaDto(s3Object.getObjectContent(), MediaType.parseMediaType(URLConnection.guessContentTypeFromName(fileName)),
                 s3Object.getObjectMetadata().getContentLength());
         return mediaDto;
     }
