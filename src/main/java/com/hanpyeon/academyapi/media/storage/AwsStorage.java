@@ -31,16 +31,10 @@ public class AwsStorage implements MediaStorage {
 
     @Override
     public String store(UploadFile uploadFile) {
-        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        try {
-            uploadFile.getInputStream().transferTo(byteArrayOutputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
         final ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(uploadFile.getExtension());
-        objectMetadata.setContentLength(byteArrayOutputStream.size());
+//        objectMetadata.setContentLength(byteArrayOutputStream.size());
 
         amazonS3Client.putObject(
                 bucketName,
