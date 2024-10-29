@@ -77,7 +77,7 @@ public class DirectoryMediaController {
 
     record MediaSaveRequest(
             @NotBlank @Pattern(regexp = "^/.*$") String targetDirectoryPath,
-            @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String fileName,
+            @NotBlank String fileName,
             @Nonnull Long totalChunkCount,
             @Nonnull Long currChunkIndex,
             @Nonnull Boolean isLast,
