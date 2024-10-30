@@ -25,6 +25,8 @@ public class JwtUtils {
     private String jwtKey;
     @Value("${server.jwt.expiration}")
     private Long expirationTime;
+    @Value("${server.jwt.refresh.expiration}")
+    private Long refreshExpirationTime;
     private SignatureAlgorithm signatureAlgorithm;
     private SecretKey secretKey;
     private JwtParser jwtParser;
@@ -57,7 +59,7 @@ public class JwtUtils {
         return TOKEN_TYPE + " " + Jwts.builder()
                 .setSubject(String.valueOf(memberId))
                 .setIssuedAt(time)
-                .setExpiration(new Date(time.getTime() + expirationTime * 2))
+                .setExpiration(new Date(time.getTime() + refreshExpirationTime))
                 .signWith(secretKey, signatureAlgorithm)
                 .compact();
     }
