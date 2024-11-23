@@ -3,8 +3,11 @@ package com.hanpyeon.academyapi.banner.controller;
 import com.hanpyeon.academyapi.banner.BannerService;
 import com.hanpyeon.academyapi.banner.dto.AddBannerCommand;
 import com.hanpyeon.academyapi.banner.dto.ChangeBannerCommand;
+import com.hanpyeon.academyapi.banner.dto.DeleteBannerCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 class BannerController {
-
     private final BannerService bannerService;
 
-    @PostMapping("/api/banner")
+    @PostMapping("/api/banners")
     public ResponseEntity<?> addBanner(
             @RequestBody AddBannerRequest addBannerRequest
     ) {
@@ -25,7 +27,7 @@ class BannerController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/api/banner")
+    @PutMapping("/api/banners")
     public ResponseEntity<?> modifyBanner(
             @RequestBody ChangeBannerRequest changeBannerRequest
     ) {
@@ -35,6 +37,15 @@ class BannerController {
         );
         bannerService.changeBanner(changeBannerCommand);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/api/banners/{bannerId}")
+    public ResponseEntity<?> deleteBanner(
+            @PathVariable(required = true) final Long bannerId
+    ) {
+        final DeleteBannerCommand deleteBannerCommand = new DeleteBannerCommand(bannerId);
+        bannerService.deleteBanner(deleteBannerCommand);
+        return ResponseEntity.noContent().build();
     }
 
     record AddBannerRequest(
