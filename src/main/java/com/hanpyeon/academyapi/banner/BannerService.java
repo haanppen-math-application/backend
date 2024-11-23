@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.banner;
 
 import com.hanpyeon.academyapi.banner.dto.AddBannerCommand;
 import com.hanpyeon.academyapi.banner.dto.ChangeBannerCommand;
+import com.hanpyeon.academyapi.banner.dto.DeleteBannerCommand;
 import com.hanpyeon.academyapi.exception.BusinessException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,10 @@ public class BannerService {
         final Banner banner = bannerRepository.findById(changeBannerCommand.bannerId())
                 .orElseThrow(() -> new BusinessException("찾을 수 없는 배너", ErrorCode.BANNER_EXCEPTION));
         banner.changeContent(changeBannerCommand.content());
+    }
+
+    @Transactional
+    public void deleteBanner(@Validated final DeleteBannerCommand deleteBannerCommand) {
+        bannerRepository.deleteById(deleteBannerCommand.bannerId());
     }
 }
