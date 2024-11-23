@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.security.exceptionhandler.JwtEntryPointHandler;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,8 +21,6 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 
 @EnableWebSecurity
@@ -65,6 +64,11 @@ public class SecurityConfig {
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole());
+
+                    request.requestMatchers(HttpMethod.POST, "/api/banners")
+                            .hasAnyAuthority(
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.ADMIN.getSecurityRole());
 
                     request.requestMatchers("/api/images/**")
                             .permitAll();
