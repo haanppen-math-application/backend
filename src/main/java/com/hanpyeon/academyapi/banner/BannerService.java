@@ -1,10 +1,12 @@
 package com.hanpyeon.academyapi.banner;
 
 import com.hanpyeon.academyapi.banner.dto.AddBannerCommand;
+import com.hanpyeon.academyapi.banner.dto.BannerResponse;
 import com.hanpyeon.academyapi.banner.dto.ChangeBannerCommand;
 import com.hanpyeon.academyapi.banner.dto.DeleteBannerCommand;
 import com.hanpyeon.academyapi.exception.BusinessException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,11 @@ import org.springframework.validation.annotation.Validated;
 @RequiredArgsConstructor
 public class BannerService {
     private final BannerRepository bannerRepository;
+
+    @Transactional(readOnly = true)
+    public List<BannerResponse> queryAllBanners() {
+        return bannerRepository.queryAllBanners();
+    }
 
     @Transactional
     public void addBanner(final AddBannerCommand addBannerCommand) {
