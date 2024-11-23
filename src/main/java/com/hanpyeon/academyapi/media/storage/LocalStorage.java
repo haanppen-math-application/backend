@@ -20,7 +20,10 @@ import java.io.OutputStream;
 import java.nio.file.*;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
+@Service
+@Primary
 public class LocalStorage implements MediaStorage {
 
     protected final String storagePath;

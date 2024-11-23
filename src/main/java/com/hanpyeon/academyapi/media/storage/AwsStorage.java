@@ -16,8 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
-@Service
-@Primary
+//@Service
+//@Primary
 public class AwsStorage implements MediaStorage {
 
     private final AmazonS3 amazonS3Client;
