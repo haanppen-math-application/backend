@@ -69,6 +69,10 @@ public class SecurityConfig {
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
                                     Role.ADMIN.getSecurityRole());
+                    request.requestMatchers(HttpMethod.PUT, "/api/banners")
+                            .hasAnyAuthority(
+                                    Role.MANAGER.getSecurityRole(),
+                                    Role.ADMIN.getSecurityRole());
 
                     request.requestMatchers("/api/images/**")
                             .permitAll();

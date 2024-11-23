@@ -43,7 +43,9 @@ public enum ErrorCode {
     INVALID_UPLOAD_FILE(HttpStatus.BAD_REQUEST, "-801", "파일 검증 실패"),
     NOT_SUPPORTED_MEDIA(HttpStatus.BAD_REQUEST, "-802", "지원하지 않는 타입의 파일"),
     NO_SUCH_MEDIA(HttpStatus.BAD_REQUEST, "-803", "파일 찾기 실패"),
-    MEDIA_STORE_EXCEPTION(HttpStatus.BAD_REQUEST, "-804", "파일을 저장 불가");
+    MEDIA_STORE_EXCEPTION(HttpStatus.BAD_REQUEST, "-804", "파일을 저장 불가"),
+
+    BANNER_EXCEPTION(HttpStatus.BAD_REQUEST, "-900", "배너 오류");
 
     private final HttpStatus httpStatus;
     private final String errorCode;
