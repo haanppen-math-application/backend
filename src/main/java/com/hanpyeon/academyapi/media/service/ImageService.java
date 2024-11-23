@@ -3,9 +3,12 @@ package com.hanpyeon.academyapi.media.service;
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.MediaMapper;
+import com.hanpyeon.academyapi.media.dto.ImageUrlDto;
 import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.entity.Image;
+import com.hanpyeon.academyapi.media.exception.MediaStoreException;
 import com.hanpyeon.academyapi.media.repository.ImageRepository;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
 import com.hanpyeon.academyapi.media.validator.UploadFileExtensionValidator;
@@ -46,6 +49,14 @@ public class ImageService {
                         .map(uploadFile -> mediaStorage.store(uploadFile))
                         .toList()
         );
+    }
+
+    @Transactional
+    public ImageUrlDto saveSingleImage(final MultipartFile image) {
+        return this.saveImage(List.of(image)).stream()
+                .map(imageEntity -> new ImageUrlDto(imageEntity.getSrc()))
+                .findAny()
+                .orElseThrow(() -> new MediaStoreException(ErrorCode.MEDIA_STORE_EXCEPTION));
     }
 
     @Transactional
