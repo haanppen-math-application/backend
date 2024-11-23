@@ -21,4 +21,8 @@ class Banner {
     public Banner(String content) {
         this.content = content;
     }
+
+    void changeContent(final String content) {
+        this.content = content;
+    }
 }

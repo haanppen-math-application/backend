@@ -82,7 +82,9 @@ public enum ErrorCode {
     NO_SUCH_MEDIA(HttpStatus.BAD_REQUEST, "-803", "파일 찾기 실패"),
     MEDIA_STORE_EXCEPTION(HttpStatus.BAD_REQUEST, "-804", "파일을 저장 불가"),
     MEDIA_ACCESS_EXCEPTION(HttpStatus.BAD_REQUEST, "-805", "파일 스트리밍 불가"),
-    MEDIA_DELETE_EXCEPTION(HttpStatus.BAD_REQUEST, "-806", "미디어 삭제 불가");
+    MEDIA_DELETE_EXCEPTION(HttpStatus.BAD_REQUEST, "-806", "미디어 삭제 불가"),
+
+    BANNER_EXCEPTION(HttpStatus.BAD_REQUEST, "-900", "배너 오류");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

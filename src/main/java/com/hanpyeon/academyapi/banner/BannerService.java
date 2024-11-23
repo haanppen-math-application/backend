@@ -1,18 +1,29 @@
 package com.hanpyeon.academyapi.banner;
 
 import com.hanpyeon.academyapi.banner.dto.AddBannerCommand;
+import com.hanpyeon.academyapi.banner.dto.ChangeBannerCommand;
+import com.hanpyeon.academyapi.exception.BusinessException;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 public class BannerService {
-
     private final BannerRepository bannerRepository;
+
     @Transactional
     public void addBanner(final AddBannerCommand addBannerCommand) {
         final Banner banner = new Banner(addBannerCommand.content());
         bannerRepository.save(banner);
+    }
+
+    @Transactional
+    public void changeBanner(@Validated final ChangeBannerCommand changeBannerCommand) {
+        final Banner banner = bannerRepository.findById(changeBannerCommand.bannerId())
+                .orElseThrow(() -> new BusinessException("찾을 수 없는 배너", ErrorCode.BANNER_EXCEPTION));
+        banner.changeContent(changeBannerCommand.content());
     }
 }
