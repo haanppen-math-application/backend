@@ -18,7 +18,8 @@ public record QuestionUpdateDto(
         @NotNull
         Role memberRole,
         String content,
-        String title
+        String title,
+        List<String> imageSources
 ) {
     @Override
     public String toString() {
