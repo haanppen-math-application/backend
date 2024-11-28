@@ -11,7 +11,7 @@ public record QuestionRegisterRequestDto(
         Long targetMemberId,
         String title,
         String content,
-        List<MultipartFile> images
+        List<String> images
 ) {
     @Override
     public String toString() {
