@@ -14,5 +14,5 @@ public record QuestionRegisterDto(
         Long targetMemberId,
         String title,
         String content,
-        List<MultipartFile> images
+        List<String> images
 ) {}

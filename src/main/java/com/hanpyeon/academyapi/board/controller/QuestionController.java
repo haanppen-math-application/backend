@@ -29,9 +29,9 @@ public class QuestionController {
 
     @Operation(summary = "질문 등록 API", description = "질문을 등록하는 API 입니다")
     @SecurityRequirement(name = "jwtAuth")
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addQuestion(
-            @Valid @ModelAttribute final QuestionRegisterRequestDto questionRegisterRequestDto,
+            @Valid @RequestBody final QuestionRegisterRequestDto questionRegisterRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
         QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, memberPrincipal.memberId());
         final Long createdQuestionId = questionService.addQuestion(questionRegisterDto);

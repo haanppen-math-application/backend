@@ -45,67 +45,6 @@ class QuestionControllerTest {
         ).andExpect(status().isBadRequest());
     }
 
-    /**
-     * no more used
-     */
-//    @Test
-//    void 질문_등록시_content_없음_테스트() throws Exception {
-//        mockMvc.perform(multipart("/api/board/questions")
-//                .param("targetMemberId", "1")
-//        ).andExpect(status().isBadRequest());
-//    }
-
-    @Test
-    void 이미지포함_질문등록_성공_테스트() throws Exception {
-        MockMultipartFile image = new MockMultipartFile(
-                "image",
-                "helwijadw".getBytes());
-        mockMvc.perform(multipart("/api/board/questions")
-                .file(image)
-                .param("title", "제목")
-                .param("content", "내용")
-        ).andExpect(status().isCreated());
-    }
-
-    @Test
-    void 이미지_없음_성공_테스트() throws Exception {
-        mockMvc.perform(multipart("/api/board/questions")
-                        .param("targetMemberId", "1")
-                        .param("content", "hello")
-                ).andExpect(status().isCreated())
-                .andDo(MockMvcResultHandlers.print());
-    }
-
-    @Test
-    void 이미지_존재_성공_테스트() throws Exception {
-        MockMultipartFile image = new MockMultipartFile(
-                "images",
-                "helwijadw".getBytes());
-
-        mockMvc.perform(multipart("/api/board/questions")
-                .file(image)
-                .param("content", "내용")
-                .param("targetMemberId", "12")
-        ).andExpect(status().isCreated());
-    }
-
-    @Test
-    void 여러_이미지_성공_테스트() throws Exception {
-        MockMultipartFile image1 = new MockMultipartFile(
-                "image",
-                "helwijadw".getBytes());
-        MockMultipartFile image2 = new MockMultipartFile(
-                "image",
-                "helwijadw".getBytes());
-
-        mockMvc.perform(multipart("/api/board/questions")
-                .file(image1)
-                .file(image2)
-                .param("content", "내용")
-                .param("targetMemberId", "12")
-        ).andExpect(status().isCreated());
-    }
-
     @Test
     void 질문조회성공테스트() throws Exception {
         Mockito.when(questionService.getSingleQuestionDetails(Mockito.any()))
