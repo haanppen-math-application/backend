@@ -9,6 +9,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,7 @@ public class ImageController {
 
     @Operation(summary = "이미지 조회를 위한 API", description = "댓글 및 게시글 조회시 받은 이미지 주소를 포함하여 요청하면 이미지 데이터를 리턴합니다.")
     @GetMapping("/{imageSource}")
-    public ResponseEntity<?> getImage(@PathVariable("imageSource") String imageSource) throws IOException {
+    public ResponseEntity<byte[]> getImage(@PathVariable("imageSource") String imageSource) throws IOException {
         MediaDto media = imageService.loadImage(imageSource);
 
         return ResponseEntity.ok()
@@ -35,8 +36,8 @@ public class ImageController {
                 .body(media.data().readAllBytes());
     }
 
-    @PostMapping("/image")
-    public ResponseEntity<?> postImage(
+    @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ImageUrlDto> postImage(
             @RequestPart(value = "image", required = true) final MultipartFile image
     ) {
         final ImageUrlDto imageUrlDto = imageService.saveSingleImage(image);
