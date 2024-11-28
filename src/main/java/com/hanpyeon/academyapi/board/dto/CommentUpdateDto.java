@@ -12,6 +12,7 @@ public record CommentUpdateDto(
         @NotNull Long requestMemberId,
         Role role,
         @NotNull Long commentId,
-        String content
+        String content,
+        List<String> imageSources
 ) {
 }

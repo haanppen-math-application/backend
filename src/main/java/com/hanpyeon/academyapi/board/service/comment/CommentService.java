@@ -13,10 +13,13 @@ import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManager;
 import com.hanpyeon.academyapi.board.service.comment.register.CommentRegisterManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.LifecycleState;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +49,8 @@ public class CommentService {
         if (commentUpdateDto.content() != null) {
             comment.setContent(commentUpdateDto.content());
         }
+        final List<Image> images = imageService.loadImages(commentUpdateDto.imageSources());
+        comment.changeImagesTo(images);
     }
 
     @Transactional
