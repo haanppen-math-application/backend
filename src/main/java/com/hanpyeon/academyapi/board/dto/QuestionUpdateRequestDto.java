@@ -10,7 +10,8 @@ public record QuestionUpdateRequestDto(
         Long questionId,
         String title,
         String content,
-        Long targetMemberId
+        Long targetMemberId,
+        List<String> imageSources
 ) {
     @Override
     public String toString() {

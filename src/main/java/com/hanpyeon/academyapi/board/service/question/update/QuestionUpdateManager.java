@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @AllArgsConstructor
@@ -17,6 +19,7 @@ public class QuestionUpdateManager {
     private final List<QuestionUpdateHandler> questionUpdateHandlers;
     private final QuestionValidateManager questionValidateManager;
 
+    @Transactional(propagation = Propagation.MANDATORY)
     public void update(final Question targetQuestion, final QuestionUpdateDto questionUpdateDto) {
         verifyAccess(targetQuestion.getOwnerMember().getId(), questionUpdateDto.requestMemberId(), questionUpdateDto.memberRole());
         questionUpdateHandlers.stream()
