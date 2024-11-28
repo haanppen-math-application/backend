@@ -138,6 +138,7 @@ public class BoardMapper {
                 .requestMemberId(requestMemberId)
                 .questionId(questionUpdateRequestDto.questionId())
                 .targetMemberId(questionUpdateRequestDto.targetMemberId())
+                .imageSources(questionUpdateRequestDto.imageSources())
                 .build();
     }
 
