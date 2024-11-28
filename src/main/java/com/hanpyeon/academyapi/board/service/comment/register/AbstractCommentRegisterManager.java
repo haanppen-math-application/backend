@@ -15,6 +15,7 @@ import com.hanpyeon.academyapi.media.exception.MediaStoreException;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 해당 클래스를 이용하여 댓글에 대한 여러 제약을 구현할 수 있습니다.
  */
 @AllArgsConstructor
+@Slf4j
 abstract class AbstractCommentRegisterManager implements CommentRegisterManager {
     private final ImageService imageService;
     private final QuestionRepository questionRepository;
@@ -35,6 +37,7 @@ abstract class AbstractCommentRegisterManager implements CommentRegisterManager 
         Question question = findQuestion(commentRegisterDto.questionId());
         Member member = findMember(commentRegisterDto.memberId());
         if (!imageService.isExists(commentRegisterDto.images())) {
+            log.error(" cannt find images Source that included in comment : " + commentRegisterDto);
             throw new MediaStoreException("이미지를 찾을 수 없습니다.", ErrorCode.MEDIA_ACCESS_EXCEPTION);
         }
         final List<Image> images = imageService.loadImages(commentRegisterDto.images());

@@ -110,6 +110,7 @@ public class BoardMapper {
                 .content(commentUpdateRequestDto.content())
                 .role(role)
                 .requestMemberId(requestMemberId)
+                .imageSources(commentUpdateRequestDto.imageSources())
                 .build();
     }
 

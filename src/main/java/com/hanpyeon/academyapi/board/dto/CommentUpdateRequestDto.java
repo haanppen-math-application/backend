@@ -11,7 +11,8 @@ public record CommentUpdateRequestDto(
         @NotNull
         Long commentId,
         @Schema(description = "바뀐 전체 본문을 보내야 합니다.")
-        String content
+        String content,
+        List<String> imageSources
 ) {
     @Override
     public String toString() {
