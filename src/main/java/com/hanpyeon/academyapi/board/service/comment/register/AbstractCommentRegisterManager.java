@@ -2,21 +2,20 @@ package com.hanpyeon.academyapi.board.service.comment.register;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
-import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
+import com.hanpyeon.academyapi.media.exception.MediaStoreException;
 import com.hanpyeon.academyapi.media.service.ImageService;
-import lombok.AllArgsConstructor;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -35,7 +34,10 @@ abstract class AbstractCommentRegisterManager implements CommentRegisterManager 
     public Comment register(final CommentRegisterDto commentRegisterDto) {
         Question question = findQuestion(commentRegisterDto.questionId());
         Member member = findMember(commentRegisterDto.memberId());
-        List<Image> images = imageService.saveImage(commentRegisterDto.images());
+        if (!imageService.isExists(commentRegisterDto.images())) {
+            throw new MediaStoreException("이미지를 찾을 수 없습니다.", ErrorCode.MEDIA_ACCESS_EXCEPTION);
+        }
+        final List<Image> images = imageService.loadImages(commentRegisterDto.images());
         final Comment comment = boardMapper.createComment(question, member, images, commentRegisterDto.content());
         question.addComment(comment);
         question.solved();

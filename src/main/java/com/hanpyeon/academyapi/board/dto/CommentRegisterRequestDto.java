@@ -10,7 +10,7 @@ import java.util.List;
 public record CommentRegisterRequestDto(
         @NotNull Long questionId,
         String content,
-        List<MultipartFile> images
+        List<String> images
 ) {
     @Override
     public String toString() {

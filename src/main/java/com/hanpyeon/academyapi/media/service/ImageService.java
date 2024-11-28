@@ -51,6 +51,16 @@ public class ImageService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public List<Image> loadImages(final List<String> imageSrcs) {
+        return imageRepository.findAllBySrcIn(imageSrcs);
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isExists(final List<String> imageSources) {
+        return imageRepository.existsAllBySrcIn(imageSources);
+    }
+
     @Transactional
     public ImageUrlDto saveSingleImage(final MultipartFile image) {
         return this.saveImage(List.of(image)).stream()
