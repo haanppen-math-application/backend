@@ -14,7 +14,7 @@ public record CommentRegisterDto (
         @NotNull
         Long memberId,
         String content,
-        List<MultipartFile> images
+        List<String> images
 ){
 
 }
