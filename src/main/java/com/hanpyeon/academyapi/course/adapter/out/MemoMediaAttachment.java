@@ -14,10 +14,10 @@ public class MemoMediaAttachment {
     private Long attachmentId;
 
     @ManyToOne
-    @JoinColumn(name = "MEMO_MEDIA_ID")
+    @JoinColumn(name = "MEMO_MEDIA_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private MemoMedia memoMedia;
     @ManyToOne
-    @JoinColumn(name = "MEDIA_ID")
+    @JoinColumn(name = "MEDIA_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Media media;
 
     private MemoMediaAttachment(MemoMedia memoMedia, Media media) {

@@ -24,9 +24,10 @@ public class Comment {
     @CreationTimestamp
     private LocalDateTime registeredDateTime;
     @ManyToOne
+    @JoinColumn(name = "registeredMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member registeredMember;
     @ManyToOne(targetEntity = Question.class, optional = false)
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "question_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Question question;
     @OneToMany
     private List<Image> images;
