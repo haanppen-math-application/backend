@@ -23,7 +23,7 @@ class Memo {
     @Column(name = "TARGET_DATE")
     private LocalDate targetDate;
     @ManyToOne
-    @JoinColumn(name = "courseId")
+    @JoinColumn(name = "courseId", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Course course;
     @Column(name = "TITLE")
     private String title;

@@ -31,8 +31,10 @@ public class Question {
     @Column(nullable = false)
     private Long viewCount = 0l;
     @ManyToOne(targetEntity = Member.class)
+    @JoinColumn(name = "ownerMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member ownerMember;
     @ManyToOne(targetEntity = Member.class)
+    @JoinColumn(name = "targetMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member targetMember;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images = new ArrayList<>();

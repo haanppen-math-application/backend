@@ -18,10 +18,10 @@ public class MemoMedia {
     @Column(name = "MEMO_MEDIA_ID")
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "MEDIA")
+    @JoinColumn(name = "MEDIA", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Media media;
     @ManyToOne
-    @JoinColumn(name = "MEMO_MEMO_ID")
+    @JoinColumn(name = "MEMO_MEMO_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Memo memo;
     private Integer sequence;
     @OneToMany(mappedBy = "memoMedia")

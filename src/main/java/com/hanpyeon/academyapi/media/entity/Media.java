@@ -30,7 +30,7 @@ public class Media {
     private String src;
 
     @ManyToOne
-    @JoinColumn(name = "media_owner")
+    @JoinColumn(name = "media_owner", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
     public Media(String mediaName, String src, Member member) {

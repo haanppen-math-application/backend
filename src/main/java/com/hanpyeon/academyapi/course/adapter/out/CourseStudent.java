@@ -22,11 +22,11 @@ public class CourseStudent {
     private LocalDateTime registeredDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Course courseEntity;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "student_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
     private CourseStudent(final Member student, final Course courseEntity) {
