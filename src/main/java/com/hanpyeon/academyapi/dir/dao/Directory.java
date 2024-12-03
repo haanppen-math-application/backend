@@ -24,7 +24,7 @@ public class Directory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "directory_owner", nullable = false)
+    @JoinColumn(name = "directory_owner", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member owner;
     @Column(name = "directory_path", nullable = false, unique = true)
     private String path;
