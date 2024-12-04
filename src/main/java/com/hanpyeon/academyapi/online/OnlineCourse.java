@@ -40,7 +40,10 @@ class OnlineCourse {
     private List<OnlineVideo> videos = new ArrayList<>();
 
     @OneToMany(mappedBy = "course")
-    private List<OnlineStudents> onlineStudents = new ArrayList<>();
+    private List<OnlineStudent> onlineStudents = new ArrayList<>();
+
+    @Column(name = "courseName", nullable = false)
+    private String courseName;
 
     @Column(name = "courseTitle", nullable = true)
     private String courseTitle;
@@ -54,4 +57,9 @@ class OnlineCourse {
     @Column
     @CreationTimestamp
     private LocalDateTime createdTime;
+
+    OnlineCourse(final Member teacher, final String courseName) {
+        this.teacher = teacher;
+        this.courseName = courseName;
+    }
 }
