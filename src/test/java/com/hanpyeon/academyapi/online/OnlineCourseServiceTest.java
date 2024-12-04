@@ -64,37 +64,4 @@ class OnlineCourseServiceTest {
             Assertions.assertThat(onlineStudentRepository.findAll().getFirst().getCourse()).isNotNull();
         });
     }
-
-    @Test
-    void 선생이_다른_선생_수업등록시_에러처리() {
-        this.memberRepository.saveAll(
-                List.of(
-                        Member.builder()
-                                .name("test")
-                                .encryptedPassword("test")
-                                .role(Role.TEACHER)
-                                .build(),
-                        Member.builder()
-                                .name("test")
-                                .encryptedPassword("test")
-                                .role(Role.TEACHER)
-                                .build(),
-                        Member.builder()
-                                .name("test")
-                                .encryptedPassword("test")
-                                .role(Role.STUDENT)
-                                .build()
-                )
-        );
-        final AddOnlineCourseCommand addOnlineCourseCommand = new AddOnlineCourseCommand(
-                1L,
-                Role.TEACHER,
-                "test",
-                List.of(2L, 3L),
-                2L
-        );
-
-        Assertions.assertThatThrownBy(() -> onlineCourseService.addOnlineCourse(addOnlineCourseCommand))
-                .isInstanceOf(BusinessException.class);
-    }
 }

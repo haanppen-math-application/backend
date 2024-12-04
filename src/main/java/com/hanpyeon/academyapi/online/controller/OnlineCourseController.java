@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 class OnlineCourseController {
     private final OnlineCourseService onlineCourseService;
 
-
     @PostMapping("/api/online-courses")
     public ResponseEntity<?> addNewOnlineCourse(
             @Validated final AddOnlineCourseRequest addOnlineCourseRequest,
