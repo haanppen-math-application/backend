@@ -18,7 +18,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @NoArgsConstructor
 @Getter
-class OnlineStudents {
+class OnlineStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,4 +34,10 @@ class OnlineStudents {
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime registeredDateTIme;
+
+    OnlineStudent(final OnlineCourse course, final Member member) {
+        course.getOnlineStudents().add(this);
+        this.course = course;
+        this.member = member;
+    }
 }

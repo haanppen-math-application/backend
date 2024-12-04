@@ -5,8 +5,8 @@ import com.hanpyeon.academyapi.security.exceptionhandler.JwtEntryPointHandler;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
-import org.springframework.beans.factory.annotation.Value;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -48,7 +48,6 @@ public class SecurityConfig {
 /////////////////////////////////////// 개발 중 열어둠 //////////////////////////////////////
                     request.requestMatchers(request1 -> request1.isUserInRole(Role.ADMIN.getSecurityRole()))
                             .permitAll();
-
                     request.requestMatchers("/swagger-ui/**")
                             .permitAll();
                     request.requestMatchers("/swagger-ui")
@@ -107,6 +106,15 @@ public class SecurityConfig {
                             .hasAnyAuthority(
                                     Role.MANAGER.getSecurityRole(),
                                     Role.ADMIN.getSecurityRole());
+
+                    // 온라인 강의
+                    request.requestMatchers(HttpMethod.POST, "/api/online-courses")
+                            .hasAnyAuthority(
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.TEACHER.getSecurityRole(),
+                                    Role.MANAGER.getSecurityRole()
+                            );
+
 
                     request.requestMatchers("/api/images/**")
                             .permitAll();
