@@ -1,5 +1,7 @@
 package com.hanpyeon.academyapi.online;
 
+import com.hanpyeon.academyapi.online.dao.OnlineCategory;
+import com.hanpyeon.academyapi.online.dao.OnlineCategoryRepository;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

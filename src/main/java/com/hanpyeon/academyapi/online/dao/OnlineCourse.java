@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online;
+package com.hanpyeon.academyapi.online.dao;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import jakarta.persistence.Column;
@@ -21,7 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @NoArgsConstructor
 @Getter
-class OnlineCourse {
+public class OnlineCourse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,8 +58,24 @@ class OnlineCourse {
     @CreationTimestamp
     private LocalDateTime createdTime;
 
-    OnlineCourse(final Member teacher, final String courseName) {
+    public OnlineCourse(final Member teacher, final String courseName) {
         this.teacher = teacher;
         this.courseName = courseName;
     }
+
+    public void setCourseTitle(final String title) {
+        this.courseTitle = title;
+    }
+
+    public void setTeacher(final Member teacher) {
+        this.teacher = teacher;
+    }
+
+    public void setCourseName(final String courseName) {
+        this.courseName = courseName;
+    }
+
+//    public void setOnlineStudents(final List<OnlineStudent> onlineStudents) {
+//        onlin
+//    }
 }

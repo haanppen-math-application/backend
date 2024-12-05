@@ -1,19 +1,16 @@
-package com.hanpyeon.academyapi.online;
+package com.hanpyeon.academyapi.online.service;
 
 import com.hanpyeon.academyapi.online.domain.OnlineCourseDomain;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseName;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseStudent;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseStudents;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseTeacher;
+import com.hanpyeon.academyapi.online.domain.OnlineCourseTitle;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
-@Slf4j
-@RequiredArgsConstructor
-public class OnlineCourseMapper {
+public class OnlineCourseAbstractFactory {
 
     public OnlineCourseName toCourseName(final String onlineCourseName) {
         return new OnlineCourseName(onlineCourseName);
@@ -28,6 +25,10 @@ public class OnlineCourseMapper {
 
     public OnlineCourseTeacher toOnlineCourseTeacher(final Long teacherId) {
         return new OnlineCourseTeacher(teacherId);
+    }
+
+    public OnlineCourseTitle toOnlineCourseTitle(final String title) {
+        return new OnlineCourseTitle(title);
     }
 
     public OnlineCourseDomain toOnlineCourse(

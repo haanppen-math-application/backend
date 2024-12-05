@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online;
+package com.hanpyeon.academyapi.online.dao;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
@@ -21,7 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @NoArgsConstructor
 @Getter
-class OnlineCategory {
+public class OnlineCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

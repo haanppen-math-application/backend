@@ -5,11 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record AddOnlineCourseRequest(
-        @NotNull String onlineCourseName,
+        @NotNull String courseName,
         @NotNull Long teacherId,
-        List<Long> studentIds
+        List<Long> students
 ) {
     public AddOnlineCourseCommand toCommand(final Long requestMemberId, final Role role) {
-        return new AddOnlineCourseCommand(requestMemberId, role, this.onlineCourseName, this.studentIds, this.teacherId);
+        return new AddOnlineCourseCommand(requestMemberId, role, this.courseName, this.students, this.teacherId);
     }
 }
