@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateMemoMediaUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "COURSE MEMO")
 class UpdateMemoMediaSequenceController {
 
     private final UpdateMemoMediaUseCase updateMemoMediaUseCase;
