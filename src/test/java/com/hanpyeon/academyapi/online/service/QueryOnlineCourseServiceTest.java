@@ -43,7 +43,7 @@ class QueryOnlineCourseServiceTest {
         onlineStudentRepository.saveAll(
                 List.of(new OnlineStudent(onlineCourse, null), new OnlineStudent(onlineCourse, null)));
 
-        final OnlineCoursePreview onlineCoursePreview = queryOnlineCourseService.queryAll().getFirst();
+        final OnlineCoursePreview onlineCoursePreview = queryOnlineCourseService.queryAll().get(0);
         Assertions.assertAll(() -> {
             Assertions.assertEquals(onlineCoursePreview.courseName(), "test");
             Assertions.assertEquals(onlineCoursePreview.teacherPreview().teacherName(), "test");

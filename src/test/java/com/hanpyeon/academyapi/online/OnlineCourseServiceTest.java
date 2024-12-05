@@ -62,8 +62,8 @@ class OnlineCourseServiceTest {
 
         org.junit.jupiter.api.Assertions.assertAll(() -> {
             Assertions.assertThat(onlineCourseRepository.findAll().size()).isEqualTo(1);
-            Assertions.assertThat(onlineCourseRepository.findAll().getFirst().getOnlineStudents().size()).isEqualTo(2);
-            Assertions.assertThat(onlineStudentRepository.findAll().getFirst().getCourse()).isNotNull();
+            Assertions.assertThat(onlineCourseRepository.findAll().get(0).getOnlineStudents().size()).isEqualTo(2);
+            Assertions.assertThat(onlineStudentRepository.findAll().get(0).getCourse()).isNotNull();
         });
     }
 }
