@@ -6,6 +6,8 @@ import com.hanpyeon.academyapi.online.dao.OnlineStudent;
 import com.hanpyeon.academyapi.online.dao.OnlineStudentRepository;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseDomain;
 import com.hanpyeon.academyapi.online.dto.AddOnlineCourseCommand;
+import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseCommand;
+import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
