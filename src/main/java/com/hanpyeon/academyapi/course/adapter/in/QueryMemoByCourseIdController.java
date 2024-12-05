@@ -8,6 +8,7 @@ import com.hanpyeon.academyapi.paging.PagedResponse;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping
+@Tag(name = "COURSE MEMO")
 class QueryMemoByCourseIdController {
 
     private final LoadMemoQuery loadMemoQuery;

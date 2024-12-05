@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.course.application.dto.UpdateCourseStudentsDto;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateCourseStudentsUseCase;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "COURSE")
 class UpdateCourseStudentsController {
 
     private final UpdateCourseStudentsUseCase updateCourseStudentsUseCase;

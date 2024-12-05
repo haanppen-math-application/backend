@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/manage/courses")
 @RequiredArgsConstructor
+@Tag(name = "MANAGE COURSE")
 class RegisterCourseController {
     private final CourseRegisterUseCase courseRegisterUseCase;
 

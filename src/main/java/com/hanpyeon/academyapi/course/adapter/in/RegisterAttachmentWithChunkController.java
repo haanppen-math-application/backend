@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.course.application.port.in.RegisterAttachmentUseC
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "COURSE MEMO")
 class RegisterAttachmentWithChunkController {
 
     private final RegisterAttachmentUseCase registerAttachmentUseCase;

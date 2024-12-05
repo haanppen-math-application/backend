@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.course.application.dto.MemoView;
 import com.hanpyeon.academyapi.course.application.port.in.QueryMemoByCourseIdAndDateUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "COURSE MEMO")
 class QueryMemoByCourseIdAndDateController {
 
     private final QueryMemoByCourseIdAndDateUseCase queryMemoByCourseIdAndDateUseCase;

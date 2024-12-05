@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
 import com.hanpyeon.academyapi.course.application.port.in.QueryCourseByMemberIdUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "COURSE")
 class QueryCourseByTeacherIdController {
     private final QueryCourseByMemberIdUseCase loadCoursesQuery;
 

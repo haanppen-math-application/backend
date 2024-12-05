@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.course.application.dto.MemoRegisterCommand;
 import com.hanpyeon.academyapi.course.application.port.in.MemoRegisterUseCase;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
+@Tag(name = "COURSE MEMO")
 class RegisterMemoController {
 
     private final MemoRegisterUseCase memoRegisterUseCase;
