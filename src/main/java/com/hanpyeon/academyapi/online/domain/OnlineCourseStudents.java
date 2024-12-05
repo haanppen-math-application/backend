@@ -19,7 +19,7 @@ public record OnlineCourseStudents(List<OnlineCourseStudent> onlineCourseStudent
 
     public List<Long> getOnlineCourseStudents() {
         return onlineCourseStudents.stream()
-                .map(onlineCourseStudent -> onlineCourseStudent.getMemberId())
+                .map(OnlineCourseStudent::getMemberId)
                 .toList();
     }
 }

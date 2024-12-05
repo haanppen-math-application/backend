@@ -1,14 +1,17 @@
-package com.hanpyeon.academyapi.online;
+package com.hanpyeon.academyapi.online.service.update;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
+import com.hanpyeon.academyapi.online.dao.OnlineStudent;
 import com.hanpyeon.academyapi.online.dao.OnlineStudentRepository;
-import com.hanpyeon.academyapi.online.dto.AddOnlineCourseCommand;
-import com.hanpyeon.academyapi.online.service.OnlineCourseService;
+import com.hanpyeon.academyapi.online.dto.OnlineCourseInfoUpdateCommand;
+import com.hanpyeon.academyapi.online.dto.OnlineCourseStudentUpdateCommand;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.Collections;
 import java.util.List;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,26 +20,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class OnlineCourseServiceTest {
+class CourseStudentsUpdateHandlerTest {
 
     @Autowired
-    private OnlineCourseRepository onlineCourseRepository;
+    private OnlineCourseStudentsUpdateHandler courseStudentsUpdateHandler;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
-    private OnlineStudentRepository onlineStudentRepository;
+    private OnlineCourseRepository onlineCourseRepository;
     @Autowired
-    private OnlineCourseService onlineCourseService;
+    private OnlineStudentRepository onlineStudentRepository;
 
     @Test
     @Transactional
-    void 온라인_강의_등록_테스트() {
-        this.memberRepository.saveAll(
-                List.of(
+    void testClear() {
+        memberRepository.saveAll(List.of(
                         Member.builder()
                                 .name("test")
                                 .encryptedPassword("test")
-                                .role(Role.TEACHER)
+                                .role(Role.STUDENT)
                                 .build(),
                         Member.builder()
                                 .name("test")
@@ -50,20 +52,22 @@ class OnlineCourseServiceTest {
                                 .build()
                 )
         );
-        final AddOnlineCourseCommand addOnlineCourseCommand = new AddOnlineCourseCommand(
-                1L,
-                Role.TEACHER,
-                "test",
-                List.of(2L, 3L),
-                1L
+        final OnlineCourse onlineCourse = new OnlineCourse(null, "test");
+        onlineCourseRepository.save(onlineCourse);
+        onlineStudentRepository.saveAll(List.of(
+                        new OnlineStudent(onlineCourse, null),
+                        new OnlineStudent(onlineCourse, null),
+                        new OnlineStudent(onlineCourse, null),
+                        new OnlineStudent(onlineCourse, null)
+                )
         );
 
-        onlineCourseService.addOnlineCourse(addOnlineCourseCommand);
+        Assertions.assertEquals(onlineStudentRepository.findAll().size(), 4);
 
-        org.junit.jupiter.api.Assertions.assertAll(() -> {
-            Assertions.assertThat(onlineCourseRepository.findAll().size()).isEqualTo(1);
-            Assertions.assertThat(onlineCourseRepository.findAll().getFirst().getOnlineStudents().size()).isEqualTo(2);
-            Assertions.assertThat(onlineStudentRepository.findAll().getFirst().getCourse()).isNotNull();
-        });
+        courseStudentsUpdateHandler.update(onlineCourse,
+                new OnlineCourseStudentUpdateCommand(1L, 1L, Collections.emptyList()));
+
+        Assertions.assertEquals(onlineStudentRepository.count(), 0);
     }
+
 }

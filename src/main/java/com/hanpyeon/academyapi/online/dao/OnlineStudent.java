@@ -1,6 +1,7 @@
-package com.hanpyeon.academyapi.online;
+package com.hanpyeon.academyapi.online.dao;
 
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -18,7 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @NoArgsConstructor
 @Getter
-class OnlineStudent {
+public class OnlineStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,7 +36,7 @@ class OnlineStudent {
     @Column(nullable = false)
     private LocalDateTime registeredDateTIme;
 
-    OnlineStudent(final OnlineCourse course, final Member member) {
+    public OnlineStudent(final OnlineCourse course, final Member member) {
         course.getOnlineStudents().add(this);
         this.course = course;
         this.member = member;
