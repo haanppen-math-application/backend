@@ -5,20 +5,17 @@ import com.hanpyeon.academyapi.online.dto.AddOnlineCourseRequest;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseInfoUpdateCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseInfoUpdateRequest;
-import com.hanpyeon.academyapi.online.dto.OnlineCoursePreview;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseStudentUpdateCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseStudentsUpdateRequest;
 import com.hanpyeon.academyapi.online.service.OnlineCourseService;
 import com.hanpyeon.academyapi.online.service.OnlineCourseUpdateService;
-import com.hanpyeon.academyapi.online.service.QueryOnlineCourseService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
-import java.util.List;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,10 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/online-courses")
 @RequiredArgsConstructor
+@Tag(name = "ONLINE COURSE")
 class OnlineCourseController {
     private final OnlineCourseService onlineCourseService;
     private final OnlineCourseUpdateService onlineCourseUpdateService;
-    private final QueryOnlineCourseService queryOnlineCourseService;
 
     @PostMapping
     public ResponseEntity<?> addNewOnlineCourse(
@@ -67,11 +64,6 @@ class OnlineCourseController {
                 memberPrincipal.memberId(), courseId);
         onlineCourseUpdateService.changeOnlineCourseStudents(onlineCourseStudentUpdateCommand);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping
-    public ResponseEntity<List<OnlineCoursePreview>> queryAllCourses() {
-        return ResponseEntity.ok(queryOnlineCourseService.queryAll());
     }
 
     @DeleteMapping("/{courseId}")
