@@ -11,6 +11,7 @@ import com.hanpyeon.academyapi.online.service.OnlineCourseService;
 import com.hanpyeon.academyapi.online.service.OnlineCourseUpdateService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/online-courses")
 @RequiredArgsConstructor
 @Tag(name = "ONLINE COURSE")
+@SecurityRequirement(name = "jwtAuth")
 class OnlineCourseController {
     private final OnlineCourseService onlineCourseService;
     private final OnlineCourseUpdateService onlineCourseUpdateService;

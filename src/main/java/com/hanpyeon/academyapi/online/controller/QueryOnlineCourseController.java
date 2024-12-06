@@ -7,6 +7,7 @@ import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hanpyeon.academyapi.online.service.QueryOnlineCourseService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/online-courses")
 @RequiredArgsConstructor
 @Tag(name = "ONLINE COURSE")
+@SecurityRequirement(name = "jwtAuth")
 public class QueryOnlineCourseController {
     private final QueryOnlineCourseService queryOnlineCourseService;
 
