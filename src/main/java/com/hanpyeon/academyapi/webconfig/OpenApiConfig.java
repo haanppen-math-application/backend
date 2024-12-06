@@ -2,6 +2,10 @@ package com.hanpyeon.academyapi.webconfig;
 
 
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.extensions.Extension;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.ObjectSchema;
 import io.swagger.v3.oas.models.media.Schema;
@@ -15,6 +19,13 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@OpenAPIDefinition(
+        info = @Info(title = "한편의 수학학원 API 문서"),
+        servers = {
+        @Server(description = "개발용 서버", url = "https://hanapi.hopto.org"),
+        @Server(description = "로컬 서버", url = "http://localhost:8081"),
+        }
+)
 public class OpenApiConfig {
 
     @Bean
