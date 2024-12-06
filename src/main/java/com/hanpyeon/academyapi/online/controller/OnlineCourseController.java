@@ -10,6 +10,7 @@ import com.hanpyeon.academyapi.online.dto.OnlineCourseStudentsUpdateRequest;
 import com.hanpyeon.academyapi.online.service.OnlineCourseService;
 import com.hanpyeon.academyapi.online.service.OnlineCourseUpdateService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ class OnlineCourseController {
     private final OnlineCourseUpdateService onlineCourseUpdateService;
 
     @PostMapping
+    @Operation(summary = "새로운 온라인 강의 등록")
     public ResponseEntity<?> addNewOnlineCourse(
             @RequestBody @Validated final AddOnlineCourseRequest addOnlineCourseRequest,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
@@ -43,6 +45,7 @@ class OnlineCourseController {
     }
 
     @PutMapping("/{courseId}/info")
+    @Operation(summary = "온라인 수업의 반 이름 / 담당 선생님 수정")
     public ResponseEntity<?> updateOnlineCourseInfo(
             @PathVariable(required = true) final Long courseId,
             @RequestBody @Validated final OnlineCourseInfoUpdateRequest onlineCourseInfoUpdateRequest,
@@ -55,7 +58,8 @@ class OnlineCourseController {
     }
 
     @PutMapping("/{courseId}/students")
-    public ResponseEntity<?> updateOnlineCourseInfo(
+    @Operation(summary = "온라인 강의의 학생 수정")
+    public ResponseEntity<?> updateOnlineCourseStudents(
             @PathVariable(required = true) final Long courseId,
             @RequestBody @Validated final OnlineCourseStudentsUpdateRequest onlineCourseStudentsUpdateRequest,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
@@ -67,6 +71,7 @@ class OnlineCourseController {
     }
 
     @DeleteMapping("/{courseId}")
+    @Operation(summary = "온라인 강의 삭제")
     public ResponseEntity<?> deleteCourse(
             @PathVariable(required = true) Long courseId,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
