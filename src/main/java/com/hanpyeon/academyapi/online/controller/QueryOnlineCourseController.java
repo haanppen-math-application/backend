@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseByStudentIdCommand;
 import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hanpyeon.academyapi.online.service.QueryOnlineCourseService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +25,13 @@ public class QueryOnlineCourseController {
     private final QueryOnlineCourseService queryOnlineCourseService;
 
     @GetMapping
+    @Operation(summary = "모든 온라인 강의를 조회")
     public ResponseEntity<List<OnlineCoursePreview>> queryAllCourses() {
         return ResponseEntity.ok(queryOnlineCourseService.queryAll());
     }
 
     @GetMapping("/teachers/{teacherId}")
+    @Operation(summary = "선생님 ID 를 통해 온라인 강의를 조회")
     public ResponseEntity<List<OnlineCoursePreview>> queryOnlineCoursesByTeacherId(
             @PathVariable final Long teacherId
     ) {
@@ -39,6 +42,7 @@ public class QueryOnlineCourseController {
     }
 
     @GetMapping("/students/{studentId}")
+    @Operation(summary = "학생 ID를 통해 온라인 강의 조회")
     public ResponseEntity<List<OnlineCoursePreview>> queryOnlineCoursesByStudentId(
             @PathVariable final Long studentId
     ) {
@@ -49,6 +53,7 @@ public class QueryOnlineCourseController {
     }
 
     @GetMapping("/my")
+    @Operation(summary = "자신이 속한, 혹은 만든 반 조회")
     public ResponseEntity<List<OnlineCoursePreview>> queryOnlineCoursesByStudentId(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
