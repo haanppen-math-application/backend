@@ -1,9 +1,11 @@
 package com.hanpyeon.academyapi.online.controller;
 
+import com.hanpyeon.academyapi.online.dto.OnlineCourseDetails;
 import com.hanpyeon.academyapi.online.dto.OnlineCoursePreview;
 import com.hanpyeon.academyapi.online.dto.QueryMyOnlineCourseCommand;
 import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseByStudentIdCommand;
 import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseByTeacherIdCommand;
+import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseDetailsCommand;
 import com.hanpyeon.academyapi.online.service.QueryOnlineCourseService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
@@ -63,5 +65,14 @@ public class QueryOnlineCourseController {
                 memberPrincipal.memberId(), memberPrincipal.role());
         return ResponseEntity.ok(
                 queryOnlineCourseService.queryMyOnlineCourses(queryMyOnlineCourseCommand));
+    }
+
+    @GetMapping("/{onlineCourseId}")
+    @Operation(summary = "특정 반의 세부정보 조회")
+    public ResponseEntity<OnlineCourseDetails> queryOnlineCourseDetails(
+            @PathVariable(required = true) final Long onlineCourseId
+    ) {
+        final QueryOnlineCourseDetailsCommand courseDetailsCommand = new QueryOnlineCourseDetailsCommand(onlineCourseId);
+        return ResponseEntity.ok(queryOnlineCourseService.queryOnlineCourseDetails(courseDetailsCommand));
     }
 }
