@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface OnlineCourseRepository extends JpaRepository<OnlineCourse, Long> {
     List<OnlineCourse> findAllByTeacherId(final Long teacherId);
 
-    @Query("SELECT o FROM OnlineCourse o JOIN OnlineStudent s ON o.id = s.course.id WHERE s.id = :studentId")
+    @Query("SELECT o FROM OnlineCourse o JOIN OnlineStudent s ON o.id = s.course.id WHERE s.member.id = :studentId")
     List<OnlineCourse> findAllByStudentId(@Param("studentId") final Long studentId);
 }
