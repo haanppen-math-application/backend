@@ -42,6 +42,7 @@ public class OnlineCourse {
     private List<OnlineVideo> videos = new ArrayList<>();
 
     @OneToMany(mappedBy = "course")
+    @BatchSize(size = 10)
     private List<OnlineStudent> onlineStudents = new ArrayList<>();
 
     @Column(name = "courseName", nullable = false)
