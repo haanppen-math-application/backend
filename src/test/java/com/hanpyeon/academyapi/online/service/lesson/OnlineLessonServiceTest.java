@@ -60,7 +60,7 @@ class OnlineLessonServiceTest {
                 newDescribe,
                 categoryId,
                 memberId,
-                Role.TEACHER);
+                Role.MANAGER);
 
         onlineLessonService.updateLessonInfo(command);
 
