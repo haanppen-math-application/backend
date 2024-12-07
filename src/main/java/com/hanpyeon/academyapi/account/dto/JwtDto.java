@@ -11,4 +11,5 @@ public record JwtDto(
         String refreshToken,
         Role role
 ) {
+
 }

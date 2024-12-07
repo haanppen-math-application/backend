@@ -2,10 +2,12 @@ package com.hanpyeon.academyapi.online.service;
 
 import com.hanpyeon.academyapi.online.domain.OnlineCourseDomain;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseName;
+import com.hanpyeon.academyapi.online.domain.OnlineCourseRange;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseStudent;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseStudents;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseTeacher;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseTitle;
+import com.hanpyeon.academyapi.online.domain.OnlineLessonDescription;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,14 @@ public class OnlineCourseAbstractFactory {
 
     public OnlineCourseName toCourseName(final String onlineCourseName) {
         return new OnlineCourseName(onlineCourseName);
+    }
+
+    public OnlineCourseRange toOnlineCourseRange(final String onlineCourseRange) {
+        return new OnlineCourseRange(onlineCourseRange);
+    }
+
+    public OnlineLessonDescription toOnlineLessonDescription(final String onlineCourseDescription) {
+        return new OnlineLessonDescription(onlineCourseDescription);
     }
 
     public OnlineCourseStudents toCourseStudents(final List<Long> students) {

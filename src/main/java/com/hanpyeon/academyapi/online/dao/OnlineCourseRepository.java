@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.online.dao;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +19,7 @@ public interface OnlineCourseRepository extends JpaRepository<OnlineCourse, Long
             + "JOIN FETCH Member m ON os.member.id = m.id "
             + "WHERE oc.id = :onlineCourseId")
     OnlineCourse findOnlineCourse(@Param("onlineCourseId") final Long onlineCourseId);
+
+    @Query("SELECT oc FROM OnlineCourse oc LEFT JOIN FETCH oc.onlineCategory WHERE oc.id = :onlineCourseId")
+    Optional<OnlineCourse> loadCourseAndCategoryByCourseId(@Param("onlineCourseId") final Long onlineCourseId);
 }

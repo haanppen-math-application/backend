@@ -96,4 +96,29 @@ class OnlineCourseRepositoryTest {
                 .collect(Collectors.toList());
     }
 
+    @Test
+    void findTest() {
+        final List<Member> members = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            members.add(Member.builder()
+                    .name("test" + i)
+                    .encryptedPassword("test")
+                    .role(Role.TEACHER)
+                    .build());
+        }
+        this.memberRepository.saveAll(members);
+
+        final OnlineCourse onlineCourse = new OnlineCourse(members.get(0), "test");
+        onlineCourseRepository.save(onlineCourse);
+
+        onlineStudentRepository.saveAll(members.stream()
+                .map(member -> new OnlineStudent(onlineCourse, member))
+                .toList());
+
+        entityManager.flush();
+        final Long courseId = onlineCourse.getId();
+        entityManager.clear();
+
+        Assertions.assertEquals(onlineCourseRepository.loadCourseAndCategoryByCourseId(courseId).orElseThrow(), 1);
+    }
 }
