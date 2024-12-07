@@ -17,12 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @NoArgsConstructor
 @Getter
+@ToString
 public class OnlineCourse {
 
     @Id
@@ -66,12 +68,24 @@ public class OnlineCourse {
         this.courseName = courseName;
     }
 
+    public void setOnlineCategory(final OnlineCategory onlineCategory) {
+        this.onlineCategory = onlineCategory;
+    }
+
     public void setCourseTitle(final String title) {
         this.courseTitle = title;
     }
 
     public void setTeacher(final Member teacher) {
         this.teacher = teacher;
+    }
+
+    public void setCourseRange(final String courseRange) {
+        this.courseRange = courseRange;
+    }
+
+    public void setCourseContent(final String courseDescribe) {
+        this.courseContent = courseDescribe;
     }
 
     public void setCourseName(final String courseName) {
