@@ -119,6 +119,6 @@ class OnlineCourseRepositoryTest {
         final Long courseId = onlineCourse.getId();
         entityManager.clear();
 
-        Assertions.assertEquals(onlineCourseRepository.loadCourseAndCategoryByCourseId(courseId).orElseThrow(), 1);
+        Assertions.assertNotNull(onlineCourseRepository.loadCourseAndCategoryByCourseId(courseId).orElseThrow());
     }
 }

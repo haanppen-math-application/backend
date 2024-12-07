@@ -29,6 +29,7 @@ public class OnlineLessonService {
     }
 
     private void validateOwner(final Role requestMemberRole, final Long requestMemberId, final Long ownerId) {
+//        log.info("주인 : {}, 요청 멤버 {}", ownerId, requestMemberId);
         if (requestMemberId.equals(ownerId)) {
             return;
         }
