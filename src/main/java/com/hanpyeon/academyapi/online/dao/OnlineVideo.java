@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.media.entity.Media;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,11 +22,11 @@ public class OnlineVideo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OnlineCourse onlineCourse;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "media", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Media media;
 
@@ -37,4 +38,12 @@ public class OnlineVideo {
 
     @Column(name = "video_sequence", nullable = false)
     private Integer videoSequence;
+
+    public OnlineVideo(OnlineCourse onlineCourse, Media media, String videoName, Boolean preview, Integer videoSequence) {
+        this.onlineCourse = onlineCourse;
+        this.media = media;
+        this.videoName = videoName;
+        this.preview = preview;
+        this.videoSequence = videoSequence;
+    }
 }
