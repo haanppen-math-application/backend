@@ -1,11 +1,13 @@
 package com.hanpyeon.academyapi.online.controller;
 
-import com.hanpyeon.academyapi.online.dto.AddOnlineVideoCommand;
 import com.hanpyeon.academyapi.online.dto.AddOnlineCourseVideoRequest;
+import com.hanpyeon.academyapi.online.dto.AddOnlineVideoCommand;
+import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseVideoCommand;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoCommand;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoRequest;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineCourseVideoService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineLessonService;
+import com.hanpyeon.academyapi.online.service.lesson.OnlineVideoDeleteService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "온라인 수업")
 class OnlineLessonController {
     private final OnlineLessonService onlineLessonService;
+    private final OnlineVideoDeleteService onlineVideoDeleteService;
     private final OnlineCourseVideoService onlineCourseVideoService;
 
     @PutMapping
@@ -46,8 +51,23 @@ class OnlineLessonController {
             @Validated final AddOnlineCourseVideoRequest addOnlineCourseVideosRequest,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final AddOnlineVideoCommand addOnlineVideoCommand = addOnlineCourseVideosRequest.toCommand(memberPrincipal.memberId(), memberPrincipal.role());
+        final AddOnlineVideoCommand addOnlineVideoCommand = addOnlineCourseVideosRequest.toCommand(
+                memberPrincipal.memberId(),
+                memberPrincipal.role());
         onlineCourseVideoService.addOnlineVideo(addOnlineVideoCommand);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("{onlineCourseId}/videos/{onlineVideoId}")
+    @Operation(summary = "온라인 수업 영상 삭제 API", description = "온라인 수업 영상을 삭제, 첨부자료까지 모두 삭제")
+    public ResponseEntity<?> deleteOnlineCourseVideo(
+            @PathVariable final Long onlineCourseId,
+            @PathVariable final Long onlineVideoId,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final DeleteOnlineCourseVideoCommand deleteOnlineCourseVideoCommand = new DeleteOnlineCourseVideoCommand(onlineCourseId, onlineVideoId,
+                memberPrincipal.memberId(), memberPrincipal.role());
+        onlineVideoDeleteService.deleteOnlineVideo(deleteOnlineCourseVideoCommand);
         return ResponseEntity.ok().build();
     }
 }
