@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -38,6 +40,9 @@ public class OnlineVideo {
 
     @Column(name = "video_sequence", nullable = false)
     private Integer videoSequence;
+
+    @OneToMany(mappedBy = "onlineVideo", fetch = FetchType.LAZY)
+    private List<OnlineVideoAttachment> videoAttachments;
 
     public OnlineVideo(OnlineCourse onlineCourse, Media media, String videoName, Boolean preview, Integer videoSequence) {
         this.onlineCourse = onlineCourse;
