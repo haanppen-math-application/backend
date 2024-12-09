@@ -7,8 +7,8 @@ import com.hanpyeon.academyapi.online.dto.OnlineCourseInfoUpdateCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseInfoUpdateRequest;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseStudentUpdateCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseStudentsUpdateRequest;
-import com.hanpyeon.academyapi.online.service.OnlineCourseService;
-import com.hanpyeon.academyapi.online.service.OnlineCourseUpdateService;
+import com.hanpyeon.academyapi.online.service.course.OnlineCourseRegisterService;
+import com.hanpyeon.academyapi.online.service.course.OnlineCourseUpdateService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "ONLINE COURSE")
 @SecurityRequirement(name = "jwtAuth")
 class OnlineCourseController {
-    private final OnlineCourseService onlineCourseService;
+    private final OnlineCourseRegisterService onlineCourseService;
     private final OnlineCourseUpdateService onlineCourseUpdateService;
 
     @PostMapping

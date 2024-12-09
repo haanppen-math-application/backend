@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online.service;
+package com.hanpyeon.academyapi.online.service.course;
 
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
@@ -6,8 +6,6 @@ import com.hanpyeon.academyapi.online.dao.OnlineStudent;
 import com.hanpyeon.academyapi.online.dao.OnlineStudentRepository;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseDomain;
 import com.hanpyeon.academyapi.online.dto.AddOnlineCourseCommand;
-import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseCommand;
-import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class OnlineCourseService {
+public class OnlineCourseRegisterService {
     private final OnlineCourseRepository onlineCourseRepository;
     private final OnlineStudentRepository onlineStudentRepository;
     private final OnlineCourseMapper onlineCourseMapper;

@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online.service;
+package com.hanpyeon.academyapi.online.service.course;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class QueryOnlineCourseServiceTest {
+class OnlineCourseQueryServiceTest {
 
     @Autowired
-    private QueryOnlineCourseService queryOnlineCourseService;
+    private OnlineCourseQueryService queryOnlineCourseService;
 
     @Autowired
     private OnlineCourseRepository onlineCourseRepository;
