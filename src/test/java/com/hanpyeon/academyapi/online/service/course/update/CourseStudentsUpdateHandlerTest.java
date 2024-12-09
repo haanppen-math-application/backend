@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online.service.update;
+package com.hanpyeon.academyapi.online.service.course.update;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
@@ -6,8 +6,8 @@ import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineStudent;
 import com.hanpyeon.academyapi.online.dao.OnlineStudentRepository;
-import com.hanpyeon.academyapi.online.dto.OnlineCourseInfoUpdateCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseStudentUpdateCommand;
+import com.hanpyeon.academyapi.online.service.course.update.OnlineCourseStudentsUpdateHandler;
 import com.hanpyeon.academyapi.security.Role;
 import java.util.Collections;
 import java.util.List;

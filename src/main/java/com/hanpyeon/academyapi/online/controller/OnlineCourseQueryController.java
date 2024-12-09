@@ -6,7 +6,7 @@ import com.hanpyeon.academyapi.online.dto.QueryMyOnlineCourseCommand;
 import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseByStudentIdCommand;
 import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseDetailsCommand;
-import com.hanpyeon.academyapi.online.service.QueryOnlineCourseService;
+import com.hanpyeon.academyapi.online.service.course.OnlineCourseQueryService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Tag(name = "ONLINE COURSE")
 @SecurityRequirement(name = "jwtAuth")
-public class QueryOnlineCourseController {
-    private final QueryOnlineCourseService queryOnlineCourseService;
+public class OnlineCourseQueryController {
+    private final OnlineCourseQueryService queryOnlineCourseService;
 
     @GetMapping
     @Operation(summary = "모든 온라인 강의를 조회")

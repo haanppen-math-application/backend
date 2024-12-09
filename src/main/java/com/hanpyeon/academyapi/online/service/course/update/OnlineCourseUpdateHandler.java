@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online.service.update;
+package com.hanpyeon.academyapi.online.service.course.update;
 
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseInfoUpdateCommand;

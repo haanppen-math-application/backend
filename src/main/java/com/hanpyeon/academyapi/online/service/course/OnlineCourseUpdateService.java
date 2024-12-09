@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online.service;
+package com.hanpyeon.academyapi.online.service.course;
 
 import com.hanpyeon.academyapi.exception.BusinessException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -8,8 +8,8 @@ import com.hanpyeon.academyapi.online.dao.OnlineStudentRepository;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseStudentUpdateCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseInfoUpdateCommand;
-import com.hanpyeon.academyapi.online.service.update.OnlineCourseStudentsUpdateHandler;
-import com.hanpyeon.academyapi.online.service.update.OnlineCourseUpdateManager;
+import com.hanpyeon.academyapi.online.service.course.update.OnlineCourseStudentsUpdateHandler;
+import com.hanpyeon.academyapi.online.service.course.update.OnlineCourseUpdateManager;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

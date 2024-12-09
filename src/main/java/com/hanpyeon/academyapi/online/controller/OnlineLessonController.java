@@ -5,8 +5,8 @@ import com.hanpyeon.academyapi.online.dto.AddOnlineVideoCommand;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseVideoCommand;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoCommand;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoRequest;
-import com.hanpyeon.academyapi.online.service.lesson.OnlineCourseVideoService;
-import com.hanpyeon.academyapi.online.service.lesson.OnlineLessonService;
+import com.hanpyeon.academyapi.online.service.lesson.OnlineVideoRegisterService;
+import com.hanpyeon.academyapi.online.service.lesson.OnlineLessonUpdateService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineVideoDeleteService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Tag(name = "온라인 수업")
 class OnlineLessonController {
-    private final OnlineLessonService onlineLessonService;
+    private final OnlineLessonUpdateService onlineLessonUpdateService;
     private final OnlineVideoDeleteService onlineVideoDeleteService;
-    private final OnlineCourseVideoService onlineCourseVideoService;
+    private final OnlineVideoRegisterService onlineVideoRegisterService;
 
     @PutMapping
     @Operation(summary = "온라인 수업의 대표 정보를 수정하는 API 입니다", description = "필드를 null로 보내면, 해당 필드는 수정하지 않습니다.")
@@ -41,7 +41,7 @@ class OnlineLessonController {
                 memberPrincipal.memberId(),
                 memberPrincipal.role()
         );
-        onlineLessonService.updateLessonInfo(updateOnlineLessonInfoCommand);
+        onlineLessonUpdateService.updateLessonInfo(updateOnlineLessonInfoCommand);
         return ResponseEntity.ok().build();
     }
 
@@ -54,7 +54,7 @@ class OnlineLessonController {
         final AddOnlineVideoCommand addOnlineVideoCommand = addOnlineCourseVideosRequest.toCommand(
                 memberPrincipal.memberId(),
                 memberPrincipal.role());
-        onlineCourseVideoService.addOnlineVideo(addOnlineVideoCommand);
+        onlineVideoRegisterService.addOnlineVideo(addOnlineVideoCommand);
         return ResponseEntity.ok().build();
     }
 

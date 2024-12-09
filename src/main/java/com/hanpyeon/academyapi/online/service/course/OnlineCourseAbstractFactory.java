@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online.service;
+package com.hanpyeon.academyapi.online.service.course;
 
 import com.hanpyeon.academyapi.online.domain.OnlineCourseDomain;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseName;
