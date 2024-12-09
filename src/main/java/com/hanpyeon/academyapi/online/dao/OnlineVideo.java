@@ -51,4 +51,10 @@ public class OnlineVideo {
         this.preview = preview;
         this.videoSequence = videoSequence;
     }
+
+    public void changeSequence(final OnlineVideo targetVideo) {
+        final Integer tempSequence = targetVideo.getVideoSequence();
+        targetVideo.videoSequence = this.videoSequence;
+        this.videoSequence = tempSequence;
+    }
 }

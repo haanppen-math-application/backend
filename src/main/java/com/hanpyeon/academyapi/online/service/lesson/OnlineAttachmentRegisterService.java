@@ -35,7 +35,7 @@ public class OnlineAttachmentRegisterService {
     }
 
     private OnlineVideo loadOnlineVideoById(final Long videoId) {
-        return onlineVideoRepository.loadSingleOnlineVideoWithCourseWithTeacherByVideoIdAndCourseId(videoId)
+        return onlineVideoRepository.loadSingleOnlineVideoWithCourseWithTeacherByVideoId(videoId)
                 .orElseThrow(() -> new BusinessException("비디오를 찾을 수 없습니다.", ErrorCode.ONLINE_COURSE_EXCEPTION));
     }
 

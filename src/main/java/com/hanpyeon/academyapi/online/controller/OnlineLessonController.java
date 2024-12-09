@@ -8,11 +8,14 @@ import com.hanpyeon.academyapi.online.dto.RegisterOnlineVideoAttachmentCommand;
 import com.hanpyeon.academyapi.online.dto.RegisterOnlineVideoAttachmentRequest;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoCommand;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoRequest;
+import com.hanpyeon.academyapi.online.dto.UpdateOnlineVideoSequenceCommand;
+import com.hanpyeon.academyapi.online.dto.UpdateOnlineVideoSequenceRequest;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineAttachmentDeleteService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineAttachmentRegisterService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineLessonUpdateService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineVideoDeleteService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineVideoRegisterService;
+import com.hanpyeon.academyapi.online.service.lesson.OnlineVideoSequenceUpdateService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,6 +40,7 @@ class OnlineLessonController {
     private final OnlineLessonUpdateService onlineLessonUpdateService;
     private final OnlineVideoDeleteService onlineVideoDeleteService;
     private final OnlineVideoRegisterService onlineVideoRegisterService;
+    private final OnlineVideoSequenceUpdateService onlineVideoSequenceUpdateService;
     private final OnlineAttachmentRegisterService onlineAttachmentRegisterService;
     private final OnlineAttachmentDeleteService onlineAttachmentDeleteService;
 
@@ -51,6 +55,17 @@ class OnlineLessonController {
                 memberPrincipal.role()
         );
         onlineLessonUpdateService.updateLessonInfo(updateOnlineLessonInfoCommand);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/videos/sequence")
+    @Operation(summary = "온라인 수업 영상 순서 수정 API")
+    public ResponseEntity<?> changeSequence(
+            @Validated @RequestBody final UpdateOnlineVideoSequenceRequest request,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final UpdateOnlineVideoSequenceCommand command = request.toCommand(memberPrincipal.memberId(), memberPrincipal.role());
+        onlineVideoSequenceUpdateService.updateSequence(command);
         return ResponseEntity.ok().build();
     }
 
