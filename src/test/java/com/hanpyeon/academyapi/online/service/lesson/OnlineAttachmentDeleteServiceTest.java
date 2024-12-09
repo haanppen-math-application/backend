@@ -1,7 +1,5 @@
 package com.hanpyeon.academyapi.online.service.lesson;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.media.entity.Media;
@@ -13,7 +11,6 @@ import com.hanpyeon.academyapi.online.dao.OnlineVideoAttachment;
 import com.hanpyeon.academyapi.online.dao.OnlineVideoAttachmentRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineVideoRepository;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineVideoAttachmentCommand;
-import com.hanpyeon.academyapi.online.dto.RegisterOnlineVideoAttachmentCommand;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
@@ -44,12 +41,14 @@ class OnlineAttachmentDeleteServiceTest {
     private OnlineAttachmentDeleteService onlineAttachmentDeleteService;
 
     @Test
-    void 수업_등록_쿼리_테스트() {
+    @Transactional
+    void 온라인강의_첨부파일_삭제() {
         final Member member = Member.builder()
                 .role(Role.TEACHER)
                 .name("test")
                 .encryptedPassword("test")
                 .build();
+
         final OnlineCourse onlineCourse = new OnlineCourse(member, "test");
         final Media media = new Media("test", "src", member);
         final OnlineVideo onlineVideo = new OnlineVideo(onlineCourse, media, "name", true, 1);
@@ -61,15 +60,13 @@ class OnlineAttachmentDeleteServiceTest {
         onlineVideoRepository.save(onlineVideo);
         onlineVideoAttachmentRepository.save(onlineVideoAttachment);
 
-        final String mediaId = media.getSrc();
-        final Long onlineCourseId = onlineCourse.getId();
+        entityManager.flush();
+
         final Long onlineVideoId = onlineVideo.getId();
         final Long memberId = member.getId();
         final Role memberRole = member.getRole();
         final Long onlineVideoAttachmentId = onlineVideoAttachment.getId();
-
-        entityManager.flush();
-        entityManager.clear();
+        final Long attachmentId = onlineVideoAttachment.getId();
 
         onlineAttachmentDeleteService.deleteAttachment(new DeleteOnlineVideoAttachmentCommand(
                 onlineVideoAttachmentId,
@@ -79,9 +76,7 @@ class OnlineAttachmentDeleteServiceTest {
         ));
 
         entityManager.flush();
-        entityManager.clear();
 
-        Assertions.assertEquals(onlineVideoAttachmentRepository.count(), 0);
+        Assertions.assertTrue(onlineVideoAttachmentRepository.findById(attachmentId).isEmpty());
     }
-
 }
