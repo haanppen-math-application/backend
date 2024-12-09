@@ -18,7 +18,7 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class OnlineCourseVideoService {
+public class OnlineVideoRegisterService {
     private final OnlineVideoRepository onlineVideoRepository;
     private final OnlineCourseRepository onlineCourseRepository;
     private final MediaRepository mediaRepository;

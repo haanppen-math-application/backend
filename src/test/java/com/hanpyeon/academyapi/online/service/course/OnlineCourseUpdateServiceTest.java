@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online.service;
+package com.hanpyeon.academyapi.online.service.course;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
@@ -7,6 +7,7 @@ import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineStudent;
 import com.hanpyeon.academyapi.online.dao.OnlineStudentRepository;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseCommand;
+import com.hanpyeon.academyapi.online.service.course.OnlineCourseUpdateService;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.EntityManager;
 import java.util.List;

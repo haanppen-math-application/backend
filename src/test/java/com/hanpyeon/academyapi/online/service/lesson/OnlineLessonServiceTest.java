@@ -32,7 +32,7 @@ class OnlineLessonServiceTest {
     @Autowired
     private EntityManager entityManager;
     @Autowired
-    private OnlineLessonService onlineLessonService;
+    private OnlineLessonUpdateService onlineLessonService;
 
     @Test
     @Transactional

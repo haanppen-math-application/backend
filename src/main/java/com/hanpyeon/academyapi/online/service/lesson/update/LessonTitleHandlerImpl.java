@@ -3,7 +3,7 @@ package com.hanpyeon.academyapi.online.service.lesson.update;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.domain.OnlineCourseTitle;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoCommand;
-import com.hanpyeon.academyapi.online.service.OnlineCourseAbstractFactory;
+import com.hanpyeon.academyapi.online.service.course.OnlineCourseAbstractFactory;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

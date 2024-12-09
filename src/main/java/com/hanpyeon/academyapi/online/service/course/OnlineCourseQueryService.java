@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.online.service;
+package com.hanpyeon.academyapi.online.service.course;
 
 import com.hanpyeon.academyapi.course.application.dto.TeacherPreview;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
@@ -22,7 +22,7 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class QueryOnlineCourseService {
+public class OnlineCourseQueryService {
     private final OnlineCourseRepository onlineCourseRepository;
 
     public List<OnlineCoursePreview> queryAll() {

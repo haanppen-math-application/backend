@@ -7,7 +7,6 @@ import com.hanpyeon.academyapi.media.repository.MediaRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineVideo;
-import com.hanpyeon.academyapi.online.dto.AddOnlineCourseVideoRequest;
 import com.hanpyeon.academyapi.online.dto.AddOnlineVideoCommand;
 import com.hanpyeon.academyapi.online.dto.AddOnlineVideoCommand.OnlineVideoCommand;
 import com.hanpyeon.academyapi.security.Role;
@@ -31,7 +30,7 @@ class OnlineCourseVideoServiceTest {
     @Autowired
     private MediaRepository mediaRepository;
     @Autowired
-    private OnlineCourseVideoService onlineCourseVideoService;
+    private OnlineVideoRegisterService onlineCourseVideoService;
     @Autowired
     private OnlineCourseRepository onlineCourseRepository;
 

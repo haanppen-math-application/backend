@@ -1,8 +1,8 @@
-package com.hanpyeon.academyapi.online.service.update;
+package com.hanpyeon.academyapi.online.service.course.update;
 
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseInfoUpdateCommand;
-import com.hanpyeon.academyapi.online.service.MemberLoader;
+import com.hanpyeon.academyapi.online.service.course.MemberLoader;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
