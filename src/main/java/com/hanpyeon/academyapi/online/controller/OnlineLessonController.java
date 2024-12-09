@@ -3,10 +3,12 @@ package com.hanpyeon.academyapi.online.controller;
 import com.hanpyeon.academyapi.online.dto.AddOnlineCourseVideoRequest;
 import com.hanpyeon.academyapi.online.dto.AddOnlineVideoCommand;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseVideoCommand;
+import com.hanpyeon.academyapi.online.dto.DeleteOnlineVideoAttachmentCommand;
 import com.hanpyeon.academyapi.online.dto.RegisterOnlineVideoAttachmentCommand;
 import com.hanpyeon.academyapi.online.dto.RegisterOnlineVideoAttachmentRequest;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoCommand;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoRequest;
+import com.hanpyeon.academyapi.online.service.lesson.OnlineAttachmentDeleteService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineAttachmentRegisterService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineLessonUpdateService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineVideoDeleteService;
@@ -15,6 +17,7 @@ import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -35,6 +38,7 @@ class OnlineLessonController {
     private final OnlineVideoDeleteService onlineVideoDeleteService;
     private final OnlineVideoRegisterService onlineVideoRegisterService;
     private final OnlineAttachmentRegisterService onlineAttachmentRegisterService;
+    private final OnlineAttachmentDeleteService onlineAttachmentDeleteService;
 
     @PutMapping
     @Operation(summary = "온라인 수업의 대표 정보를 수정하는 API 입니다", description = "필드를 null로 보내면, 해당 필드는 수정하지 않습니다.")
@@ -89,5 +93,19 @@ class OnlineLessonController {
                 memberPrincipal.memberId(), memberPrincipal.role());
         onlineAttachmentRegisterService.register(command);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{onlineCourseId}/videos/{onlineVideoId}/attachments/{attachmentId}")
+    @Operation(summary = "온라인 영상 첨부자료 삭제 API")
+    public ResponseEntity<?> deleteAttachment(
+            @PathVariable(required = true) final Long onlineCourseId,
+            @PathVariable(required = true) final Long onlineVideoId,
+            @PathVariable(required = true) final Long attachmentId,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final DeleteOnlineVideoAttachmentCommand command = new DeleteOnlineVideoAttachmentCommand(attachmentId, onlineVideoId,
+                memberPrincipal.memberId(), memberPrincipal.role());
+        onlineAttachmentDeleteService.deleteAttachment(command);
+        return ResponseEntity.noContent().build();
     }
 }
