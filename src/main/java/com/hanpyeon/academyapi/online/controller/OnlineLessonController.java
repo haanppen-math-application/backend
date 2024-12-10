@@ -47,7 +47,7 @@ class OnlineLessonController {
     @PutMapping
     @Operation(summary = "온라인 수업의 대표 정보를 수정하는 API 입니다", description = "필드를 null로 보내면, 해당 필드는 수정하지 않습니다.")
     public ResponseEntity<?> updateOnlineLessonInfo(
-            @Validated final UpdateOnlineLessonInfoRequest updateOnlineLessonInfoRequest,
+            @Validated @RequestBody final UpdateOnlineLessonInfoRequest updateOnlineLessonInfoRequest,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         final UpdateOnlineLessonInfoCommand updateOnlineLessonInfoCommand = updateOnlineLessonInfoRequest.toCommand(
