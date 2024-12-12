@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import retrofit2.http.Path;
 
 @RestController
 @RequestMapping("/api/online-courses/category")
@@ -56,7 +55,7 @@ public class OnlineCategoryController {
     public ResponseEntity<?> deleteOnlineCategory(
             @PathVariable(required = true) final Long categoryId
     ) {
-        onlineCategoryDeleteService.deleteChildDirectories(categoryId);
+        onlineCategoryDeleteService.deleteChildCategories(categoryId);
         return ResponseEntity.noContent().build();
     }
 }
