@@ -15,6 +15,7 @@ import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @NoArgsConstructor
@@ -42,6 +43,7 @@ public class OnlineVideo {
     private Integer videoSequence;
 
     @OneToMany(mappedBy = "onlineVideo", fetch = FetchType.LAZY)
+    @BatchSize(size = 10)
     private List<OnlineVideoAttachment> videoAttachments;
 
     public OnlineVideo(OnlineCourse onlineCourse, Media media, String videoName, Boolean preview, Integer videoSequence) {
