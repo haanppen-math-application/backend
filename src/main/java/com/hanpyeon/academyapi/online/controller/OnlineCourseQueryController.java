@@ -18,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -76,7 +77,7 @@ public class OnlineCourseQueryController {
         return ResponseEntity.ok(queryOnlineCourseService.queryOnlineCourseDetails(courseDetailsCommand));
     }
 
-    @GetMapping("/category/{categoryId}")
+    @GetMapping("/categories/{categoryId}")
     @Operation(summary = "카테고리 ID를 통한 반 조회")
     public ResponseEntity<?> queryOnlineCoursesByCategoryId(
             @PathVariable(required = true) final Long categoryId
