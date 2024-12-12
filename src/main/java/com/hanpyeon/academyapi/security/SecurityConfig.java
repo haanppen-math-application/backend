@@ -220,7 +220,12 @@ public class SecurityConfig {
                             );
 
                     // 온라인 카테고리
-                    request.requestMatchers("/api/online-courses/category")
+                    request.requestMatchers(HttpMethod.POST, "/api/online-courses/category")
+                            .hasAnyAuthority(
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.MANAGER.getSecurityRole()
+                            );
+                    request.requestMatchers(HttpMethod.DELETE, "/api/online-courses/category/*")
                             .hasAnyAuthority(
                                     Role.ADMIN.getSecurityRole(),
                                     Role.MANAGER.getSecurityRole()

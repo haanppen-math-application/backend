@@ -43,7 +43,7 @@ class OnlineLessonServiceTest {
                 .role(Role.TEACHER)
                 .build();
         final OnlineCourse onlineCourse = new OnlineCourse(member, "test");
-        final OnlineCategory onlineCategory = new OnlineCategory("test", "test", "test");
+        final OnlineCategory onlineCategory = new OnlineCategory("test");
 
         final Long memberId = memberRepository.save(member).getId();
         final Long courseId = onlineCourseRepository.save(onlineCourse).getId();
