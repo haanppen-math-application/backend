@@ -23,7 +23,7 @@ public class OnlineLessonUpdateService {
     @Transactional
     public void updateLessonInfo(@Validated final UpdateOnlineLessonInfoCommand updateOnlineLessonInfoCommand) {
         final OnlineCourse onlineCourse = loadCourseAndCategoryByCourseId(updateOnlineLessonInfoCommand.targetCourseId());
-        onlineCourseOwnerValidator.validate(updateOnlineLessonInfoCommand.requestMemberRole(), updateOnlineLessonInfoCommand.requestMemberId(), onlineCourse.getId());
+        onlineCourseOwnerValidator.validate(updateOnlineLessonInfoCommand.requestMemberRole(), updateOnlineLessonInfoCommand.requestMemberId(), onlineCourse.getTeacher().getId());
 
         onlineLessonInfoUpdateManager.update(onlineCourse, updateOnlineLessonInfoCommand);
     }
