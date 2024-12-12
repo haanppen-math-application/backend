@@ -19,7 +19,7 @@ class LessonCategoryUpdateHandlerTest {
 
     @Test
     void testOnlineCategoryQuery() {
-        final OnlineCategory onlineCategory = new OnlineCategory("test1", "test2", "test3");
+        final OnlineCategory onlineCategory = new OnlineCategory("test1");
         final Long id = onlineCategoryRepository.save(onlineCategory).getId();
 
         entityManager.flush();

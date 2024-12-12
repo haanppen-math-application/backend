@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.online.dao;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -31,7 +32,8 @@ public class OnlineCategory {
     @OneToMany(mappedBy = "onlineCategory", fetch = FetchType.LAZY)
     @BatchSize(size = 10)
     private List<OnlineCourse> onlineCourses;
-    @OneToMany(mappedBy = "parentCategory")
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.REMOVE)
+    @BatchSize(size = 10)
     private List<OnlineCategory> childCategories;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))

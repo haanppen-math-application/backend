@@ -75,4 +75,12 @@ public class OnlineCourseQueryController {
         final QueryOnlineCourseDetailsCommand courseDetailsCommand = new QueryOnlineCourseDetailsCommand(onlineCourseId);
         return ResponseEntity.ok(queryOnlineCourseService.queryOnlineCourseDetails(courseDetailsCommand));
     }
+
+    @GetMapping("/category/{categoryId}")
+    @Operation(summary = "카테고리 ID를 통한 반 조회")
+    public ResponseEntity<?> queryOnlineCoursesByCategoryId(
+            @PathVariable(required = true) final Long categoryId
+    ) {
+        return ResponseEntity.ok(queryOnlineCourseService.queryOnlineCourseByCategoryId(categoryId));
+    }
 }

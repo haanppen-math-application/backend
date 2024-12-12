@@ -14,6 +14,7 @@ import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseDetailsCommand;
 import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,5 +74,14 @@ public class OnlineCourseQueryService {
                 .map(member -> new OnlineStudentPreview(member.getId(), member.getName(), member.getGrade()))
                 .toList();
         return new OnlineCourseDetails(onlineCourse.getId(), onlineCourse.getCourseName(), onlineStudentPreviews, onlineTeacherPreview);
+    }
+
+    public List<OnlineCoursePreview> queryOnlineCourseByCategoryId(final Long categoryId) {
+        final List<OnlineCourse> onlineCourses = onlineCourseRepository.loadOnlineCoursesByCategoryId(categoryId);
+        return onlineCourses.stream()
+                .map(onlineCourse -> {
+                    final TeacherPreview teacherPreview = new TeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId());
+                    return new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(), onlineCourse.getOnlineStudents().size(), teacherPreview);
+                }).toList();
     }
 }
