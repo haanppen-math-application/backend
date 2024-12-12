@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -218,6 +217,13 @@ public class SecurityConfig {
                                     Role.ADMIN.getSecurityRole(),
                                     Role.MANAGER.getSecurityRole(),
                                     Role.TEACHER.getSecurityRole()
+                            );
+
+                    // 온라인 카테고리
+                    request.requestMatchers("/api/online-courses/category")
+                            .hasAnyAuthority(
+                                    Role.ADMIN.getSecurityRole(),
+                                    Role.MANAGER.getSecurityRole()
                             );
 
                     request.requestMatchers(HttpMethod.GET)
