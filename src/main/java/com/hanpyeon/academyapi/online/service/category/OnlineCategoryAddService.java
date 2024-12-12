@@ -14,9 +14,9 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 public class OnlineCategoryAddService {
-    private final OnlineCategoryRepository onlineCategoryRepository;
+    private static final Long MAX_LEVEL = 2L;
 
-    private static final Long MAX_LEVEL = 3L;
+    private final OnlineCategoryRepository onlineCategoryRepository;
 
     @Transactional
     public void addOnlineCategory(@Validated final OnlineCategoryAddCommand command) {

@@ -14,7 +14,7 @@ public class OnlineCategoryDeleteService {
     private final OnlineCategoryRepository onlineCategoryRepository;
 
     @Transactional
-    public void deleteChildDirectories(final Long onlineCategoryId) {
+    public void deleteChildCategories(final Long onlineCategoryId) {
         final OnlineCategory targetCategory = loadTargetCategory(onlineCategoryId);
         onlineCategoryRepository.delete(targetCategory);
     }
