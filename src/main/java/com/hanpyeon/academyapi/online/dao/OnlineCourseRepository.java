@@ -28,4 +28,7 @@ public interface OnlineCourseRepository extends JpaRepository<OnlineCourse, Long
 
     @Query("SELECT oc FROM OnlineCourse oc JOIN FETCH oc.teacher JOIN FETCH oc.onlineStudents WHERE oc.onlineCategory.id = :categoryId")
     List<OnlineCourse> loadOnlineCoursesByCategoryId(@Param("categoryId") final Long categoryId);
+
+    @Query("SELECT oc FROM OnlineCourse oc JOIN FETCH oc.onlineCategory JOIN FETCH oc.videos WHERE oc.id = :onlineCourseId")
+    Optional<OnlineCourse> loadOnlineCourseAndVideosAndCategoryById(@Param("onlineCourseId") final Long courseId);
 }
