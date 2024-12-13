@@ -48,7 +48,7 @@ public class OnlineCategoryController {
     @GetMapping("/root")
     @Operation(summary = "온라인 강의 카테고리 조회 서비스")
     public ResponseEntity<List<OnlineCategoryInfo>> queryRootCategories() {
-        return ResponseEntity.ok(onlineCategoryQueryService.queryChildCategories(null));
+        return ResponseEntity.ok(onlineCategoryQueryService.queryRootCategories());
     }
 
     @DeleteMapping("/{categoryId}")
