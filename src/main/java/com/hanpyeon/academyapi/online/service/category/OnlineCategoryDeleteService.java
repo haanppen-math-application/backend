@@ -21,7 +21,7 @@ public class OnlineCategoryDeleteService {
 
     private OnlineCategory loadTargetCategory(final Long onlineCategoryId) {
         return onlineCategoryRepository.findDeleteTargetDirectory(onlineCategoryId)
-                .orElseThrow(() -> new BusinessException("카테고리르 찾을 수 없음 : " + onlineCategoryId,
+                .orElseThrow(() -> new BusinessException( onlineCategoryId + " 카테고리를찾을 수 없음 : " + onlineCategoryId,
                         ErrorCode.ONLINE_COURSE_EXCEPTION));
     }
 }
