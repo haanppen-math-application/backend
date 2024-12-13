@@ -17,4 +17,8 @@ public class OnlineCategoryQueryService {
     public List<OnlineCategoryInfo> queryChildCategories(final Long categoryId) {
         return onlineCategoryRepository.queryChildCategories(categoryId);
     }
+
+    public List<OnlineCategoryInfo> queryRootCategories() {
+        return onlineCategoryRepository.queryRootCategories();
+    }
 }

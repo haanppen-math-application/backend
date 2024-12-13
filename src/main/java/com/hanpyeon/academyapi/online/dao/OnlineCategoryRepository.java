@@ -14,6 +14,9 @@ public interface OnlineCategoryRepository extends JpaRepository<OnlineCategory, 
     @Query("SELECT new com.hanpyeon.academyapi.online.dto.OnlineCategoryInfo(oc.id, oc.categoryName, oc.creationTime) FROM OnlineCategory oc WHERE oc.parentCategory.id = :categoryId")
     List<OnlineCategoryInfo> queryChildCategories(@Param("categoryId") final Long categoryId);
 
+    @Query("SELECT new com.hanpyeon.academyapi.online.dto.OnlineCategoryInfo(oc.id, oc.categoryName, oc.creationTime) FROM OnlineCategory oc WHERE oc.parentCategory = null")
+    List<OnlineCategoryInfo> queryRootCategories();
+
     @Query("SELECT oc FROM OnlineCategory oc JOIN FETCH oc.childCategories WHERE oc.id = :categoryId")
     Optional<OnlineCategory> findDeleteTargetDirectory(@Param("categoryId") final Long categoryId);
 }
