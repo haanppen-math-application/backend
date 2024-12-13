@@ -2,14 +2,17 @@ package com.hanpyeon.academyapi.online.service.lesson;
 
 import com.hanpyeon.academyapi.exception.BusinessException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.online.dao.OnlineCategory;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineVideo;
 import com.hanpyeon.academyapi.online.dao.OnlineVideoAttachment;
+import com.hanpyeon.academyapi.online.dto.LessonCategoryInfo;
 import com.hanpyeon.academyapi.online.dto.OnlineLessonDetail;
 import com.hanpyeon.academyapi.online.dto.OnlineVideoAttachmentDetail;
 import com.hanpyeon.academyapi.online.dto.OnlineVideoDetail;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,8 +38,16 @@ public class OnlineLessonQueryService {
                 onlineCourse.getCourseContent(),
                 onlineCourse.getVideos().stream()
                         .map(this::mapToDetail)
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                toCategory(onlineCourse.getOnlineCategory())
         );
+    }
+    private LessonCategoryInfo toCategory(final OnlineCategory onlineCategory) {
+        if (Objects.isNull(onlineCategory)) {
+            return null;
+        }
+        return new LessonCategoryInfo(onlineCategory.getId(), onlineCategory.getParentCategory().getCategoryName(),
+                onlineCategory.getCategoryName());
     }
 
     private OnlineVideoDetail mapToDetail(final OnlineVideo onlineVideo) {

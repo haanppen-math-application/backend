@@ -7,6 +7,7 @@ public record OnlineLessonDetail(
         String title,
         String lessonRange,
         String lessonDesc,
-        List<OnlineVideoDetail> onlineVideoDetails
+        List<OnlineVideoDetail> onlineVideoDetails,
+        LessonCategoryInfo lessonCategoryInfo
 ) {
 }
