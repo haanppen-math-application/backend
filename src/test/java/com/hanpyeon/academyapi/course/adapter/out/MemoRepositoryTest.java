@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
@@ -9,13 +10,15 @@ import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
+import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
-class CourseRepositoryTest {
+@ActiveProfiles("test")
+class MemoRepositoryTest {
     @Autowired
     EntityManager entityManager;
     @Autowired
@@ -66,7 +69,26 @@ class CourseRepositoryTest {
     @Test
     void 선생님_번호를_통한_수업_조회_테스트() {
         init();
-        assertThat(courseRepository.findAll().size())
-                .isEqualTo(1);
+
+        final LocalDate today = LocalDate.now();
+        final LocalDate startDayOfMonth = today.withDayOfMonth(1);
+        final LocalDate endDayOfMonth = today.withDayOfMonth(today.lengthOfMonth());
+        student = memberRepository.findById(student.getId())
+                .orElseThrow();
+        course = courseRepository.findById(course.getId())
+                .orElseThrow();
+        final Long studentId = student.getId();
+        memoRepository.save(new Memo(course, today, "test", "test"));
+        memoRepository.save(new Memo(course, today, "test", "test"));
+        memoRepository.save(new Memo(course, today, "test", "test"));
+        memoRepository.save(new Memo(course, LocalDate.MAX, "test", "test"));
+        memoRepository.save(new Memo(course, LocalDate.MAX, "test", "test"));
+
+        entityManager.flush();
+        entityManager.clear();
+
+        Assertions.assertEquals(memoRepository.findAllByMonthAndStudentId(
+                        startDayOfMonth, endDayOfMonth, studentId).size(),
+                3);
     }
 }

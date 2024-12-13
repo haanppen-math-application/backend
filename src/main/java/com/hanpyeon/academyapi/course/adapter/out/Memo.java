@@ -22,7 +22,7 @@ class Memo {
     private LocalDateTime registeredDateTime;
     @Column(name = "TARGET_DATE")
     private LocalDate targetDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "courseId", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Course course;
     @Column(name = "TITLE")
