@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.online.dto.AddOnlineCourseVideoRequest;
 import com.hanpyeon.academyapi.online.dto.AddOnlineVideoCommand;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseVideoCommand;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineVideoAttachmentCommand;
+import com.hanpyeon.academyapi.online.dto.OnlineLessonInitializeCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineVideoPreviewUpdateCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineVideoPreviewUpdateRequest;
 import com.hanpyeon.academyapi.online.dto.RegisterOnlineVideoAttachmentCommand;
@@ -23,6 +24,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jdk.jfr.MemoryAddress;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import retrofit2.http.PUT;
 
 @RestController
 @RequestMapping("/api/online-courses/lesson")
@@ -59,6 +62,17 @@ class OnlineLessonController {
                 memberPrincipal.role()
         );
         onlineLessonUpdateService.updateLessonInfo(updateOnlineLessonInfoCommand);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("{lessonId}")
+    @Operation(summary = "온라인 수업의 내용을 초기화 API", description = "등록된 영상 및 첨부파일, 수업 제목, 수업 범위, 수업 내용 삭제")
+    public ResponseEntity<?> initializeLesson(
+            @PathVariable(required = true) final Long lessonId,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final OnlineLessonInitializeCommand command = new OnlineLessonInitializeCommand(lessonId, memberPrincipal.memberId(), memberPrincipal.role());
+        onlineLessonUpdateService.initializeCourse(command);
         return ResponseEntity.ok().build();
     }
 
