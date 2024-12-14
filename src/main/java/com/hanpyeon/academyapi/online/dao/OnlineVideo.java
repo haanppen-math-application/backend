@@ -59,4 +59,8 @@ public class OnlineVideo {
         targetVideo.videoSequence = this.videoSequence;
         this.videoSequence = tempSequence;
     }
+
+    public void setPreviewStatus(final boolean previewStatus) {
+        this.preview = previewStatus;
+    }
 }

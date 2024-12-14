@@ -41,6 +41,6 @@ public class OnlineAttachmentRegisterService {
 
     private Media loadMedia(final String src) {
         return mediaRepository.findBySrc(src)
-                .orElseThrow(() -> new BusinessException("첨부자료 찾을 수 없음", ErrorCode.ONLINE_COURSE_EXCEPTION));
+                .orElseThrow(() -> new BusinessException(src + " : 첨부자료 찾을 수 없음", ErrorCode.ONLINE_COURSE_EXCEPTION));
     }
 }

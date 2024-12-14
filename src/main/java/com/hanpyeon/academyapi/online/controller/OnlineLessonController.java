@@ -4,6 +4,8 @@ import com.hanpyeon.academyapi.online.dto.AddOnlineCourseVideoRequest;
 import com.hanpyeon.academyapi.online.dto.AddOnlineVideoCommand;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseVideoCommand;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineVideoAttachmentCommand;
+import com.hanpyeon.academyapi.online.dto.OnlineVideoPreviewUpdateCommand;
+import com.hanpyeon.academyapi.online.dto.OnlineVideoPreviewUpdateRequest;
 import com.hanpyeon.academyapi.online.dto.RegisterOnlineVideoAttachmentCommand;
 import com.hanpyeon.academyapi.online.dto.RegisterOnlineVideoAttachmentRequest;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoCommand;
@@ -20,8 +22,8 @@ import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -81,6 +83,17 @@ class OnlineLessonController {
                 memberPrincipal.memberId(),
                 memberPrincipal.role());
         onlineVideoRegisterService.addOnlineVideo(addOnlineVideoCommand);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/videos")
+    @Operation(summary = "온라인 수업 영상 Preview 옵션 수정 API")
+    public ResponseEntity<?> updateOnlineVideoPreviewStatus(
+            @Valid @RequestBody final OnlineVideoPreviewUpdateRequest request,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final OnlineVideoPreviewUpdateCommand command = request.toCommand(memberPrincipal.memberId(), memberPrincipal.role());
+        onlineLessonUpdateService.updatePreviewStauts(command);
         return ResponseEntity.ok().build();
     }
 

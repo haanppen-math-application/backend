@@ -60,7 +60,7 @@ class OnlineCourseVideoServiceTest {
         entityManager.flush();
         entityManager.clear();
 
-        final OnlineVideo onlineVideo = onlineCourseRepository.loadCourseAndVideosByCourseId(onlineCourse.getId())
+        final OnlineVideo onlineVideo = onlineCourseRepository.loadCourseAndVideosAndTeacherByCourseId(onlineCourse.getId())
                 .orElseThrow()
                 .getVideos().get(0);
 

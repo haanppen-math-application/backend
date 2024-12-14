@@ -5,9 +5,6 @@ import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineVideo;
-import com.hanpyeon.academyapi.online.dao.OnlineVideoAttachment;
-import com.hanpyeon.academyapi.online.dao.OnlineVideoAttachmentRepository;
-import com.hanpyeon.academyapi.online.dao.OnlineVideoRepository;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineVideoSequenceCommand;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +51,7 @@ public class OnlineVideoSequenceUpdateService {
     }
 
     private OnlineCourse loadOnlineCourse(final Long onlineCourseId) {
-        return onlineCourseRepository.loadCourseAndVideosByCourseId(onlineCourseId)
+        return onlineCourseRepository.loadCourseAndVideosAndTeacherByCourseId(onlineCourseId)
                 .orElseThrow(() -> new BusinessException("해당 반을 찾을 수 없음", ErrorCode.ONLINE_COURSE_EXCEPTION));
     }
 }
