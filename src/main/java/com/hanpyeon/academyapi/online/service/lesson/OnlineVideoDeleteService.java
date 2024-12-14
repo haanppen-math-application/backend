@@ -42,7 +42,7 @@ public class OnlineVideoDeleteService {
     }
 
     private OnlineCourse loadOnlineCourseWithVideos(final Long onlineCourseId) {
-        return onlineCourseRepository.loadCourseAndVideosByCourseId(onlineCourseId)
+        return onlineCourseRepository.loadCourseAndVideosAndTeacherByCourseId(onlineCourseId)
                 .orElseThrow(() -> new BusinessException("온라인 수업을 찾을 수 없습니다.", ErrorCode.ONLINE_COURSE_EXCEPTION));
     }
 }
