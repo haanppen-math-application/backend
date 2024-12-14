@@ -72,7 +72,7 @@ class OnlineLessonController {
     @PostMapping("/videos")
     @Operation(summary = "온라인 수업에 영상 등록 API")
     public ResponseEntity<?> updateOnlineCourseVideos(
-            @Validated final AddOnlineCourseVideoRequest addOnlineCourseVideosRequest,
+            @Validated @RequestBody final AddOnlineCourseVideoRequest addOnlineCourseVideosRequest,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         final AddOnlineVideoCommand addOnlineVideoCommand = addOnlineCourseVideosRequest.toCommand(
