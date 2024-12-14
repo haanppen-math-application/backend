@@ -13,6 +13,7 @@ import com.hanpyeon.academyapi.online.dto.OnlineLessonDetail;
 import com.hanpyeon.academyapi.online.dto.OnlineLessonQueryCommand;
 import com.hanpyeon.academyapi.online.dto.OnlineVideoAttachmentDetail;
 import com.hanpyeon.academyapi.online.dto.OnlineVideoDetail;
+import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -32,11 +33,11 @@ public class OnlineLessonQueryService {
                         command.courseId())
                 .orElseThrow(() -> new BusinessException(command.courseId() + "를 찾을 수 없음",
                         ErrorCode.ONLINE_COURSE_EXCEPTION));
-        return mapToDetail(onlineCourses, command.requestMemberId());
+        return mapToDetail(onlineCourses, command.requestMemberId(), command.requestMemberRole());
     }
 
-    private OnlineLessonDetail mapToDetail(final OnlineCourse onlineCourse, final Long requestMemberId) {
-        final boolean isIncludedStudent = checkIncludedStudent(requestMemberId, onlineCourse.getOnlineStudents());
+    private OnlineLessonDetail mapToDetail(final OnlineCourse onlineCourse, final Long requestMemberId, final Role role) {
+        final boolean isIncludedStudent = checkViewable(role, requestMemberId, onlineCourse.getOnlineStudents());
         return new OnlineLessonDetail(
                 onlineCourse.getId(),
                 onlineCourse.getCourseTitle(),
@@ -49,10 +50,14 @@ public class OnlineLessonQueryService {
         );
     }
 
-    private boolean checkIncludedStudent(final Long requestMemberId, final List<OnlineStudent> studentIds) {
-        return studentIds.stream()
-                .map(onlineStudent -> onlineStudent.getMember().getId())
-                .anyMatch(studentId -> studentId.equals(requestMemberId));
+    private boolean checkViewable(final Role role, final Long requestMemberId, final List<OnlineStudent> studentIds) {
+        if (role.equals(Role.STUDENT)) {
+            return studentIds.stream()
+                    .map(onlineStudent -> onlineStudent.getMember().getId())
+                    .anyMatch(studentId -> studentId.equals(requestMemberId));
+        }
+        // 학생이 아닌 조회에선 모두 true
+        return true;
     }
 
     private LessonCategoryInfo toCategory(final OnlineCategory onlineCategory) {
