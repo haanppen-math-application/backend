@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.online.dao;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -31,4 +32,15 @@ public interface OnlineCourseRepository extends JpaRepository<OnlineCourse, Long
 
     @Query("SELECT oc FROM OnlineCourse oc LEFT JOIN FETCH oc.onlineCategory LEFT JOIN FETCH oc.videos WHERE oc.id = :onlineCourseId")
     Optional<OnlineCourse> loadOnlineCourseAndVideosAndCategoryById(@Param("onlineCourseId") final Long courseId);
+
+    @Query("SELECT oc FROM OnlineCourse oc LEFT JOIN FETCH oc.videos WHERE oc.id = :onlineCourseId")
+    Optional<OnlineCourse> loadOnlineCourseAndVideosByCourseId(@Param("onlineCourseId") final Long courseId);
+
+    @Modifying
+    @Query("DELETE OnlineVideoAttachment ova WHERE ova.onlineVideo.id IN :videoIds")
+    void removeAllOnlineVideoAttachmentsIn(@Param("videoIds") final List<Long> videoIds);
+
+    @Modifying
+    @Query("DELETE OnlineVideo ov WHERE ov.onlineCourse.id = :onlineCourseId")
+    void removeOnlineCourseVideos(@Param("onlineCourseId") final Long courseId);
 }

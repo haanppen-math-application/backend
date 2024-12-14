@@ -92,6 +92,12 @@ public class OnlineCourse {
         this.courseName = courseName;
     }
 
+    public void clearContents() {
+        this.courseTitle = null;
+        this.courseContent = null;
+        this.courseRange = null;
+    }
+
 //    public void setOnlineStudents(final List<OnlineStudent> onlineStudents) {
 //        onlin
 //    }
