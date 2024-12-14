@@ -93,6 +93,6 @@ public class OnlineLessonQueryService {
 
     private OnlineVideoAttachmentDetail mapToDetail(final OnlineVideoAttachment onlineVideoAttachment) {
         return new OnlineVideoAttachmentDetail(onlineVideoAttachment.getId(),
-                onlineVideoAttachment.getMedia().getSrc());
+                onlineVideoAttachment.getContent());
     }
 }
