@@ -26,14 +26,16 @@ public class OnlineVideoAttachment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OnlineVideo onlineVideo;
-
+    @Column(name = "title")
+    private String title;
     @Column(name = "content")
     private String content;
     @CreationTimestamp
     private LocalDateTime registeredDate;
 
-    public OnlineVideoAttachment(final OnlineVideo onlineVideo, final String content) {
+    public OnlineVideoAttachment(final OnlineVideo onlineVideo, final String title, final String content) {
         this.onlineVideo = onlineVideo;
+        this.title = title;
         this.content = content;
     }
 }
