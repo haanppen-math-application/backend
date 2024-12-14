@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record RegisterOnlineVideoAttachmentCommand(
-        @NotBlank String mediaSrc,
+        @NotBlank String attachmentContent,
         @NotNull Long onlineCourseId,
         @NotNull Long onlineVideoId,
         @NotNull Long requestMemberId,

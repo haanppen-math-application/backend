@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.online.dao;
 
 import com.hanpyeon.academyapi.media.entity.Media;
+import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,14 +26,14 @@ public class OnlineVideoAttachment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OnlineVideo onlineVideo;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Media media;
+
+    @Column(name = "content")
+    private String content;
     @CreationTimestamp
     private LocalDateTime registeredDate;
 
-    public OnlineVideoAttachment(final OnlineVideo onlineVideo, final Media media) {
+    public OnlineVideoAttachment(final OnlineVideo onlineVideo, final String content) {
         this.onlineVideo = onlineVideo;
-        this.media = media;
+        this.content = content;
     }
 }
