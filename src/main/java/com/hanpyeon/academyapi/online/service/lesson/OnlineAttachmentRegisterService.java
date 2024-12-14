@@ -28,7 +28,7 @@ public class OnlineAttachmentRegisterService {
         final OnlineVideo onlineVideo = loadOnlineVideoById(command.onlineVideoId());
         onlineCourseOwnerValidator.validate(command.requestMemberRole(), command.requestMemberId(), onlineVideo.getOnlineCourse().getTeacher().getId());
         
-        final OnlineVideoAttachment onlineVideoAttachment = new OnlineVideoAttachment(onlineVideo, command.attachmentContent());
+        final OnlineVideoAttachment onlineVideoAttachment = new OnlineVideoAttachment(onlineVideo, command.attachmentTitle(), command.attachmentContent());
         onlineVideoAttachmentRepository.save(onlineVideoAttachment);
     }
 
