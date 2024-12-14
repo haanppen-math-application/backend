@@ -4,7 +4,7 @@ import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.constraints.NotBlank;
 
 public record RegisterOnlineVideoAttachmentRequest(
-        @NotBlank String mediaSrc
+        @NotBlank String attachmentContent
 ) {
     public RegisterOnlineVideoAttachmentCommand toCommand(
             final Long onlineCourseId,
@@ -12,6 +12,6 @@ public record RegisterOnlineVideoAttachmentRequest(
             final Long requestMemberId,
             final Role requstMemberRole
     ) {
-        return new RegisterOnlineVideoAttachmentCommand(mediaSrc, onlineCourseId, onlineVideoId, requestMemberId, requstMemberRole);
+        return new RegisterOnlineVideoAttachmentCommand(attachmentContent, onlineCourseId, onlineVideoId, requestMemberId, requstMemberRole);
     }
 }

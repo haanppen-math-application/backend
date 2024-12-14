@@ -52,7 +52,7 @@ class OnlineAttachmentDeleteServiceTest {
         final OnlineCourse onlineCourse = new OnlineCourse(member, "test");
         final Media media = new Media("test", "src", member);
         final OnlineVideo onlineVideo = new OnlineVideo(onlineCourse, media, "name", true, 1);
-        final OnlineVideoAttachment onlineVideoAttachment = new OnlineVideoAttachment(onlineVideo, media);
+        final OnlineVideoAttachment onlineVideoAttachment = new OnlineVideoAttachment(onlineVideo, "test");
 
         memberRepository.save(member);
         onlineCourseRepository.save(onlineCourse);
