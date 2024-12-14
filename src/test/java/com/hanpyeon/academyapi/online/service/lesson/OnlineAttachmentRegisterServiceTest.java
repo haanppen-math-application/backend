@@ -60,6 +60,7 @@ class OnlineAttachmentRegisterServiceTest {
         entityManager.clear();
 
         onlineAttachmentRegisterService.register(new RegisterOnlineVideoAttachmentCommand(
+                "test",
                 mediaId,
                 onlineCourseId,
                 onlineVideoId,
