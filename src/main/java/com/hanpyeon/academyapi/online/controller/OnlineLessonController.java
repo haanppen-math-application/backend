@@ -18,6 +18,7 @@ import com.hanpyeon.academyapi.online.service.lesson.OnlineVideoRegisterService;
 import com.hanpyeon.academyapi.online.service.lesson.OnlineVideoSequenceUpdateService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/online-courses/lesson")
 @RequiredArgsConstructor
 @Tag(name = "온라인 수업")
+@SecurityRequirement(name = "jwtAuth")
 class OnlineLessonController {
     private final OnlineLessonUpdateService onlineLessonUpdateService;
     private final OnlineVideoDeleteService onlineVideoDeleteService;
