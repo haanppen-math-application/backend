@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class OnlineAttachmentRegisterService {
     private final OnlineVideoRepository onlineVideoRepository;
     private final OnlineVideoAttachmentRepository onlineVideoAttachmentRepository;
-    private final MediaRepository mediaRepository;
 
     private final OnlineCourseOwnerValidator onlineCourseOwnerValidator;
 
@@ -28,8 +27,7 @@ public class OnlineAttachmentRegisterService {
     public void register(final RegisterOnlineVideoAttachmentCommand command) {
         final OnlineVideo onlineVideo = loadOnlineVideoById(command.onlineVideoId());
         onlineCourseOwnerValidator.validate(command.requestMemberRole(), command.requestMemberId(), onlineVideo.getOnlineCourse().getTeacher().getId());
-
-        final Media media = loadMedia(command.attachmentContent());
+        
         final OnlineVideoAttachment onlineVideoAttachment = new OnlineVideoAttachment(onlineVideo, command.attachmentContent());
         onlineVideoAttachmentRepository.save(onlineVideoAttachment);
     }
@@ -37,10 +35,5 @@ public class OnlineAttachmentRegisterService {
     private OnlineVideo loadOnlineVideoById(final Long videoId) {
         return onlineVideoRepository.loadSingleOnlineVideoWithCourseWithTeacherByVideoId(videoId)
                 .orElseThrow(() -> new BusinessException("비디오를 찾을 수 없습니다.", ErrorCode.ONLINE_COURSE_EXCEPTION));
-    }
-
-    private Media loadMedia(final String src) {
-        return mediaRepository.findBySrc(src)
-                .orElseThrow(() -> new BusinessException(src + " : 첨부자료 찾을 수 없음", ErrorCode.ONLINE_COURSE_EXCEPTION));
     }
 }
