@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class QueryMemoByMonthController {
     private final QueryCourseByMonthUseCase queryCourseByMonthUseCase;
 
-    @GetMapping("/api/courses/{courseId}/memos/month")
+    @GetMapping("/api/courses/memos/month")
     @Operation(summary = "로그인된 학생 ID와 날짜정보를 활용하여, 해당 달의 학생 수업 정보를 가져오는 API")
     public ResponseEntity<List<MemoAppliedDayResult>> queryByMonthInfo(
             @RequestParam(required = true) final LocalDate monthInfo,
