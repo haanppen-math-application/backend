@@ -5,7 +5,7 @@ import com.hanpyeon.academyapi.exception.ErrorCode;
 import java.util.Objects;
 
 public record OnlineCourseTitle(String title) {
-    private static final int TITLE_MAX_LENGTH = 10;
+    private static final int TITLE_MAX_LENGTH = 50;
     private static final int TITLE_MIN_LENGTH = 1;
 
     public OnlineCourseTitle {
