@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "courseEntity")
 public class CourseStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
