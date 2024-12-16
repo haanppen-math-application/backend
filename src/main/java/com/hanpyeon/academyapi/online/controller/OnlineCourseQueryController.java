@@ -79,7 +79,7 @@ public class OnlineCourseQueryController {
 
     @GetMapping("/categories/{categoryId}")
     @Operation(summary = "카테고리 ID를 통한 반 조회")
-    public ResponseEntity<?> queryOnlineCoursesByCategoryId(
+    public ResponseEntity<List<OnlineCoursePreview>> queryOnlineCoursesByCategoryId(
             @PathVariable(required = true) final Long categoryId
     ) {
         return ResponseEntity.ok(queryOnlineCourseService.queryOnlineCourseByCategoryId(categoryId));
