@@ -14,7 +14,7 @@ public class QueryMemosByMonthAdapter implements QueryMemosByMonthPort {
     @Override
     public List<MemoAppliedDayResult> query(final LocalDate startDate, final LocalDate endDate, final Long studentId) {
         return memoRepository.findAllByMonthAndStudentId(startDate, endDate, studentId).stream()
-                .map(memo -> new MemoAppliedDayResult(memo.getCourse().getId(), memo.getCourse().getCourseName(), memo.getId(), memo.getRegisteredDateTime()))
+                .map(memo -> new MemoAppliedDayResult(memo.getCourse().getId(), memo.getCourse().getCourseName(), memo.getId(), memo.getTargetDate()))
                 .toList();
     }
 }
