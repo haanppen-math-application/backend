@@ -12,12 +12,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
-//@Service
-//@Primary
+@Service
+@Profile("deploy")
+@Primary
 public class AwsStorage implements MediaStorage {
 
     private final AmazonS3 amazonS3Client;
