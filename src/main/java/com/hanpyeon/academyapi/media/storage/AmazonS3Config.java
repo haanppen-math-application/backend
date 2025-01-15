@@ -5,8 +5,10 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
-//@Configuration
+@Configuration
+@Profile("deploy")
 class AmazonS3Config {
     private final String accessKey;
     private final String secretKey;
