@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Tag(name = "COURSE MEMO")
 class UpdateMemoMediaSequenceController {
-
     private final UpdateMemoMediaUseCase updateMemoMediaUseCase;
 
     @PutMapping("/api/course/memo/media")

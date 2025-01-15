@@ -98,6 +98,12 @@ public class OnlineCourse {
         this.courseRange = null;
     }
 
+    public List<OnlineStudent> getOnlineStudents() {
+        return onlineStudents.stream()
+                .filter(onlineStudent -> !onlineStudent.getMember().getRemoved())
+                .toList();
+    }
+
 //    public void setOnlineStudents(final List<OnlineStudent> onlineStudents) {
 //        onlin
 //    }
