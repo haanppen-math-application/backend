@@ -53,7 +53,7 @@ jobs:
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_SSH_KEY }}
           script: |
-            sudo systemctl restart appserver.service
+            sudo systemctl restart apiserver.service
       - name: ssh access to ec2 Main Server
         if: github.ref == 'refs/heads/main'
         uses: appleboy/ssh-action@master
