@@ -15,6 +15,7 @@ import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -101,7 +102,7 @@ public class OnlineCourse {
     public List<OnlineStudent> getOnlineStudents() {
         return onlineStudents.stream()
                 .filter(onlineStudent -> !onlineStudent.getMember().getRemoved())
-                .toList();
+                .collect(Collectors.toList());
     }
 
 //    public void setOnlineStudents(final List<OnlineStudent> onlineStudents) {
