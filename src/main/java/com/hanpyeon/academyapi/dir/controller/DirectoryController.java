@@ -72,7 +72,7 @@ public class DirectoryController {
 
     record CreateDirectoryRequest(
             @NotBlank @Pattern(regexp = "^/.*$") String directoryPath,
-            @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String directoryName,
+            @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9 ]+$") String directoryName,
             @NotNull Boolean canViewByEveryone,
             @NotNull Boolean canModifyByEveryone
     ) {
@@ -80,7 +80,7 @@ public class DirectoryController {
 
     record UpdateDirectoryRequest(
             @NotBlank @Pattern(regexp = "^/.*$") String targetDirPath,
-            @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$") String newDirName
+            @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9 ]+$") String newDirName
     ) {
     }
 
