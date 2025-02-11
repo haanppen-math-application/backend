@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.server.Cookie;
+import org.springframework.boot.web.server.Cookie.SameSite;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -92,7 +93,7 @@ public class LoginController {
     private ResponseCookie createHttpOnlyCookieHeader(final String refreshToken, final int minute) {
         return ResponseCookie.from(REFRESH_TOKEN_NAME, refreshToken)
                 .httpOnly(true)
-                .sameSite(Cookie.SameSite.NONE.name())
+                .sameSite(SameSite.STRICT.name())
                 .path("/api/login/refresh")
                 .secure(true)
                 .maxAge(60 * minute)
