@@ -14,13 +14,12 @@ class MediaFileUtilTest {
     @Autowired
     private MediaFileUtil mediaFileUtil;
 
-    @Test
-    void 파일로부터_재생시간_추출() throws IOException {
-        final Path path = Paths.get("/Users/yoon/projects/spring/math-backend/backend/src/main/resources/storage/dance.mp4");
-        final File file = path.toFile();
-
-        mediaFileUtil.getDurationFromPath(file);
-        System.out.println(mediaFileUtil.getDurationFromPath(file) / 1000);
-    }
-
+//    @Test
+//    void 파일로부터_재생시간_추출() throws IOException {
+//        final Path path = Paths.get("/Users/yoon/projects/spring/math-backend/backend/src/main/resources/storage/dance.mp4");
+//        final File file = path.toFile();
+//
+//        mediaFileUtil.getDurationFromPath(file);
+//        System.out.println(mediaFileUtil.getDurationFromPath(file) / 1000);
+//    }
 }
