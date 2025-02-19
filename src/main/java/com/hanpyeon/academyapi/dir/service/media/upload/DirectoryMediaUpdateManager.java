@@ -7,6 +7,7 @@ import com.hanpyeon.academyapi.dir.dao.Directory;
 import com.hanpyeon.academyapi.dir.dao.DirectoryRepository;
 import com.hanpyeon.academyapi.dir.exception.DirectoryException;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.merger.MergedVideoUploadFile;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Media;
 import com.hanpyeon.academyapi.media.repository.MediaRepository;
@@ -30,10 +31,27 @@ public class DirectoryMediaUpdateManager {
         directory.add(media);
     }
 
+    @Transactional
+    public void update(final ChunkGroupInfo chunkGroupInfo, final Long duration, final String savedPath, final Long memberId, final Long fileSize) {
+        final Directory directory = this.findTargetDirectory(chunkGroupInfo.getDirPath());
+        final Media media = create(chunkGroupInfo.getFileName() + chunkGroupInfo.getExtension(), savedPath, memberId, duration, fileSize);
+        mediaRepository.save(media);
+        directory.add(media);
+    }
+
     private Media create(final String fileName, final String savedPath, final Long memberId) {
-        final Member member = memberRepository.findMemberByIdAndRemovedIsFalse(memberId)
-                .orElseThrow(() -> new AccountException(ErrorCode.NO_SUCH_MEMBER));
+        final Member member = loadMember(memberId);
         return new Media(fileName, savedPath, member);
+    }
+
+    private Media create(final String fileName, final String savedPath, final Long memberId, final Long duration, final Long fileSize) {
+        final Member member = loadMember(memberId);
+        return new Media(fileName, savedPath, member, duration, fileSize);
+    }
+
+    private Member loadMember(final Long memberId) {
+        return memberRepository.findMemberByIdAndRemovedIsFalse(memberId)
+                .orElseThrow(() -> new AccountException(ErrorCode.NO_SUCH_MEMBER));
     }
 
     private Directory findTargetDirectory(final String resolvedDirPath) {

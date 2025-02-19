@@ -4,29 +4,36 @@ import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroup;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
-import com.hanpyeon.academyapi.exception.ErrorCode;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
+import com.hanpyeon.academyapi.dir.service.media.upload.chunk.util.MediaFileUtil;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 class ChunkMergerImpl implements ChunkMerger {
+    private final MediaFileUtil mediaFileUtil;
 
     @Override
     public MergedUploadFile merge(ChunkStorage chunkStorage, ChunkGroupInfo chunkGroupInfo) {
         final ChunkGroup chunkGroup = this.getValidatedChunkGroup(chunkStorage, chunkGroupInfo);
         final InputStream totalInputStream = getCombinedInputStream(chunkGroup.getSequentialChunkInputStream());
-        return new MergedUploadFileImpl(chunkGroup.getChunkGroupInfo(), totalInputStream, chunkStorage);
+        final File tempFile;
+        try {
+            tempFile = mediaFileUtil.createTempFile(totalInputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        final Long mediaDuration = mediaFileUtil.getDurationFromPath(tempFile);
+        return new MergedUploadFileImpl(chunkGroup.getChunkGroupInfo(), tempFile, chunkStorage, mediaDuration);
     }
 
     private ChunkGroup getValidatedChunkGroup(final ChunkStorage chunkStorage, final ChunkGroupInfo chunkGroupInfo) {

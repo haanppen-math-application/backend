@@ -13,11 +13,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class ChunkedFileTransferManager {
-    private final ChunkMerger chunkMerger;
     private final MediaStorage mediaStorage;
 
-    public String sendToMediaStorage(final ChunkStorage chunkStorage, final ChunkGroupInfo chunkGroupInfo) {
-        final MergedUploadFile mergedUploadFile = chunkMerger.merge(chunkStorage, chunkGroupInfo);
+    public String sendToMediaStorage(final MergedUploadFile mergedUploadFile) {
         final String resultFileName = mediaStorage.store(mergedUploadFile);
         mergedUploadFile.completed();
         return resultFileName;

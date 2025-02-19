@@ -33,9 +33,23 @@ public class Media {
     @JoinColumn(name = "media_owner", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
+    @Column(name = "duration", nullable = true)
+    private Long duration;
+
+    @Column(name = "size", nullable = true)
+    private Long size;
+
     public Media(String mediaName, String src, Member member) {
         this.mediaName = mediaName;
         this.src = src;
         this.member = member;
+    }
+
+    public Media(String mediaName, String src, Member member, Long duration, Long size) {
+        this.mediaName = mediaName;
+        this.src = src;
+        this.member = member;
+        this.duration = duration;
+        this.size = size;
     }
 }
