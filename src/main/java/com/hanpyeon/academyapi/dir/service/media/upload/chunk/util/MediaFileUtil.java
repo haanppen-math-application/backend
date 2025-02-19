@@ -22,7 +22,7 @@ public class MediaFileUtil {
     public Long getDurationFromPath(final File file) {
         final MultimediaObject multimediaObject = new MultimediaObject(file, FFMpegProcessLocator);
         try {
-            return multimediaObject.getInfo().getDuration();
+            return multimediaObject.getInfo().getDuration() / 1000;
         } catch (EncoderException e) {
             log.error("영상 길이 추출중 에러 발생 : {}", e.getMessage());
             throw new RuntimeException(e);
