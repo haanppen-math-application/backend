@@ -6,6 +6,7 @@ public record OnlineCoursePreview(
         String courseName,
         Long courseId,
         Integer studentSize,
-        TeacherPreview teacherPreview
+        TeacherPreview teacherPreview,
+        LessonCategoryInfo lessonCategoryInfo
 ){
 }

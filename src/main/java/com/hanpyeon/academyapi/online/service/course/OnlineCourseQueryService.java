@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.course.application.dto.TeacherPreview;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineStudent;
+import com.hanpyeon.academyapi.online.dto.LessonCategoryInfo;
 import com.hanpyeon.academyapi.online.dto.OnlineCourseDetails;
 import com.hanpyeon.academyapi.online.dto.OnlineCoursePreview;
 import com.hanpyeon.academyapi.online.dto.OnlineStudentPreview;
@@ -14,7 +15,6 @@ import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hanpyeon.academyapi.online.dto.QueryOnlineCourseDetailsCommand;
 import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +28,7 @@ public class OnlineCourseQueryService {
 
     public List<OnlineCoursePreview> queryAll() {
         return onlineCourseRepository.findAll().stream()
-                .map(onlineCourse -> new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(),
-                        onlineCourse.getOnlineStudents().size(),
-                        new TeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId())))
+                .map(this::mapToCoursePreview)
                 .toList();
     }
 
@@ -38,18 +36,14 @@ public class OnlineCourseQueryService {
             @Validated final QueryOnlineCourseByTeacherIdCommand queryOnlineCourseByTeacherIdCommand
     ) {
         return onlineCourseRepository.findAllByTeacherId(queryOnlineCourseByTeacherIdCommand.teacherId()).stream()
-                .map(onlineCourse -> new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(),
-                        onlineCourse.getOnlineStudents().size(),
-                        new TeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId())))
+                .map(this::mapToCoursePreview)
                 .toList();
     }
 
     public List<OnlineCoursePreview> queryOnlineCourseByStudentId(
             @Validated final QueryOnlineCourseByStudentIdCommand queryOnlineCourseByStudentIdCommand) {
         return onlineCourseRepository.findAllByStudentId(queryOnlineCourseByStudentIdCommand.studentId()).stream()
-                .map(onlineCourse -> new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(),
-                        onlineCourse.getOnlineStudents().size(),
-                        new TeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId())))
+                .map(this::mapToCoursePreview)
                 .toList();
     }
 
@@ -79,9 +73,18 @@ public class OnlineCourseQueryService {
     public List<OnlineCoursePreview> queryOnlineCourseByCategoryId(final Long categoryId) {
         final List<OnlineCourse> onlineCourses = onlineCourseRepository.loadOnlineCoursesByCategoryId(categoryId);
         return onlineCourses.stream()
-                .map(onlineCourse -> {
-                    final TeacherPreview teacherPreview = new TeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId());
-                    return new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(), onlineCourse.getOnlineStudents().size(), teacherPreview);
-                }).toList();
+                .map(this::mapToCoursePreview).toList();
+    }
+
+    private OnlineCoursePreview mapToCoursePreview(final OnlineCourse onlineCourse) {
+        return new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(),
+                onlineCourse.getOnlineStudents().size(),
+                new TeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId()),
+                new LessonCategoryInfo(
+                        onlineCourse.getOnlineCategory().getId(),
+                        onlineCourse.getOnlineCategory().getParentCategory() == null ? null : onlineCourse.getOnlineCategory().getParentCategory().getCategoryName(),
+                        onlineCourse.getOnlineCategory().getCategoryName()
+                )
+        );
     }
 }
