@@ -2,6 +2,8 @@ package com.hanpyeon.academyapi.online.service.course;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.online.dao.OnlineCategory;
+import com.hanpyeon.academyapi.online.dao.OnlineCategoryRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineStudent;
@@ -22,7 +24,8 @@ class OnlineCourseQueryServiceTest {
 
     @Autowired
     private OnlineCourseQueryService queryOnlineCourseService;
-
+    @Autowired
+    private OnlineCategoryRepository onlineCategoryRepository;
     @Autowired
     private OnlineCourseRepository onlineCourseRepository;
     @Autowired
@@ -39,6 +42,9 @@ class OnlineCourseQueryServiceTest {
                 .build();
         memberRepository.save(teacher);
         final OnlineCourse onlineCourse = new OnlineCourse(teacher, "test");
+        final OnlineCategory onlineCategory = new OnlineCategory("test");
+        onlineCategoryRepository.save(onlineCategory);
+        onlineCourse.setOnlineCategory(onlineCategory);
         onlineCourseRepository.save(onlineCourse);
         onlineStudentRepository.saveAll(
                 List.of(new OnlineStudent(onlineCourse, null), new OnlineStudent(onlineCourse, null)));
