@@ -1,8 +1,7 @@
-package com.hanpyeon.academyapi.account.service;
+package com.hanpyeon.academyapi.account.model;
 
 import com.hanpyeon.academyapi.account.service.password.AccountPassword;
 import com.hanpyeon.academyapi.account.service.password.AccountPasswordFactory;
-import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,12 @@
 package com.hanpyeon.academyapi.account.entity;
 
 import com.hanpyeon.academyapi.account.dto.RegisterMemberCommand;
-import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.account.service.*;
+import com.hanpyeon.academyapi.account.model.Account;
+import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;
+import com.hanpyeon.academyapi.account.model.AccountGrade;
+import com.hanpyeon.academyapi.account.model.AccountName;
+import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
+import com.hanpyeon.academyapi.account.model.AccountRole;
 import com.hanpyeon.academyapi.account.service.password.AccountPassword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

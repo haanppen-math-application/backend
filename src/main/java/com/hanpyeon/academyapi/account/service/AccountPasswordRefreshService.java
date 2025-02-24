@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.account.dto.SendValidationCodeCommand;
 import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
+import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.service.password.AccountPassword;
 import com.hanpyeon.academyapi.account.service.password.AccountPasswordFactory;

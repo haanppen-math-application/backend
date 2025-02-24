@@ -1,13 +1,9 @@
 package com.hanpyeon.academyapi.account.service.update;
 
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
-import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.account.exceptions.AccountException;
-import com.hanpyeon.academyapi.account.service.Account;
-import com.hanpyeon.academyapi.account.service.AccountAbstractFactory;
+import com.hanpyeon.academyapi.account.model.Account;
+import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;
 import com.hanpyeon.academyapi.account.service.password.AccountPassword;
-import com.hanpyeon.academyapi.exception.ErrorCode;
-import com.hanpyeon.academyapi.security.PasswordHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

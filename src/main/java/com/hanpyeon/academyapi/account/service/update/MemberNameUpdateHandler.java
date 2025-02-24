@@ -1,9 +1,9 @@
 package com.hanpyeon.academyapi.account.service.update;
 
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
-import com.hanpyeon.academyapi.account.service.Account;
-import com.hanpyeon.academyapi.account.service.AccountAbstractFactory;
-import com.hanpyeon.academyapi.account.service.AccountName;
+import com.hanpyeon.academyapi.account.model.Account;
+import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;
+import com.hanpyeon.academyapi.account.model.AccountName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
