@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.account.service;
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
 import com.hanpyeon.academyapi.account.entity.AccountApplier;
+import com.hanpyeon.academyapi.account.model.Account;
 import com.hanpyeon.academyapi.account.service.update.AccountUpdateCommandProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

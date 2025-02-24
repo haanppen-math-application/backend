@@ -1,8 +1,8 @@
 package com.hanpyeon.academyapi.account.entity;
 
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.account.service.Account;
-import com.hanpyeon.academyapi.account.service.AccountAbstractFactory;
+import com.hanpyeon.academyapi.account.model.Account;
+import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;
 import com.hanpyeon.academyapi.account.service.password.AccountPassword;
 import com.hanpyeon.academyapi.security.Role;
 import org.assertj.core.api.Assertions;
@@ -14,7 +14,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.stream.Stream;
 
 
 @SpringBootTest

@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.account.dto;
 
-import com.hanpyeon.academyapi.account.service.AccountPhoneNumber;
+import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

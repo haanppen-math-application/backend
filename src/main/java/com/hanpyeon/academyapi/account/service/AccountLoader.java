@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.entity.AccountMapper;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
+import com.hanpyeon.academyapi.account.model.Account;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
