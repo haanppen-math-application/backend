@@ -11,6 +11,7 @@ public record UpdateOnlineLessonInfoCommand(
         String lessonDescribe,
         @NotNull Long categoryId,
         @NotNull Long requestMemberId,
-        @NotNull Role requestMemberRole
+        @NotNull Role requestMemberRole,
+        String imageSrc
 ) {
 }

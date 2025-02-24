@@ -10,7 +10,8 @@ public record UpdateOnlineLessonInfoRequest(
         String title,
         String lessonRange,
         String lessonDescribe,
-        Long categoryId
+        Long categoryId,
+        String imageSrc
 ) {
     public UpdateOnlineLessonInfoCommand toCommand(final Long requestMemberId, final Role requestMemberRole) {
         return new UpdateOnlineLessonInfoCommand(
@@ -20,7 +21,8 @@ public record UpdateOnlineLessonInfoRequest(
                 lessonDescribe,
                 categoryId,
                 requestMemberId,
-                requestMemberRole
+                requestMemberRole,
+                imageSrc
         );
     }
 }

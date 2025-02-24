@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.online.dao;
 
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.media.entity.Image;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -64,6 +65,10 @@ public class OnlineCourse {
     @CreationTimestamp
     private LocalDateTime createdTime;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Image image;
+
     public OnlineCourse(final Member teacher, final String courseName) {
         this.teacher = teacher;
         this.courseName = courseName;
@@ -91,6 +96,10 @@ public class OnlineCourse {
 
     public void setCourseName(final String courseName) {
         this.courseName = courseName;
+    }
+
+    public void setImage(final Image image) {
+        this.image = image;
     }
 
     public void clearContents() {

@@ -46,7 +46,8 @@ public class OnlineLessonQueryService {
                 onlineCourse.getVideos().stream()
                         .map(onlineVideo -> this.mapToDetail(onlineVideo, isIncludedStudent))
                         .collect(Collectors.toList()),
-                toCategory(onlineCourse.getOnlineCategory())
+                toCategory(onlineCourse.getOnlineCategory()),
+                onlineCourse.getImage().getSrc()
         );
     }
 
