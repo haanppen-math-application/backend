@@ -31,6 +31,9 @@ public class AccountPhoneNumber {
     }
 
     public static AccountPhoneNumber of(final String phoneNumber) {
+        if (phoneNumber == null) {
+            return null;
+        }
         validate(phoneNumber);
         return new AccountPhoneNumber(phoneNumber);
     }

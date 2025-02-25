@@ -24,7 +24,10 @@ public class AccountName {
         }
     }
 
-    static AccountName of(final String name) {
+    public static AccountName of(final String name) {
+        if (name == null) {
+            return null;
+        }
         validate(name);
         return new AccountName(name);
     }

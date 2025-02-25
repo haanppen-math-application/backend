@@ -1,8 +1,6 @@
 package com.hanpyeon.academyapi.account.model;
 
-import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.service.password.AccountPassword;
-import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,12 +24,9 @@ public class Account {
         grade.validate(accountRole);
     }
 
-    public void changePassword(final String rawPassword, final AccountPassword accountNewPassword) {
-        if (this.password.isMatch(rawPassword)) {
-            this.password = accountNewPassword;
-            return;
-        }
-        throw new AccountException(ErrorCode.INVALID_PASSWORD_EXCEPTION);
+    public void updatePassword(final ResetAccountPassword resetAccountPassword) {
+        resetAccountPassword.isMatchToPrevPassword(password);
+        this.password = resetAccountPassword.getNewPassword();
     }
 
     public void setPhoneNumber(AccountPhoneNumber phoneNumber) {
@@ -41,6 +36,7 @@ public class Account {
     public static Account of(final AccountPhoneNumber phoneNumber, final AccountName name, final AccountRole role, final AccountGrade grade, final AccountPassword password) {
         return new Account(null, phoneNumber, name, role, grade, password);
     }
+
     public static Account of(final Long accountId, final AccountPhoneNumber phoneNumber, final AccountName name, final AccountRole role, final AccountGrade grade, final AccountPassword password) {
         return new Account(accountId, phoneNumber, name, role, grade, password);
     }
