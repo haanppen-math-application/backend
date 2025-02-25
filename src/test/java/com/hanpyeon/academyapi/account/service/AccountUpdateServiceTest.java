@@ -3,38 +3,26 @@ package com.hanpyeon.academyapi.account.service;
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;
 import com.hanpyeon.academyapi.account.model.AccountGrade;
 import com.hanpyeon.academyapi.account.model.AccountName;
+import com.hanpyeon.academyapi.account.model.AccountPassword;
 import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
 import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.account.service.password.AccountPassword;
-import com.hanpyeon.academyapi.account.service.password.AccountPasswordFactory;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
-import io.swagger.v3.oas.annotations.Parameter;
-import org.aspectj.lang.annotation.Before;
+import java.time.LocalDateTime;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.stream.Stream;
 
 
 @SpringBootTest
@@ -44,13 +32,13 @@ class AccountUpdateServiceTest {
     @Autowired
     MemberRepository memberRepository;
     @Autowired
-    AccountPasswordFactory accountPasswordFactory;
-    @Autowired
     AccountUpdateService accountUpdateService;
     @Autowired
     AccountLoader accountLoader;
     @Autowired
     private PasswordHandler passwordHandler;
+    @Autowired
+    private AccountAbstractFactory accountAbstractFactory;
 
 
     @ParameterizedTest
@@ -104,7 +92,7 @@ class AccountUpdateServiceTest {
     }
 
     Long initData() {
-        final AccountPassword accountPassword = accountPasswordFactory.createNew(new Password(prevPassword));
+        final AccountPassword accountPassword = accountAbstractFactory.getPassword(new Password(prevPassword));
         final Member member = Member.builder()
                 .role(Role.STUDENT)
                 .phoneNumber("01011111222")

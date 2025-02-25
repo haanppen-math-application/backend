@@ -7,7 +7,7 @@ import com.hanpyeon.academyapi.account.model.AccountGrade;
 import com.hanpyeon.academyapi.account.model.AccountName;
 import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
 import com.hanpyeon.academyapi.account.model.AccountRole;
-import com.hanpyeon.academyapi.account.service.password.AccountPassword;
+import com.hanpyeon.academyapi.account.model.AccountPassword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

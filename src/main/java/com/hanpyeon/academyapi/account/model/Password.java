@@ -1,8 +1,9 @@
 package com.hanpyeon.academyapi.account.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 
-@Getter
+@Getter(value = AccessLevel.PACKAGE)
 public class Password {
     private final String password;
 

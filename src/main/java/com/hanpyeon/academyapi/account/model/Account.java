@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.account.model;
 
-import com.hanpyeon.academyapi.account.service.password.AccountPassword;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +13,10 @@ public class Account {
     private AccountRole accountRole;
     private AccountGrade grade;
     private AccountPassword password;
+
+    public boolean isMatchPassword(final Password password) {
+        return this.password.isMatch(password.getPassword());
+    }
 
     public void updateAccountName(AccountName accountName) {
         this.accountName = accountName;

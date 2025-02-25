@@ -1,7 +1,6 @@
 package com.hanpyeon.academyapi.account.model;
 
-import com.hanpyeon.academyapi.account.service.password.AccountPassword;
-import com.hanpyeon.academyapi.account.service.password.AccountPasswordFactory;
+import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -9,18 +8,18 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class AccountAbstractFactory {
-    private final AccountPasswordFactory accountPasswordFactory;
+    private final PasswordHandler passwordHandler;
 
     public AccountGrade getGrade(final Integer grade){
         return AccountGrade.of(grade);
     }
 
-    public AccountPassword getPassword(final Password rawPassword) {
-        return accountPasswordFactory.createNew(rawPassword);
+    public AccountPassword getPasswordFromEntity(final String encryptedPassword) {
+        return AccountPassword.load(encryptedPassword, passwordHandler);
     }
 
-    public AccountPassword getPasswordFromEntity(final String encryptedPassword) {
-        return accountPasswordFactory.createWithEntity(encryptedPassword);
+    public AccountPassword getPassword(final Password rawPassword) {
+        return AccountPassword.createNew(rawPassword, passwordHandler);
     }
 
     public AccountName getName(final String name) {

@@ -4,7 +4,7 @@ import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.model.Account;
 import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;
-import com.hanpyeon.academyapi.account.service.password.AccountPassword;
+import com.hanpyeon.academyapi.account.model.AccountPassword;
 import com.hanpyeon.academyapi.security.Role;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

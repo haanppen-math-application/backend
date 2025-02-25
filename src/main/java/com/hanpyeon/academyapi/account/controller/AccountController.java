@@ -15,7 +15,7 @@ import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
-import com.hanpyeon.academyapi.account.service.password.AccountPassword;
+import com.hanpyeon.academyapi.account.model.AccountPassword;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -49,7 +49,6 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
 public class AccountController {
-
     private final AccountRegisterService accountRegisterService;
     private final AccountUpdateService accountUpdateService;
     private final AccountRemoveService accountRemoveService;

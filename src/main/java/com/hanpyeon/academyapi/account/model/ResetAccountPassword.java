@@ -1,7 +1,6 @@
 package com.hanpyeon.academyapi.account.model;
 
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
-import com.hanpyeon.academyapi.account.service.password.AccountPassword;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.Getter;
