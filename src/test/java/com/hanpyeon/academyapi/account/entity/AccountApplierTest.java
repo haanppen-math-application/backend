@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.account.entity;
 
+import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.model.Account;
 import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;
@@ -35,7 +36,7 @@ class AccountApplierTest {
     @Test
     void testApplyingAccount() {
         final Long targetMemberId = initMember();
-        final AccountPassword accountPassword = accountAbstractFactory.getPassword("testPasword");
+        final AccountPassword accountPassword = accountAbstractFactory.getPassword(new Password("testPasword"));
 
         final Account account = Account.of(
                 targetMemberId,

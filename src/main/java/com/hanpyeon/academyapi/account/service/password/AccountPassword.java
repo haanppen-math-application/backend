@@ -1,12 +1,12 @@
 package com.hanpyeon.academyapi.account.service.password;
 
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
+import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
@@ -29,12 +29,12 @@ public class AccountPassword {
         }
     }
 
-    public static AccountPassword createNew(final String rawPassword, final PasswordHandler passwordHandler) {
+    public static AccountPassword createNew(final Password rawPassword, final PasswordHandler passwordHandler) {
         if (rawPassword == null || rawPassword.isBlank()) {
             return null;
         }
-        validate(rawPassword);
-        return new AccountPassword(passwordHandler, passwordHandler.getEncodedPassword(rawPassword));
+        validate(rawPassword.getPassword());
+        return new AccountPassword(passwordHandler, passwordHandler.getEncodedPassword(rawPassword.getPassword()));
     }
 
     public static AccountPassword load(final String encryptedPassword, final PasswordHandler passwordHandler) {
