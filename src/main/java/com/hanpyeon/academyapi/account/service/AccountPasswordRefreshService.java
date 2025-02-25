@@ -3,33 +3,34 @@ package com.hanpyeon.academyapi.account.service;
 import com.hanpyeon.academyapi.account.dto.ChangedPassword;
 import com.hanpyeon.academyapi.account.dto.SendValidationCodeCommand;
 import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
+import com.hanpyeon.academyapi.account.entity.AccountMapper;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
+import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;
+import com.hanpyeon.academyapi.account.model.AccountPassword;
 import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
 import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.account.service.password.AccountPassword;
-import com.hanpyeon.academyapi.account.service.password.AccountPasswordFactory;
 import com.hanpyeon.academyapi.account.service.sms.MessageSender;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Random;
-
 @Service
 @RequiredArgsConstructor
 public class AccountPasswordRefreshService {
+    private final AccountMapper accountMapper;
     private int maxVerifyMessageSendCount = 3;
     private int maxVerifyErrorCount = 3;
     private int validMinute = 5;
     private final Random random;
     private final MessageSender messageSender;
     private final MemberRepository memberRepository;
-    private final AccountPasswordFactory accountPasswordFactory;
+    private final AccountAbstractFactory accountAbstractFactory;
 
     @Transactional
     public void generateVerificationCode(final String phoneNumber) {
@@ -56,7 +57,7 @@ public class AccountPasswordRefreshService {
 
     private Password setNewPassword(final AccountPhoneNumber accountPhoneNumber) {
         final Password newPassword = generatePassword();
-        final AccountPassword accountPassword = accountPasswordFactory.createNew(newPassword);
+        final AccountPassword accountPassword = accountAbstractFactory.getPassword(newPassword);
         final Member member = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse(accountPhoneNumber.getPhoneNumber())
                 .orElseThrow();
         member.setPassword(accountPassword.getEncryptedPassword());

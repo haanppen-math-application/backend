@@ -4,7 +4,7 @@ import com.hanpyeon.academyapi.account.dto.JwtDto;
 import com.hanpyeon.academyapi.account.dto.JwtResponse;
 import com.hanpyeon.academyapi.account.dto.LoginRequestDto;
 import com.hanpyeon.academyapi.account.exceptions.ReLoginRequiredException;
-import com.hanpyeon.academyapi.account.service.JwtService;
+import com.hanpyeon.academyapi.account.service.LoginService;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.server.Cookie;
 import org.springframework.boot.web.server.Cookie.SameSite;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -31,7 +30,7 @@ import java.net.URLEncoder;
 public class LoginController {
     private static final String REFRESH_TOKEN_NAME = "refreshToken";
     private static final String ENCODER = "UTF-8";
-    private final JwtService jwtService;
+    private final LoginService jwtService;
 
     @PostMapping("/login")
     @Operation(summary = "로그인 API", description = "JWT 발급을 위한 로그인 API 입니다.")
@@ -40,7 +39,7 @@ public class LoginController {
             @Valid @RequestBody final LoginRequestDto loginRequestDto,
             HttpServletResponse httpServletResponse
     ) {
-        final JwtDto jwtDto = jwtService.provideJwtByLogin(loginRequestDto.userPhoneNumber(), loginRequestDto.password().getPassword());
+        final JwtDto jwtDto = jwtService.provideJwtByLogin(loginRequestDto.userPhoneNumber(), loginRequestDto.password());
         return createJwtResponse(httpServletResponse, jwtDto, 10080);
     }
 
