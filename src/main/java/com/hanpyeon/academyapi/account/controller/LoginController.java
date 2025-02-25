@@ -40,7 +40,7 @@ public class LoginController {
             @Valid @RequestBody final LoginRequestDto loginRequestDto,
             HttpServletResponse httpServletResponse
     ) {
-        final JwtDto jwtDto = jwtService.provideJwtByLogin(loginRequestDto.userPhoneNumber(), loginRequestDto.password());
+        final JwtDto jwtDto = jwtService.provideJwtByLogin(loginRequestDto.userPhoneNumber(), loginRequestDto.password().getPassword());
         return createJwtResponse(httpServletResponse, jwtDto, 10080);
     }
 

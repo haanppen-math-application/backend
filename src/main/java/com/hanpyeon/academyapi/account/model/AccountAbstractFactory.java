@@ -15,7 +15,7 @@ public class AccountAbstractFactory {
         return AccountGrade.of(grade);
     }
 
-    public AccountPassword getPassword(final String rawPassword) {
+    public AccountPassword getPassword(final Password rawPassword) {
         return accountPasswordFactory.createNew(rawPassword);
     }
 

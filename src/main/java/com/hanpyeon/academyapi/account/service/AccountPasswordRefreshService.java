@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
+import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.service.password.AccountPassword;
 import com.hanpyeon.academyapi.account.service.password.AccountPasswordFactory;
@@ -49,12 +50,12 @@ public class AccountPasswordRefreshService {
         validateCode(member, verifyAccountCode.verificationCode());
         member.resetVerifyInfo();
         final AccountPhoneNumber accountPhoneNumber = AccountPhoneNumber.of(member.getPhoneNumber());
-        final String changedPassword = setNewPassword(accountPhoneNumber);
+        final Password changedPassword = setNewPassword(accountPhoneNumber);
         return new ChangedPassword(verifyAccountCode.phoneNumber(), changedPassword);
     }
 
-    private String setNewPassword(final AccountPhoneNumber accountPhoneNumber) {
-        final String newPassword = generatePassword();
+    private Password setNewPassword(final AccountPhoneNumber accountPhoneNumber) {
+        final Password newPassword = generatePassword();
         final AccountPassword accountPassword = accountPasswordFactory.createNew(newPassword);
         final Member member = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse(accountPhoneNumber.getPhoneNumber())
                 .orElseThrow();
@@ -71,12 +72,12 @@ public class AccountPasswordRefreshService {
         }
     }
 
-    private String generatePassword() {
+    private Password generatePassword() {
         StringBuilder password = new StringBuilder();
         for (int i = 0; i < 8; i++) {
             password.append(random.nextInt(10));
         }
-        return password.toString();
+        return new Password(password.toString());
     }
 
     private String generateVerificationCode() {

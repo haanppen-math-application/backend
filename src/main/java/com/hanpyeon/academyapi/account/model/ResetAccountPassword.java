@@ -11,15 +11,15 @@ import lombok.RequiredArgsConstructor;
 public class ResetAccountPassword {
     @Getter
     private final AccountPassword newPassword;
-    private final String prevRawPassword;
+    private final Password prevRawPassword;
 
     void isMatchToPrevPassword(final AccountPassword currentPassword) {
-        if (!currentPassword.isMatch(prevRawPassword)) {
+        if (!currentPassword.isMatch(prevRawPassword.getPassword())) {
             throw new AccountException(ErrorCode.INVALID_PASSWORD_EXCEPTION);
         }
     }
 
-    public static ResetAccountPassword of(final String prevRawPassword, final AccountPassword newPassword) {
+    public static ResetAccountPassword of(final Password prevRawPassword, final AccountPassword newPassword) {
         if (prevRawPassword == null || prevRawPassword.isBlank()) {
             return null;
         }

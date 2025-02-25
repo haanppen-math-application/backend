@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.model.AccountGrade;
 import com.hanpyeon.academyapi.account.model.AccountName;
 import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
+import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.service.password.AccountPassword;
@@ -25,6 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
@@ -59,7 +61,7 @@ class AccountUpdateServiceTest {
         final AccountUpdateCommand accountUpdateCommand = new AccountUpdateCommand(targetMemberId, AccountPhoneNumber.of(phoneNumber),
                 AccountName.of(newName),
                 AccountGrade.of(newGrade),
-                ResetAccountPassword.of(prevPassword, AccountPassword.createNew(nextPassword, passwordHandler)));
+                ResetAccountPassword.of(new Password(prevPassword), AccountPassword.createNew(new Password(nextPassword), passwordHandler)));
         accountUpdateService.updateAccount(accountUpdateCommand);
         final MyAccountInfo accountInfo = accountUpdateService.getMyInfo(accountUpdateCommand.targetMemberId());
         System.out.println(accountInfo);
@@ -87,7 +89,7 @@ class AccountUpdateServiceTest {
         new AccountUpdateCommand(targetMemberId, AccountPhoneNumber.of(phoneNumber),
                 AccountName.of(newName),
                 AccountGrade.of(newGrade),
-                ResetAccountPassword.of(prevPassword, AccountPassword.createNew(nextPassword, passwordHandler)))
+                ResetAccountPassword.of(new Password(prevPassword), AccountPassword.createNew(new Password(nextPassword), passwordHandler)))
         );
     }
 
@@ -102,7 +104,7 @@ class AccountUpdateServiceTest {
     }
 
     Long initData() {
-        final AccountPassword accountPassword = accountPasswordFactory.createNew(prevPassword);
+        final AccountPassword accountPassword = accountPasswordFactory.createNew(new Password(prevPassword));
         final Member member = Member.builder()
                 .role(Role.STUDENT)
                 .phoneNumber("01011111222")
