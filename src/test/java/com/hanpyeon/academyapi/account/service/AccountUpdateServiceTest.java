@@ -3,9 +3,14 @@ package com.hanpyeon.academyapi.account.service;
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.account.model.AccountGrade;
+import com.hanpyeon.academyapi.account.model.AccountName;
+import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
+import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.service.password.AccountPassword;
 import com.hanpyeon.academyapi.account.service.password.AccountPasswordFactory;
+import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.aspectj.lang.annotation.Before;
@@ -42,6 +47,8 @@ class AccountUpdateServiceTest {
     AccountUpdateService accountUpdateService;
     @Autowired
     AccountLoader accountLoader;
+    @Autowired
+    private PasswordHandler passwordHandler;
 
 
     @ParameterizedTest
@@ -49,7 +56,10 @@ class AccountUpdateServiceTest {
     @Transactional
     void testModifyCommand(final String phoneNumber, final String newName, final int newGrade, final String prevPassword, final String nextPassword) {
         final Long targetMemberId = initData();
-        final AccountUpdateCommand accountUpdateCommand = new AccountUpdateCommand(targetMemberId, phoneNumber, newName, newGrade, prevPassword, nextPassword);
+        final AccountUpdateCommand accountUpdateCommand = new AccountUpdateCommand(targetMemberId, AccountPhoneNumber.of(phoneNumber),
+                AccountName.of(newName),
+                AccountGrade.of(newGrade),
+                ResetAccountPassword.of(prevPassword, AccountPassword.createNew(nextPassword, passwordHandler)));
         accountUpdateService.updateAccount(accountUpdateCommand);
         final MyAccountInfo accountInfo = accountUpdateService.getMyInfo(accountUpdateCommand.targetMemberId());
         System.out.println(accountInfo);
@@ -67,15 +77,19 @@ class AccountUpdateServiceTest {
                 Arguments.of("01012345678", "tesst", 11, null, null)
         );
     }
+
     @Transactional
     @MethodSource("provideIllegalArguments")
     @ParameterizedTest
     void testWrongModifyCommand(final String phoneNumber, final String newName, final int newGrade, final String prevPassword, final String nextPassword) {
         final Long targetMemberId = initData();
-        final AccountUpdateCommand accountUpdateCommand = new AccountUpdateCommand(targetMemberId, phoneNumber, newName, newGrade, prevPassword, nextPassword);
-        Assertions.assertThatThrownBy(() -> accountUpdateService.updateAccount(accountUpdateCommand));
+        Assertions.assertThatThrownBy(() ->
+        new AccountUpdateCommand(targetMemberId, AccountPhoneNumber.of(phoneNumber),
+                AccountName.of(newName),
+                AccountGrade.of(newGrade),
+                ResetAccountPassword.of(prevPassword, AccountPassword.createNew(nextPassword, passwordHandler)))
+        );
     }
-
 
     static Stream<Arguments> provideIllegalArguments() {
         return Stream.of(
