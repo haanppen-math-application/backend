@@ -21,6 +21,9 @@ public class AccountRole {
     }
 
     static AccountRole of(final Role role) {
+        if (role == null) {
+            return null;
+        }
         validate(role);
         return new AccountRole(role);
     }

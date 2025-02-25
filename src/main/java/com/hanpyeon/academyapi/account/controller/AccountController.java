@@ -1,10 +1,21 @@
 package com.hanpyeon.academyapi.account.controller;
 
-import com.hanpyeon.academyapi.account.dto.*;
+import com.hanpyeon.academyapi.account.dto.AccountRemoveCommand;
+import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
+import com.hanpyeon.academyapi.account.dto.ChangedPassword;
+import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
+import com.hanpyeon.academyapi.account.dto.RegisterMemberCommand;
+import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
+import com.hanpyeon.academyapi.account.model.AccountGrade;
+import com.hanpyeon.academyapi.account.model.AccountName;
+import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
+import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
 import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
+import com.hanpyeon.academyapi.account.service.password.AccountPassword;
+import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,18 +26,23 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
@@ -37,6 +53,7 @@ public class AccountController {
     private final AccountUpdateService accountUpdateService;
     private final AccountRemoveService accountRemoveService;
     private final AccountPasswordRefreshService accountPasswordRefreshService;
+    private final PasswordHandler passwordHandler;
 
     @PostMapping("/password/verification")
     public ResponseEntity<?> authenticateForRefreshPassword(
@@ -90,13 +107,13 @@ public class AccountController {
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
             @RequestBody @Valid AccountUpdateRequest accountUpdateRequest
     ) {
-        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(memberPrincipal.memberId());
+        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(memberPrincipal.memberId(),
+                passwordHandler);
         accountUpdateService.updateAccount(accountUpdateCommand);
         return ResponseEntity.ok().build();
     }
 
     public record AccountUpdateRequest(
-            @NotNull
             @Pattern(regexp = "^[0-9]+$")
             String phoneNumber,
             @NotNull
@@ -104,8 +121,13 @@ public class AccountController {
             String prevPassword,
             String newPassword
     ) {
-        AccountUpdateCommand toCommand(final Long targetMemberId) {
-            return new AccountUpdateCommand(targetMemberId, phoneNumber(), name(), null, prevPassword(), newPassword());
+        AccountUpdateCommand toCommand(final Long targetMemberId, final PasswordHandler passwordHandler) {
+            return new AccountUpdateCommand(targetMemberId,
+                    AccountPhoneNumber.of(phoneNumber()),
+                    AccountName.of(name()),
+                    null,
+                    ResetAccountPassword.of(prevPassword, AccountPassword.createNew(newPassword, passwordHandler))
+            );
         }
     }
 
@@ -158,7 +180,12 @@ public class AccountController {
             Integer grade
     ) {
         AccountUpdateCommand toCommand() {
-            return new AccountUpdateCommand(studentId(), phoneNumber(), name(), grade(), null, null);
+            return new AccountUpdateCommand(
+                    studentId(),
+                    AccountPhoneNumber.of(phoneNumber),
+                    AccountName.of(name),
+                    AccountGrade.of(grade),
+                    null);
         }
     }
 
@@ -182,7 +209,12 @@ public class AccountController {
             String phoneNumber
     ) {
         AccountUpdateCommand toCommand() {
-            return new AccountUpdateCommand(targetId(), phoneNumber(),name(), null, null, null);
+            return new AccountUpdateCommand(
+                    targetId(),
+                    AccountPhoneNumber.of(phoneNumber),
+                    AccountName.of(name)
+                    , null,
+                    null);
         }
     }
 }

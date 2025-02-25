@@ -24,17 +24,16 @@ public class AccountGrade {
         }
     }
 
-
     private static void validate(final Integer grade) {
-        if (Objects.isNull(grade)) {
-            return;
-        }
         if (grade < GRADE_MIN || grade > GRADE_MAX) {
             throw new AccountException(ErrorCode.ACCOUNT_POLICY);
         }
     }
 
-    static AccountGrade of(final Integer grade) {
+    public static AccountGrade of(final Integer grade) {
+        if (grade == null) {
+            return null;
+        }
         validate(grade);
         return new AccountGrade(grade);
     }

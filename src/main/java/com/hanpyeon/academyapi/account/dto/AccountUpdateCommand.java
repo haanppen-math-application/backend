@@ -1,16 +1,19 @@
 package com.hanpyeon.academyapi.account.dto;
 
+import com.hanpyeon.academyapi.account.model.AccountGrade;
+import com.hanpyeon.academyapi.account.model.AccountName;
+import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
+import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
+import com.hanpyeon.academyapi.account.service.password.AccountPassword;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record AccountUpdateCommand(
         @NotNull
         Long targetMemberId,
-        @Pattern(regexp = "^[0-9]+$")
-        String phoneNumber,
-        String name,
-        Integer grade,
-        String prevPassword,
-        String newPassword
+        AccountPhoneNumber phoneNumber,
+        AccountName name,
+        AccountGrade grade,
+        ResetAccountPassword resetAccountPassword
 ) {
 }
