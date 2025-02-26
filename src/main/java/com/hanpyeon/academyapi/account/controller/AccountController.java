@@ -9,6 +9,7 @@ import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
 import com.hanpyeon.academyapi.account.model.AccountGrade;
 import com.hanpyeon.academyapi.account.model.AccountName;
 import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
+import com.hanpyeon.academyapi.account.model.AccountRole;
 import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
 import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
@@ -81,8 +82,8 @@ public class AccountController {
     @Operation(summary = "계정 등록", description = "어플리케이션에 계정을 등록하기 위한 API 입니다 ")
     @ApiResponse(responseCode = "201", description = "계정 생성 성공")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<?> registerMember(@Valid @RequestBody final AccountController.RegisterMemberRequest registerMemberRequest) {
-        final RegisterMemberCommand registerMemberCommand = registerMemberRequest.toCommand();
+    public ResponseEntity<?> registerMember(@Valid @RequestBody final RegisterMemberRequest registerMemberRequest) {
+        final RegisterMemberCommand registerMemberCommand = registerMemberRequest.toCommand(passwordHandler);
         accountRegisterService.register(registerMemberCommand);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -94,8 +95,9 @@ public class AccountController {
             @Schema(description = "등록 유형 ( student, teacher 중 택 1 )", example = "student") @NotNull(message = "teacher / student 둘중 하나여야 합니다") Role role,
             Password password
     ) {
-        RegisterMemberCommand toCommand() {
-            return new RegisterMemberCommand(name(), grade(), phoneNumber(), role(), password());
+        RegisterMemberCommand toCommand(final PasswordHandler passwordHandler) {
+            return new RegisterMemberCommand(
+                    AccountName.of(name),AccountGrade.of(grade), AccountPhoneNumber.of(phoneNumber), AccountRole.of(role), AccountPassword.createNew(password, passwordHandler));
         }
     }
 
@@ -107,8 +109,7 @@ public class AccountController {
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
             @RequestBody @Valid AccountUpdateRequest accountUpdateRequest
     ) {
-        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(memberPrincipal.memberId(),
-                passwordHandler);
+        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(memberPrincipal.memberId(), passwordHandler);
         accountUpdateService.updateAccount(accountUpdateCommand);
         return ResponseEntity.ok().build();
     }

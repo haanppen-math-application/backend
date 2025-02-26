@@ -27,13 +27,13 @@ public class AccountMapper {
     }
 
     public Account mapToAccount(final RegisterMemberCommand registerMemberDto) {
-        final AccountGrade accountGrade = accountAbstractFactory.getGrade(registerMemberDto.grade());
-        final AccountRole accountRole = accountAbstractFactory.getAccountRole(registerMemberDto.role());
-        final AccountName accountName = accountAbstractFactory.getName(registerMemberDto.name());
-        final AccountPhoneNumber accountPhoneNumber = accountAbstractFactory.getPhoneNumber(registerMemberDto.phoneNumber());
-        final AccountPassword password = accountAbstractFactory.getPassword(registerMemberDto.password());
-
-        return Account.of(accountPhoneNumber, accountName, accountRole, accountGrade, password);
+        return Account.of(
+                registerMemberDto.phoneNumber(),
+                registerMemberDto.name(),
+                registerMemberDto.role(),
+                registerMemberDto.grade(),
+                registerMemberDto.password()
+        );
     }
 
     Member mapToMember(final Account account) {

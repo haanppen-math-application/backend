@@ -1,5 +1,10 @@
 package com.hanpyeon.academyapi.account.dto;
 
+import com.hanpyeon.academyapi.account.model.AccountGrade;
+import com.hanpyeon.academyapi.account.model.AccountName;
+import com.hanpyeon.academyapi.account.model.AccountPassword;
+import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
+import com.hanpyeon.academyapi.account.model.AccountRole;
 import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.constraints.NotBlank;
@@ -10,10 +15,10 @@ import org.hibernate.validator.constraints.Range;
 
 @Builder
 public record RegisterMemberCommand(
-        @NotBlank String name,
-        @Range(min = 0, max = 11) Integer grade,
-        @NotBlank @Pattern(regexp = "^[0-9]+$") String phoneNumber,
-        @NotNull Role role,
-        Password password
+        AccountName name,
+        AccountGrade grade,
+        AccountPhoneNumber phoneNumber,
+        AccountRole role,
+        AccountPassword password
 ) {
 }

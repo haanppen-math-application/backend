@@ -20,7 +20,7 @@ public class AccountRole {
         }
     }
 
-    static AccountRole of(final Role role) {
+    public static AccountRole of(final Role role) {
         if (role == null) {
             return null;
         }
