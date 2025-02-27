@@ -58,6 +58,11 @@ public class AccountUpdateService {
     @Transactional(readOnly = true)
     public MyAccountInfo getMyInfo(final Long requestMemberId) {
         final Account account = accountLoader.loadAccount(requestMemberId);
-        return new MyAccountInfo(account.getAccountName().getName(), account.getPhoneNumber().getPhoneNumber(), account.getAccountRole().getRole(), account.getGrade().getGrade());
+        return new MyAccountInfo(
+                account.getAccountName().getName(),
+                account.getPhoneNumber().getPhoneNumber(),
+                account.getAccountRole().getRole(),
+                account.getGrade() == null ? null : account.getGrade().getGrade()
+        );
     }
 }

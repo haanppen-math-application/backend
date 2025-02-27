@@ -14,7 +14,7 @@ class MacConfigurationCondition implements ConfigurationCondition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        log.info(context.getEnvironment().getProperty("os.name").toLowerCase());
+//        log.info(context.getEnvironment().getProperty("os.name").toLowerCase());
         return context.getEnvironment().getProperty("os.name").toLowerCase().contains("mac");
     }
 }

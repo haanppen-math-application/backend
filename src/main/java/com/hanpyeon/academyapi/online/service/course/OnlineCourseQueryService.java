@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.online.service.course;
 
 import com.hanpyeon.academyapi.course.application.dto.TeacherPreview;
+import com.hanpyeon.academyapi.online.dao.OnlineCategory;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineStudent;
@@ -80,11 +81,18 @@ public class OnlineCourseQueryService {
         return new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(),
                 onlineCourse.getOnlineStudents().size(),
                 new TeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId()),
-                new LessonCategoryInfo(
-                        onlineCourse.getOnlineCategory().getId(),
-                        onlineCourse.getOnlineCategory().getParentCategory() == null ? null : onlineCourse.getOnlineCategory().getParentCategory().getCategoryName(),
-                        onlineCourse.getOnlineCategory().getCategoryName()
-                )
+                mapToCategoryInfo(onlineCourse.getOnlineCategory())
+        );
+    }
+
+    private LessonCategoryInfo mapToCategoryInfo(final OnlineCategory onlineCategory) {
+        if (onlineCategory == null) {
+            return null;
+        }
+        return new LessonCategoryInfo(
+                onlineCategory.getId(),
+                onlineCategory.getParentCategory() == null ? null : onlineCategory.getParentCategory().getCategoryName(),
+                onlineCategory.getCategoryName()
         );
     }
 }
