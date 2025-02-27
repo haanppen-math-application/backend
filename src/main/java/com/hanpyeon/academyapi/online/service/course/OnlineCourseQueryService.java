@@ -81,7 +81,8 @@ public class OnlineCourseQueryService {
         return new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(),
                 onlineCourse.getOnlineStudents().size(),
                 new TeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId()),
-                mapToCategoryInfo(onlineCourse.getOnlineCategory())
+                mapToCategoryInfo(onlineCourse.getOnlineCategory()),
+                onlineCourse.getImage() == null ? null : onlineCourse.getImage().getSrc()
         );
     }
 
