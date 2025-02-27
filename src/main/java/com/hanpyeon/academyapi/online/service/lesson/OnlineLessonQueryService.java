@@ -47,7 +47,7 @@ public class OnlineLessonQueryService {
                         .map(onlineVideo -> this.mapToDetail(onlineVideo, isIncludedStudent))
                         .collect(Collectors.toList()),
                 toCategory(onlineCourse.getOnlineCategory()),
-                onlineCourse.getImage().getSrc()
+                onlineCourse.getImage() == null ? null : onlineCourse.getImage().getSrc()
         );
     }
 
