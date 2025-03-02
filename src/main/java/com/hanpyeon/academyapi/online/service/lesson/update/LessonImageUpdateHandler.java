@@ -23,9 +23,11 @@ class LessonImageUpdateHandler implements LessonUpdateHandler{
         if (Objects.isNull(updateOnlineLessonInfoCommand.imageSrc())) {
             return;
         }
-        imageService.removeImage(List.of(onlineCourse.getImage()));
-        final Image preImage = loadImage(updateOnlineLessonInfoCommand.imageSrc());
-        onlineCourse.setImage(preImage);
+        if (onlineCourse.getImage() != null) {
+            imageService.removeImage(List.of(onlineCourse.getImage()));
+        }
+        final Image newImage = loadImage(updateOnlineLessonInfoCommand.imageSrc());
+        onlineCourse.setImage(newImage);
     }
 
     private Image loadImage(final String imageSrc) {
