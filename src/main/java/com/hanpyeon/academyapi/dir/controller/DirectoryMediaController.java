@@ -10,6 +10,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -81,7 +82,8 @@ public class DirectoryMediaController {
             @Nonnull Long totalChunkCount,
             @Nonnull Long currChunkIndex,
             @Nonnull Boolean isLast,
-            @Nonnull String extension
+            @Nonnull String extension,
+            @NonNull Long mediaDuration
     ) {
 
         UploadMediaDto create(final MultipartFile multipartFile, final Long requestMemberId) {
@@ -93,7 +95,8 @@ public class DirectoryMediaController {
                     isLast(),
                     requestMemberId,
                     targetDirectoryPath(),
-                    extension()
+                    extension(),
+                    mediaDuration()
             );
         }
     }

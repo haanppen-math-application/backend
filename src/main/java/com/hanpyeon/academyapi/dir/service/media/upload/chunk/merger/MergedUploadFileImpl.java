@@ -2,18 +2,14 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.merger;
 
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import lombok.RequiredArgsConstructor;
-
 import java.io.InputStream;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 class MergedUploadFileImpl implements MergedUploadFile {
 
     private final ChunkGroupInfo chunkGroupInfo;
-    private final File mergedFile;
+    private final InputStream mergedInputStream;
     private final ChunkStorage temporarySavedStorage;
     private final Long duration;
 
@@ -24,11 +20,7 @@ class MergedUploadFileImpl implements MergedUploadFile {
 
     @Override
     public InputStream getInputStream() {
-        try {
-            return new FileInputStream(mergedFile);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        return mergedInputStream;
     }
 
     @Override
@@ -39,7 +31,6 @@ class MergedUploadFileImpl implements MergedUploadFile {
     @Override
     public boolean completed() {
         temporarySavedStorage.removeChunks(this.chunkGroupInfo);
-        mergedFile.delete();
         return this.chunkGroupInfo.clear();
     }
 
@@ -53,6 +44,6 @@ class MergedUploadFileImpl implements MergedUploadFile {
 
     @Override
     public Long getSize() {
-        return mergedFile.length();
+        return chunkGroupInfo.getTotalSize();
     }
 }

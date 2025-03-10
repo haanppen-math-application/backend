@@ -2,10 +2,9 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -16,6 +15,7 @@ class BasicChunkGroupInfo implements ChunkGroupInfo {
     private final String fileName;
     private final Long totalChunkSize;
     private final String fileExtension;
+    private final Long mediaDuration;
 
     @Override
     public boolean equals(Object o) {
@@ -103,5 +103,15 @@ class BasicChunkGroupInfo implements ChunkGroupInfo {
     @Override
     public Long getNextChunkIndex() {
         return chunkGroupIdManager.getGroupeNextChunkIndex(this);
+    }
+
+    @Override
+    public Long getMediaDuration() {
+        return mediaDuration;
+    }
+
+    @Override
+    public Long getTotalSize() {
+        return totalChunkSize;
     }
 }

@@ -20,7 +20,8 @@ class ChunkGroupInfoFactory {
                 resolvedPath,
                 uploadMediaDto.getFileName(),
                 uploadMediaDto.getTotalChunkCount(),
-                getExtension(uploadMediaDto.getExtension())
+                getExtension(uploadMediaDto.getExtension()),
+                uploadMediaDto.getMediaDuration()
         );
         chunkGroupInfo.init();
         return chunkGroupInfo;

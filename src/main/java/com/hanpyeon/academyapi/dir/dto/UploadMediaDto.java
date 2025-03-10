@@ -18,5 +18,6 @@ public final class UploadMediaDto {
     private final Long requestMemberId;
     private final String targetDirectory;
     private final String extension;
+    private final Long mediaDuration;
 }
 

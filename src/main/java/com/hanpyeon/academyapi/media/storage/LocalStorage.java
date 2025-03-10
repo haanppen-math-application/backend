@@ -6,6 +6,15 @@ import com.hanpyeon.academyapi.media.exception.NoSuchMediaException;
 import com.hanpyeon.academyapi.media.exception.NotSupportedMediaException;
 import com.hanpyeon.academyapi.media.exception.StorageException;
 import com.hanpyeon.academyapi.media.service.UploadFile;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
@@ -13,14 +22,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.*;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service

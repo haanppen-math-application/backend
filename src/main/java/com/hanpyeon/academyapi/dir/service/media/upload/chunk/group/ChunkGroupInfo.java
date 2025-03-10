@@ -25,4 +25,8 @@ public interface ChunkGroupInfo {
     Long getRequiringChunkSize();
 
     Long getNextChunkIndex();
+
+    Long getMediaDuration();
+
+    Long getTotalSize();
 }
