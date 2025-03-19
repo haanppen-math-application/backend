@@ -4,7 +4,9 @@ import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupIn
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import java.io.InputStream;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 class MergedUploadFileImpl implements MergedUploadFile {
 
@@ -30,6 +32,7 @@ class MergedUploadFileImpl implements MergedUploadFile {
 
     @Override
     public boolean completed() {
+        log.debug("Completed chunk group {}", chunkGroupInfo.getGroupId());
         temporarySavedStorage.removeChunks(this.chunkGroupInfo);
         return this.chunkGroupInfo.clear();
     }

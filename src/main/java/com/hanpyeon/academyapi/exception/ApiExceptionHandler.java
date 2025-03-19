@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.exception;
 
+import java.util.Arrays;
 import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +53,8 @@ public class ApiExceptionHandler {
         ErrorCode errorCode = businessException.getErrorCode();
         String details = businessException.getMessage();
 
+        logger.debug("[ EXCEPTION WITH ] -> {} : {}", errorCode, details);
+        logger.debug("[ STACK TRACE ] -> {} ", Arrays.toString(businessException.getStackTrace()));
         return createExceptionResponse(errorCode, ExceptionResponseBody.of(errorCode, details));
     }
 

@@ -16,6 +16,7 @@ public class ChunkedFileTransferManager {
     private final MediaStorage mediaStorage;
 
     public String sendToMediaStorage(final MergedUploadFile mergedUploadFile) {
+        log.debug("합쳐진 파일 전송 시작");
         final String resultFileName = mediaStorage.store(mergedUploadFile);
         mergedUploadFile.completed();
         return resultFileName;
