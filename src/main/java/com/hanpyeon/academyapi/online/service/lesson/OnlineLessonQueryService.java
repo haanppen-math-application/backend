@@ -77,6 +77,7 @@ public class OnlineLessonQueryService {
                     onlineVideo.getVideoName(),
                     onlineVideo.getPreview(),
                     onlineVideo.getMedia().getSrc(),
+                    onlineVideo.getMedia().getDuration(),
                     onlineVideo.getVideoAttachments().stream()
                             .map(this::mapToDetail)
                             .toList()
@@ -87,6 +88,7 @@ public class OnlineLessonQueryService {
                 onlineVideo.getVideoSequence(),
                 onlineVideo.getVideoName(),
                 onlineVideo.getPreview(),
+                null,
                 null,
                 null
         );

@@ -8,6 +8,7 @@ public record OnlineVideoDetail(
         String mediaName,
         Boolean isPreview,
         String mediaSrc,
+        Long duration,
         List<OnlineVideoAttachmentDetail> attachmentDetails
 ) {
 }
