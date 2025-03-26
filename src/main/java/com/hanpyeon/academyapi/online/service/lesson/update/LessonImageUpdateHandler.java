@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.online.service.lesson.update;
 
+import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.exception.BusinessException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
@@ -17,16 +18,15 @@ import org.springframework.stereotype.Component;
 class LessonImageUpdateHandler implements LessonUpdateHandler{
     private final ImageService imageService;
     private final ImageRepository imageRepository;
+    private final CommentService commentService;
 
     @Override
     public void update(OnlineCourse onlineCourse, UpdateOnlineLessonInfoCommand updateOnlineLessonInfoCommand) {
-        if (Objects.isNull(updateOnlineLessonInfoCommand.imageSrc())) {
+        if (updateOnlineLessonInfoCommand.imageSrc() == null) {
             return;
         }
-        if (updateOnlineLessonInfoCommand.imageSrc() != null) {
-            if (onlineCourse.getImage() != null) {
-                imageService.removeImage(List.of(onlineCourse.getImage()));
-            }
+        if (onlineCourse.getImage() != null && updateOnlineLessonInfoCommand.imageSrc() != null && !onlineCourse.getImage().getSrc().equals(updateOnlineLessonInfoCommand.imageSrc())) {
+            imageService.removeImage(List.of(onlineCourse.getImage()));
         }
         final Image newImage = loadImage(updateOnlineLessonInfoCommand.imageSrc());
         onlineCourse.setImage(newImage);
