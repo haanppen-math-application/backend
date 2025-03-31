@@ -63,7 +63,6 @@ public class Member {
     private Integer loginTryCount = 0;
 
     @Column(name = "locked", nullable = true)
-    @Getter(AccessLevel.PRIVATE)
     private Boolean locked = false;
 
     @Column(name = "locked_start_time", nullable = true)

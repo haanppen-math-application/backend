@@ -39,7 +39,7 @@ public class LoginService {
             accountLockService.updateLoginFailedInfo(account, now);
             throw new InvalidPasswordException(ErrorCode.INVALID_PASSWORD_EXCEPTION);
         }
-        accountLockService.unlock(account);
+        accountLockService.unlock(account, now);
         return createJwtDto(account);
     }
 
@@ -49,13 +49,14 @@ public class LoginService {
      */
     @WarnLoggable
     public JwtDto provideJwtByRefreshToken(final String refreshToken) {
+        final LocalDateTime now = timeProvider.getCurrentTime();
         try {
             final Claims claims = jwtUtils.parseToken(refreshToken);
             final Long memberId = jwtUtils.getMemberId(claims)
                     .orElseThrow(() -> new JwtException("잘못된 JWT"));
 
             final Account account = accountLoader.loadAccount(memberId);
-            accountLockService.unlock(account);
+            accountLockService.unlock(account, now);
             return createJwtDto(account);
         } catch (JwtException exception) {
             throw new ReLoginRequiredException("재 로그인 필요", ErrorCode.RE_LOGIN_REQUIRED);

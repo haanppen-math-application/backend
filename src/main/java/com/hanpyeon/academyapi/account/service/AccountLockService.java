@@ -52,22 +52,20 @@ public class AccountLockService {
     @Transactional(propagation = Propagation.MANDATORY)
     public boolean checkAllowedToLogin(final Account account, final LocalDateTime currentTime) {
         final Member member = findMember(account.getId());
-        if (!member.canLoginAt(currentTime, this.lockTimeMinutes)) {
-            return false;
-        }
-        log.info("Check account {}, unlocked at {}", account.getId(), currentTime);
-        unlockMember(member);
-        return true;
+        return member.canLoginAt(currentTime, this.lockTimeMinutes);
     }
 
     @Transactional
-    public void unlock(final Account account) {
+    public void unlock(final Account account, final LocalDateTime currentTime) {
         final Member member = findMember(account.getId());
-        unlockMember(member);
+        unlockMember(member, currentTime);
     }
 
-    private void unlockMember(final Member member) {
-        member.unlock();
+    private void unlockMember(final Member member, final LocalDateTime currentTime) {
+        if (member.getLocked()) {
+            member.unlock();
+            log.info("Check account {}, unlocked at {}", member.getId(), currentTime);
+        }
     }
 
     private Member findMember(final Long memberId) {
