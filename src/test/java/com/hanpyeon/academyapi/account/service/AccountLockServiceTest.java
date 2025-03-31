@@ -35,7 +35,7 @@ class AccountLockServiceTest {
         final Account account = accountLoader.loadAccount(member.getId());
 
         LocalDateTime invalidTime = LocalDateTime.of(2020,1,1,0,5);
-        LocalDateTime validTime = LocalDateTime.of(2020,1,1,0,4);
+        LocalDateTime validTime = LocalDateTime.of(2020,1,1,0,6);
         Assertions.assertAll(
                 () -> Assertions.assertEquals(accountLockService.checkAllowedToLogin(account, invalidTime), false),
                 () -> Assertions.assertEquals(accountLockService.checkAllowedToLogin(account, validTime), true)

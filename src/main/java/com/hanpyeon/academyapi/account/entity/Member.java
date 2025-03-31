@@ -105,7 +105,7 @@ public class Member {
         if (!getLocked()) {
             return true;
         }
-        return currentTime.isBefore(getLockedStartTime().plusMinutes(lockTimeMinutes));
+        return currentTime.isAfter(getLockedStartTime().plusMinutes(lockTimeMinutes));
     }
 
     public void lock(final LocalDateTime lockedStartTime) {
