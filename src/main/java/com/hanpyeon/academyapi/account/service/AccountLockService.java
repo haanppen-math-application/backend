@@ -62,10 +62,8 @@ public class AccountLockService {
     }
 
     private void unlockMember(final Member member, final LocalDateTime currentTime) {
-        if (member.getLocked()) {
-            member.unlock();
-            log.info("Check account {}, unlocked at {}", member.getId(), currentTime);
-        }
+        member.unlock();
+        log.info("Check account {}, unlocked at {}", member.getId(), currentTime);
     }
 
     private Member findMember(final Long memberId) {
