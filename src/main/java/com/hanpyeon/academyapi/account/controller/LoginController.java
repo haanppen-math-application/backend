@@ -30,7 +30,7 @@ import java.net.URLEncoder;
 public class LoginController {
     private static final String REFRESH_TOKEN_NAME = "refreshToken";
     private static final String ENCODER = "UTF-8";
-    private final LoginService jwtService;
+    private final LoginService loginService;
 
     @PostMapping("/login")
     @Operation(summary = "로그인 API", description = "JWT 발급을 위한 로그인 API 입니다.")
@@ -39,7 +39,7 @@ public class LoginController {
             @Valid @RequestBody final LoginRequestDto loginRequestDto,
             HttpServletResponse httpServletResponse
     ) {
-        final JwtDto jwtDto = jwtService.provideJwtByLogin(loginRequestDto.userPhoneNumber(), loginRequestDto.password());
+        final JwtDto jwtDto = loginService.provideJwtByLogin(loginRequestDto.userPhoneNumber(), loginRequestDto.password());
         return createJwtResponse(httpServletResponse, jwtDto, 10080);
     }
 
@@ -50,7 +50,7 @@ public class LoginController {
             final HttpServletResponse httpServletResponse
     ) {
         final String refreshToken = decodeToken(jwtRefreshToken);
-        final JwtDto jwtDto = jwtService.provideJwtByRefreshToken(refreshToken);
+        final JwtDto jwtDto = loginService.provideJwtByRefreshToken(refreshToken);
         return createJwtResponse(httpServletResponse, jwtDto, 10080);
     }
 

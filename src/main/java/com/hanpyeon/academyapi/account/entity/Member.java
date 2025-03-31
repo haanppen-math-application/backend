@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.account.entity;
 import com.hanpyeon.academyapi.course.adapter.out.CourseStudent;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -58,6 +59,16 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<CourseStudent> courseStudent = new ArrayList<>();
 
+    @Column(name = "login_try_count", nullable = false)
+    private Integer loginTryCount = 0;
+
+    @Column(name = "locked", nullable = true)
+    @Getter(AccessLevel.PRIVATE)
+    private Boolean locked = false;
+
+    @Column(name = "locked_start_time", nullable = true)
+    @Getter(AccessLevel.PRIVATE)
+    private LocalDateTime lockedStartTime;
 
     public void setName(final String name) {
         this.name = name;
@@ -82,6 +93,33 @@ public class Member {
         isVerifying = true;
         verifyMessageSendCount ++;
     }
+
+    public boolean isOverMaxLoginTryCount(final Integer maxLoginTryCount) {
+        return this.loginTryCount >= maxLoginTryCount;
+    }
+
+    public void increaseLoginTryCount() {
+        this.loginTryCount++;
+    }
+
+    public boolean canLoginAt(final LocalDateTime currentTime, final Long lockTimeMinutes) {
+        if (!getLocked()) {
+            return true;
+        }
+        return currentTime.isBefore(getLockedStartTime().plusMinutes(lockTimeMinutes));
+    }
+
+    public void lock(final LocalDateTime lockedStartTime) {
+        this.locked = true;
+        this.lockedStartTime = lockedStartTime;
+    }
+
+    public void unlock() {
+        this.loginTryCount = 0;
+        this.locked = false;
+        this.lockedStartTime = null;
+    }
+
     public void resetVerifyInfo() {
         this.verifyDateTime = null;
         this.verifyMessageSendCount = 0;
