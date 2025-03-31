@@ -39,6 +39,7 @@ public class LoginService {
             accountLockService.updateLoginFailedInfo(account, now);
             throw new InvalidPasswordException(ErrorCode.INVALID_PASSWORD_EXCEPTION);
         }
+        accountLockService.unlock(account);
         return createJwtDto(account);
     }
 
