@@ -83,7 +83,5 @@ class DeleteCourseServiceTest {
                 .isEqualTo(0);
         assertThat(courseRepository.count())
                 .isEqualTo(0);
-        assertThat(memberRepository.count())
-                .isEqualTo(3);
     }
 }

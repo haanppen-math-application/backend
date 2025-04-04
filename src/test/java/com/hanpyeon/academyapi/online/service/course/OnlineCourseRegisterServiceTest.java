@@ -51,7 +51,8 @@ class OnlineCourseRegisterServiceTest {
                         .role(Role.STUDENT)
                         .build()
         );
-        this.memberRepository.saveAll(members);
+        members.stream()
+                        .forEach(memberRepository::save);
         entityManager.flush();
         entityManager.clear();
 

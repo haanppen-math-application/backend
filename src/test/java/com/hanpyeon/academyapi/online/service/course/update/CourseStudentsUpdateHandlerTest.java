@@ -34,7 +34,7 @@ class CourseStudentsUpdateHandlerTest {
     @Test
     @Transactional
     void testClear() {
-        memberRepository.saveAll(List.of(
+        List.of(
                         Member.builder()
                                 .name("test")
                                 .encryptedPassword("test")
@@ -50,8 +50,8 @@ class CourseStudentsUpdateHandlerTest {
                                 .encryptedPassword("test")
                                 .role(Role.STUDENT)
                                 .build()
-                )
-        );
+        ).stream()
+                .forEach(memberRepository::save);
         final OnlineCourse onlineCourse = new OnlineCourse(null, "test");
         onlineCourseRepository.save(onlineCourse);
         onlineStudentRepository.saveAll(List.of(

@@ -73,7 +73,7 @@ class MemoRepositoryTest {
         final LocalDate today = LocalDate.now();
         final LocalDate startDayOfMonth = today.withDayOfMonth(1);
         final LocalDate endDayOfMonth = today.withDayOfMonth(today.lengthOfMonth());
-        student = memberRepository.findById(student.getId())
+        student = memberRepository.findMemberByIdAndRemovedIsFalse(student.getId())
                 .orElseThrow();
         course = courseRepository.findById(course.getId())
                 .orElseThrow();

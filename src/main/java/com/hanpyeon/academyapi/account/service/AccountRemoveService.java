@@ -16,7 +16,7 @@ public class AccountRemoveService {
 
     @Transactional
     public void removeAccount(final AccountRemoveCommand accountRemoveCommand) {
-        List<Member> members = memberRepository.findAllById(accountRemoveCommand.targetIds());
+        List<Member> members = memberRepository.findMembersByIdIsInAndRemovedIsFalse(accountRemoveCommand.targetIds());
         members.stream().forEach(member -> member.remove());
     }
 }

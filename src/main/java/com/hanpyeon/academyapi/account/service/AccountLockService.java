@@ -30,23 +30,29 @@ public class AccountLockService {
     }
 
     /**
+     * 로그인 실패 시, 호출해야하는 메소드입니다.
+     *
      * @param account     로그인 하고자 하는 계정
-     * @param currentTime 로그인 시도한 시간 로그인 실패 시, 호출해야하는 메소드입니다.
+     * @param currentTime 로그인 시도한 시간.
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateLoginFailedInfo(final Account account, final LocalDateTime currentTime) {
         final Member member = findMember(account.getId());
+
+        member.increaseLoginTryCount();
+        log.info("account {}, Increase login try count to {}", account.getId(), member.getLoginTryCount());
+
         if (member.isOverMaxLoginTryCount(this.maxTryCount)) {
             member.lock(currentTime);
             log.info("Lock account {}, lock started at {}", account.getId(), currentTime);
-        } else {
-            member.increaseLoginTryCount();
-            log.info("account {}, Increase login try count to {}", account.getId(), member.getLoginTryCount());
         }
     }
 
     /**
+     * 해당 계정에 로그인 할 수 있는지 판단하는 메소드 입니다.
+     *
      * @param account 로그인 하고자 하는 대상입니다.
+     * @param currentTime 로그인 시도 시간
      * @return 로그인을 시도할 수 있다면 true, 아니라면 false
      */
     @Transactional(propagation = Propagation.MANDATORY)

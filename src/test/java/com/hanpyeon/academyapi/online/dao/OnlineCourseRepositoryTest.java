@@ -48,7 +48,8 @@ class OnlineCourseRepositoryTest {
                         .build()
         );
 
-        this.memberRepository.saveAll(members);
+        members.stream()
+                .forEach(memberRepository::save);
 
         final OnlineCourse onlineCourse = new OnlineCourse(null, "test");
         final OnlineStudent onlineStudent1 = new OnlineStudent(onlineCourse, members.get(0));
@@ -77,7 +78,8 @@ class OnlineCourseRepositoryTest {
                     .role(Role.TEACHER)
                     .build());
         }
-        this.memberRepository.saveAll(members);
+        members.stream()
+                .forEach(memberRepository::save);
 
         final OnlineCourse onlineCourse = new OnlineCourse(members.get(0), "test");
         onlineCourseRepository.save(onlineCourse);
@@ -106,7 +108,8 @@ class OnlineCourseRepositoryTest {
                     .role(Role.TEACHER)
                     .build());
         }
-        this.memberRepository.saveAll(members);
+        members.stream()
+                .forEach(memberRepository::save);
 
         final OnlineCourse onlineCourse = new OnlineCourse(members.get(0), "test");
         onlineCourseRepository.save(onlineCourse);

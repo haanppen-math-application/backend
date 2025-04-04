@@ -3,19 +3,23 @@ package com.hanpyeon.academyapi.account.repository;
 import com.hanpyeon.academyapi.account.dto.MemberInfo;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.security.Role;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 
 
-@Repository
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends Repository<Member, Long> {
+
+    Member save(Member member);
+
+    @Modifying
+    @Query("UPDATE Member m SET m.verifyDateTime = null, m.isVerifying = false, m.verifyMessageSendCount = 0, m.verificationCode = null")
+    void resetVerificationInfos();
 
     boolean existsByPhoneNumberAndRemovedIsFalse(final String phoneNumber);
 
@@ -53,4 +57,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT new com.hanpyeon.academyapi.account.dto.MemberInfo(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole AND m.name LIKE %:targetName% AND m.removed = FALSE")
     Page<MemberInfo> findMembersByRoleAndNameContainingAndRemovedIsFalse(@Param("targetRole") final Role role, @Param("targetName") final String name, final Pageable pageable);
+
+    List<Member> findMembersByIdIsInAndRemovedIsFalse(List<Long> memberIds);
 }

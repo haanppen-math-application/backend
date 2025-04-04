@@ -18,7 +18,7 @@ public class MemberManager {
     private final MemberRepository memberRepository;
 
     public Member getMemberWithValidated(final Long id, final Predicate<? super Member> predicate) {
-        return memberRepository.findById(id)
+        return memberRepository.findMemberByIdAndRemovedIsFalse(id)
                 .filter(predicate)
                 .orElseThrow(() -> new NoSuchMemberException(predicate + " : 조건에 맞는 사용자를 찾을 수 없습니다.", ErrorCode.NO_SUCH_MEMBER));
     }

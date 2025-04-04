@@ -25,18 +25,18 @@ class AccountRemoveServiceTest {
     MemberRepository memberRepository;
     @Autowired
     AccountRemoveService accountRemoveService;
+
     @Test
     void testDelete() {
         initTestData();
-        Assertions.assertEquals(memberRepository.findAll().size(), 4);
         accountRemoveService.removeAccount(new AccountRemoveCommand(List.of(1L, 2L)));
         Assertions.assertEquals(memberRepository.findMembersByRole(Role.STUDENT).size(), 2);
     }
 
     void initTestData() {
-        memberRepository.saveAll(List.of(Member.builder().name("test").grade(10).role(Role.STUDENT).registeredDate(LocalDateTime.now()).phoneNumber("01000000000").encryptedPassword("test").build()));
-        memberRepository.saveAll(List.of(Member.builder().name("test").grade(10).role(Role.STUDENT).registeredDate(LocalDateTime.now()).phoneNumber("01000000001").encryptedPassword("test").build()));
-        memberRepository.saveAll(List.of(Member.builder().name("test").grade(10).role(Role.STUDENT).registeredDate(LocalDateTime.now()).phoneNumber("01000000002").encryptedPassword("test").build()));
-        memberRepository.saveAll(List.of(Member.builder().name("test").grade(10).role(Role.STUDENT).registeredDate(LocalDateTime.now()).phoneNumber("01000000003").encryptedPassword("test").build()));
+        memberRepository.save(Member.builder().name("test").grade(10).role(Role.STUDENT).registeredDate(LocalDateTime.now()).phoneNumber("01000000000").encryptedPassword("test").build());
+        memberRepository.save(Member.builder().name("test").grade(10).role(Role.STUDENT).registeredDate(LocalDateTime.now()).phoneNumber("01000000001").encryptedPassword("test").build());
+        memberRepository.save(Member.builder().name("test").grade(10).role(Role.STUDENT).registeredDate(LocalDateTime.now()).phoneNumber("01000000002").encryptedPassword("test").build());
+        memberRepository.save(Member.builder().name("test").grade(10).role(Role.STUDENT).registeredDate(LocalDateTime.now()).phoneNumber("01000000003").encryptedPassword("test").build());
     }
 }

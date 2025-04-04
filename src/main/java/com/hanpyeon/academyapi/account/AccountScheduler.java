@@ -14,7 +14,6 @@ public class AccountScheduler {
     @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void resetVerificationStatus() {
-        memberRepository.findAll().stream()
-                .forEach(member -> member.resetVerifyInfo());
+        memberRepository.resetVerificationInfos();
     }
 }

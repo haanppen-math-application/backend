@@ -5,6 +5,7 @@ import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.course.application.port.out.RegisterCoursePort;
 import com.hanpyeon.academyapi.course.domain.Student;
 import com.hanpyeon.academyapi.course.domain.Teacher;
+import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -46,11 +47,11 @@ class RegisterCourseAdapter implements RegisterCoursePort {
         List<Long> studentIds = students.stream()
                 .map(student -> student.id())
                 .toList();
-        return memberRepository.findAllById(studentIds);
+        return memberRepository.findMembersByIdIsInAndRoleAndRemovedIsFalse(studentIds, Role.STUDENT);
     }
 
     private Member findTeacher(final Teacher teacher) {
-        return memberRepository.findById(teacher.id())
+        return memberRepository.findMemberByIdAndRoleAndRemovedIsFalse(teacher.id(), Role.TEACHER)
                 .orElseThrow();
     }
 }
