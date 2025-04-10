@@ -7,7 +7,6 @@ import com.hanpyeon.academyapi.account.dto.UpdateTeacherCommand;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
-import com.hanpyeon.academyapi.account.model.Account;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.service.policy.AccountPolicyManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -24,7 +23,6 @@ public class AccountUpdateService {
     private final MemberRepository memberRepository;
 
     private final AccountPolicyManager accountPolicyManager;
-    private final AccountLoader accountLoader;
     private final PasswordHandler passwordHandler;
 
     public void updateMember(final AccountUpdateCommand updateCommand) {
@@ -85,12 +83,12 @@ public class AccountUpdateService {
 
     @Transactional(readOnly = true)
     public MyAccountInfo getMyInfo(final Long requestMemberId) {
-        final Account account = accountLoader.loadAccount(requestMemberId);
+        final Member member = loadMember(requestMemberId);
         return new MyAccountInfo(
-                account.getAccountName().getName(),
-                account.getPhoneNumber().getPhoneNumber(),
-                account.getAccountRole().getRole(),
-                account.getGrade() == null ? null : account.getGrade().getGrade()
+                member.getName(),
+                member.getPhoneNumber(),
+                member.getRole(),
+                member.getGrade() == null ? null : member.getGrade()
         );
     }
 
