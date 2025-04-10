@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.account.dto;
 
 
-import com.hanpyeon.academyapi.account.model.Password;
+import com.hanpyeon.academyapi.account.service.Password;
 import com.hanpyeon.academyapi.account.validation.PhoneNumberConstraint;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;

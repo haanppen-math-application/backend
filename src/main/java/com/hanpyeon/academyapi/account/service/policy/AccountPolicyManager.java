@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.account.service.policy;
 
-import com.hanpyeon.academyapi.account.model.Account;
+import com.hanpyeon.academyapi.account.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +9,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AccountPolicyManager {
-    private final List<AccountPolicy> policies;
+    private final List<AccountPolicy> accountPolicies;
 
-    public void check(final Account account) {
-        policies.stream()
-                .forEach(policy -> policy.verify(account));
+    /**
+     * @throws com.hanpyeon.academyapi.account.exceptions.AccountException 정책 위반시 해당 객체를 던집니다.
+     * @param member 정책 검사를 위한 파사드 객체 입니다.
+     */
+    public void checkPolicy(final Member member) {
+        accountPolicies.forEach(policy -> policy.verify(member));
     }
 }

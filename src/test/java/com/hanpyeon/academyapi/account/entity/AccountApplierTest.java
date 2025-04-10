@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.account.entity;
 
-import com.hanpyeon.academyapi.account.model.Password;
+import com.hanpyeon.academyapi.account.service.Password;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.model.Account;
 import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;

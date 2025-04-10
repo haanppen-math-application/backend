@@ -6,7 +6,6 @@ import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.exceptions.InvalidPasswordException;
 import com.hanpyeon.academyapi.account.exceptions.ReLoginRequiredException;
 import com.hanpyeon.academyapi.account.model.Account;
-import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.JwtUtils;

@@ -8,7 +8,6 @@ import com.hanpyeon.academyapi.account.model.AccountGrade;
 import com.hanpyeon.academyapi.account.model.AccountName;
 import com.hanpyeon.academyapi.account.model.AccountPassword;
 import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
-import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.security.PasswordHandler;

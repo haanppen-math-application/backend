@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.account.model;
 
+import com.hanpyeon.academyapi.account.service.Password;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;

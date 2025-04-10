@@ -9,7 +9,6 @@ import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.model.AccountAbstractFactory;
 import com.hanpyeon.academyapi.account.model.AccountPassword;
 import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
-import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.account.service.sms.MessageSender;
 import com.hanpyeon.academyapi.exception.ErrorCode;

@@ -1,10 +1,10 @@
-package com.hanpyeon.academyapi.account.model;
+package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.validation.PasswordConstraint;
-import lombok.AccessLevel;
 import lombok.Getter;
 
-@Getter(value = AccessLevel.PACKAGE)
+//@Getter(value = AccessLevel.PACKAGE)
+@Getter
 public class Password {
     @PasswordConstraint
     private final String password;

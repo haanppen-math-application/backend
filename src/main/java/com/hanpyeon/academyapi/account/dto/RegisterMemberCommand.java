@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.account.dto;
 
-import com.hanpyeon.academyapi.account.model.Password;
+import com.hanpyeon.academyapi.account.service.Password;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
