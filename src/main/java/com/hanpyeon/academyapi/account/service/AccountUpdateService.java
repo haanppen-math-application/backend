@@ -1,7 +1,6 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
-import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
 import com.hanpyeon.academyapi.account.dto.StudentUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.UpdateTeacherCommand;
 import com.hanpyeon.academyapi.account.entity.Member;
@@ -79,17 +78,6 @@ public class AccountUpdateService {
 
     private void updatePhoneNumber(final String accountPhoneNumber, final Member targetAccount) {
         targetAccount.setPhoneNumber(accountPhoneNumber);
-    }
-
-    @Transactional(readOnly = true)
-    public MyAccountInfo getMyInfo(final Long requestMemberId) {
-        final Member member = loadMember(requestMemberId);
-        return new MyAccountInfo(
-                member.getName(),
-                member.getPhoneNumber(),
-                member.getRole(),
-                member.getGrade() == null ? null : member.getGrade()
-        );
     }
 
     private Member loadMember(final Long targetMemberId) {

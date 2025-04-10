@@ -13,11 +13,11 @@ import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
 import com.hanpyeon.academyapi.account.service.Password;
+import com.hanpyeon.academyapi.account.service.QueryService;
 import com.hanpyeon.academyapi.account.validation.GradeConstraint;
 import com.hanpyeon.academyapi.account.validation.NameConstraint;
 import com.hanpyeon.academyapi.account.validation.PhoneNumberConstraint;
 import com.hanpyeon.academyapi.account.validation.RoleConstraint;
-import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,6 +53,7 @@ public class AccountController {
     private final AccountUpdateService accountUpdateService;
     private final AccountRemoveService accountRemoveService;
     private final AccountPasswordRefreshService accountPasswordRefreshService;
+    private final QueryService queryService;
 
     @PostMapping("/password/verification")
     public ResponseEntity<?> authenticateForRefreshPassword(
@@ -157,7 +158,7 @@ public class AccountController {
     public ResponseEntity<MyAccountInfo> getMyAccountInfo(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        return ResponseEntity.ok(accountUpdateService.getMyInfo(memberPrincipal.memberId()));
+        return ResponseEntity.ok(queryService.getMyInfo(memberPrincipal.memberId()));
     }
 
     @DeleteMapping

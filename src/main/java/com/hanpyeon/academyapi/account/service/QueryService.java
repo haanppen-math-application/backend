@@ -1,7 +1,10 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.*;
+import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.paging.CursorResponse;
 import com.hanpyeon.academyapi.security.Role;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,17 @@ import java.util.Objects;
 @Transactional(readOnly = true)
 public class QueryService {
     private final MemberRepository memberRepository;
+
+    public MyAccountInfo getMyInfo(final Long requestMemberId) {
+        final Member member = memberRepository.findMemberByIdAndRemovedIsFalse(requestMemberId)
+                .orElseThrow(() -> new NoSuchMemberException("찾을 수 없습니다.", ErrorCode.NO_SUCH_MEMBER));
+        return new MyAccountInfo(
+                member.getName(),
+                member.getPhoneNumber(),
+                member.getRole(),
+                member.getGrade() == null ? null : member.getGrade()
+        );
+    }
 
     public List<PreviewStudent> loadAllStudents() {
         return memberRepository.findMembersByRole(Role.STUDENT).stream()
