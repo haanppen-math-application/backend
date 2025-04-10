@@ -83,10 +83,9 @@ public class AccountControllerTest {
 
     public static Stream<Arguments> provideLegalArguments() {
         return Stream.of(
-                Arguments.of(createRequest("희종", 0, "102010021", "student", null)),
-                Arguments.of(createRequest("TOM", 11, "102010021", "student", null)),
-                Arguments.of(createRequest("COKE", 10, "1022", "manager", null)),
-                Arguments.of(createRequest("COKE", null, "1022", "manager", null))
+                Arguments.of(createRequest("희종", 0, "0102010021", "student", null)),
+                Arguments.of(createRequest("TOM", 11, "0102010021", "student", null)),
+                Arguments.of(createRequest("COKE", 10, "01022", "manager", null))
         );
     }
 

@@ -8,6 +8,7 @@ import com.hanpyeon.academyapi.account.dto.RegisterMemberCommand;
 import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
 import com.hanpyeon.academyapi.account.model.AccountGrade;
 import com.hanpyeon.academyapi.account.model.AccountName;
+import com.hanpyeon.academyapi.account.model.AccountPassword;
 import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
 import com.hanpyeon.academyapi.account.model.Password;
 import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
@@ -15,7 +16,10 @@ import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
-import com.hanpyeon.academyapi.account.model.AccountPassword;
+import com.hanpyeon.academyapi.account.validation.GradeConstraint;
+import com.hanpyeon.academyapi.account.validation.NameConstraint;
+import com.hanpyeon.academyapi.account.validation.PhoneNumberConstraint;
+import com.hanpyeon.academyapi.account.validation.RoleConstraint;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -24,12 +28,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +40,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -57,7 +61,7 @@ public class AccountController {
 
     @PostMapping("/password/verification")
     public ResponseEntity<?> authenticateForRefreshPassword(
-            @RequestParam(required = true) String phoneNumber
+            @RequestParam(required = true) final String phoneNumber
     ) {
         accountPasswordRefreshService.generateVerificationCode(phoneNumber);
         return ResponseEntity.ok().build();
@@ -65,33 +69,54 @@ public class AccountController {
 
     @PutMapping("/password/verification")
     public ResponseEntity<ChangedPasswordResponse> changePassword(
-            @RequestParam(required = true) final String phoneNumber,
-            @RequestParam(required = true) final String verificationCode
+            @ModelAttribute @Valid final CheckVerificationCodeRequest request
     ) {
-        final ChangedPassword changedPassword = accountPasswordRefreshService.verifyCode(new VerifyAccountCode(phoneNumber, verificationCode));
+        final ChangedPassword changedPassword = accountPasswordRefreshService.verifyCode(new VerifyAccountCode(
+                request.phoneNumber(), request.verificationCode()));
         return ResponseEntity.ok(new ChangedPasswordResponse(changedPassword.phoneNumber(), changedPassword.changedPassword()));
     }
 
-    record ChangedPasswordResponse(
+    record CheckVerificationCodeRequest(
+            @PhoneNumberConstraint
             String phoneNumber,
-            Password changedPassword) {
+            @NotNull
+            String verificationCode
+    ) {
+    }
+
+    record ChangedPasswordResponse(
+            @PhoneNumberConstraint
+            String phoneNumber,
+            @Valid
+            Password changedPassword
+    ) {
     }
 
     @PostMapping
     @Operation(summary = "계정 등록", description = "어플리케이션에 계정을 등록하기 위한 API 입니다 ")
     @ApiResponse(responseCode = "201", description = "계정 생성 성공")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<?> registerMember(@Valid @RequestBody final AccountController.RegisterMemberRequest registerMemberRequest) {
+    public ResponseEntity<?> registerMember(
+            @Valid @RequestBody final RegisterMemberRequest registerMemberRequest
+    ) {
         final RegisterMemberCommand registerMemberCommand = registerMemberRequest.toCommand();
         accountRegisterService.register(registerMemberCommand);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     record RegisterMemberRequest(
-            @NotBlank String name,
-            @Schema(description = "학년 정보 ( 0 ~ 11 )", example = "11") @Range(min = 0, max = 11) Integer grade,
-            @Schema(description = "전화번호", example = "01000000000") @NotBlank @Pattern(regexp = "^[0-9]+$") String phoneNumber,
-            @Schema(description = "등록 유형 ( student, teacher 중 택 1 )", example = "student") @NotNull(message = "teacher / student 둘중 하나여야 합니다") Role role,
+            @NameConstraint
+            String name,
+            @Schema(description = "학년 정보 ( 0 ~ 11 )", example = "11")
+            @GradeConstraint
+            Integer grade,
+            @Schema(description = "전화번호", example = "01000000000")
+            @PhoneNumberConstraint
+            String phoneNumber,
+            @Schema(description = "등록 유형 ( student, teacher 중 택 1 )", example = "student")
+            @RoleConstraint
+            Role role,
+            @Valid
             Password password
     ) {
         RegisterMemberCommand toCommand() {
@@ -107,18 +132,22 @@ public class AccountController {
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
             @RequestBody @Valid AccountUpdateRequest accountUpdateRequest
     ) {
-        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(memberPrincipal.memberId(),
-                passwordHandler);
+        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(
+                memberPrincipal.memberId(),
+                passwordHandler
+        );
         accountUpdateService.updateAccount(accountUpdateCommand);
         return ResponseEntity.ok().build();
     }
 
     public record AccountUpdateRequest(
-            @Pattern(regexp = "^[0-9]+$")
+            @PhoneNumberConstraint
             String phoneNumber,
-            @NotNull
+            @NameConstraint
             String name,
+            @Valid
             Password prevPassword,
+            @Valid
             Password newPassword
     ) {
         AccountUpdateCommand toCommand(final Long targetMemberId, final PasswordHandler passwordHandler) {
@@ -142,7 +171,7 @@ public class AccountController {
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "계정 삭제 API", description = "계정을 삭제하기 위한 API 입니다. (원장님, 개발자)만 사용 가능합니다")
     public ResponseEntity<?> deleteAccounts(
-            @RequestBody @NonNull AccountRemoveRequest accountRemoveRequest
+            @RequestBody @Valid AccountRemoveRequest accountRemoveRequest
     ) {
         final AccountRemoveCommand accountRemoveCommand = accountRemoveRequest.toCommand();
         accountRemoveService.removeAccount(accountRemoveCommand);
@@ -150,7 +179,9 @@ public class AccountController {
     }
 
     record AccountRemoveRequest(
-            @NonNull List<Long> targetIds
+            @NonNull
+            @Size(min = 1, max = 50)
+            List<Long> targetIds
     ) {
         AccountRemoveCommand toCommand() {
             return new AccountRemoveCommand(targetIds());
@@ -160,7 +191,9 @@ public class AccountController {
     @PutMapping("/student")
     @Operation(summary = "학생 수정 API", description = "선생님, 원장님이 학생 정보를 수정하는 API")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<?> modifyStudent(@RequestBody @Valid ModifyStudentRequest modifyStudentRequest) {
+    public ResponseEntity<?> modifyStudent(
+            @RequestBody @Valid ModifyStudentRequest modifyStudentRequest
+    ) {
         final AccountUpdateCommand updateCommand = modifyStudentRequest.toCommand();
         accountUpdateService.updateAccount(updateCommand);
         return ResponseEntity.ok(null);
@@ -169,31 +202,30 @@ public class AccountController {
     public record ModifyStudentRequest(
             @NotNull
             Long studentId,
-            @NotNull
-            @NotBlank
+            @NameConstraint
             String name,
-            @NotNull
-            @NotBlank
-            @Pattern(regexp = "^[0-9]+$")
+            @PhoneNumberConstraint
             String phoneNumber,
-            @NotNull
+            @GradeConstraint
             Integer grade
     ) {
         AccountUpdateCommand toCommand() {
-            return new AccountUpdateCommand(
-                    studentId(),
-                    AccountPhoneNumber.of(phoneNumber),
-                    AccountName.of(name),
-                    AccountGrade.of(grade),
-                    null);
+                return new AccountUpdateCommand(
+                        studentId(),
+                        AccountPhoneNumber.of(phoneNumber),
+                        AccountName.of(name),
+                        AccountGrade.of(grade),
+                        null);
+            }
         }
-    }
 
 
     @PutMapping("/teacher")
     @Operation(summary = "선생 수정 API", description = "원장님만 사용가능한 API")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<?> modifyTeacher(@RequestBody @Valid ModifyTeacherRequest modifyTeacherRequest) {
+    public ResponseEntity<?> modifyTeacher(
+            @RequestBody @Valid ModifyTeacherRequest modifyTeacherRequest
+    ) {
         final AccountUpdateCommand accountUpdateCommand = modifyTeacherRequest.toCommand();
         accountUpdateService.updateAccount(accountUpdateCommand);
         return ResponseEntity.ok(null);
@@ -202,10 +234,9 @@ public class AccountController {
     public record ModifyTeacherRequest(
             @NotNull
             Long targetId,
-            @NotNull
+            @NameConstraint
             String name,
-            @NotNull
-            @Pattern(regexp = "^[0-9]+$")
+            @PhoneNumberConstraint
             String phoneNumber
     ) {
         AccountUpdateCommand toCommand() {

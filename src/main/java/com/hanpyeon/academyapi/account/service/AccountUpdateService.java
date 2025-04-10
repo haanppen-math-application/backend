@@ -21,7 +21,7 @@ public class AccountUpdateService {
     private final AccountApplier accountApplier;
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public void updateAccount(@Validated final AccountUpdateCommand updateCommand) {
+    public void updateAccount(final AccountUpdateCommand updateCommand) {
         final Account targetAccount = accountLoader.loadAccount(updateCommand.targetMemberId());
         updatePhoneNumber(updateCommand.phoneNumber(), targetAccount);
         updateGrade(updateCommand.grade(), targetAccount);
