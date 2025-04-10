@@ -16,7 +16,7 @@ public class Account {
     private AccountPassword password;
 
     public boolean isMatchPassword(final Password password) {
-        return this.password.isMatch(password.getPassword());
+        return this.password.isMatch(password.getRawPassword());
     }
 
     public void updateAccountName(AccountName accountName) {

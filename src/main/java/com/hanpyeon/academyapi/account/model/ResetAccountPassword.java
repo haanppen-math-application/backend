@@ -14,7 +14,7 @@ public class ResetAccountPassword {
     private final Password prevRawPassword;
 
     void isMatchToPrevPassword(final AccountPassword currentPassword) {
-        if (!currentPassword.isMatch(prevRawPassword.getPassword())) {
+        if (!currentPassword.isMatch(prevRawPassword.getRawPassword())) {
             throw new AccountException(ErrorCode.INVALID_PASSWORD_EXCEPTION);
         }
     }

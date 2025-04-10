@@ -33,8 +33,8 @@ public class AccountPassword {
         if (rawPassword == null || rawPassword.isBlank()) {
             return null;
         }
-        validate(rawPassword.getPassword());
-        return new AccountPassword(passwordHandler, passwordHandler.getEncodedPassword(rawPassword.getPassword()));
+        validate(rawPassword.getRawPassword());
+        return new AccountPassword(passwordHandler, passwordHandler.getEncodedPassword(rawPassword.getRawPassword()));
     }
 
     public static AccountPassword load(final String encryptedPassword, final PasswordHandler passwordHandler) {

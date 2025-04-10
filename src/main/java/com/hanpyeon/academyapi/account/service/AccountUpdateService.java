@@ -2,57 +2,85 @@ package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
-import com.hanpyeon.academyapi.account.entity.AccountApplier;
+import com.hanpyeon.academyapi.account.dto.StudentUpdateCommand;
+import com.hanpyeon.academyapi.account.dto.UpdateTeacherCommand;
+import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.account.exceptions.AccountException;
+import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.model.Account;
-import com.hanpyeon.academyapi.account.model.AccountGrade;
-import com.hanpyeon.academyapi.account.model.AccountName;
-import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
-import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
+import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.account.service.policy.AccountPolicyManager;
+import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.security.PasswordHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class AccountUpdateService {
-    private final AccountLoader accountLoader;
-    private final AccountApplier accountApplier;
+    private final MemberRepository memberRepository;
 
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public void updateAccount(final AccountUpdateCommand updateCommand) {
-        final Account targetAccount = accountLoader.loadAccount(updateCommand.targetMemberId());
-        updatePhoneNumber(updateCommand.phoneNumber(), targetAccount);
-        updateGrade(updateCommand.grade(), targetAccount);
-        updateName(updateCommand.name(), targetAccount);
-        updatePassword(updateCommand.resetAccountPassword(), targetAccount);
-        accountApplier.applyAccount(targetAccount);
+    private final AccountPolicyManager accountPolicyManager;
+    private final AccountLoader accountLoader;
+    private final PasswordHandler passwordHandler;
+
+    public void updateMember(final AccountUpdateCommand updateCommand) {
+        final Member member = loadMember(updateCommand.targetMemberId());
+
+        updatePhoneNumber(updateCommand.phoneNumber(), member);
+        updateName(updateCommand.name(), member);
+        updatePassword(updateCommand.prevPassword(), updateCommand.newPassword(), member);
+
+        accountPolicyManager.checkPolicy(member);
     }
 
-    private void updatePassword(final ResetAccountPassword resetAccountPassword, final Account account) {
-        if (resetAccountPassword == null) {
+    public void updateMember(final StudentUpdateCommand updateCommand) {
+        final Member member = loadMember(updateCommand.memberId());
+
+        updatePhoneNumber(updateCommand.phoneNumber(), member);
+        updateGrade(updateCommand.grade(), member);
+        updateName(updateCommand.name(), member);
+
+        accountPolicyManager.checkPolicy(member);
+    }
+
+    public void updateMember(final UpdateTeacherCommand updateCommand) {
+        final Member member = loadMember(updateCommand.memberId());
+
+        updatePhoneNumber(updateCommand.phoneNumber(), member);
+        updateName(updateCommand.name(), member);
+
+        accountPolicyManager.checkPolicy(member);
+    }
+
+    /**
+     * password가 passwordHandler 의존하도록 구성
+     *
+     * @param prevPassword 이전 비밀번호
+     * @param newPassword  새로 설정할 비밀번호
+     * @param account      수정할 계정
+     */
+    private void updatePassword(final Password prevPassword, final Password newPassword, final Member account) {
+        if (prevPassword.isMatch(account.getPassword(), passwordHandler)) {
+            account.setPassword(newPassword.getEncryptedPassword(passwordHandler));
             return;
         }
-        account.updatePassword(resetAccountPassword);
+        throw new AccountException("잘못된 비밀번호 입니다.", ErrorCode.ACCOUNT_POLICY);
     }
 
-    private void updateName(final AccountName accountName, final Account targetAccount) {
-        if (accountName != null) {
-            targetAccount.updateAccountName(accountName);
-        }
+    private void updateName(final String accountName, final Member targetAccount) {
+        targetAccount.setName(accountName);
     }
 
-    private void updateGrade(final AccountGrade accountGrade, final Account targetAccount) {
-        if (accountGrade != null) {
-            targetAccount.updateGrade(accountGrade);
-        }
+    private void updateGrade(final Integer accountGrade, final Member targetAccount) {
+        targetAccount.setGrade(accountGrade);
     }
 
-    private void updatePhoneNumber(final AccountPhoneNumber accountPhoneNumber, final Account targetAccount) {
-        if (accountPhoneNumber != null) {
-            targetAccount.setPhoneNumber(accountPhoneNumber);
-        }
+    private void updatePhoneNumber(final String accountPhoneNumber, final Member targetAccount) {
+        targetAccount.setPhoneNumber(accountPhoneNumber);
     }
 
     @Transactional(readOnly = true)
@@ -64,5 +92,10 @@ public class AccountUpdateService {
                 account.getAccountRole().getRole(),
                 account.getGrade() == null ? null : account.getGrade().getGrade()
         );
+    }
+
+    private Member loadMember(final Long targetMemberId) {
+        return memberRepository.findMemberByIdAndRemovedIsFalse(targetMemberId)
+                .orElseThrow(() -> new NoSuchMemberException("찾을 수 없습니다.", ErrorCode.NO_SUCH_MEMBER));
     }
 }

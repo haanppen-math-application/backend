@@ -5,17 +5,14 @@ import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.ChangedPassword;
 import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
 import com.hanpyeon.academyapi.account.dto.RegisterMemberCommand;
+import com.hanpyeon.academyapi.account.dto.StudentUpdateCommand;
+import com.hanpyeon.academyapi.account.dto.UpdateTeacherCommand;
 import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
-import com.hanpyeon.academyapi.account.model.AccountGrade;
-import com.hanpyeon.academyapi.account.model.AccountName;
-import com.hanpyeon.academyapi.account.model.AccountPassword;
-import com.hanpyeon.academyapi.account.model.AccountPhoneNumber;
-import com.hanpyeon.academyapi.account.service.Password;
-import com.hanpyeon.academyapi.account.model.ResetAccountPassword;
 import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
+import com.hanpyeon.academyapi.account.service.Password;
 import com.hanpyeon.academyapi.account.validation.GradeConstraint;
 import com.hanpyeon.academyapi.account.validation.NameConstraint;
 import com.hanpyeon.academyapi.account.validation.PhoneNumberConstraint;
@@ -56,7 +53,6 @@ public class AccountController {
     private final AccountUpdateService accountUpdateService;
     private final AccountRemoveService accountRemoveService;
     private final AccountPasswordRefreshService accountPasswordRefreshService;
-    private final PasswordHandler passwordHandler;
 
     @PostMapping("/password/verification")
     public ResponseEntity<?> authenticateForRefreshPassword(
@@ -131,11 +127,8 @@ public class AccountController {
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
             @RequestBody @Valid AccountUpdateRequest accountUpdateRequest
     ) {
-        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(
-                memberPrincipal.memberId(),
-                passwordHandler
-        );
-        accountUpdateService.updateAccount(accountUpdateCommand);
+        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(memberPrincipal.memberId());
+        accountUpdateService.updateMember(accountUpdateCommand);
         return ResponseEntity.ok().build();
     }
 
@@ -149,12 +142,13 @@ public class AccountController {
             @Valid
             Password newPassword
     ) {
-        AccountUpdateCommand toCommand(final Long targetMemberId, final PasswordHandler passwordHandler) {
-            return new AccountUpdateCommand(targetMemberId,
-                    AccountPhoneNumber.of(phoneNumber()),
-                    AccountName.of(name()),
-                    null,
-                    ResetAccountPassword.of(prevPassword, AccountPassword.createNew(newPassword, passwordHandler))
+        AccountUpdateCommand toCommand(final Long targetMemberId) {
+            return new AccountUpdateCommand(
+                    targetMemberId,
+                    phoneNumber(),
+                    name(),
+                    prevPassword(),
+                    newPassword()
             );
         }
     }
@@ -193,8 +187,8 @@ public class AccountController {
     public ResponseEntity<?> modifyStudent(
             @RequestBody @Valid ModifyStudentRequest modifyStudentRequest
     ) {
-        final AccountUpdateCommand updateCommand = modifyStudentRequest.toCommand();
-        accountUpdateService.updateAccount(updateCommand);
+        final StudentUpdateCommand studentUpdateCommand = modifyStudentRequest.toCommand();
+        accountUpdateService.updateMember(studentUpdateCommand);
         return ResponseEntity.ok(null);
     }
 
@@ -208,13 +202,13 @@ public class AccountController {
             @GradeConstraint
             Integer grade
     ) {
-        AccountUpdateCommand toCommand() {
-                return new AccountUpdateCommand(
+        StudentUpdateCommand toCommand() {
+            return new StudentUpdateCommand(
                         studentId(),
-                        AccountPhoneNumber.of(phoneNumber),
-                        AccountName.of(name),
-                        AccountGrade.of(grade),
-                        null);
+                    phoneNumber(),
+                    name(),
+                    grade()
+            );
             }
         }
 
@@ -225,8 +219,8 @@ public class AccountController {
     public ResponseEntity<?> modifyTeacher(
             @RequestBody @Valid ModifyTeacherRequest modifyTeacherRequest
     ) {
-        final AccountUpdateCommand accountUpdateCommand = modifyTeacherRequest.toCommand();
-        accountUpdateService.updateAccount(accountUpdateCommand);
+        final UpdateTeacherCommand updateTeacherCommand = modifyTeacherRequest.toCommand();
+        accountUpdateService.updateMember(updateTeacherCommand);
         return ResponseEntity.ok(null);
     }
 
@@ -238,13 +232,12 @@ public class AccountController {
             @PhoneNumberConstraint
             String phoneNumber
     ) {
-        AccountUpdateCommand toCommand() {
-            return new AccountUpdateCommand(
-                    targetId(),
-                    AccountPhoneNumber.of(phoneNumber),
-                    AccountName.of(name)
-                    , null,
-                    null);
+        UpdateTeacherCommand toCommand() {
+            return new UpdateTeacherCommand(
+                    targetId,
+                    name,
+                    phoneNumber
+            );
         }
     }
 }

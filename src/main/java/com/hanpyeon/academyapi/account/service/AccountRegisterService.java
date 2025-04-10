@@ -19,7 +19,7 @@ public class AccountRegisterService {
 
     @Transactional
     public void register(final RegisterMemberCommand registerMemberCommand) {
-        final String encryptedPassword = getEncryptedPassword(registerMemberCommand.password().getPassword());
+        final String encryptedPassword = getEncryptedPassword(registerMemberCommand.password().getRawPassword());
         final Member member = buildMember(registerMemberCommand, encryptedPassword);
 
         accountPolicyManager.checkPolicy(member);
