@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.account.controller;
 
 import com.hanpyeon.academyapi.account.dto.*;
-import com.hanpyeon.academyapi.account.service.QueryService;
+import com.hanpyeon.academyapi.account.service.MemberQueryService;
 import com.hanpyeon.academyapi.paging.CursorResponse;
 import com.hanpyeon.academyapi.paging.PagedResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/api/members")
 @RequiredArgsConstructor
 public class QueryMemberController {
-    private final QueryService queryService;
+    private final MemberQueryService queryService;
 
     @GetMapping("/teachers")
     @Operation(summary = "커서기반 선생 조회 API", description = "인증된 사용자면 모두 가능, \n" +

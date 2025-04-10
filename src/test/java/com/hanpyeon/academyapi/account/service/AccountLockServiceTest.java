@@ -1,7 +1,6 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.account.model.Account;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.security.Role;
 import java.time.LocalDateTime;
@@ -17,8 +16,6 @@ class AccountLockServiceTest {
     private MemberRepository memberRepository;
     @Autowired
     private AccountLockService accountLockService;
-    @Autowired
-    private AccountLoader accountLoader;
 
     @Test
     @Transactional
@@ -32,13 +29,12 @@ class AccountLockServiceTest {
         memberRepository.save(member);
 
         member.lock(LocalDateTime.of(2020, 1, 1, 0, 0));
-        final Account account = accountLoader.loadAccount(member.getId());
 
         LocalDateTime invalidTime = LocalDateTime.of(2020,1,1,0,5);
         LocalDateTime validTime = LocalDateTime.of(2020,1,1,0,6);
         Assertions.assertAll(
-                () -> Assertions.assertEquals(accountLockService.checkAllowedToLogin(account, invalidTime), false),
-                () -> Assertions.assertEquals(accountLockService.checkAllowedToLogin(account, validTime), true)
+                () -> Assertions.assertEquals(accountLockService.checkAllowedToLogin(member, invalidTime), false),
+                () -> Assertions.assertEquals(accountLockService.checkAllowedToLogin(member, validTime), true)
         );
     }
 }

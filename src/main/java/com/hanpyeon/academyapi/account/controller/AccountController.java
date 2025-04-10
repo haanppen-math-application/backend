@@ -13,7 +13,7 @@ import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
 import com.hanpyeon.academyapi.account.service.Password;
-import com.hanpyeon.academyapi.account.service.QueryService;
+import com.hanpyeon.academyapi.account.service.MemberQueryService;
 import com.hanpyeon.academyapi.account.validation.GradeConstraint;
 import com.hanpyeon.academyapi.account.validation.NameConstraint;
 import com.hanpyeon.academyapi.account.validation.PhoneNumberConstraint;
@@ -53,7 +53,7 @@ public class AccountController {
     private final AccountUpdateService accountUpdateService;
     private final AccountRemoveService accountRemoveService;
     private final AccountPasswordRefreshService accountPasswordRefreshService;
-    private final QueryService queryService;
+    private final MemberQueryService queryService;
 
     @PostMapping("/password/verification")
     public ResponseEntity<?> authenticateForRefreshPassword(

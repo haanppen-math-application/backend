@@ -19,7 +19,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class QueryService {
+public class MemberQueryService {
     private final MemberRepository memberRepository;
 
     public MyAccountInfo getMyInfo(final Long requestMemberId) {
