@@ -6,7 +6,9 @@ import com.hanpyeon.academyapi.board.controller.Requests.QuestionUpdateRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
-import com.hanpyeon.academyapi.board.service.question.QuestionService;
+import com.hanpyeon.academyapi.board.service.question.QuestionDeleteService;
+import com.hanpyeon.academyapi.board.service.question.QuestionRegisterService;
+import com.hanpyeon.academyapi.board.service.question.QuestionUpdateService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -28,7 +30,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/api/board/questions")
 @RequiredArgsConstructor
 public class QuestionController {
-    private final QuestionService questionService;
+    private final QuestionUpdateService questionUpdateService;
+    private final QuestionRegisterService questionRegisterService;
+    private final QuestionDeleteService questionDeleteService;
 
     @Operation(summary = "질문 등록 API", description = "질문을 등록하는 API 입니다")
     @SecurityRequirement(name = "jwtAuth")
@@ -38,7 +42,7 @@ public class QuestionController {
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         final QuestionRegisterCommand questionRegisterCommand = questionRegisterRequestDto.toCommand(memberPrincipal.memberId());
-        final Long createdQuestionId = questionService.addQuestion(questionRegisterCommand);
+        final Long createdQuestionId = questionRegisterService.addQuestion(questionRegisterCommand);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -58,7 +62,7 @@ public class QuestionController {
                 memberPrincipal.memberId(),
                 memberPrincipal.role()
         );
-        return ResponseEntity.ok(questionService.updateQuestion(questionUpdateCommand));
+        return ResponseEntity.ok(questionUpdateService.updateQuestion(questionUpdateCommand));
     }
 
     @Operation(summary = "질문 삭제 API", description = "작성된 질문은 선생님, 매니저 권한만 가능합니다")
@@ -72,7 +76,7 @@ public class QuestionController {
                 memberPrincipal.memberId(),
                 memberPrincipal.role()
         );
-        questionService.deleteQuestion(questionDeleteDto);
+        questionDeleteService.deleteQuestion(questionDeleteDto);
         return ResponseEntity.noContent().build();
     }
 }

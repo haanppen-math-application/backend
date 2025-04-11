@@ -1,7 +1,9 @@
 package com.hanpyeon.academyapi.board.service.question;
 
+import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
+import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateHandler;
 import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
@@ -12,12 +14,21 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Component
 @AllArgsConstructor
-public class QuestionUpdateManager {
+public class QuestionUpdateService {
     private final List<QuestionUpdateHandler> questionUpdateHandlers;
     private final QuestionValidateManager questionValidateManager;
+    private final QuestionRepository questionRepository;
+
+    @Transactional
+    public Long updateQuestion(@Validated final QuestionUpdateCommand questionUpdateDto) {
+        final Question targetQuestion = findQuestion(questionUpdateDto.questionId());
+        this.update(targetQuestion, questionUpdateDto);
+        return targetQuestion.getId();
+    }
 
     @Transactional(propagation = Propagation.MANDATORY)
     public void update(final Question targetQuestion, final QuestionUpdateCommand questionUpdateDto) {
@@ -34,5 +45,10 @@ public class QuestionUpdateManager {
         if (!requestMemberId.equals(ownedMemberId)) {
             throw new RequestDeniedException("본인 질문이 아닙니다", ErrorCode.DENIED_EXCEPTION);
         }
+    }
+
+    private Question findQuestion(final Long questionId) {
+        return questionRepository.findById(questionId)
+                .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
     }
 }

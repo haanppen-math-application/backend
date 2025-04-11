@@ -28,7 +28,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 @DataJpaTest
 class QuestionServiceTest {
     @Mock
-    QuestionUpdateManager questionUpdateManager;
+    QuestionUpdateService questionUpdateManager;
     @Mock
     QuestionRegisterService questionRegisterManger;
     @Mock
