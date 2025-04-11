@@ -46,47 +46,47 @@ public class MemberQueryService {
                 .toList();
     }
 
-    public Page<Responses.PreviewTeacherResponse> loadTeachers(final TeacherPageQueryCommand teacherPageQueryCommand) {
-        if (teacherPageQueryCommand.name() == null || teacherPageQueryCommand.name().isBlank()) {
-            return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER, teacherPageQueryCommand.pageable())
+    public Page<Responses.PreviewTeacherResponse> loadTeachers(final TeacherPageQuery teacherPageQuery) {
+        if (teacherPageQuery.name() == null || teacherPageQuery.name().isBlank()) {
+            return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER, teacherPageQuery.pageable())
                     .map(Responses.PreviewTeacherResponse::of);
         }
-        return memberRepository.findMembersByRoleAndNameContainingAndRemovedIsFalse(Role.TEACHER, teacherPageQueryCommand.name(), teacherPageQueryCommand.pageable())
+        return memberRepository.findMembersByRoleAndNameContainingAndRemovedIsFalse(Role.TEACHER, teacherPageQuery.name(), teacherPageQuery.pageable())
                 .map(Responses.PreviewTeacherResponse::of);
     }
 
     // 동적 쿼리 필요성 확인
-    public Page<Responses.PreviewStudentResponse> loadStudents(final StudentPageQueryCommand studentPageQueryCommand) {
+    public Page<Responses.PreviewStudentResponse> loadStudents(final StudentPageQuery studentPageQuery) {
         Page<Responses.MemberInfoResponse> members;
-        if (Objects.isNull(studentPageQueryCommand.name()) || studentPageQueryCommand.name().isBlank()) {
-            members = memberRepository.findMembersByRoleAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQueryCommand.startGrade(), studentPageQueryCommand.endGrade(), studentPageQueryCommand.pageable());
+        if (Objects.isNull(studentPageQuery.name()) || studentPageQuery.name().isBlank()) {
+            members = memberRepository.findMembersByRoleAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQuery.startGrade(), studentPageQuery.endGrade(), studentPageQuery.pageable());
         } else {
-            members = memberRepository.findMembersByRoleAndNameContainingAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQueryCommand.name(), studentPageQueryCommand.startGrade(), studentPageQueryCommand.endGrade(), studentPageQueryCommand.pageable());
+            members = memberRepository.findMembersByRoleAndNameContainingAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQuery.name(), studentPageQuery.startGrade(), studentPageQuery.endGrade(), studentPageQuery.pageable());
         }
         return members.map(Responses.PreviewStudentResponse::of);
     }
 
-    public CursorResponse<Responses.PreviewTeacherResponse> loadTeachers(final TeacherQueryCommand teacherQueryCommand) {
-        final Pageable pageable = Pageable.ofSize(teacherQueryCommand.pageSize());
+    public CursorResponse<Responses.PreviewTeacherResponse> loadTeachers(final TeacherQuery teacherQuery) {
+        final Pageable pageable = Pageable.ofSize(teacherQuery.pageSize());
         List<Responses.MemberInfoResponse> teacherEntities;
-        if (Objects.isNull(teacherQueryCommand.name())) {
-            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndRemovedIsFalse(teacherQueryCommand.cursorIndex(), Role.TEACHER, pageable);
+        if (Objects.isNull(teacherQuery.name())) {
+            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndRemovedIsFalse(teacherQuery.cursorIndex(), Role.TEACHER, pageable);
         } else {
-            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndNameContainingAndRemovedIsFalse(teacherQueryCommand.cursorIndex(), Role.TEACHER, pageable, teacherQueryCommand.name());
+            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndNameContainingAndRemovedIsFalse(teacherQuery.cursorIndex(), Role.TEACHER, pageable, teacherQuery.name());
         }
         final List<Responses.PreviewTeacherResponse> previewTeachers = teacherEntities.stream().map(
                 Responses.PreviewTeacherResponse::of).toList();
         return new CursorResponse<>(previewTeachers, getNextCursorIndex(teacherEntities));
     }
 
-    public CursorResponse<Responses.PreviewStudentResponse> loadStudents(final StudentQueryCommand studentQueryCommand) {
-        final Pageable pageable = getPageable(studentQueryCommand.pageSize());
+    public CursorResponse<Responses.PreviewStudentResponse> loadStudents(final StudentQuery studentQuery) {
+        final Pageable pageable = getPageable(studentQuery.pageSize());
 
         List<Responses.MemberInfoResponse> studentEntities;
-        if (Objects.isNull((studentQueryCommand.name()))) {
-            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndRemovedIsFalse(studentQueryCommand.cursorIndex(), Role.STUDENT, pageable, studentQueryCommand.startGrade(), studentQueryCommand.endGrade());
+        if (Objects.isNull((studentQuery.name()))) {
+            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndRemovedIsFalse(studentQuery.cursorIndex(), Role.STUDENT, pageable, studentQuery.startGrade(), studentQuery.endGrade());
         } else {
-            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndNameContainingAndRemovedIsFalse(studentQueryCommand.cursorIndex(), Role.STUDENT, pageable, studentQueryCommand.startGrade(), studentQueryCommand.endGrade(), studentQueryCommand.name());
+            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndNameContainingAndRemovedIsFalse(studentQuery.cursorIndex(), Role.STUDENT, pageable, studentQuery.startGrade(), studentQuery.endGrade(), studentQuery.name());
         }
         List<Responses.PreviewStudentResponse> previewStudents = studentEntities.stream().map(
                 Responses.PreviewStudentResponse::of).toList();

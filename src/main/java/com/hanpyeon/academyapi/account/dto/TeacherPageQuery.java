@@ -1,12 +1,9 @@
 package com.hanpyeon.academyapi.account.dto;
 
-
 import org.springframework.data.domain.Pageable;
 
-public record StudentPageQueryCommand(
+public record TeacherPageQuery(
         String name,
-        Integer startGrade,
-        Integer endGrade,
         Pageable pageable
 ) {
 }
