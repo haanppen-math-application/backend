@@ -1,8 +1,8 @@
 package com.hanpyeon.academyapi.board.service.question.access;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
-import com.hanpyeon.academyapi.board.dto.QuestionDetails;
-import com.hanpyeon.academyapi.board.dto.QuestionPreview;
+import com.hanpyeon.academyapi.board.controller.Responses.QuestionDetails;
+import com.hanpyeon.academyapi.board.controller.Responses.QuestionPreview;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import java.util.List;

@@ -4,9 +4,9 @@ import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.controller.Requests.QuestionDeleteRequest;
 import com.hanpyeon.academyapi.board.controller.Requests.QuestionRegisterRequest;
 import com.hanpyeon.academyapi.board.controller.Requests.QuestionUpdateRequest;
+import com.hanpyeon.academyapi.board.controller.Responses.QuestionDetails;
+import com.hanpyeon.academyapi.board.controller.Responses.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
-import com.hanpyeon.academyapi.board.dto.QuestionDetails;
-import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
@@ -17,7 +17,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.MediaType;
@@ -34,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 
 @RestController
 @RequestMapping("/api/board/questions")

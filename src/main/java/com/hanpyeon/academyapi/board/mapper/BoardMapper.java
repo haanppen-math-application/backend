@@ -1,10 +1,10 @@
 package com.hanpyeon.academyapi.board.mapper;
 
 import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.board.dto.CommentDetails;
-import com.hanpyeon.academyapi.board.dto.MemberDetails;
-import com.hanpyeon.academyapi.board.dto.QuestionDetails;
-import com.hanpyeon.academyapi.board.dto.QuestionPreview;
+import com.hanpyeon.academyapi.board.controller.Responses.CommentDetails;
+import com.hanpyeon.academyapi.board.controller.Responses.MemberDetails;
+import com.hanpyeon.academyapi.board.controller.Responses.QuestionDetails;
+import com.hanpyeon.academyapi.board.controller.Responses.QuestionPreview;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.media.MediaMapper;
