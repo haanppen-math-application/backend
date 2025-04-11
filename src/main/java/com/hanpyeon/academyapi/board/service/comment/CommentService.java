@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.board.service.comment;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.dao.CommentRepository;
-import com.hanpyeon.academyapi.board.controller.Requests.CommentDeleteRequest;
+import com.hanpyeon.academyapi.board.dto.CommentDeleteCommand;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterCommand;
 import com.hanpyeon.academyapi.board.dto.CommentUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Comment;
@@ -50,7 +50,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteComment(@Validated final CommentDeleteRequest commentDeleteDto) {
+    public void deleteComment(@Validated final CommentDeleteCommand commentDeleteDto) {
         final Comment comment = findComment(commentDeleteDto.commentId());
         validateOwnedMember(comment, commentDeleteDto.requestMemberId(), commentDeleteDto.role());
         comment.delete();

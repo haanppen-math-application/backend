@@ -1,15 +1,14 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
-import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.controller.Requests.QuestionDeleteRequest;
+import com.hanpyeon.academyapi.board.controller.Requests.QuestionRegisterRequest;
+import com.hanpyeon.academyapi.board.controller.Requests.QuestionUpdateRequest;
+import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
-import com.hanpyeon.academyapi.board.controller.Requests.QuestionRegisterRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
-import com.hanpyeon.academyapi.board.controller.Requests.QuestionUpdateRequest;
-import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.paging.PagedResponse;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -19,6 +18,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,21 +36,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
-@AllArgsConstructor
 @RestController
 @RequestMapping("/api/board/questions")
+@RequiredArgsConstructor
 public class QuestionController {
     private final QuestionService questionService;
-    private final BoardMapper boardMapper;
 
     @Operation(summary = "질문 등록 API", description = "질문을 등록하는 API 입니다")
     @SecurityRequirement(name = "jwtAuth")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addQuestion(
             @Valid @RequestBody final QuestionRegisterRequest questionRegisterRequestDto,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        QuestionRegisterCommand questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, memberPrincipal.memberId());
-        final Long createdQuestionId = questionService.addQuestion(questionRegisterDto);
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final QuestionRegisterCommand questionRegisterCommand = questionRegisterRequestDto.toCommand(memberPrincipal.memberId());
+        final Long createdQuestionId = questionService.addQuestion(questionRegisterCommand);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -63,7 +63,8 @@ public class QuestionController {
     @GetMapping("/{questionId}")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
-            @NotNull @PathVariable final Long questionId) {
+            @NotNull @PathVariable final Long questionId
+    ) {
         return ResponseEntity.ok(questionService.getSingleQuestionDetails(questionId));
     }
 
@@ -75,8 +76,12 @@ public class QuestionController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<PagedResponse<QuestionPreview>> getQuestionsWithPagination(
             @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
-            @RequestParam(required = false) final String title) {
-        return ResponseEntity.ok(questionService.loadQuestionsByOffset(entityFieldMappedPageRequest, title));
+            @RequestParam(required = false) final String title
+    ) {
+        return ResponseEntity.ok(questionService.loadQuestionsByOffset(
+                entityFieldMappedPageRequest,
+                title)
+        );
     }
 
     @Operation(summary = "나의 질문 조회")
@@ -87,7 +92,11 @@ public class QuestionController {
             @ParameterObject final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
             @RequestParam(required = false) final String title
     ) {
-        return ResponseEntity.ok(questionService.loadMyQuestionsByOffset(memberPrincipal.memberId(), entityFieldMappedPageRequest, title));
+        return ResponseEntity.ok(questionService.loadMyQuestionsByOffset(
+                memberPrincipal.memberId(),
+                entityFieldMappedPageRequest,
+                title)
+        );
     }
 
     @Operation(summary = "질문 수정 API", description = "질문 수정은 본인만 가능합니다")
@@ -97,8 +106,11 @@ public class QuestionController {
             @Valid @RequestBody final QuestionUpdateRequest questionUpdateRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final QuestionUpdateCommand questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
-        return ResponseEntity.ok(questionService.updateQuestion(questionUpdateDto));
+        final QuestionUpdateCommand questionUpdateCommand = questionUpdateRequestDto.toCommand(
+                memberPrincipal.memberId(),
+                memberPrincipal.role()
+        );
+        return ResponseEntity.ok(questionService.updateQuestion(questionUpdateCommand));
     }
 
     @Operation(summary = "질문 삭제 API", description = "작성된 질문은 선생님, 매니저 권한만 가능합니다")
@@ -108,7 +120,10 @@ public class QuestionController {
             @ModelAttribute @Valid final QuestionDeleteRequest questionDeleteRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final QuestionDeleteCommand questionDeleteDto = boardMapper.createQuestionDeleteDto(questionDeleteRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
+        final QuestionDeleteCommand questionDeleteDto = questionDeleteRequestDto.toCommand(
+                memberPrincipal.memberId(),
+                memberPrincipal.role()
+        );
         questionService.deleteQuestion(questionDeleteDto);
         return ResponseEntity.noContent().build();
     }

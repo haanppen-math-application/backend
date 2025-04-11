@@ -1,11 +1,10 @@
 package com.hanpyeon.academyapi.board.controller;
 
-import com.hanpyeon.academyapi.board.controller.Requests.CommentDeleteRequest;
-import com.hanpyeon.academyapi.board.dto.CommentRegisterCommand;
 import com.hanpyeon.academyapi.board.controller.Requests.CommentRegisterRequest;
-import com.hanpyeon.academyapi.board.dto.CommentUpdateCommand;
 import com.hanpyeon.academyapi.board.controller.Requests.CommentUpdateRequest;
-import com.hanpyeon.academyapi.board.mapper.BoardMapper;
+import com.hanpyeon.academyapi.board.dto.CommentDeleteCommand;
+import com.hanpyeon.academyapi.board.dto.CommentRegisterCommand;
+import com.hanpyeon.academyapi.board.dto.CommentUpdateCommand;
 import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,16 +29,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/api/board/comments")
 public class CommentController {
     private final CommentService commentService;
-    private final BoardMapper boardMapper;
 
     @Operation(summary = "댓글 등록 API", description = "질문 게시글에 댓글을 달 수 있도록 하는 API 입니다.")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> addComment(
-            @Valid @RequestBody CommentRegisterRequest commentRegisterRequestDto,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-
-        CommentRegisterCommand commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, memberPrincipal.memberId());
+            @Valid @RequestBody final CommentRegisterRequest commentRegisterRequest,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final CommentRegisterCommand commentRegisterDto = commentRegisterRequest.toCommand(memberPrincipal.memberId());
         final Long createdCommentId = commentService.addComment(commentRegisterDto);
 
         return ResponseEntity.created(
@@ -54,10 +52,13 @@ public class CommentController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateComment(
-            @Valid @RequestBody CommentUpdateRequest commentUpdateRequestDto,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        final CommentUpdateCommand commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
+            @Valid @RequestBody final CommentUpdateRequest commentUpdateRequest,
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final CommentUpdateCommand commentUpdateDto = commentUpdateRequest.toCommand(memberPrincipal.memberId(),
+                memberPrincipal.role());
         commentService.updateComment(commentUpdateDto);
+
         return ResponseEntity.ok().build();
     }
 
@@ -66,9 +67,12 @@ public class CommentController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> deleteComment(
             @NotNull @PathVariable final Long commentId,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        CommentDeleteRequest commentDeleteDto = boardMapper.createCommentDeleteDto(commentId, memberPrincipal.memberId(), memberPrincipal.role());
+            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+    ) {
+        final CommentDeleteCommand commentDeleteDto = new CommentDeleteCommand(commentId, memberPrincipal.memberId(),
+                memberPrincipal.role());
         commentService.deleteComment(commentDeleteDto);
+
         return ResponseEntity.noContent().build();
     }
 }
