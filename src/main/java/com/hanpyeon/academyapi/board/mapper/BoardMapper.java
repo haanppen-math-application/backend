@@ -1,21 +1,21 @@
 package com.hanpyeon.academyapi.board.mapper;
 
 import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.board.dto.CommentDeleteDto;
+import com.hanpyeon.academyapi.board.controller.Requests.CommentDeleteRequest;
 import com.hanpyeon.academyapi.board.dto.CommentDetails;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
-import com.hanpyeon.academyapi.board.dto.CommentRegisterRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.CommentRegisterRequest;
 import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
-import com.hanpyeon.academyapi.board.dto.CommentUpdateRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.CommentUpdateRequest;
 import com.hanpyeon.academyapi.board.dto.MemberDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteDto;
-import com.hanpyeon.academyapi.board.dto.QuestionDeleteRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.QuestionDeleteRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.QuestionRegisterRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
-import com.hanpyeon.academyapi.board.dto.QuestionUpdateRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.QuestionUpdateRequest;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.media.MediaMapper;
@@ -32,7 +32,7 @@ public class BoardMapper {
 
     private final MediaMapper mediaMapper;
 
-    public QuestionRegisterDto createRegisterDto(final QuestionRegisterRequestDto questionRegisterRequestDto, final Long userId) {
+    public QuestionRegisterDto createRegisterDto(final QuestionRegisterRequest questionRegisterRequestDto, final Long userId) {
         return QuestionRegisterDto.builder()
                 .title(questionRegisterRequestDto.title())
                 .content(questionRegisterRequestDto.content())
@@ -117,7 +117,7 @@ public class BoardMapper {
                 .content(content)
                 .build();
     }
-    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequestDto commentUpdateRequestDto, final Long requestMemberId, final Role role) {
+    public CommentUpdateDto createCommentUpdateDto(final CommentUpdateRequest commentUpdateRequestDto, final Long requestMemberId, final Role role) {
         return CommentUpdateDto.builder()
                 .commentId(commentUpdateRequestDto.commentId())
                 .content(commentUpdateRequestDto.content())
@@ -127,7 +127,7 @@ public class BoardMapper {
                 .build();
     }
 
-    public CommentRegisterDto createCommentRegisterDto(final CommentRegisterRequestDto registerRequestDto, final Long memberId) {
+    public CommentRegisterDto createCommentRegisterDto(final CommentRegisterRequest registerRequestDto, final Long memberId) {
         return CommentRegisterDto.builder()
                 .questionId(registerRequestDto.questionId())
                 .content(registerRequestDto.content())
@@ -136,14 +136,14 @@ public class BoardMapper {
                 .build();
     }
 
-    public CommentDeleteDto createCommentDeleteDto(final Long commentId, final Long requestMemberId, final Role role) {
-        return CommentDeleteDto.builder()
+    public CommentDeleteRequest createCommentDeleteDto(final Long commentId, final Long requestMemberId, final Role role) {
+        return CommentDeleteRequest.builder()
                 .requestMemberId(requestMemberId)
                 .commentId(commentId)
                 .role(role)
                 .build();
     }
-    public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequestDto questionUpdateRequestDto, final Long requestMemberId, final Role memberRole) {
+    public QuestionUpdateDto createQuestionUpdateDto(final QuestionUpdateRequest questionUpdateRequestDto, final Long requestMemberId, final Role memberRole) {
         return QuestionUpdateDto.builder()
                 .memberRole(memberRole)
                 .title(questionUpdateRequestDto.title())
@@ -155,7 +155,7 @@ public class BoardMapper {
                 .build();
     }
 
-    public QuestionDeleteDto createQuestionDeleteDto(final QuestionDeleteRequestDto questionDeleteRequestDto, final Long requestMemberId, final Role role) {
+    public QuestionDeleteDto createQuestionDeleteDto(final QuestionDeleteRequest questionDeleteRequestDto, final Long requestMemberId, final Role role) {
         return new QuestionDeleteDto(questionDeleteRequestDto.questionId(), role, requestMemberId);
     }
 }

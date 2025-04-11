@@ -2,13 +2,13 @@ package com.hanpyeon.academyapi.board.controller;
 
 import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteDto;
-import com.hanpyeon.academyapi.board.dto.QuestionDeleteRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.QuestionDeleteRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionPreview;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.QuestionRegisterRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
-import com.hanpyeon.academyapi.board.dto.QuestionUpdateRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.QuestionUpdateRequest;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.paging.PagedResponse;
@@ -47,7 +47,7 @@ public class QuestionController {
     @SecurityRequirement(name = "jwtAuth")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addQuestion(
-            @Valid @RequestBody final QuestionRegisterRequestDto questionRegisterRequestDto,
+            @Valid @RequestBody final QuestionRegisterRequest questionRegisterRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
         QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, memberPrincipal.memberId());
         final Long createdQuestionId = questionService.addQuestion(questionRegisterDto);
@@ -94,7 +94,7 @@ public class QuestionController {
     @SecurityRequirement(name = "jwtAuth")
     @PutMapping
     public ResponseEntity<?> updateQuestion(
-            @Valid @RequestBody final QuestionUpdateRequestDto questionUpdateRequestDto,
+            @Valid @RequestBody final QuestionUpdateRequest questionUpdateRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
@@ -105,7 +105,7 @@ public class QuestionController {
     @SecurityRequirement(name = "jwtAuth")
     @DeleteMapping("/{questionId}")
     public ResponseEntity<?> deleteQuestion(
-            @ModelAttribute @Valid final QuestionDeleteRequestDto questionDeleteRequestDto,
+            @ModelAttribute @Valid final QuestionDeleteRequest questionDeleteRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         final QuestionDeleteDto questionDeleteDto = boardMapper.createQuestionDeleteDto(questionDeleteRequestDto, memberPrincipal.memberId(), memberPrincipal.role());

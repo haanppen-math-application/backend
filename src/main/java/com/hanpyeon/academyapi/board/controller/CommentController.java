@@ -1,10 +1,10 @@
 package com.hanpyeon.academyapi.board.controller;
 
-import com.hanpyeon.academyapi.board.dto.CommentDeleteDto;
+import com.hanpyeon.academyapi.board.controller.Requests.CommentDeleteRequest;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
-import com.hanpyeon.academyapi.board.dto.CommentRegisterRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.CommentRegisterRequest;
 import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
-import com.hanpyeon.academyapi.board.dto.CommentUpdateRequestDto;
+import com.hanpyeon.academyapi.board.controller.Requests.CommentUpdateRequest;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -36,7 +36,7 @@ public class CommentController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> addComment(
-            @Valid @RequestBody CommentRegisterRequestDto commentRegisterRequestDto,
+            @Valid @RequestBody CommentRegisterRequest commentRegisterRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
 
         CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, memberPrincipal.memberId());
@@ -54,7 +54,7 @@ public class CommentController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateComment(
-            @Valid @RequestBody CommentUpdateRequestDto commentUpdateRequestDto,
+            @Valid @RequestBody CommentUpdateRequest commentUpdateRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         commentService.updateComment(commentUpdateDto);
@@ -67,7 +67,7 @@ public class CommentController {
     public ResponseEntity<?> deleteComment(
             @NotNull @PathVariable final Long commentId,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        CommentDeleteDto commentDeleteDto = boardMapper.createCommentDeleteDto(commentId, memberPrincipal.memberId(), memberPrincipal.role());
+        CommentDeleteRequest commentDeleteDto = boardMapper.createCommentDeleteDto(commentId, memberPrincipal.memberId(), memberPrincipal.role());
         commentService.deleteComment(commentDeleteDto);
         return ResponseEntity.noContent().build();
     }
