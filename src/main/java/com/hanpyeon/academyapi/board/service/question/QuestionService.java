@@ -1,19 +1,15 @@
 package com.hanpyeon.academyapi.board.service.question;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
-import com.hanpyeon.academyapi.board.dao.QuestionRepository;
-import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.controller.Responses.QuestionDetails;
 import com.hanpyeon.academyapi.board.controller.Responses.QuestionPreview;
+import com.hanpyeon.academyapi.board.dao.QuestionRepository;
+import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
-import com.hanpyeon.academyapi.board.service.question.access.QuestionAccessManager;
-import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
-import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;
-import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.paging.PagedResponse;
@@ -22,18 +18,18 @@ import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-@Component
+@Service
 @AllArgsConstructor
 @Transactional
 public class QuestionService {
-    private final QuestionRegisterManger questionRegisterManager;
+    private final QuestionRegisterService questionRegisterService;
     private final QuestionUpdateManager questionUpdateManager;
-    private final QuestionDeleteManager questionDeleteManager;
-    private final QuestionAccessManager questionAccessManager;
+    private final QuestionDeleteService questionDeleteManager;
+    private final QuestionQueryService questionAccessManager;
     private final BoardMapper boardMapper;
 
     private final QuestionRepository questionRepository;
@@ -41,7 +37,7 @@ public class QuestionService {
     @Transactional
     @WarnLoggable
     public Long addQuestion(@Validated final QuestionRegisterCommand questionRegisterDto) {
-        final Question question = questionRegisterManager.register(questionRegisterDto);
+        final Question question = questionRegisterService.register(questionRegisterDto);
         return questionRepository.save(question).getId();
     }
 

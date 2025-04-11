@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service.question.register;
+package com.hanpyeon.academyapi.board.service.question;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.board.dao.MemberManager;
@@ -11,12 +11,12 @@ import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Service
 @AllArgsConstructor
-public class QuestionRegisterManger {
+public class QuestionRegisterService {
     private final QuestionValidateManager questionValidateManager;
     private final MemberManager memberManager;
     private final ImageService imageService;

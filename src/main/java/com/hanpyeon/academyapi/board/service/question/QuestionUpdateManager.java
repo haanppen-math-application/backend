@@ -1,8 +1,9 @@
-package com.hanpyeon.academyapi.board.service.question.update;
+package com.hanpyeon.academyapi.board.service.question;
 
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
+import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateHandler;
 import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;

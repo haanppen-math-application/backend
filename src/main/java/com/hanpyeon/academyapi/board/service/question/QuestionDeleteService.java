@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service.question.delete;
+package com.hanpyeon.academyapi.board.service.question;
 
 import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.dao.MemberManager;
@@ -9,13 +9,12 @@ import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.security.Role;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Service
 @AllArgsConstructor
-public class QuestionDeleteManager {
-
+public class QuestionDeleteService {
     private final MemberManager memberManager;
     private final CommentRepository commentRepository;
     private final ImageService imageService;

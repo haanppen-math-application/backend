@@ -5,7 +5,7 @@ import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
 
 @WarnLoggable
-abstract class QuestionUpdateHandler {
+public abstract class QuestionUpdateHandler {
     abstract boolean applicable(QuestionUpdateCommand questionUpdateDto);
 
     abstract void process(Question question, QuestionUpdateCommand questionUpdateDto);

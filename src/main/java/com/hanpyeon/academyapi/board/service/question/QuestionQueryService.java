@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service.question.access;
+package com.hanpyeon.academyapi.board.service.question;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.controller.Responses.QuestionDetails;
@@ -7,13 +7,12 @@ import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Service
 @AllArgsConstructor
-public class QuestionAccessManager {
-
+public class QuestionQueryService {
     private final BoardMapper boardMapper;
 
     public List<QuestionPreview> mapToPreview(final List<Question> questions) {

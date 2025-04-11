@@ -6,9 +6,6 @@ import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
-import com.hanpyeon.academyapi.board.service.question.access.QuestionAccessManager;
-import com.hanpyeon.academyapi.board.service.question.delete.QuestionDeleteManager;
-import com.hanpyeon.academyapi.board.service.question.register.QuestionRegisterManger;
 import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.Validation;
@@ -34,11 +31,11 @@ class QuestionServiceTest {
     @Mock
     QuestionUpdateManager questionUpdateManager;
     @Mock
-    QuestionRegisterManger questionRegisterManger;
+    QuestionRegisterService questionRegisterManger;
     @Mock
-    QuestionAccessManager questionAccessManager;
+    QuestionQueryService questionAccessManager;
     @Mock
-    QuestionDeleteManager questionDeleteManager;
+    QuestionDeleteService questionDeleteManager;
     @Mock
     QuestionRepository questionRepository;
 
