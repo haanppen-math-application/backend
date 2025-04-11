@@ -1,13 +1,12 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.ChangedPassword;
-import com.hanpyeon.academyapi.account.dto.SendValidationCodeCommand;
 import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
-import com.hanpyeon.academyapi.account.service.sms.Message;
-import com.hanpyeon.academyapi.account.service.sms.MessageSender;
+import com.hanpyeon.academyapi.sms.Message;
+import com.hanpyeon.academyapi.sms.MessageSender;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import java.time.Duration;

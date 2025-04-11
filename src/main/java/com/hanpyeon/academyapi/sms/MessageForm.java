@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.account.service.sms;
+package com.hanpyeon.academyapi.sms;
 
 class MessageForm {
     private final String contentPrefix = "[한편의 수학]";

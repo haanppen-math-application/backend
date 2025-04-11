@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.account.service.sms;
+package com.hanpyeon.academyapi.sms;
 
 public interface MessageSender {
     void sendMessage(final Message message);

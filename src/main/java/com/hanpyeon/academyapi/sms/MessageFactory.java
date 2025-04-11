@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.account.service.sms;
+package com.hanpyeon.academyapi.sms;
 
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;

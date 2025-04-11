@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.account.service.sms;
+package com.hanpyeon.academyapi.sms;
 
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.service.DefaultMessageService;
