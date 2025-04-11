@@ -8,13 +8,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.board.controller.Responses.QuestionDetails;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
+import com.hanpyeon.academyapi.board.service.question.QuestionDeleteService;
 import com.hanpyeon.academyapi.board.service.question.QuestionQueryService;
-import com.hanpyeon.academyapi.board.service.question.QuestionService;
+import com.hanpyeon.academyapi.board.service.question.QuestionRegisterService;
+import com.hanpyeon.academyapi.board.service.question.QuestionUpdateService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -38,9 +41,13 @@ class QuestionControllerTest {
     @MockBean
     BoardMapper boardMapper;
     @MockBean
-    QuestionService questionService;
-    @MockBean
     QuestionQueryService questionQueryService;
+    @MockBean
+    QuestionUpdateService questionUpdateService;
+    @MockBean
+    QuestionDeleteService questionDeleteService;
+    @MockBean
+    QuestionRegisterService questionRegisterService;
 
     // targetMemberId가 null 일 수 있도록 요구사항 변경됨에 따라 테스트 안함
     void 질문_등록시_targetMemberId_없음_에러_테스트() throws Exception {

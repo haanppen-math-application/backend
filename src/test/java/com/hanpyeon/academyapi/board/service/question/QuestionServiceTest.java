@@ -41,9 +41,6 @@ class QuestionServiceTest {
     @Autowired
     TestEntityManager testEntityManager;
 
-    @InjectMocks
-    QuestionService questionService;
-
     Validator validator;
 
     @BeforeEach

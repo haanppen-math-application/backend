@@ -30,7 +30,7 @@ public class QuestionQueryController {
     @GetMapping("/{questionId}")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
-            @NotNull @PathVariable final Long questionId
+            @PathVariable final Long questionId
     ) {
         return ResponseEntity.ok(questionQueryService.getSingleQuestionDetails(questionId));
     }
