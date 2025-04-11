@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.account.service.sms.Message;
 import com.hanpyeon.academyapi.account.service.sms.MessageSender;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.PasswordHandler;
@@ -36,8 +37,12 @@ public class AccountPasswordRefreshService {
         }
         final String verificationCode = generateVerificationCode();
         member.setVerificationCode(verificationCode);
-        messageSender.sendValidationCode(new SendValidationCodeCommand(member.getPhoneNumber(), verificationCode,
-                member.getVerifyMessageSendCount(), maxVerifyMessageSendCount, validMinute));
+
+        messageSender.sendMessage(new Message(member.getPhoneNumber(),
+                "인증번호 : [" + verificationCode + "]\n"
+                        + " 현재 시도 횟수 : " + member.getLoginTryCount() + "/" + maxVerifyMessageSendCount + "\n"
+                        + " 남은 입력 시간 : " + validMinute + "\n")
+        );
     }
 
     @Transactional

@@ -1,7 +1,5 @@
 package com.hanpyeon.academyapi.account.service.sms;
 
-import com.hanpyeon.academyapi.account.dto.SendPasswordCommand;
-import com.hanpyeon.academyapi.account.dto.SendValidationCodeCommand;
 import lombok.RequiredArgsConstructor;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.service.DefaultMessageService;
@@ -15,9 +13,9 @@ class CoolMessageSender implements MessageSender {
     private final MessageFactory messageFactory;
 
     @Override
-    public void sendValidationCode(SendValidationCodeCommand sendValidationCodeCommand) {
-        final MessageContent messageForm = new MessageContent("인증번호 : " + sendValidationCodeCommand.getValidationCode() + "\n" + " 현재 시도 횟수 : " + sendValidationCodeCommand.getCurrTryCount() + "/" + sendValidationCodeCommand.getMaxTryCount() + " :)");
-        final SingleMessageSendingRequest singleMessageSendingRequest = messageFactory.getMessage(sendValidationCodeCommand.getTargetPhoneNumber(), messageForm);
-        defaultMessageService.sendOne(singleMessageSendingRequest);
+    public void sendMessage(final Message message) {
+        final MessageForm messageContent = new MessageForm(message.getContent());
+        final SingleMessageSendingRequest request = messageFactory.getMessage(message.getTargetPhoneNumber(), messageContent);
+        defaultMessageService.sendOne(request);
     }
 }

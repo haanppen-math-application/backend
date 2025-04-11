@@ -14,11 +14,11 @@ class MessageFactory {
         this.sender = sender;
     }
 
-    SingleMessageSendingRequest getMessage(final String targetPhoneNumber, final MessageContent messageForm) {
+    SingleMessageSendingRequest getMessage(final String targetPhoneNumber, final MessageForm messageForm) {
         final Message message = new Message();
         message.setFrom(sender);
         message.setTo(targetPhoneNumber);
-        message.setText(messageForm.toString());
+        message.setText(messageForm.getTotalMessage());
         return new SingleMessageSendingRequest(message);
     }
 }
