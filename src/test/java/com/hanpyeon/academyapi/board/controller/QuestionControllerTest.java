@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.board.controller.Responses.QuestionDetails;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
+import com.hanpyeon.academyapi.board.service.question.QuestionQueryService;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
@@ -24,7 +25,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-@WebMvcTest(controllers = QuestionController.class,
+@WebMvcTest(controllers = {QuestionController.class, QuestionQueryController.class},
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class, JwtAuthenticationFilter.class})
@@ -38,6 +39,8 @@ class QuestionControllerTest {
     BoardMapper boardMapper;
     @MockBean
     QuestionService questionService;
+    @MockBean
+    QuestionQueryService questionQueryService;
 
     // targetMemberId가 null 일 수 있도록 요구사항 변경됨에 따라 테스트 안함
     void 질문_등록시_targetMemberId_없음_에러_테스트() throws Exception {
@@ -48,7 +51,7 @@ class QuestionControllerTest {
 
     @Test
     void 질문조회성공테스트() throws Exception {
-        Mockito.when(questionService.getSingleQuestionDetails(Mockito.any()))
+        Mockito.when(questionQueryService.getSingleQuestionDetails(Mockito.any()))
                 .thenReturn(Mockito.mock(QuestionDetails.class));
         mockMvc.perform(get("/api/board/questions/12"))
                 .andExpect(status().isOk())

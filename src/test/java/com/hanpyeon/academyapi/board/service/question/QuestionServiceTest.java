@@ -6,7 +6,6 @@ import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
-import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManager;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

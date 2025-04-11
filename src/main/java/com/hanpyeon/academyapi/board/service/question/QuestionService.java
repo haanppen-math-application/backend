@@ -1,23 +1,16 @@
 package com.hanpyeon.academyapi.board.service.question;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
-import com.hanpyeon.academyapi.board.controller.Responses.QuestionDetails;
-import com.hanpyeon.academyapi.board.controller.Responses.QuestionPreview;
 import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
-import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import com.hanpyeon.academyapi.paging.PagedResponse;
 import com.hanpyeon.academyapi.security.Role;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -29,8 +22,6 @@ public class QuestionService {
     private final QuestionRegisterService questionRegisterService;
     private final QuestionUpdateManager questionUpdateManager;
     private final QuestionDeleteService questionDeleteManager;
-    private final QuestionQueryService questionAccessManager;
-    private final BoardMapper boardMapper;
 
     private final QuestionRepository questionRepository;
 
@@ -39,34 +30,6 @@ public class QuestionService {
     public Long addQuestion(@Validated final QuestionRegisterCommand questionRegisterDto) {
         final Question question = questionRegisterService.register(questionRegisterDto);
         return questionRepository.save(question).getId();
-    }
-
-    @WarnLoggable
-    public QuestionDetails getSingleQuestionDetails(final Long questionId) {
-        final Question question = findQuestion(questionId);
-        return questionAccessManager.getSingle(question);
-    }
-
-    @Transactional(readOnly = true)
-    public PagedResponse<QuestionPreview> loadQuestionsByOffset(final Pageable pageable, final String title) {
-        Page<Question> questions;
-        if (Objects.isNull(title) || title.isBlank()) {
-            questions = questionRepository.findAllBy(pageable);
-        }else {
-            questions = questionRepository.findAllByTitleContaining(title, pageable);
-        }
-        return PagedResponse.of(questions.map(question -> boardMapper.createQuestionPreview(question)));
-    }
-
-    @Transactional(readOnly = true)
-    public PagedResponse<QuestionPreview> loadMyQuestionsByOffset(final Long memberId, final Pageable pageable, final String title) {
-        Page<Question> questions;
-        if (Objects.isNull(title) || title.isBlank()) {
-            questions = questionRepository.findQuestionsByOwnerMemberId(memberId, pageable);
-        } else {
-            questions = questionRepository.findQuestionsByOwnerMemberIdAndTitleContaining(memberId, title, pageable);
-        }
-        return PagedResponse.of(questions.map(question -> boardMapper.createQuestionPreview(question)));
     }
 
     @Transactional
