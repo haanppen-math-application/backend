@@ -1,5 +1,13 @@
 package com.hanpyeon.academyapi.account.controller;
 
+import static com.hanpyeon.academyapi.account.controller.Requests.AccountRemoveRequest;
+import static com.hanpyeon.academyapi.account.controller.Requests.AccountUpdateRequest;
+import static com.hanpyeon.academyapi.account.controller.Requests.CheckVerificationCodeRequest;
+import static com.hanpyeon.academyapi.account.controller.Requests.ModifyStudentRequest;
+import static com.hanpyeon.academyapi.account.controller.Requests.ModifyTeacherRequest;
+import static com.hanpyeon.academyapi.account.controller.Requests.RegisterMemberRequest;
+
+import com.hanpyeon.academyapi.account.controller.Responses.ChangedPasswordResponse;
 import com.hanpyeon.academyapi.account.dto.AccountRemoveCommand;
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.ChangedPassword;
@@ -12,27 +20,16 @@ import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
-import com.hanpyeon.academyapi.account.service.Password;
 import com.hanpyeon.academyapi.account.service.MemberQueryService;
-import com.hanpyeon.academyapi.account.validation.GradeConstraint;
-import com.hanpyeon.academyapi.account.validation.NameConstraint;
-import com.hanpyeon.academyapi.account.validation.PhoneNumberConstraint;
-import com.hanpyeon.academyapi.account.validation.RoleConstraint;
-import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,22 +69,6 @@ public class AccountController {
         return ResponseEntity.ok(new ChangedPasswordResponse(changedPassword.phoneNumber(), changedPassword.changedPassword()));
     }
 
-    record CheckVerificationCodeRequest(
-            @PhoneNumberConstraint
-            String phoneNumber,
-            @NotNull
-            String verificationCode
-    ) {
-    }
-
-    record ChangedPasswordResponse(
-            @PhoneNumberConstraint
-            String phoneNumber,
-            @Valid
-            Password changedPassword
-    ) {
-    }
-
     @PostMapping
     @Operation(summary = "계정 등록", description = "어플리케이션에 계정을 등록하기 위한 API 입니다 ")
     @ApiResponse(responseCode = "201", description = "계정 생성 성공")
@@ -98,26 +79,6 @@ public class AccountController {
         final RegisterMemberCommand registerMemberCommand = registerMemberRequest.toCommand();
         accountRegisterService.register(registerMemberCommand);
         return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    record RegisterMemberRequest(
-            @NameConstraint
-            String name,
-            @Schema(description = "학년 정보 ( 0 ~ 11 )", example = "11")
-            @GradeConstraint
-            Integer grade,
-            @Schema(description = "전화번호", example = "01000000000")
-            @PhoneNumberConstraint
-            String phoneNumber,
-            @Schema(description = "등록 유형 ( student, teacher 중 택 1 )", example = "student")
-            @RoleConstraint
-            Role role,
-            @Valid
-            Password password
-    ) {
-        RegisterMemberCommand toCommand() {
-            return new RegisterMemberCommand(name(), grade(), phoneNumber(), role(), password());
-        }
     }
 
     @PatchMapping(value = "/my", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -131,27 +92,6 @@ public class AccountController {
         final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(memberPrincipal.memberId());
         accountUpdateService.updateMember(accountUpdateCommand);
         return ResponseEntity.ok().build();
-    }
-
-    public record AccountUpdateRequest(
-            @PhoneNumberConstraint
-            String phoneNumber,
-            @NameConstraint
-            String name,
-            @Valid
-            Password prevPassword,
-            @Valid
-            Password newPassword
-    ) {
-        AccountUpdateCommand toCommand(final Long targetMemberId) {
-            return new AccountUpdateCommand(
-                    targetMemberId,
-                    phoneNumber(),
-                    name(),
-                    prevPassword(),
-                    newPassword()
-            );
-        }
     }
 
     @GetMapping(value = "/my")
@@ -172,16 +112,6 @@ public class AccountController {
         return ResponseEntity.ok(null);
     }
 
-    record AccountRemoveRequest(
-            @NonNull
-            @Size(min = 1, max = 50)
-            List<Long> targetIds
-    ) {
-        AccountRemoveCommand toCommand() {
-            return new AccountRemoveCommand(targetIds());
-        }
-    }
-
     @PutMapping("/student")
     @Operation(summary = "학생 수정 API", description = "선생님, 원장님이 학생 정보를 수정하는 API")
     @SecurityRequirement(name = "jwtAuth")
@@ -193,27 +123,6 @@ public class AccountController {
         return ResponseEntity.ok(null);
     }
 
-    public record ModifyStudentRequest(
-            @NotNull
-            Long studentId,
-            @NameConstraint
-            String name,
-            @PhoneNumberConstraint
-            String phoneNumber,
-            @GradeConstraint
-            Integer grade
-    ) {
-        StudentUpdateCommand toCommand() {
-            return new StudentUpdateCommand(
-                        studentId(),
-                    phoneNumber(),
-                    name(),
-                    grade()
-            );
-            }
-        }
-
-
     @PutMapping("/teacher")
     @Operation(summary = "선생 수정 API", description = "원장님만 사용가능한 API")
     @SecurityRequirement(name = "jwtAuth")
@@ -223,22 +132,5 @@ public class AccountController {
         final UpdateTeacherCommand updateTeacherCommand = modifyTeacherRequest.toCommand();
         accountUpdateService.updateMember(updateTeacherCommand);
         return ResponseEntity.ok(null);
-    }
-
-    public record ModifyTeacherRequest(
-            @NotNull
-            Long targetId,
-            @NameConstraint
-            String name,
-            @PhoneNumberConstraint
-            String phoneNumber
-    ) {
-        UpdateTeacherCommand toCommand() {
-            return new UpdateTeacherCommand(
-                    targetId,
-                    name,
-                    phoneNumber
-            );
-        }
     }
 }
