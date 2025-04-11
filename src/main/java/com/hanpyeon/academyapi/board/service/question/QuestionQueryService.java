@@ -18,19 +18,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class QuestionQueryService {
     private final BoardMapper boardMapper;
 
     private final QuestionRepository questionRepository;
 
     @WarnLoggable
+    @Transactional(readOnly = false)
     public QuestionDetails getSingleQuestionDetails(final Long questionId) {
         final Question question = findQuestion(questionId);
         question.addViewCount();
         return boardMapper.createQuestionDetails(question);
     }
 
-    @Transactional(readOnly = true)
     public PagedResponse<QuestionPreview> loadQuestionsByOffset(final Pageable pageable, final String title) {
         Page<Question> questions;
         if (Objects.isNull(title) || title.isBlank()) {
@@ -41,7 +42,6 @@ public class QuestionQueryService {
         return PagedResponse.of(questions.map(question -> boardMapper.createQuestionPreview(question)));
     }
 
-    @Transactional(readOnly = true)
     public PagedResponse<QuestionPreview> loadMyQuestionsByOffset(
             final Long memberId,
             final Pageable pageable,

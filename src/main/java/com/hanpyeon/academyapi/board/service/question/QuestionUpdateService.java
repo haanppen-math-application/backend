@@ -9,6 +9,7 @@ import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateHandl
 import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,13 +18,14 @@ import org.springframework.validation.annotation.Validated;
 
 @Component
 @AllArgsConstructor
+@Validated
 public class QuestionUpdateService {
     private final List<QuestionUpdateHandler> questionUpdateHandlers;
     private final QuestionValidateManager questionValidateManager;
     private final QuestionRepository questionRepository;
 
     @Transactional
-    public Long updateQuestion(@Validated final QuestionUpdateCommand questionUpdateDto) {
+    public Long updateQuestion(@Valid final QuestionUpdateCommand questionUpdateDto) {
         final Question targetQuestion = findQuestion(questionUpdateDto.questionId());
         verifyAccess(targetQuestion.getOwnerMember().getId(), questionUpdateDto.requestMemberId(), questionUpdateDto.memberRole());
         questionUpdateHandlers.stream()

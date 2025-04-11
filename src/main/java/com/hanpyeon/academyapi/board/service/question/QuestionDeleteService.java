@@ -11,14 +11,17 @@ import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.security.Role;
+import jakarta.validation.Valid;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
-@AllArgsConstructor
+@Validated
+@RequiredArgsConstructor
 public class QuestionDeleteService {
     private final QuestionRepository questionRepository;
     private final MemberManager memberManager;
@@ -26,7 +29,7 @@ public class QuestionDeleteService {
     private final ImageService imageService;
 
     @Transactional
-    public void deleteQuestion(@Validated final QuestionDeleteCommand questionDeleteDto) {
+    public void deleteQuestion(@Valid final QuestionDeleteCommand questionDeleteDto) {
         final Question question = findQuestion(questionDeleteDto.questionId());
         hasPermission(questionDeleteDto.requestMemberId(), question.getOwnerMember().getId());
         question.getComments().stream()
