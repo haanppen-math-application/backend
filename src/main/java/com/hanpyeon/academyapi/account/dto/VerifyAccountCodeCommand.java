@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.account.dto;
 
-public record VerifyAccountCode (
+public record VerifyAccountCodeCommand(
         String phoneNumber,
         String verificationCode
 ){

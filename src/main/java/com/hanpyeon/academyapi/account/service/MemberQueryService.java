@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.account.service;
 
+import com.hanpyeon.academyapi.account.controller.Responses;
 import com.hanpyeon.academyapi.account.dto.*;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
@@ -22,10 +23,10 @@ import java.util.Objects;
 public class MemberQueryService {
     private final MemberRepository memberRepository;
 
-    public MyAccountInfo getMyInfo(final Long requestMemberId) {
+    public Responses.MyAccountInfoResponse getMyInfo(final Long requestMemberId) {
         final Member member = memberRepository.findMemberByIdAndRemovedIsFalse(requestMemberId)
                 .orElseThrow(() -> new NoSuchMemberException("찾을 수 없습니다.", ErrorCode.NO_SUCH_MEMBER));
-        return new MyAccountInfo(
+        return new Responses.MyAccountInfoResponse(
                 member.getName(),
                 member.getPhoneNumber(),
                 member.getRole(),
@@ -33,60 +34,62 @@ public class MemberQueryService {
         );
     }
 
-    public List<PreviewStudent> loadAllStudents() {
+    public List<Responses.PreviewStudentResponse> loadAllStudents() {
         return memberRepository.findMembersByRole(Role.STUDENT).stream()
-                .map(PreviewStudent::of)
+                .map(Responses.PreviewStudentResponse::of)
                 .toList();
     }
 
-    public List<PreviewTeacher> loadALlTeachers() {
+    public List<Responses.PreviewTeacherResponse> loadALlTeachers() {
         return memberRepository.findMembersByRole(Role.TEACHER).stream()
-                .map(PreviewTeacher::of)
+                .map(Responses.PreviewTeacherResponse::of)
                 .toList();
     }
 
-    public Page<PreviewTeacher> loadTeachers(final TeacherPageQueryDto teacherPageQueryDto) {
-        if (teacherPageQueryDto.name() == null || teacherPageQueryDto.name().isBlank()) {
-            return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER, teacherPageQueryDto.pageable())
-                    .map(PreviewTeacher::of);
+    public Page<Responses.PreviewTeacherResponse> loadTeachers(final TeacherPageQueryCommand teacherPageQueryCommand) {
+        if (teacherPageQueryCommand.name() == null || teacherPageQueryCommand.name().isBlank()) {
+            return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER, teacherPageQueryCommand.pageable())
+                    .map(Responses.PreviewTeacherResponse::of);
         }
-        return memberRepository.findMembersByRoleAndNameContainingAndRemovedIsFalse(Role.TEACHER, teacherPageQueryDto.name(), teacherPageQueryDto.pageable())
-                .map(PreviewTeacher::of);
+        return memberRepository.findMembersByRoleAndNameContainingAndRemovedIsFalse(Role.TEACHER, teacherPageQueryCommand.name(), teacherPageQueryCommand.pageable())
+                .map(Responses.PreviewTeacherResponse::of);
     }
 
     // 동적 쿼리 필요성 확인
-    public Page<PreviewStudent> loadStudents(final StudentPageQueryDto studentPageQueryDto) {
-        Page<MemberInfo> members;
-        if (Objects.isNull(studentPageQueryDto.name()) || studentPageQueryDto.name().isBlank()) {
-            members = memberRepository.findMembersByRoleAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.startGrade(), studentPageQueryDto.endGrade(), studentPageQueryDto.pageable());
+    public Page<Responses.PreviewStudentResponse> loadStudents(final StudentPageQueryCommand studentPageQueryCommand) {
+        Page<Responses.MemberInfoResponse> members;
+        if (Objects.isNull(studentPageQueryCommand.name()) || studentPageQueryCommand.name().isBlank()) {
+            members = memberRepository.findMembersByRoleAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQueryCommand.startGrade(), studentPageQueryCommand.endGrade(), studentPageQueryCommand.pageable());
         } else {
-            members = memberRepository.findMembersByRoleAndNameContainingAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQueryDto.name(), studentPageQueryDto.startGrade(), studentPageQueryDto.endGrade(), studentPageQueryDto.pageable());
+            members = memberRepository.findMembersByRoleAndNameContainingAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQueryCommand.name(), studentPageQueryCommand.startGrade(), studentPageQueryCommand.endGrade(), studentPageQueryCommand.pageable());
         }
-        return members.map(PreviewStudent::of);
+        return members.map(Responses.PreviewStudentResponse::of);
     }
 
-    public CursorResponse<PreviewTeacher> loadTeachers(final TeacherQueryDto teacherQueryDto) {
-        final Pageable pageable = Pageable.ofSize(teacherQueryDto.pageSize());
-        List<MemberInfo> teacherEntities;
-        if (Objects.isNull(teacherQueryDto.name())) {
-            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndRemovedIsFalse(teacherQueryDto.cursorIndex(), Role.TEACHER, pageable);
+    public CursorResponse<Responses.PreviewTeacherResponse> loadTeachers(final TeacherQueryCommand teacherQueryCommand) {
+        final Pageable pageable = Pageable.ofSize(teacherQueryCommand.pageSize());
+        List<Responses.MemberInfoResponse> teacherEntities;
+        if (Objects.isNull(teacherQueryCommand.name())) {
+            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndRemovedIsFalse(teacherQueryCommand.cursorIndex(), Role.TEACHER, pageable);
         } else {
-            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndNameContainingAndRemovedIsFalse(teacherQueryDto.cursorIndex(), Role.TEACHER, pageable, teacherQueryDto.name());
+            teacherEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndNameContainingAndRemovedIsFalse(teacherQueryCommand.cursorIndex(), Role.TEACHER, pageable, teacherQueryCommand.name());
         }
-        final List<PreviewTeacher> previewTeachers = teacherEntities.stream().map(PreviewTeacher::of).toList();
+        final List<Responses.PreviewTeacherResponse> previewTeachers = teacherEntities.stream().map(
+                Responses.PreviewTeacherResponse::of).toList();
         return new CursorResponse<>(previewTeachers, getNextCursorIndex(teacherEntities));
     }
 
-    public CursorResponse<PreviewStudent> loadStudents(final StudentQueryDto studentQueryDto) {
-        final Pageable pageable = getPageable(studentQueryDto.pageSize());
+    public CursorResponse<Responses.PreviewStudentResponse> loadStudents(final StudentQueryCommand studentQueryCommand) {
+        final Pageable pageable = getPageable(studentQueryCommand.pageSize());
 
-        List<MemberInfo> studentEntities;
-        if (Objects.isNull((studentQueryDto.name()))) {
-            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndRemovedIsFalse(studentQueryDto.cursorIndex(), Role.STUDENT, pageable, studentQueryDto.startGrade(), studentQueryDto.endGrade());
+        List<Responses.MemberInfoResponse> studentEntities;
+        if (Objects.isNull((studentQueryCommand.name()))) {
+            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndRemovedIsFalse(studentQueryCommand.cursorIndex(), Role.STUDENT, pageable, studentQueryCommand.startGrade(), studentQueryCommand.endGrade());
         } else {
-            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndNameContainingAndRemovedIsFalse(studentQueryDto.cursorIndex(), Role.STUDENT, pageable, studentQueryDto.startGrade(), studentQueryDto.endGrade(), studentQueryDto.name());
+            studentEntities = memberRepository.findMembersByIdGreaterThanEqualAndRoleAndGradeBetweenAndNameContainingAndRemovedIsFalse(studentQueryCommand.cursorIndex(), Role.STUDENT, pageable, studentQueryCommand.startGrade(), studentQueryCommand.endGrade(), studentQueryCommand.name());
         }
-        List<PreviewStudent> previewStudents = studentEntities.stream().map(PreviewStudent::of).toList();
+        List<Responses.PreviewStudentResponse> previewStudents = studentEntities.stream().map(
+                Responses.PreviewStudentResponse::of).toList();
         return new CursorResponse<>(previewStudents, getNextCursorIndex(studentEntities));
     }
 
@@ -94,7 +97,7 @@ public class MemberQueryService {
         return Pageable.ofSize(size);
     }
 
-    private Long getNextCursorIndex(final List<MemberInfo> result) {
+    private Long getNextCursorIndex(final List<Responses.MemberInfoResponse> result) {
         if (result.isEmpty()) {
             return null;
         }

@@ -114,4 +114,14 @@ class Requests {
             );
         }
     }
+
+    @Schema(description = "로그인 정보")
+    record LoginRequest(
+            @Schema(description = "전화번호", example = "01000000000")
+            @PhoneNumberConstraint
+            String userPhoneNumber,
+            @Valid
+            Password password
+    ) {
+    }
 }

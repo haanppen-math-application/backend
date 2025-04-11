@@ -11,11 +11,11 @@ import com.hanpyeon.academyapi.account.controller.Responses.ChangedPasswordRespo
 import com.hanpyeon.academyapi.account.dto.AccountRemoveCommand;
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.ChangedPassword;
-import com.hanpyeon.academyapi.account.dto.MyAccountInfo;
+import com.hanpyeon.academyapi.account.controller.Responses.MyAccountInfoResponse;
 import com.hanpyeon.academyapi.account.dto.RegisterMemberCommand;
 import com.hanpyeon.academyapi.account.dto.StudentUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.UpdateTeacherCommand;
-import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
+import com.hanpyeon.academyapi.account.dto.VerifyAccountCodeCommand;
 import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
@@ -64,7 +64,7 @@ public class AccountController {
     public ResponseEntity<ChangedPasswordResponse> changePassword(
             @ModelAttribute @Valid final CheckVerificationCodeRequest request
     ) {
-        final ChangedPassword changedPassword = accountPasswordRefreshService.verifyCode(new VerifyAccountCode(
+        final ChangedPassword changedPassword = accountPasswordRefreshService.verifyCode(new VerifyAccountCodeCommand(
                 request.phoneNumber(), request.verificationCode()));
         return ResponseEntity.ok(new ChangedPasswordResponse(changedPassword.phoneNumber(), changedPassword.changedPassword()));
     }
@@ -95,7 +95,7 @@ public class AccountController {
     }
 
     @GetMapping(value = "/my")
-    public ResponseEntity<MyAccountInfo> getMyAccountInfo(
+    public ResponseEntity<MyAccountInfoResponse> getMyAccountInfo(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         return ResponseEntity.ok(queryService.getMyInfo(memberPrincipal.memberId()));

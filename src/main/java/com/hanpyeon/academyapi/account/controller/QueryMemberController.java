@@ -30,39 +30,39 @@ public class QueryMemberController {
             "?size={페이지 크기 지정}. 기본 값 5 로 설정 \n" +
             "?name={찾고자 하는 이름} 시 검색, name이 없을시, 전체 조회\n")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<CursorResponse<PreviewTeacher>> queryTeachers(@RequestParam(required = false, defaultValue = "0") Long cursorIndex,
-                                                                        @RequestParam(required = false, defaultValue = "5") Integer size,
-                                                                        @RequestParam(required = false) String name
+    public ResponseEntity<CursorResponse<Responses.PreviewTeacherResponse>> queryTeachers(@RequestParam(required = false, defaultValue = "0") Long cursorIndex,
+                                                                                          @RequestParam(required = false, defaultValue = "5") Integer size,
+                                                                                          @RequestParam(required = false) String name
     ) {
-        final TeacherQueryDto teacherQueryDto = new TeacherQueryDto(cursorIndex, size, name);
-        CursorResponse<PreviewTeacher> teachers = queryService.loadTeachers(teacherQueryDto);
+        final TeacherQueryCommand teacherQueryDto = new TeacherQueryCommand(cursorIndex, size, name);
+        CursorResponse<Responses.PreviewTeacherResponse> teachers = queryService.loadTeachers(teacherQueryDto);
         return ResponseEntity.ok(teachers);
     }
 
     @GetMapping("/teachers/paging")
     @Operation(summary = "페이징 선생 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<PagedResponse<PreviewTeacher>> queryTeachers(
+    public ResponseEntity<PagedResponse<Responses.PreviewTeacherResponse>> queryTeachers(
             @PageableDefault(size = 5) final Pageable pageable,
             @RequestParam(required = false) String name
     ) {
-        final TeacherPageQueryDto teacherQueryDto = new TeacherPageQueryDto(name, pageable);
-        Page<PreviewTeacher> previewTeachers = queryService.loadTeachers(teacherQueryDto);
+        final TeacherPageQueryCommand teacherQueryDto = new TeacherPageQueryCommand(name, pageable);
+        Page<Responses.PreviewTeacherResponse> previewTeachers = queryService.loadTeachers(teacherQueryDto);
         return ResponseEntity.ok(PagedResponse.of(previewTeachers));
     }
 
     @GetMapping("/students/paging")
     @Operation(summary = "페이징 학생 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<PagedResponse<PreviewStudent>> queryStudents(
+    public ResponseEntity<PagedResponse<Responses.PreviewStudentResponse>> queryStudents(
             @PageableDefault(size = 5) final Pageable pageable,
             @RequestParam(required = false) String name,
             @RequestParam(required = false, defaultValue = "0") Integer startGrade,
             @RequestParam(required = false, defaultValue = "11") Integer endGrade
 
     ) {
-        final StudentPageQueryDto studentPageQueryDto = new StudentPageQueryDto(name, startGrade, endGrade, pageable);
-        Page<PreviewStudent> previewTeachers = queryService.loadStudents(studentPageQueryDto);
+        final StudentPageQueryCommand studentPageQueryDto = new StudentPageQueryCommand(name, startGrade, endGrade, pageable);
+        Page<Responses.PreviewStudentResponse> previewTeachers = queryService.loadStudents(studentPageQueryDto);
         return ResponseEntity.ok(PagedResponse.of(previewTeachers));
     }
 
@@ -74,28 +74,28 @@ public class QueryMemberController {
             "?startRange : 기본값 0, include\n" +
             "?endRange : 기본값 11, include")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<CursorResponse<PreviewStudent>> queryStudents(@RequestParam(required = false, defaultValue = "0") Long cursorIndex,
-                                                                        @RequestParam(required = false, defaultValue = "5") Integer size,
-                                                                        @RequestParam(required = false) String name,
-                                                                        @RequestParam(required = false, defaultValue = "0") Integer startGrade,
-                                                                        @RequestParam(required = false, defaultValue = "11") Integer endGrade
+    public ResponseEntity<CursorResponse<Responses.PreviewStudentResponse>> queryStudents(@RequestParam(required = false, defaultValue = "0") Long cursorIndex,
+                                                                                          @RequestParam(required = false, defaultValue = "5") Integer size,
+                                                                                          @RequestParam(required = false) String name,
+                                                                                          @RequestParam(required = false, defaultValue = "0") Integer startGrade,
+                                                                                          @RequestParam(required = false, defaultValue = "11") Integer endGrade
     ) {
-        final StudentQueryDto queryDto = new StudentQueryDto(cursorIndex, size, name, startGrade, endGrade);
-        CursorResponse<PreviewStudent> students = queryService.loadStudents(queryDto);
+        final StudentQueryCommand queryDto = new StudentQueryCommand(cursorIndex, size, name, startGrade, endGrade);
+        CursorResponse<Responses.PreviewStudentResponse> students = queryService.loadStudents(queryDto);
         return ResponseEntity.ok(students);
     }
 
     @GetMapping("/students/all")
     @Operation(summary = "전체 학생 조회 API")
-    public ResponseEntity<List<PreviewStudent>> getAllStudents() {
-        final List<PreviewStudent> students = queryService.loadAllStudents();
+    public ResponseEntity<List<Responses.PreviewStudentResponse>> getAllStudents() {
+        final List<Responses.PreviewStudentResponse> students = queryService.loadAllStudents();
         return ResponseEntity.ok(students);
     }
 
     @GetMapping("/teachers/all")
     @Operation(summary = "전체 선생 조회 API")
-    public ResponseEntity<List<PreviewTeacher>> getAllTeachers() {
-        final List<PreviewTeacher> teachers = queryService.loadALlTeachers();
+    public ResponseEntity<List<Responses.PreviewTeacherResponse>> getAllTeachers() {
+        final List<Responses.PreviewTeacherResponse> teachers = queryService.loadALlTeachers();
         return ResponseEntity.ok(teachers);
     }
 }

@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.account.dto;
 
 import org.springframework.data.domain.Pageable;
 
-public record TeacherPageQueryDto(
+public record TeacherPageQueryCommand(
         String name,
         Pageable pageable
 ) {

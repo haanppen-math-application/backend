@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.ChangedPassword;
-import com.hanpyeon.academyapi.account.dto.VerifyAccountCode;
+import com.hanpyeon.academyapi.account.dto.VerifyAccountCodeCommand;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
@@ -45,7 +45,7 @@ public class AccountPasswordRefreshService {
     }
 
     @Transactional
-    public ChangedPassword verifyCode(final VerifyAccountCode verifyAccountCode) {
+    public ChangedPassword verifyCode(final VerifyAccountCodeCommand verifyAccountCode) {
         final Member member = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse(verifyAccountCode.phoneNumber())
                 .orElseThrow(() -> new AccountException(ErrorCode.NO_SUCH_MEMBER));
         validateCode(member, verifyAccountCode.verificationCode());

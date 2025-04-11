@@ -1,8 +1,8 @@
 package com.hanpyeon.academyapi.account.controller;
 
 import com.hanpyeon.academyapi.account.dto.JwtDto;
-import com.hanpyeon.academyapi.account.dto.JwtResponse;
-import com.hanpyeon.academyapi.account.dto.LoginRequestDto;
+import com.hanpyeon.academyapi.account.controller.Responses.JwtResponse;
+import com.hanpyeon.academyapi.account.controller.Requests.LoginRequest;
 import com.hanpyeon.academyapi.account.exceptions.ReLoginRequiredException;
 import com.hanpyeon.academyapi.account.service.LoginService;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -36,7 +36,7 @@ public class LoginController {
     @Operation(summary = "로그인 API", description = "JWT 발급을 위한 로그인 API 입니다.")
     @ApiResponse(responseCode = "200", description = "사용자 로그인 성공", content = @Content(schema = @Schema(implementation = JwtDto.class)))
     public ResponseEntity<JwtResponse> memberLogin(
-            @Valid @RequestBody final LoginRequestDto loginRequestDto,
+            @Valid @RequestBody final LoginRequest loginRequestDto,
             HttpServletResponse httpServletResponse
     ) {
         final JwtDto jwtDto = loginService.provideJwtByLogin(loginRequestDto.userPhoneNumber(), loginRequestDto.password());
