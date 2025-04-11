@@ -12,7 +12,6 @@ import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
@@ -26,16 +25,11 @@ public class QuestionUpdateService {
     @Transactional
     public Long updateQuestion(@Validated final QuestionUpdateCommand questionUpdateDto) {
         final Question targetQuestion = findQuestion(questionUpdateDto.questionId());
-        this.update(targetQuestion, questionUpdateDto);
-        return targetQuestion.getId();
-    }
-
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void update(final Question targetQuestion, final QuestionUpdateCommand questionUpdateDto) {
         verifyAccess(targetQuestion.getOwnerMember().getId(), questionUpdateDto.requestMemberId(), questionUpdateDto.memberRole());
         questionUpdateHandlers.stream()
                 .forEach(questionUpdateHandler -> questionUpdateHandler.update(targetQuestion, questionUpdateDto));
         questionValidateManager.validate(targetQuestion);
+        return targetQuestion.getId();
     }
 
     private void verifyAccess(final Long ownedMemberId, final Long requestMemberId, final Role role) {

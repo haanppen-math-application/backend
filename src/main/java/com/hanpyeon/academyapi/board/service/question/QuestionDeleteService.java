@@ -28,40 +28,25 @@ public class QuestionDeleteService {
     @Transactional
     public void deleteQuestion(@Validated final QuestionDeleteCommand questionDeleteDto) {
         final Question question = findQuestion(questionDeleteDto.questionId());
-        validate(question, questionDeleteDto);
-        this.delete(question, questionDeleteDto.requestMemberId());
+        hasPermission(questionDeleteDto.requestMemberId(), question.getOwnerMember().getId());
+        question.getComments().stream()
+                .forEach(comment -> {
+                    comment.delete();
+                    commentRepository.delete(comment);
+                });
+        imageService.removeImage(question.getImages());
         questionRepository.delete(question);
     }
 
-    @Transactional
-    public void delete(final Question question, final Long requestMemberId) {
-        validate(requestMemberId, question.getOwnerMember().getId());
-        question.getComments().stream()
-                        .forEach(comment -> {
-                            comment.delete();
-                            commentRepository.delete(comment);
-                        });
-        imageService.removeImage(question.getImages());
+    private void hasPermission(final Long requestMemberId, final Long questionOwnerId) {
+        if (requestMemberId.equals(questionOwnerId) || Objects.nonNull(memberManager.getMemberWithRoleValidated(requestMemberId, Role.MANAGER, Role.TEACHER))) {
+            return;
+        }
+        throw new CourseException("삭제 권한 부재", ErrorCode.DENIED_EXCEPTION);
     }
 
     private Question findQuestion(final Long questionId) {
         return questionRepository.findById(questionId)
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
-    }
-
-    private void validate(final Question question, final QuestionDeleteCommand questionDeleteDto) {
-        if (questionDeleteDto.role().equals(Role.STUDENT)) {
-            if (question.getOwnerMember().getId().equals(questionDeleteDto.requestMemberId())) {
-                return;
-            }
-            throw new CourseException("학생은 본인 질문만 삭제할 수 있습니다", ErrorCode.INVALID_COURSE_ACCESS);
-        }
-    }
-
-    private void validate(final Long requestMemberId, final Long questionOwnerId) {
-        if (requestMemberId.equals(questionOwnerId) || Objects.nonNull(memberManager.getMemberWithRoleValidated(requestMemberId, Role.MANAGER, Role.TEACHER))) {
-            return;
-        }
-        throw new RequestDeniedException(ErrorCode.DENIED_EXCEPTION);
     }
 }
