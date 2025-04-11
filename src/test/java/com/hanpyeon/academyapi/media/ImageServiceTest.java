@@ -1,11 +1,15 @@
 package com.hanpyeon.academyapi.media;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.repository.ImageRepository;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.media.service.ImageUploadFile;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
 import com.hanpyeon.academyapi.media.validator.UploadFileExtensionValidator;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,11 +18,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Collections;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class ImageServiceTest {

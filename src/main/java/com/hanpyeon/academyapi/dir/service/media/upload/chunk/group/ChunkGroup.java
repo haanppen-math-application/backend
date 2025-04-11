@@ -2,11 +2,10 @@ package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ChunkGroup {

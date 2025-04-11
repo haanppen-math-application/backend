@@ -3,8 +3,6 @@ package com.hanpyeon.academyapi.media.storage;
 import com.hanpyeon.academyapi.aspect.log.ErrorLoggable;
 import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.service.UploadFile;
-
-import java.util.List;
 import java.util.Set;
 
 /**

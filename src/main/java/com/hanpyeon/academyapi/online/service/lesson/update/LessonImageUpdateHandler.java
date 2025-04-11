@@ -8,8 +8,6 @@ import com.hanpyeon.academyapi.media.repository.ImageRepository;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dto.UpdateOnlineLessonInfoCommand;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

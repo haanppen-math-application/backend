@@ -5,10 +5,9 @@ import com.hanpyeon.academyapi.course.application.port.out.LoadMediaBySourcePort
 import com.hanpyeon.academyapi.course.domain.Media;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.repository.MediaRepository;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

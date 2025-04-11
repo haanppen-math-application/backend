@@ -3,10 +3,9 @@ package com.hanpyeon.academyapi.course.adapter.out;
 import com.hanpyeon.academyapi.course.application.exception.MemoMediaException;
 import com.hanpyeon.academyapi.course.application.port.out.DeleteAttachmentPort;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

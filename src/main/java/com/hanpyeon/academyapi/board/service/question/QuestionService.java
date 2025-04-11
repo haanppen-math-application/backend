@@ -2,7 +2,11 @@ package com.hanpyeon.academyapi.board.service.question;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.dao.QuestionRepository;
-import com.hanpyeon.academyapi.board.dto.*;
+import com.hanpyeon.academyapi.board.dto.QuestionDeleteDto;
+import com.hanpyeon.academyapi.board.dto.QuestionDetails;
+import com.hanpyeon.academyapi.board.dto.QuestionPreview;
+import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
+import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
@@ -14,15 +18,13 @@ import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.paging.PagedResponse;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.Objects;
 
 @Component
 @AllArgsConstructor

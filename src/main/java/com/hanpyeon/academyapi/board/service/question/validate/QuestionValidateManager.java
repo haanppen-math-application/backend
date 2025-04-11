@@ -1,10 +1,9 @@
 package com.hanpyeon.academyapi.board.service.question.validate;
 
 import com.hanpyeon.academyapi.board.entity.Question;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @AllArgsConstructor

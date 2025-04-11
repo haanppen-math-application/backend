@@ -1,7 +1,5 @@
 package com.hanpyeon.academyapi.online.domain;
 
-import com.hanpyeon.academyapi.exception.BusinessException;
-import com.hanpyeon.academyapi.security.Role;
 import lombok.Getter;
 
 @Getter

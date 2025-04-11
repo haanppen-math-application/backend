@@ -5,7 +5,6 @@ import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

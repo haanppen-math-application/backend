@@ -11,12 +11,11 @@ import com.hanpyeon.academyapi.course.domain.Student;
 import com.hanpyeon.academyapi.course.domain.Teacher;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.List;
 
 @Service
 @Transactional

@@ -1,8 +1,8 @@
 package com.hanpyeon.academyapi.account.controller;
 
-import com.hanpyeon.academyapi.account.dto.JwtDto;
-import com.hanpyeon.academyapi.account.controller.Responses.JwtResponse;
 import com.hanpyeon.academyapi.account.controller.Requests.LoginRequest;
+import com.hanpyeon.academyapi.account.controller.Responses.JwtResponse;
+import com.hanpyeon.academyapi.account.dto.JwtDto;
 import com.hanpyeon.academyapi.account.exceptions.ReLoginRequiredException;
 import com.hanpyeon.academyapi.account.service.AccountLoginService;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -13,16 +13,19 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.server.Cookie.SameSite;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")

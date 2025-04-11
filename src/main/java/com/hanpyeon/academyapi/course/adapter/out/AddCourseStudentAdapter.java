@@ -7,10 +7,9 @@ import com.hanpyeon.academyapi.course.application.exception.NoSuchMemberExceptio
 import com.hanpyeon.academyapi.course.application.port.out.AddCourseStudentPort;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

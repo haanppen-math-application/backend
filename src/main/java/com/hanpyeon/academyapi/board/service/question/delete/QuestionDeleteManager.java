@@ -1,17 +1,16 @@
 package com.hanpyeon.academyapi.board.service.question.delete;
 
 import com.hanpyeon.academyapi.board.dao.CommentRepository;
+import com.hanpyeon.academyapi.board.dao.MemberManager;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
-import com.hanpyeon.academyapi.board.dao.MemberManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Objects;
 
 @Component
 @AllArgsConstructor

@@ -1,8 +1,7 @@
 package com.hanpyeon.academyapi.board.dto;
 
-import lombok.Builder;
-
 import java.time.LocalDateTime;
+import lombok.Builder;
 
 @Builder
 public record QuestionPreview(

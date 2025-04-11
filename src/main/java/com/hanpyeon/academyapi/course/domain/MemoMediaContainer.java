@@ -3,12 +3,10 @@ package com.hanpyeon.academyapi.course.domain;
 import com.hanpyeon.academyapi.course.application.dto.MemoMediaUpdateSequenceCommand;
 import com.hanpyeon.academyapi.course.application.exception.MemoMediaException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemoMediaContainer {

@@ -2,12 +2,16 @@ package com.hanpyeon.academyapi.account.controller;
 
 import com.hanpyeon.academyapi.account.controller.Responses.PreviewStudentResponse;
 import com.hanpyeon.academyapi.account.controller.Responses.PreviewTeacherResponse;
-import com.hanpyeon.academyapi.account.dto.*;
+import com.hanpyeon.academyapi.account.dto.StudentPageQuery;
+import com.hanpyeon.academyapi.account.dto.StudentQuery;
+import com.hanpyeon.academyapi.account.dto.TeacherPageQuery;
+import com.hanpyeon.academyapi.account.dto.TeacherQuery;
 import com.hanpyeon.academyapi.account.service.AccountQueryService;
 import com.hanpyeon.academyapi.paging.CursorResponse;
 import com.hanpyeon.academyapi.paging.PagedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/members")

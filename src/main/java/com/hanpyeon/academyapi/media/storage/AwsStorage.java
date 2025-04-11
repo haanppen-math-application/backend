@@ -5,8 +5,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.service.UploadFile;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.net.URLConnection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,7 +13,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MimeTypeUtils;
 
 @Service
 @Profile("deploy")

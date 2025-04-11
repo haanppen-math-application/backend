@@ -1,9 +1,8 @@
 package com.hanpyeon.academyapi.media.dto;
 
+import java.io.InputStream;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.io.InputStream;
 
 @RequiredArgsConstructor
 @Getter

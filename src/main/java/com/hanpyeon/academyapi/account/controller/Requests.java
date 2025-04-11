@@ -2,10 +2,10 @@ package com.hanpyeon.academyapi.account.controller;
 
 import com.hanpyeon.academyapi.account.dto.AccountRemoveCommand;
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
+import com.hanpyeon.academyapi.account.dto.Password;
 import com.hanpyeon.academyapi.account.dto.RegisterMemberCommand;
 import com.hanpyeon.academyapi.account.dto.StudentUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.UpdateTeacherCommand;
-import com.hanpyeon.academyapi.account.dto.Password;
 import com.hanpyeon.academyapi.account.validation.GradeConstraint;
 import com.hanpyeon.academyapi.account.validation.NameConstraint;
 import com.hanpyeon.academyapi.account.validation.PhoneNumberConstraint;

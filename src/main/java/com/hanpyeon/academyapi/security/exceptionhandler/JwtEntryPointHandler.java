@@ -1,18 +1,15 @@
 package com.hanpyeon.academyapi.security.exceptionhandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.exception.ExceptionResponseBody;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.exception.ExceptionResponseBody;
 import com.hanpyeon.academyapi.security.exception.ExpiredJwtAuthenticationException;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
-
-import java.io.IOException;
 
 public class JwtEntryPointHandler implements AuthenticationEntryPoint {
     @Override

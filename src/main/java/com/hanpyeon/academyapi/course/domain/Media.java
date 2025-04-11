@@ -1,11 +1,7 @@
 package com.hanpyeon.academyapi.course.domain;
 
-import com.hanpyeon.academyapi.course.application.exception.CourseException;
-import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Getter

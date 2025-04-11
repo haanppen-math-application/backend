@@ -1,10 +1,8 @@
 package com.hanpyeon.academyapi.board.dto;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
+import lombok.Builder;
 
 @Builder
 public record QuestionRegisterDto(

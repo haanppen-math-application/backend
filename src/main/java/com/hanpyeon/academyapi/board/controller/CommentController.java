@@ -1,6 +1,10 @@
 package com.hanpyeon.academyapi.board.controller;
 
-import com.hanpyeon.academyapi.board.dto.*;
+import com.hanpyeon.academyapi.board.dto.CommentDeleteDto;
+import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
+import com.hanpyeon.academyapi.board.dto.CommentRegisterRequestDto;
+import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
+import com.hanpyeon.academyapi.board.dto.CommentUpdateRequestDto;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.comment.CommentService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
@@ -9,11 +13,16 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @AllArgsConstructor

@@ -8,12 +8,11 @@ import com.hanpyeon.academyapi.course.application.port.out.UpdateCoursePort;
 import com.hanpyeon.academyapi.course.domain.Course;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

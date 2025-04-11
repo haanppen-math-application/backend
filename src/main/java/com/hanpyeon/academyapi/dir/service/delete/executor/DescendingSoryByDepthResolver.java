@@ -1,10 +1,9 @@
 package com.hanpyeon.academyapi.dir.service.delete.executor;
 
 import com.hanpyeon.academyapi.dir.dao.Directory;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 class DescendingSoryByDepthResolver {

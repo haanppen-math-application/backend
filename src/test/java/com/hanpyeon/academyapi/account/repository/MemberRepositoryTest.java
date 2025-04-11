@@ -1,15 +1,14 @@
 package com.hanpyeon.academyapi.account.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.security.Role;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.time.LocalDateTime;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 class MemberRepositoryTest {

@@ -6,11 +6,10 @@ import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorage;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.storage.ChunkStorageUploader;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

@@ -1,10 +1,9 @@
 package com.hanpyeon.academyapi.dir.service.delete.executor;
 
 import com.hanpyeon.academyapi.dir.dao.Directory;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 class DirectoryDepthDescendingSortResolverTest {
 

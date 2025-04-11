@@ -8,7 +8,6 @@ import com.hanpyeon.academyapi.course.application.port.out.QueryMemosPort;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -8,11 +8,10 @@ import com.hanpyeon.academyapi.course.application.port.out.UpdateCoursePort;
 import com.hanpyeon.academyapi.course.domain.Course;
 import com.hanpyeon.academyapi.course.domain.Teacher;
 import jakarta.validation.Valid;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

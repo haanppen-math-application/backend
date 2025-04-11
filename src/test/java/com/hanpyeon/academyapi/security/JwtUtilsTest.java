@@ -1,18 +1,16 @@
 package com.hanpyeon.academyapi.security;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import io.jsonwebtoken.Claims;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.Optional;
+import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.Optional;
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
 @SpringBootTest

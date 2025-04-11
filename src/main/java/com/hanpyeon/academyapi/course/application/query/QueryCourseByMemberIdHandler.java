@@ -1,7 +1,6 @@
 package com.hanpyeon.academyapi.course.application.query;
 
 import com.hanpyeon.academyapi.course.domain.Course;
-
 import java.util.List;
 
 interface QueryCourseByMemberIdHandler {

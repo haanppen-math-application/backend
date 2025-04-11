@@ -1,17 +1,16 @@
 package com.hanpyeon.academyapi.course.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import com.hanpyeon.academyapi.course.application.exception.IllegalCourseNameException;
 import com.hanpyeon.academyapi.course.application.exception.IllegalCourseStudentStateException;
 import com.hanpyeon.academyapi.course.application.exception.NotFoundTeacherException;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class CourseTest {
 

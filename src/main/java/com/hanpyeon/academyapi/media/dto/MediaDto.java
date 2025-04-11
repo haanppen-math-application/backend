@@ -1,9 +1,8 @@
 package com.hanpyeon.academyapi.media.dto;
 
 import jakarta.validation.constraints.NotNull;
-import org.springframework.http.MediaType;
-
 import java.io.InputStream;
+import org.springframework.http.MediaType;
 
 public record MediaDto(
         @NotNull

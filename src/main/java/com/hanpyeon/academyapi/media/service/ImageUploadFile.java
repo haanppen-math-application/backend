@@ -3,11 +3,10 @@ package com.hanpyeon.academyapi.media.service;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.exception.InvalidUploadFileException;
 import com.hanpyeon.academyapi.media.exception.StorageException;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ImageUploadFile implements UploadFile {
     private final MultipartFile multipartFile;

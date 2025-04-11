@@ -1,9 +1,13 @@
 package com.hanpyeon.academyapi.security.authentication;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.hanpyeon.academyapi.security.JwtUtils;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.exception.IllegalJwtAuthenticationException;
 import io.jsonwebtoken.Claims;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,11 +18,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 @ExtendWith(MockitoExtension.class)

@@ -5,11 +5,10 @@ import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import java.util.Arrays;
 import java.util.function.Predicate;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor

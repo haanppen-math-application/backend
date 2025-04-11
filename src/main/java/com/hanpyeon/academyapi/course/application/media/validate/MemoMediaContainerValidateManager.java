@@ -1,10 +1,9 @@
 package com.hanpyeon.academyapi.course.application.media.validate;
 
 import com.hanpyeon.academyapi.course.domain.MemoMediaContainer;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

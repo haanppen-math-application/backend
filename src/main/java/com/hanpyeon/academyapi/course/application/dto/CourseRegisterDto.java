@@ -2,7 +2,6 @@ package com.hanpyeon.academyapi.course.application.dto;
 
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.constraints.NotNull;
-
 import java.util.List;
 
 public record CourseRegisterDto(

@@ -11,14 +11,12 @@ import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.exception.MediaStoreException;
 import com.hanpyeon.academyapi.media.repository.ImageRepository;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
-import com.hanpyeon.academyapi.media.validator.UploadFileExtensionValidator;
+import java.util.Collections;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Collections;
-import java.util.List;
 
 @Component
 @AllArgsConstructor

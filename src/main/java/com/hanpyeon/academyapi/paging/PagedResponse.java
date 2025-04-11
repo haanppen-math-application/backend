@@ -1,8 +1,7 @@
 package com.hanpyeon.academyapi.paging;
 
-import org.springframework.data.domain.Page;
-
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 public record PagedResponse<T>(
         List<T> data,

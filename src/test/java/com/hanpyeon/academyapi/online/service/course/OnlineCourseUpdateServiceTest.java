@@ -7,7 +7,6 @@ import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineStudent;
 import com.hanpyeon.academyapi.online.dao.OnlineStudentRepository;
 import com.hanpyeon.academyapi.online.dto.DeleteOnlineCourseCommand;
-import com.hanpyeon.academyapi.online.service.course.OnlineCourseUpdateService;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.EntityManager;
 import java.util.List;

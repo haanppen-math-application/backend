@@ -6,10 +6,9 @@ import com.hanpyeon.academyapi.course.application.port.out.LoadMemoMediaPort;
 import com.hanpyeon.academyapi.course.domain.MemoMedia;
 import com.hanpyeon.academyapi.course.domain.MemoMediaContainer;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

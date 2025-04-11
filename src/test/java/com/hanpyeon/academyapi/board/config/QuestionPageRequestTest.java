@@ -1,12 +1,12 @@
 package com.hanpyeon.academyapi.board.config;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class QuestionPageRequestTest {
 

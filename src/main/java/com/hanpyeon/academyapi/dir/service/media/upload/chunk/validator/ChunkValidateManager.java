@@ -1,11 +1,10 @@
 package com.hanpyeon.academyapi.dir.service.media.upload.chunk.validator;
 
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkedFile;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service

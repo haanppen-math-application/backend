@@ -1,22 +1,17 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
-import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.course.domain.MemoMedia;
 import com.hanpyeon.academyapi.course.domain.MemoMediaContainer;
 import com.hanpyeon.academyapi.media.entity.Media;
 import com.hanpyeon.academyapi.media.repository.MediaRepository;
-import com.hanpyeon.academyapi.security.Role;
-import java.time.LocalDateTime;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test")

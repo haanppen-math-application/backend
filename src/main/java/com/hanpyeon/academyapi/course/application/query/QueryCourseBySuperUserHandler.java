@@ -3,10 +3,9 @@ package com.hanpyeon.academyapi.course.application.query;
 import com.hanpyeon.academyapi.course.application.port.out.LoadCoursesByTeacherIdPort;
 import com.hanpyeon.academyapi.course.application.port.out.ValidateSuperUserPort;
 import com.hanpyeon.academyapi.course.domain.Course;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

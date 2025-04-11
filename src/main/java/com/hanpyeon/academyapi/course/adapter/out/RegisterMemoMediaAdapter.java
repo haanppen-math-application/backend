@@ -6,12 +6,10 @@ import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Media;
 import com.hanpyeon.academyapi.media.exception.NoSuchMediaException;
 import com.hanpyeon.academyapi.media.repository.MediaRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

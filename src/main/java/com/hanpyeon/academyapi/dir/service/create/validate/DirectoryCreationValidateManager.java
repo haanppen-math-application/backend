@@ -1,11 +1,10 @@
 package com.hanpyeon.academyapi.dir.service.create.validate;
 
 import com.hanpyeon.academyapi.dir.dto.CreateDirectoryCommand;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

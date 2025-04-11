@@ -3,9 +3,8 @@ package com.hanpyeon.academyapi.board.service.question.validate;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.BoardException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import org.springframework.stereotype.Component;
-
 import java.util.Objects;
+import org.springframework.stereotype.Component;
 
 @Component
 class QuestionTitleContentValidator implements QuestionValidator {

@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.security.PasswordHandler;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,11 +13,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")

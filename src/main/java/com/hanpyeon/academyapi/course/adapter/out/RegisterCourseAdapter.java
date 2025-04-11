@@ -6,10 +6,9 @@ import com.hanpyeon.academyapi.course.application.port.out.RegisterCoursePort;
 import com.hanpyeon.academyapi.course.domain.Student;
 import com.hanpyeon.academyapi.course.domain.Teacher;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

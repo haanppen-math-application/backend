@@ -1,11 +1,14 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.course.application.port.in.CourseRegisterUseCase;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.JwtAuthenticationToken;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
+import java.util.List;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,11 +25,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.Collections;
-import java.util.List;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest(controllers = RegisterCourseController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가

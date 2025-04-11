@@ -1,10 +1,9 @@
 package com.hanpyeon.academyapi.media.dto;
 
+import java.io.InputStream;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-
-import java.io.InputStream;
 
 @RequiredArgsConstructor
 @Getter

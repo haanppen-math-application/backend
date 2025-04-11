@@ -3,18 +3,14 @@ package com.hanpyeon.academyapi.course.application;
 import com.hanpyeon.academyapi.course.application.dto.RegisterMemoMediaCommand;
 import com.hanpyeon.academyapi.course.application.exception.MemoMediaException;
 import com.hanpyeon.academyapi.course.application.port.in.RegisterMemoMediaUseCase;
-import com.hanpyeon.academyapi.course.application.port.out.LoadMemoMediaPort;
 import com.hanpyeon.academyapi.course.application.port.out.LoadMemoPort;
 import com.hanpyeon.academyapi.course.application.port.out.RegisterMemoMediaPort;
 import com.hanpyeon.academyapi.course.application.port.out.ValidateSuperUserPort;
 import com.hanpyeon.academyapi.course.domain.Memo;
-import com.hanpyeon.academyapi.course.domain.MemoMedia;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

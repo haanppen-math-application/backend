@@ -1,5 +1,7 @@
 package com.hanpyeon.academyapi.board.service.question.validate;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.InvalidTargetException;
@@ -8,8 +10,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class QuestionTargetMemberValidatorTest {

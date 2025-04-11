@@ -8,19 +8,19 @@ import static com.hanpyeon.academyapi.account.controller.Requests.ModifyTeacherR
 import static com.hanpyeon.academyapi.account.controller.Requests.RegisterMemberRequest;
 
 import com.hanpyeon.academyapi.account.controller.Responses.ChangedPasswordResponse;
+import com.hanpyeon.academyapi.account.controller.Responses.MyAccountInfoResponse;
 import com.hanpyeon.academyapi.account.dto.AccountRemoveCommand;
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.ChangedPassword;
-import com.hanpyeon.academyapi.account.controller.Responses.MyAccountInfoResponse;
 import com.hanpyeon.academyapi.account.dto.RegisterMemberCommand;
 import com.hanpyeon.academyapi.account.dto.StudentUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.UpdateTeacherCommand;
 import com.hanpyeon.academyapi.account.dto.VerifyAccountCodeCommand;
 import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
+import com.hanpyeon.academyapi.account.service.AccountQueryService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
-import com.hanpyeon.academyapi.account.service.AccountQueryService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

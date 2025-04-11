@@ -2,16 +2,14 @@ package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.course.application.port.out.LoadMediasPort;
 import com.hanpyeon.academyapi.course.domain.Media;
-import com.hanpyeon.academyapi.course.domain.MemoMedia;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.exception.NoSuchMediaException;
 import com.hanpyeon.academyapi.media.repository.MediaRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

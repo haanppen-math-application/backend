@@ -1,21 +1,16 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
-import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.application.exception.MemoMediaException;
 import com.hanpyeon.academyapi.course.application.port.out.UpdateMemoMediaContainerPort;
 import com.hanpyeon.academyapi.course.domain.MemoMedia;
 import com.hanpyeon.academyapi.course.domain.MemoMediaContainer;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import com.hanpyeon.academyapi.media.entity.Media;
-import com.hanpyeon.academyapi.media.exception.MediaException;
-import com.hanpyeon.academyapi.media.repository.MediaRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

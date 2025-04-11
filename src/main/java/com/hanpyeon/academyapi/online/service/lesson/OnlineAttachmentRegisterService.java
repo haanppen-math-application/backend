@@ -2,8 +2,6 @@ package com.hanpyeon.academyapi.online.service.lesson;
 
 import com.hanpyeon.academyapi.exception.BusinessException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import com.hanpyeon.academyapi.media.entity.Media;
-import com.hanpyeon.academyapi.media.repository.MediaRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineVideo;
 import com.hanpyeon.academyapi.online.dao.OnlineVideoAttachment;
 import com.hanpyeon.academyapi.online.dao.OnlineVideoAttachmentRepository;

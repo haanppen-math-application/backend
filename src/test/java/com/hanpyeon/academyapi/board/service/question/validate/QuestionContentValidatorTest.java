@@ -1,18 +1,7 @@
 package com.hanpyeon.academyapi.board.service.question.validate;
 
-import com.hanpyeon.academyapi.board.entity.Question;
-import com.hanpyeon.academyapi.board.exception.QuestionContentOverSizeException;
-import com.hanpyeon.academyapi.board.exception.QuestionValidationException;
-import com.hanpyeon.academyapi.media.entity.Image;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * no more used

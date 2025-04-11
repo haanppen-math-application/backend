@@ -1,5 +1,7 @@
 package com.hanpyeon.academyapi.board.service.question;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteDto;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
@@ -11,6 +13,8 @@ import com.hanpyeon.academyapi.board.service.question.update.QuestionUpdateManag
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import java.util.Collections;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,11 +27,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-
-import java.util.Collections;
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 @DataJpaTest

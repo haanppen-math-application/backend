@@ -1,10 +1,9 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.course.application.port.out.DeleteMemoPort;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

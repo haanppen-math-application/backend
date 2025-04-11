@@ -5,10 +5,9 @@ import com.hanpyeon.academyapi.course.application.dto.MemoView;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemoByCourseIdAndDatePort;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

@@ -1,13 +1,20 @@
 package com.hanpyeon.academyapi.account.controller;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
+import com.hanpyeon.academyapi.account.service.AccountQueryService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
-import com.hanpyeon.academyapi.account.service.AccountQueryService;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,14 +28,6 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AccountController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가

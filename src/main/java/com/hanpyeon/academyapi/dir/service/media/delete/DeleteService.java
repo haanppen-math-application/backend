@@ -10,7 +10,6 @@ import com.hanpyeon.academyapi.media.exception.MediaException;
 import com.hanpyeon.academyapi.media.repository.MediaRepository;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

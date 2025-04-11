@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.course.adapter.in;
 
-import com.hanpyeon.academyapi.course.application.LoadCoursesByStudentQueryService;
 import com.hanpyeon.academyapi.course.application.port.in.LoadCourseDetailsQuery;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
@@ -14,8 +13,6 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @WebMvcTest(controllers = QueryCourseDetailsController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가

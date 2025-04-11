@@ -7,7 +7,6 @@ import com.hanpyeon.academyapi.dir.dao.Directory;
 import com.hanpyeon.academyapi.dir.dao.DirectoryRepository;
 import com.hanpyeon.academyapi.dir.exception.DirectoryException;
 import com.hanpyeon.academyapi.dir.service.media.upload.chunk.group.ChunkGroupInfo;
-import com.hanpyeon.academyapi.dir.service.media.upload.chunk.merger.MergedVideoUploadFile;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Media;
 import com.hanpyeon.academyapi.media.repository.MediaRepository;

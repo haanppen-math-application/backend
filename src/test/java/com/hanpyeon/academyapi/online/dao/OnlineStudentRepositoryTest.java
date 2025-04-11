@@ -1,7 +1,6 @@
 package com.hanpyeon.academyapi.online.dao;
 
 import jakarta.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

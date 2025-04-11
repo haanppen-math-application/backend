@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.exception;
 
-import java.util.Arrays;
+import java.util.List;
 import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +10,6 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.List;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {

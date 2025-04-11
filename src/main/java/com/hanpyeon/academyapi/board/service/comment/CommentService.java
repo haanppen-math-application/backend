@@ -1,15 +1,13 @@
 package com.hanpyeon.academyapi.board.service.comment;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
+import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.dto.CommentDeleteDto;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
 import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
 import com.hanpyeon.academyapi.board.entity.Comment;
-import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.BoardException;
 import com.hanpyeon.academyapi.board.exception.NoSuchCommentException;
-import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
-import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManager;
 import com.hanpyeon.academyapi.board.service.comment.register.CommentRegisterManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -19,9 +17,7 @@ import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.LifecycleState;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 

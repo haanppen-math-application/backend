@@ -1,7 +1,5 @@
 package com.hanpyeon.academyapi.online.service.lesson;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;

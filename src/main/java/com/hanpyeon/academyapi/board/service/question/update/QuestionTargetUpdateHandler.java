@@ -1,14 +1,13 @@
 package com.hanpyeon.academyapi.board.service.question.update;
 
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.board.dao.MemberManager;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
 import com.hanpyeon.academyapi.board.entity.Question;
-import com.hanpyeon.academyapi.board.dao.MemberManager;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 @Component
 @AllArgsConstructor

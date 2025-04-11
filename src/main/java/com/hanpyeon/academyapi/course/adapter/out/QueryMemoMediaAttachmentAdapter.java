@@ -2,11 +2,10 @@ package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.course.application.dto.AttachmentView;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemoMediaAttachmentPort;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 
 @Service

@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.course.adapter.in;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanpyeon.academyapi.course.application.port.in.AddStudentToCourseUseCase;
 import com.hanpyeon.academyapi.security.filter.JwtAuthenticationFilter;
+import java.util.List;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.List;
 
 @WebMvcTest(controllers = AddStudentToCourseController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가

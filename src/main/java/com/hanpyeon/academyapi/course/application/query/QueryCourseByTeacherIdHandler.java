@@ -4,10 +4,9 @@ import com.hanpyeon.academyapi.course.application.port.out.LoadCoursesByTeacherI
 import com.hanpyeon.academyapi.course.application.port.out.LoadTeacherPort;
 import com.hanpyeon.academyapi.course.domain.Course;
 import com.hanpyeon.academyapi.exception.BusinessException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

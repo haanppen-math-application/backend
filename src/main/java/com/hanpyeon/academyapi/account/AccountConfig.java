@@ -1,10 +1,9 @@
 package com.hanpyeon.academyapi.account;
 
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import java.util.Random;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Random;
 
 @Configuration
 public class AccountConfig {

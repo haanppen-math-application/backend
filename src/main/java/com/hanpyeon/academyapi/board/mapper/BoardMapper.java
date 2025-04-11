@@ -1,17 +1,30 @@
 package com.hanpyeon.academyapi.board.mapper;
 
 import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.board.dto.*;
+import com.hanpyeon.academyapi.board.dto.CommentDeleteDto;
+import com.hanpyeon.academyapi.board.dto.CommentDetails;
+import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
+import com.hanpyeon.academyapi.board.dto.CommentRegisterRequestDto;
+import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
+import com.hanpyeon.academyapi.board.dto.CommentUpdateRequestDto;
+import com.hanpyeon.academyapi.board.dto.MemberDetails;
+import com.hanpyeon.academyapi.board.dto.QuestionDeleteDto;
+import com.hanpyeon.academyapi.board.dto.QuestionDeleteRequestDto;
+import com.hanpyeon.academyapi.board.dto.QuestionDetails;
+import com.hanpyeon.academyapi.board.dto.QuestionPreview;
+import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
+import com.hanpyeon.academyapi.board.dto.QuestionRegisterRequestDto;
+import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
+import com.hanpyeon.academyapi.board.dto.QuestionUpdateRequestDto;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.media.MediaMapper;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.security.Role;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Objects;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

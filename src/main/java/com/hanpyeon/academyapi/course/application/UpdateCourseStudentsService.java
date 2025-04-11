@@ -7,11 +7,10 @@ import com.hanpyeon.academyapi.course.application.port.out.LoadStudentsPort;
 import com.hanpyeon.academyapi.course.application.port.out.UpdateCoursePort;
 import com.hanpyeon.academyapi.course.domain.Course;
 import com.hanpyeon.academyapi.course.domain.Student;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

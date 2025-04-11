@@ -2,7 +2,6 @@ package com.hanpyeon.academyapi.course.adapter.in;
 
 import com.hanpyeon.academyapi.course.application.dto.DeleteCourseCommand;
 import com.hanpyeon.academyapi.course.application.port.in.DeleteCourseUseCase;
-import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

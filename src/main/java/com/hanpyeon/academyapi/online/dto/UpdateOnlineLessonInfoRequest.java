@@ -1,8 +1,6 @@
 package com.hanpyeon.academyapi.online.dto;
 
 import com.hanpyeon.academyapi.security.Role;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.SchemaProperties;
 import jakarta.validation.constraints.NotNull;
 
 public record UpdateOnlineLessonInfoRequest(

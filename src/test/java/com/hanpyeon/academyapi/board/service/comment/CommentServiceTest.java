@@ -1,8 +1,10 @@
 package com.hanpyeon.academyapi.board.service.comment;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
 import com.hanpyeon.academyapi.board.entity.Comment;
-import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManager;
 import com.hanpyeon.academyapi.board.service.comment.register.CommentRegisterManager;
 import com.hanpyeon.academyapi.media.service.ImageService;
@@ -12,8 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class CommentServiceTest {

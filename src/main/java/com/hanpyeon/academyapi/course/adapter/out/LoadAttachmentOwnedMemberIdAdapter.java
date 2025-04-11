@@ -1,7 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.account.entity.Member;
-import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.application.exception.MemoMediaException;
 import com.hanpyeon.academyapi.course.application.port.out.LoadAttachmentOwnedMemberIdPort;
 import com.hanpyeon.academyapi.exception.ErrorCode;

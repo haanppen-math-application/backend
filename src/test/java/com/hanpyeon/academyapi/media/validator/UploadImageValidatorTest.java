@@ -1,11 +1,10 @@
 package com.hanpyeon.academyapi.media.validator;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.hanpyeon.academyapi.media.service.ImageUploadFile;
 import org.apache.http.entity.ContentType;
-import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class UploadImageValidatorTest {
 //    @Test

@@ -1,10 +1,9 @@
 package com.hanpyeon.academyapi.board.config;
 
+import java.util.function.Function;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
-import java.util.function.Function;
 
 public class EntityFieldMappedPageRequest extends PageRequest {
 

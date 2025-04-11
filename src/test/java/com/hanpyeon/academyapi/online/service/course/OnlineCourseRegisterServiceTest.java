@@ -5,7 +5,6 @@ import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
 import com.hanpyeon.academyapi.online.dao.OnlineStudentRepository;
 import com.hanpyeon.academyapi.online.dto.AddOnlineCourseCommand;
-import com.hanpyeon.academyapi.online.service.course.OnlineCourseRegisterService;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.EntityManager;
 import java.util.List;

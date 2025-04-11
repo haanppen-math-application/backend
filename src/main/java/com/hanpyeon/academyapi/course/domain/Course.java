@@ -1,17 +1,16 @@
 package com.hanpyeon.academyapi.course.domain;
 
 import com.hanpyeon.academyapi.course.application.exception.IllegalCourseNameException;
-import com.hanpyeon.academyapi.course.application.exception.IllegalCourseStudentStateException;
 import com.hanpyeon.academyapi.course.application.exception.IllegalCourseStudentSizeException;
+import com.hanpyeon.academyapi.course.application.exception.IllegalCourseStudentStateException;
 import com.hanpyeon.academyapi.course.application.exception.NotFoundTeacherException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

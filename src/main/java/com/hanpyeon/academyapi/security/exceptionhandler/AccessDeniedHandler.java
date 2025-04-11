@@ -1,15 +1,14 @@
 package com.hanpyeon.academyapi.security.exceptionhandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanpyeon.academyapi.exception.ExceptionResponseBody;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.exception.ExceptionResponseBody;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
-
-import java.io.IOException;
 
 public class AccessDeniedHandler implements org.springframework.security.web.access.AccessDeniedHandler {
     @Override

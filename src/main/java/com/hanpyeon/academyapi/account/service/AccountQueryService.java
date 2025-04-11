@@ -1,21 +1,23 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.controller.Responses;
-import com.hanpyeon.academyapi.account.dto.*;
+import com.hanpyeon.academyapi.account.dto.StudentPageQuery;
+import com.hanpyeon.academyapi.account.dto.StudentQuery;
+import com.hanpyeon.academyapi.account.dto.TeacherPageQuery;
+import com.hanpyeon.academyapi.account.dto.TeacherQuery;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.NoSuchMemberException;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.paging.CursorResponse;
 import com.hanpyeon.academyapi.security.Role;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

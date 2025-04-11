@@ -1,10 +1,7 @@
 package com.hanpyeon.academyapi.media.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.hanpyeon.academyapi.media.entity.Image;
 import java.util.List;
-import net.bytebuddy.agent.builder.AgentBuilder.LambdaInstrumentationStrategy;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

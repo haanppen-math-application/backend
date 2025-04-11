@@ -1,5 +1,8 @@
 package com.hanpyeon.academyapi.media;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.hanpyeon.academyapi.media.exception.InvalidUploadFileException;
 import com.hanpyeon.academyapi.media.service.ImageUploadFile;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
@@ -8,12 +11,8 @@ import org.apache.http.entity.ContentType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class UploadFileTest {

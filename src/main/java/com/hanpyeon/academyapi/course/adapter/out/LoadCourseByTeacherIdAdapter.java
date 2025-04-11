@@ -2,10 +2,9 @@ package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.course.application.port.out.LoadCoursesByTeacherIdPort;
 import com.hanpyeon.academyapi.course.domain.Course;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Component

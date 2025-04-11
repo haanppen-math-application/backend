@@ -7,7 +7,6 @@ import com.hanpyeon.academyapi.media.service.ImageService;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.LifecycleState;
 import org.springframework.stereotype.Service;
 
 @Service

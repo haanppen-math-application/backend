@@ -3,13 +3,11 @@ package com.hanpyeon.academyapi.dir.service.delete.executor;
 import com.hanpyeon.academyapi.dir.dao.Directory;
 import com.hanpyeon.academyapi.dir.dao.DirectoryRepository;
 import com.hanpyeon.academyapi.dir.service.MediaService;
+import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

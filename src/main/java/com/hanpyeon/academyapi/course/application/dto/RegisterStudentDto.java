@@ -1,7 +1,6 @@
 package com.hanpyeon.academyapi.course.application.dto;
 
 import jakarta.validation.constraints.NotNull;
-
 import java.util.List;
 
 public record RegisterStudentDto (

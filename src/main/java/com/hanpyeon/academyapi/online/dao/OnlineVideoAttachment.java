@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.online.dao;
 
-import com.hanpyeon.academyapi.media.entity.Media;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;

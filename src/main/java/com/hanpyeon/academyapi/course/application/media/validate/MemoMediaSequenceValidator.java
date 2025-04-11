@@ -4,9 +4,8 @@ import com.hanpyeon.academyapi.course.application.exception.MemoMediaException;
 import com.hanpyeon.academyapi.course.domain.MemoMedia;
 import com.hanpyeon.academyapi.course.domain.MemoMediaContainer;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MemoMediaSequenceValidator implements MemoMediaContainerValidator {
