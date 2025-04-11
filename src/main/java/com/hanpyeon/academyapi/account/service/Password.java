@@ -4,7 +4,6 @@ import com.hanpyeon.academyapi.account.validation.PasswordConstraint;
 import com.hanpyeon.academyapi.security.PasswordHandler;
 import lombok.Getter;
 
-//@Getter(value = AccessLevel.PACKAGE)
 @Getter
 public class Password {
     @PasswordConstraint
