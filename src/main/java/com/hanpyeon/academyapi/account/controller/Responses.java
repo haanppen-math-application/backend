@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.account.controller;
 
-import com.hanpyeon.academyapi.account.service.Password;
+import com.hanpyeon.academyapi.account.dto.Password;
 import com.hanpyeon.academyapi.security.Role;
 import java.time.LocalDateTime;
 

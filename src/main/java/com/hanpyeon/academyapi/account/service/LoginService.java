@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.TimeProvider;
 import com.hanpyeon.academyapi.account.dto.JwtDto;
+import com.hanpyeon.academyapi.account.dto.Password;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
 import com.hanpyeon.academyapi.account.exceptions.InvalidPasswordException;

@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.AccountUpdateCommand;
+import com.hanpyeon.academyapi.account.dto.Password;
 import com.hanpyeon.academyapi.account.dto.StudentUpdateCommand;
 import com.hanpyeon.academyapi.account.dto.UpdateTeacherCommand;
 import com.hanpyeon.academyapi.account.entity.Member;

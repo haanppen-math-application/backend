@@ -1,21 +1,15 @@
-package com.hanpyeon.academyapi.account.service;
+package com.hanpyeon.academyapi.account.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hanpyeon.academyapi.account.validation.PasswordConstraint;
 import com.hanpyeon.academyapi.security.PasswordHandler;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@Getter
+@RequiredArgsConstructor
 public class Password {
     @PasswordConstraint
+    @JsonProperty
     private final String rawPassword;
-
-    public Password(final String password) {
-        this.rawPassword = password;
-    }
-
-    public boolean isBlank() {
-        return rawPassword == null || rawPassword.isBlank();
-    }
 
     public boolean isMatch(final String encryptedPassword, final PasswordHandler passwordHandler) {
         return passwordHandler.matches(rawPassword, encryptedPassword);

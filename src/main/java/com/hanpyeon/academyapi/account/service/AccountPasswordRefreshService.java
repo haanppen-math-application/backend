@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.account.service;
 
 import com.hanpyeon.academyapi.account.dto.ChangedPassword;
+import com.hanpyeon.academyapi.account.dto.Password;
 import com.hanpyeon.academyapi.account.dto.VerifyAccountCodeCommand;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.exceptions.AccountException;
