@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record QuestionUpdateDto(
+public record QuestionUpdateCommand(
         @NotNull
         Long questionId,
         @NotNull

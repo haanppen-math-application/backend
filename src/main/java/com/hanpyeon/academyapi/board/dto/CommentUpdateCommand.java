@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record CommentUpdateDto(
+public record CommentUpdateCommand(
         @NotNull Long requestMemberId,
         Role role,
         @NotNull Long commentId,

@@ -3,7 +3,7 @@ package com.hanpyeon.academyapi.board.dto;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.constraints.NotNull;
 
-public record QuestionDeleteDto(
+public record QuestionDeleteCommand(
         @NotNull
         Long questionId,
         Role role,

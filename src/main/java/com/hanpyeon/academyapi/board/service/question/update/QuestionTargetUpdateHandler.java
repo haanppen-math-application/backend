@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.board.service.question.update;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.board.dao.MemberManager;
-import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
+import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.security.Role;
 import java.util.Objects;
@@ -16,12 +16,12 @@ class QuestionTargetUpdateHandler extends QuestionUpdateHandler {
     private final MemberManager memberManager;
 
     @Override
-    boolean applicable(final QuestionUpdateDto questionUpdateDto) {
+    boolean applicable(final QuestionUpdateCommand questionUpdateDto) {
         return Objects.nonNull(questionUpdateDto.targetMemberId());
     }
 
     @Override
-    void process(final Question question, final QuestionUpdateDto questionUpdateDto) {
+    void process(final Question question, final QuestionUpdateCommand questionUpdateDto) {
         Member member = memberManager.getMemberWithRoleValidated(questionUpdateDto.targetMemberId(), Role.TEACHER, Role.MANAGER);
         question.changeTargetMember(member);
     }

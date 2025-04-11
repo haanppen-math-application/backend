@@ -1,13 +1,13 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.hanpyeon.academyapi.board.config.EntityFieldMappedPageRequest;
-import com.hanpyeon.academyapi.board.dto.QuestionDeleteDto;
+import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.controller.Requests.QuestionDeleteRequest;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionPreview;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
+import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
 import com.hanpyeon.academyapi.board.controller.Requests.QuestionRegisterRequest;
-import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
+import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.controller.Requests.QuestionUpdateRequest;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.question.QuestionService;
@@ -49,7 +49,7 @@ public class QuestionController {
     public ResponseEntity<?> addQuestion(
             @Valid @RequestBody final QuestionRegisterRequest questionRegisterRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
-        QuestionRegisterDto questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, memberPrincipal.memberId());
+        QuestionRegisterCommand questionRegisterDto = boardMapper.createRegisterDto(questionRegisterRequestDto, memberPrincipal.memberId());
         final Long createdQuestionId = questionService.addQuestion(questionRegisterDto);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
@@ -97,7 +97,7 @@ public class QuestionController {
             @Valid @RequestBody final QuestionUpdateRequest questionUpdateRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final QuestionUpdateDto questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
+        final QuestionUpdateCommand questionUpdateDto = boardMapper.createQuestionUpdateDto(questionUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         return ResponseEntity.ok(questionService.updateQuestion(questionUpdateDto));
     }
 
@@ -108,7 +108,7 @@ public class QuestionController {
             @ModelAttribute @Valid final QuestionDeleteRequest questionDeleteRequestDto,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final QuestionDeleteDto questionDeleteDto = boardMapper.createQuestionDeleteDto(questionDeleteRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
+        final QuestionDeleteCommand questionDeleteDto = boardMapper.createQuestionDeleteDto(questionDeleteRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         questionService.deleteQuestion(questionDeleteDto);
         return ResponseEntity.noContent().build();
     }

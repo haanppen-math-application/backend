@@ -1,9 +1,9 @@
 package com.hanpyeon.academyapi.board.controller;
 
 import com.hanpyeon.academyapi.board.controller.Requests.CommentDeleteRequest;
-import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
+import com.hanpyeon.academyapi.board.dto.CommentRegisterCommand;
 import com.hanpyeon.academyapi.board.controller.Requests.CommentRegisterRequest;
-import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
+import com.hanpyeon.academyapi.board.dto.CommentUpdateCommand;
 import com.hanpyeon.academyapi.board.controller.Requests.CommentUpdateRequest;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.comment.CommentService;
@@ -39,7 +39,7 @@ public class CommentController {
             @Valid @RequestBody CommentRegisterRequest commentRegisterRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
 
-        CommentRegisterDto commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, memberPrincipal.memberId());
+        CommentRegisterCommand commentRegisterDto = boardMapper.createCommentRegisterDto(commentRegisterRequestDto, memberPrincipal.memberId());
         final Long createdCommentId = commentService.addComment(commentRegisterDto);
 
         return ResponseEntity.created(
@@ -56,7 +56,7 @@ public class CommentController {
     public ResponseEntity<?> updateComment(
             @Valid @RequestBody CommentUpdateRequest commentUpdateRequestDto,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        final CommentUpdateDto commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
+        final CommentUpdateCommand commentUpdateDto = boardMapper.createCommentUpdateDto(commentUpdateRequestDto, memberPrincipal.memberId(), memberPrincipal.role());
         commentService.updateComment(commentUpdateDto);
         return ResponseEntity.ok().build();
     }

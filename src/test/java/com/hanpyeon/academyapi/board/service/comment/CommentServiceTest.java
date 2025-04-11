@@ -3,7 +3,7 @@ package com.hanpyeon.academyapi.board.service.comment;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.hanpyeon.academyapi.board.dao.CommentRepository;
-import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
+import com.hanpyeon.academyapi.board.dto.CommentRegisterCommand;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManager;
 import com.hanpyeon.academyapi.board.service.comment.register.CommentRegisterManager;
@@ -36,7 +36,7 @@ class CommentServiceTest {
 
     @Test
     void 질문_추가_테스트() {
-        CommentRegisterDto commentRegisterDto = Mockito.mock(CommentRegisterDto.class);
+        CommentRegisterCommand commentRegisterDto = Mockito.mock(CommentRegisterCommand.class);
         Comment comment = Mockito.mock(Comment.class);
         Mockito.when(commentRegisterManager.register(commentRegisterDto))
                 .thenReturn(comment);

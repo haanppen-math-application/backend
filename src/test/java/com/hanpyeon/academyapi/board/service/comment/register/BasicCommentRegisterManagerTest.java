@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.board.dao.QuestionRepository;
-import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
+import com.hanpyeon.academyapi.board.dto.CommentRegisterCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
@@ -40,7 +40,7 @@ class BasicCommentRegisterManagerTest {
 
     @Test
     void 질문_못찾음_에러() {
-        CommentRegisterDto commentRegisterDto = Mockito.mock(CommentRegisterDto.class);
+        CommentRegisterCommand commentRegisterDto = Mockito.mock(CommentRegisterCommand.class);
         Member member = Mockito.mock(Member.class);
 
         Mockito.when(questionRepository.findById(Mockito.anyLong()))
@@ -53,7 +53,7 @@ class BasicCommentRegisterManagerTest {
     @Test
     void 사용자_못찾음_에러() {
         Question question = Mockito.mock(Question.class);
-        CommentRegisterDto commentRegisterDto = Mockito.mock(CommentRegisterDto.class);
+        CommentRegisterCommand commentRegisterDto = Mockito.mock(CommentRegisterCommand.class);
         Mockito.when(questionRepository.findById(Mockito.anyLong()))
                 .thenReturn(Optional.of(question));
         Mockito.when(memberRepository.findMemberByIdAndRemovedIsFalse(Mockito.anyLong()))

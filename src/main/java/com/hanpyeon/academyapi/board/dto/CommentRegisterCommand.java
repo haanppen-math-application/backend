@@ -5,12 +5,12 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record QuestionRegisterDto(
+public record CommentRegisterCommand(
         @NotNull
-        Long requestMemberId,
+        Long questionId,
         @NotNull
-        Long targetMemberId,
-        String title,
+        Long memberId,
         String content,
         List<String> images
-) {}
+){
+}

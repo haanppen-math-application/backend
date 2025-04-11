@@ -3,8 +3,8 @@ package com.hanpyeon.academyapi.board.service.comment;
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.controller.Requests.CommentDeleteRequest;
-import com.hanpyeon.academyapi.board.dto.CommentRegisterDto;
-import com.hanpyeon.academyapi.board.dto.CommentUpdateDto;
+import com.hanpyeon.academyapi.board.dto.CommentRegisterCommand;
+import com.hanpyeon.academyapi.board.dto.CommentUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.exception.BoardException;
 import com.hanpyeon.academyapi.board.exception.NoSuchCommentException;
@@ -32,14 +32,14 @@ public class CommentService {
     private final ImageService imageService;
 
     @Transactional
-    public Long addComment(@Validated final CommentRegisterDto commentRegisterDto) {
+    public Long addComment(@Validated final CommentRegisterCommand commentRegisterDto) {
         Comment comment = commentRegisterManager.register(commentRegisterDto);
         commentRepository.save(comment);
         return comment.getId();
     }
 
     @Transactional
-    public void updateComment(@Validated final CommentUpdateDto commentUpdateDto) {
+    public void updateComment(@Validated final CommentUpdateCommand commentUpdateDto) {
         final Comment comment = findComment(commentUpdateDto.commentId());
         validateOwnedMember(comment, commentUpdateDto.requestMemberId(), commentUpdateDto.role());
         if (commentUpdateDto.content() != null) {

@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.board.service.question.register;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.board.dao.MemberManager;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
+import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
@@ -23,13 +23,13 @@ public class QuestionRegisterManger {
     private final BoardMapper boardMapper;
 
     @Transactional
-    public Question register(final QuestionRegisterDto questionRegisterDto) {
+    public Question register(final QuestionRegisterCommand questionRegisterDto) {
         final Question question = preProcess(questionRegisterDto);
         questionValidateManager.validate(question);
         return question;
     }
 
-    private Question preProcess(final QuestionRegisterDto questionRegisterDto) {
+    private Question preProcess(final QuestionRegisterCommand questionRegisterDto) {
         final Member requestMember = memberManager.getMemberWithRoleValidated(questionRegisterDto.requestMemberId(), Role.STUDENT);
         Member targetMember;
         if (questionRegisterDto.targetMemberId() == null) {

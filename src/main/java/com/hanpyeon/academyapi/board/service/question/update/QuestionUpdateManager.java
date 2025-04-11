@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.board.service.question.update;
 
-import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
+import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
 import com.hanpyeon.academyapi.board.service.question.validate.QuestionValidateManager;
@@ -19,7 +19,7 @@ public class QuestionUpdateManager {
     private final QuestionValidateManager questionValidateManager;
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public void update(final Question targetQuestion, final QuestionUpdateDto questionUpdateDto) {
+    public void update(final Question targetQuestion, final QuestionUpdateCommand questionUpdateDto) {
         verifyAccess(targetQuestion.getOwnerMember().getId(), questionUpdateDto.requestMemberId(), questionUpdateDto.memberRole());
         questionUpdateHandlers.stream()
                 .forEach(questionUpdateHandler -> questionUpdateHandler.update(targetQuestion, questionUpdateDto));

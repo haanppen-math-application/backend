@@ -2,11 +2,11 @@ package com.hanpyeon.academyapi.board.service.question;
 
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.board.dao.QuestionRepository;
-import com.hanpyeon.academyapi.board.dto.QuestionDeleteDto;
+import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionDetails;
 import com.hanpyeon.academyapi.board.dto.QuestionPreview;
-import com.hanpyeon.academyapi.board.dto.QuestionRegisterDto;
-import com.hanpyeon.academyapi.board.dto.QuestionUpdateDto;
+import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
+import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
@@ -40,7 +40,7 @@ public class QuestionService {
 
     @Transactional
     @WarnLoggable
-    public Long addQuestion(@Validated final QuestionRegisterDto questionRegisterDto) {
+    public Long addQuestion(@Validated final QuestionRegisterCommand questionRegisterDto) {
         final Question question = questionRegisterManager.register(questionRegisterDto);
         return questionRepository.save(question).getId();
     }
@@ -74,21 +74,21 @@ public class QuestionService {
     }
 
     @Transactional
-    public Long updateQuestion(@Validated final QuestionUpdateDto questionUpdateDto) {
+    public Long updateQuestion(@Validated final QuestionUpdateCommand questionUpdateDto) {
         final Question targetQuestion = findQuestion(questionUpdateDto.questionId());
         questionUpdateManager.update(targetQuestion, questionUpdateDto);
         return targetQuestion.getId();
     }
 
     @Transactional
-    public void deleteQuestion(@Validated final QuestionDeleteDto questionDeleteDto) {
+    public void deleteQuestion(@Validated final QuestionDeleteCommand questionDeleteDto) {
         final Question question = findQuestion(questionDeleteDto.questionId());
         validate(question, questionDeleteDto);
         questionDeleteManager.delete(question, questionDeleteDto.requestMemberId());
         questionRepository.delete(question);
     }
 
-    private void validate(final Question question, final QuestionDeleteDto questionDeleteDto) {
+    private void validate(final Question question, final QuestionDeleteCommand questionDeleteDto) {
         if (questionDeleteDto.role().equals(Role.STUDENT)) {
             if (question.getOwnerMember().getId().equals(questionDeleteDto.requestMemberId())) {
                 return;
