@@ -20,7 +20,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MemberQueryService {
+public class AccountQueryService {
     private final MemberRepository memberRepository;
 
     public Responses.MyAccountInfoResponse getMyInfo(final Long requestMemberId) {

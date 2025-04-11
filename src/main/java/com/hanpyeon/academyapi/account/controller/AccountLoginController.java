@@ -4,7 +4,7 @@ import com.hanpyeon.academyapi.account.dto.JwtDto;
 import com.hanpyeon.academyapi.account.controller.Responses.JwtResponse;
 import com.hanpyeon.academyapi.account.controller.Requests.LoginRequest;
 import com.hanpyeon.academyapi.account.exceptions.ReLoginRequiredException;
-import com.hanpyeon.academyapi.account.service.LoginService;
+import com.hanpyeon.academyapi.account.service.AccountLoginService;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,10 +27,10 @@ import java.net.URLEncoder;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class LoginController {
+public class AccountLoginController {
     private static final String REFRESH_TOKEN_NAME = "refreshToken";
     private static final String ENCODER = "UTF-8";
-    private final LoginService loginService;
+    private final AccountLoginService loginService;
 
     @PostMapping("/login")
     @Operation(summary = "로그인 API", description = "JWT 발급을 위한 로그인 API 입니다.")

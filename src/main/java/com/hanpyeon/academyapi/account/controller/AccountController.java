@@ -20,7 +20,7 @@ import com.hanpyeon.academyapi.account.service.AccountPasswordRefreshService;
 import com.hanpyeon.academyapi.account.service.AccountRegisterService;
 import com.hanpyeon.academyapi.account.service.AccountRemoveService;
 import com.hanpyeon.academyapi.account.service.AccountUpdateService;
-import com.hanpyeon.academyapi.account.service.MemberQueryService;
+import com.hanpyeon.academyapi.account.service.AccountQueryService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -50,7 +50,7 @@ public class AccountController {
     private final AccountUpdateService accountUpdateService;
     private final AccountRemoveService accountRemoveService;
     private final AccountPasswordRefreshService accountPasswordRefreshService;
-    private final MemberQueryService queryService;
+    private final AccountQueryService queryService;
 
     @PostMapping("/password/verification")
     public ResponseEntity<?> authenticateForRefreshPassword(
