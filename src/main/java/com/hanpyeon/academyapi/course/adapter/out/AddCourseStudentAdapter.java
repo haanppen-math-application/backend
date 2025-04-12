@@ -5,6 +5,8 @@ import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.course.application.exception.NoSuchCourseException;
 import com.hanpyeon.academyapi.course.application.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.course.application.port.out.AddCourseStudentPort;
+import com.hanpyeon.academyapi.course.entity.Course;
+import com.hanpyeon.academyapi.course.entity.CourseStudent;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
 import java.util.List;

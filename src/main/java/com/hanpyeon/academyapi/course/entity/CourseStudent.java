@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.course.adapter.out;
+package com.hanpyeon.academyapi.course.entity;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import jakarta.persistence.ConstraintMode;
@@ -41,7 +41,7 @@ public class CourseStudent {
         this.courseEntity = courseEntity;
     }
 
-    static CourseStudent addToCourse(final Member student, final Course courseEntity) {
+    public static CourseStudent addToCourse(final Member student, final Course courseEntity) {
         final CourseStudent courseStudent = new CourseStudent(student, courseEntity);
         courseEntity.addCourseStudent(courseStudent);
         return new CourseStudent(student, courseEntity);

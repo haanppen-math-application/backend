@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.account.entity;
 
-import com.hanpyeon.academyapi.course.adapter.out.CourseStudent;
+import com.hanpyeon.academyapi.course.entity.CourseStudent;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

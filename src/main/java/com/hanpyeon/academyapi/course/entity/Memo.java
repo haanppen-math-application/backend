@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.course.adapter.out;
+package com.hanpyeon.academyapi.course.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
@@ -21,7 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity(name = "MEMO")
 @NoArgsConstructor
 @Getter
-class Memo {
+public class Memo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "MEMO_ID")
@@ -48,18 +48,18 @@ class Memo {
     @OneToMany(mappedBy = "")
     private List<Image> courseMedia;
 */
-    void setTitle(final String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
-    void setContent(final String content) {
+    public void setContent(final String content) {
         this.content = content;
     }
-    void delete() {
+    public void delete() {
         this.course = null;
         memoMedias.stream().forEach(memoMedia -> memoMedia.setNull());
     }
 
-    Memo(final Course course, final LocalDate targetDate, final String progressed, final String homework) {
+    public Memo(final Course course, final LocalDate targetDate, final String progressed, final String homework) {
         this.course = course;
         this.targetDate = targetDate;
         this.title = progressed;

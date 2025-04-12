@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.course.entity.Course;
+import com.hanpyeon.academyapi.course.entity.CourseStudent;
 import com.hanpyeon.academyapi.security.Role;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;

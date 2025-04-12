@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.course.adapter.out;
+package com.hanpyeon.academyapi.course.entity;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @NoArgsConstructor
 @Getter
 @ToString
-class Course {
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,20 +38,20 @@ class Course {
     @BatchSize(size = 10)
     private List<Memo> memos = new ArrayList<>();
 
-    Course(final String courseName, final Member teacher) {
+    public Course(final String courseName, final Member teacher) {
         this.courseName = courseName;
         this.teacher = teacher;
     }
 
-    void changeCourseName(final String newCourseName) {
+    public void changeCourseName(final String newCourseName) {
         this.courseName = newCourseName;
     }
 
-    void changeTeacher(final Member newTeacher) {
+    public void changeTeacher(final Member newTeacher) {
         this.teacher = newTeacher;
     }
 
-    void addCourseStudent(final CourseStudent courseStudent) {
+    public void addCourseStudent(final CourseStudent courseStudent) {
         this.students.add(courseStudent);
     }
 

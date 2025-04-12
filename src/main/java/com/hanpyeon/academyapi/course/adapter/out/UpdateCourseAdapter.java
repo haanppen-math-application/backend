@@ -6,6 +6,7 @@ import com.hanpyeon.academyapi.course.application.exception.NoSuchCourseExceptio
 import com.hanpyeon.academyapi.course.application.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.course.application.port.out.UpdateCoursePort;
 import com.hanpyeon.academyapi.course.domain.Course;
+import com.hanpyeon.academyapi.course.entity.CourseStudent;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
@@ -25,7 +26,7 @@ public class UpdateCourseAdapter implements UpdateCoursePort {
     @Override
     @Transactional
     public void updateCourse(final Course updatedCourseDomain) {
-        final com.hanpyeon.academyapi.course.adapter.out.Course course = courseRepository.findById(updatedCourseDomain.getCourseId())
+        final com.hanpyeon.academyapi.course.entity.Course course = courseRepository.findById(updatedCourseDomain.getCourseId())
                 .orElseThrow(() -> new NoSuchCourseException("반 찾을 수 없음", ErrorCode.NO_SUCH_COURSE_MEMBER));
         course.changeCourseName(updatedCourseDomain.getCourseName());
         final Member newTeacher = memberRepository.findMemberByIdAndRoleAndRemovedIsFalse(updatedCourseDomain.getTeacher().id(), Role.TEACHER)

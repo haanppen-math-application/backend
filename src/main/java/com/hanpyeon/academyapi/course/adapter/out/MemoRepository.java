@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
+import com.hanpyeon.academyapi.course.entity.Memo;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;

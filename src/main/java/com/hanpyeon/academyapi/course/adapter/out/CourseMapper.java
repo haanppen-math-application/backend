@@ -4,6 +4,7 @@ import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.board.exception.InvalidTargetException;
 import com.hanpyeon.academyapi.course.domain.Student;
 import com.hanpyeon.academyapi.course.domain.Teacher;
+import com.hanpyeon.academyapi.course.entity.Course;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ class CourseMapper {
         throw new InvalidTargetException("학생만 반에 등록될 수 있습니다", ErrorCode.INVALID_MEMBER_TARGET);
     }
 
-    com.hanpyeon.academyapi.course.domain.Course mapToCourseDomain(final com.hanpyeon.academyapi.course.adapter.out.Course courseEntity) {
+    com.hanpyeon.academyapi.course.domain.Course mapToCourseDomain(final Course courseEntity) {
         return com.hanpyeon.academyapi.course.domain.Course.loadByEntity(
                 courseEntity.getId(),
                 courseEntity.getCourseName(),

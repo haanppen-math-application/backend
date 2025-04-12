@@ -17,12 +17,12 @@ public class UpdateMemoTextAdapter implements UpdateMemoTextPort {
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
     public void update(Memo memo) {
-        final com.hanpyeon.academyapi.course.adapter.out.Memo memoEntity = getMemo(memo.getMemoId());
+        final com.hanpyeon.academyapi.course.entity.Memo memoEntity = getMemo(memo.getMemoId());
         memoEntity.setContent(memo.getContent());
         memoEntity.setTitle(memo.getTitle());
     }
 
-    private com.hanpyeon.academyapi.course.adapter.out.Memo getMemo(final Long memoId) {
+    private com.hanpyeon.academyapi.course.entity.Memo getMemo(final Long memoId) {
         return memoRepository.findById(memoId)
                 .orElseThrow(() -> new CourseException(ErrorCode.MEMO_NOT_EXIST));
     }

@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.course.adapter.out;
+package com.hanpyeon.academyapi.course.entity;
 
 import com.hanpyeon.academyapi.media.entity.Media;
 import jakarta.persistence.Column;
@@ -42,7 +42,7 @@ public class MemoMedia {
         this.sequence = sequence;
     }
 
-    void setSequence(final Integer sequence) {
+    public void setSequence(final Integer sequence) {
         this.sequence = sequence;
     }
 
@@ -53,7 +53,7 @@ public class MemoMedia {
                 .forEach(memoMediaAttachment -> memoMediaAttachment.setNull());
     }
 
-    static MemoMedia of(final Memo memo, final Media media, final Integer sequence) {
+    public static MemoMedia of(final Memo memo, final Media media, final Integer sequence) {
         return new MemoMedia(memo, media, sequence);
     }
 }

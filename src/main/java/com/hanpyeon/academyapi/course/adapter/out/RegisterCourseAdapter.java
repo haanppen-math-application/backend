@@ -5,6 +5,8 @@ import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.course.application.port.out.RegisterCoursePort;
 import com.hanpyeon.academyapi.course.domain.Student;
 import com.hanpyeon.academyapi.course.domain.Teacher;
+import com.hanpyeon.academyapi.course.entity.Course;
+import com.hanpyeon.academyapi.course.entity.CourseStudent;
 import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

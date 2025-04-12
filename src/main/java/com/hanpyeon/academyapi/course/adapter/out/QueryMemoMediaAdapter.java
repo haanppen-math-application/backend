@@ -3,6 +3,7 @@ package com.hanpyeon.academyapi.course.adapter.out;
 import com.hanpyeon.academyapi.course.controller.Responses.MediaViewResponse;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemoMediaPort;
+import com.hanpyeon.academyapi.course.entity.MemoMedia;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Media;
 import java.util.List;

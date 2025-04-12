@@ -29,7 +29,7 @@ class UpdateMemoMediaContainerAdapter implements UpdateMemoMediaContainerPort {
 
     private void update(final MemoMedia memoMediaDomain) {
         log.debug(memoMediaDomain.toString());
-        final com.hanpyeon.academyapi.course.adapter.out.MemoMedia memoMedia = memoMediaRepository.findById(memoMediaDomain.getMemoMediaId())
+        final com.hanpyeon.academyapi.course.entity.MemoMedia memoMedia = memoMediaRepository.findById(memoMediaDomain.getMemoMediaId())
                         .orElseThrow(() -> new MemoMediaException("해당 수업 미디어를 찾을 수 없음", ErrorCode.MEMO_MEDIA_UPDATE_EXCEPTION));
         log.debug(memoMedia.toString());
         memoMedia.setSequence(memoMediaDomain.getSequence());

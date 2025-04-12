@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.account.entity.Member;
+import com.hanpyeon.academyapi.course.entity.MemoMediaAttachment;
 import com.hanpyeon.academyapi.media.entity.Media;
 import java.util.List;
 import java.util.Optional;

@@ -42,9 +42,9 @@ class UpdateMemoMediaContainerAdapterTest {
 
 
         memoMediaRepository.saveAll(List.of(
-                com.hanpyeon.academyapi.course.adapter.out.MemoMedia.of(null, media1, 1),
-                com.hanpyeon.academyapi.course.adapter.out.MemoMedia.of(null, media2, 2),
-                com.hanpyeon.academyapi.course.adapter.out.MemoMedia.of(null, media3, 3))
+                com.hanpyeon.academyapi.course.entity.MemoMedia.of(null, media1, 1),
+                com.hanpyeon.academyapi.course.entity.MemoMedia.of(null, media2, 2),
+                com.hanpyeon.academyapi.course.entity.MemoMedia.of(null, media3, 3))
         );
 
         final MemoMediaContainer container = MemoMediaContainer.of(

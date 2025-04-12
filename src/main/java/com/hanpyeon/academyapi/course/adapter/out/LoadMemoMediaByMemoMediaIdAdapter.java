@@ -13,7 +13,7 @@ class LoadMemoMediaByMemoMediaIdAdapter implements LoadMemoMediaByMemoMediaIdPor
     private final MemoMediaRepository memoMediaRepository;
     @Override
     public MemoMedia loadByMemoMediaId(Long memoMediaId, Long memoId) {
-        final com.hanpyeon.academyapi.course.adapter.out.MemoMedia memoMedia = memoMediaRepository.findMemoMediaByIdAndMemo_Id(memoMediaId, memoId)
+        final com.hanpyeon.academyapi.course.entity.MemoMedia memoMedia = memoMediaRepository.findMemoMediaByIdAndMemo_Id(memoMediaId, memoId)
                 .orElseThrow(() -> new MemoMediaException("존재하지 않는 메모-미디어 입니다.", ErrorCode.MEMO_MEDIA_UPDATE_EXCEPTION));
         return MemoMedia.createByEntity(
                 memoMedia.getId(),

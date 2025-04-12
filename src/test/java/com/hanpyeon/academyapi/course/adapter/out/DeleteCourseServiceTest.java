@@ -7,6 +7,8 @@ import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.course.application.DeleteCourseService;
 import com.hanpyeon.academyapi.course.application.dto.DeleteCourseCommand;
 import com.hanpyeon.academyapi.course.application.port.in.DeleteCourseUseCase;
+import com.hanpyeon.academyapi.course.entity.Course;
+import com.hanpyeon.academyapi.course.entity.CourseStudent;
 import com.hanpyeon.academyapi.security.Role;
 import java.time.LocalDateTime;
 import java.util.List;

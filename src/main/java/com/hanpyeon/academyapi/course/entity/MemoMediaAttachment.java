@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.course.adapter.out;
+package com.hanpyeon.academyapi.course.entity;
 
 import com.hanpyeon.academyapi.media.entity.Media;
 import jakarta.persistence.ConstraintMode;
@@ -32,7 +32,7 @@ public class MemoMediaAttachment {
         this.media = media;
     }
 
-    static MemoMediaAttachment of(final MemoMedia memoMedia, final Media media) {
+    public static MemoMediaAttachment of(final MemoMedia memoMedia, final Media media) {
         return new MemoMediaAttachment(memoMedia, media);
     }
 

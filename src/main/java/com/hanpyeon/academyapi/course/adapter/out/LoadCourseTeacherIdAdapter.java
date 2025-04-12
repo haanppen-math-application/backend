@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.course.application.exception.NoSuchCourseException;
 import com.hanpyeon.academyapi.course.application.port.out.LoadCourseTeacherIdPort;
+import com.hanpyeon.academyapi.course.entity.Course;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

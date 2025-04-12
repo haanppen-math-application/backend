@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
 import com.hanpyeon.academyapi.course.application.port.out.DeleteCoursePort;
+import com.hanpyeon.academyapi.course.entity.Course;
 import com.hanpyeon.academyapi.security.Role;
 import java.time.LocalDateTime;
 import java.util.List;
