@@ -60,6 +60,7 @@ public class Question {
         this.targetMember = targetMember;
         this.comments = comments;
     }
+
     public void changeTitle(final String title) {
         this.title = title;
     }
@@ -73,30 +74,17 @@ public class Question {
         comment.setQuestion(this);
         return comments.size();
     }
+
     public void changeTargetMember(final Member targetMember) {
         this.targetMember = targetMember;
     }
+
     public void changeImages(final List<Image> images) {
         this.images = images;
     }
 
     public void addViewCount() {
         this.viewCount++;
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "id=" + id +
-                ", registeredDateTime=" + registeredDateTime +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", solved=" + solved +
-                ", viewCount=" + viewCount +
-                ", ownerMember=" + ownerMember +
-                ", targetMember=" + targetMember +
-                ", images=" + images +
-                '}';
     }
 
     public void clearSolved() {
@@ -112,13 +100,5 @@ public class Question {
     void clearCommentsAdoptedStatus() {
         comments.parallelStream()
                 .forEach(comment -> comment.singleDeAdopt());
-    }
-
-    void singleUnsolved() {
-        this.solved = false;
-    }
-
-    void singleSolved() {
-        this.solved = true;
     }
 }

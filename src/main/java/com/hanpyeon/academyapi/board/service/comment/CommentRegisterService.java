@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.board.service.comment;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
+import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.dao.QuestionRepository;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterCommand;
 import com.hanpyeon.academyapi.board.entity.Comment;
@@ -30,16 +31,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentRegisterService {
     private final ImageService imageService;
     private final QuestionRepository questionRepository;
+    private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
     private final BoardMapper boardMapper;
-    /**
-     *
-     * @param commentRegisterDto
-     * @return Comment
-     */
-    public Comment register(final CommentRegisterCommand commentRegisterDto) {
-        Question question = findQuestion(commentRegisterDto.questionId());
-        Member member = findMember(commentRegisterDto.memberId());
+
+    public Long register(final CommentRegisterCommand commentRegisterDto) {
+        final Question question = findQuestion(commentRegisterDto.questionId());
+        final Member member = findMember(commentRegisterDto.memberId());
         if (!imageService.isExists(commentRegisterDto.images())) {
             log.error(" cannt find images Source that included in comment : " + commentRegisterDto);
             throw new MediaStoreException("이미지를 찾을 수 없습니다.", ErrorCode.MEDIA_ACCESS_EXCEPTION);
@@ -49,7 +47,8 @@ public class CommentRegisterService {
         question.addComment(comment);
         question.solved();
         verifyComment(comment);
-        return comment;
+        commentRepository.save(comment);
+        return comment.getId();
     }
 
     private Question findQuestion(final Long questionId) {
@@ -70,6 +69,7 @@ public class CommentRegisterService {
             throw new RequestDeniedException("학생은 질문에 대한 댓글을 달 수 없습니다", ErrorCode.DENIED_EXCEPTION);
         }
     }
+
 
     protected void verifyComment(Comment comment) {
         if (comment.getContent() == null && comment.getImages().isEmpty()) {
