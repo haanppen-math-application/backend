@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.board.service.comment.register;
+package com.hanpyeon.academyapi.board.service.comment;
 
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.account.repository.MemberRepository;
@@ -8,31 +8,35 @@ import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.board.exception.NoSuchMemberException;
 import com.hanpyeon.academyapi.board.exception.NoSuchQuestionException;
+import com.hanpyeon.academyapi.board.exception.NotAllowedCommentException;
+import com.hanpyeon.academyapi.board.exception.RequestDeniedException;
 import com.hanpyeon.academyapi.board.mapper.BoardMapper;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.exception.MediaStoreException;
 import com.hanpyeon.academyapi.media.service.ImageService;
+import com.hanpyeon.academyapi.security.Role;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-/**
- * 댓글 등록을 위해 제공되는 클래스입니다.
- * 해당 클래스를 이용하여 댓글에 대한 여러 제약을 구현할 수 있습니다.
- */
-@AllArgsConstructor
+@Service
+@RequiredArgsConstructor
+@Transactional
 @Slf4j
-abstract class AbstractCommentRegisterManager implements CommentRegisterManager {
+public class CommentRegisterManager {
     private final ImageService imageService;
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
     private final BoardMapper boardMapper;
-
-    @Override
-    @Transactional
+    /**
+     *
+     * @param commentRegisterDto
+     * @return Comment
+     */
     public Comment register(final CommentRegisterCommand commentRegisterDto) {
         Question question = findQuestion(commentRegisterDto.questionId());
         Member member = findMember(commentRegisterDto.memberId());
@@ -62,8 +66,18 @@ abstract class AbstractCommentRegisterManager implements CommentRegisterManager 
         return member;
     }
 
-    protected abstract void verifyQuestion(final Question question);
+    protected void verifyQuestion(Question question) {
+    }
 
-    protected abstract void verifyMember(final Member member);
-    protected abstract void verifyComment(final Comment comment);
+    protected void verifyMember(Member member) {
+        if (member.getRole().equals(Role.STUDENT)) {
+            throw new RequestDeniedException("학생은 질문에 대한 댓글을 달 수 없습니다", ErrorCode.DENIED_EXCEPTION);
+        }
+    }
+
+    protected void verifyComment(Comment comment) {
+        if (comment.getContent() == null && comment.getImages().isEmpty()) {
+            throw new NotAllowedCommentException("댓글 = 이미지, 글 중 하나는 작성해야 합니다.", ErrorCode.ILLEGAL_COMMENT_EXCEPTION);
+        }
+    }
 }
