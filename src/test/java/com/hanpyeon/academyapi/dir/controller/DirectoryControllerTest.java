@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.dir.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanpyeon.academyapi.dir.controller.Requests.CreateDirectoryRequest;
 import com.hanpyeon.academyapi.dir.service.DirectoryService;
 import com.hanpyeon.academyapi.security.JwtUtils;
 import com.hanpyeon.academyapi.security.Role;
@@ -42,7 +43,7 @@ class DirectoryControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/directories")
                         .header(JwtUtils.HEADER, jwtUtils.generateAccessToken(1l, role, "test"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(new DirectoryController.CreateDirectoryRequest("/test", "test", false, false))))
+                .content(objectMapper.writeValueAsString(new CreateDirectoryRequest("/test", "test", false, false))))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
@@ -51,7 +52,7 @@ class DirectoryControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/directories")
                         .header(JwtUtils.HEADER, jwtUtils.generateAccessToken(1l, Role.STUDENT, "test"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new DirectoryController.CreateDirectoryRequest("test", "test", false, false))))
+                        .content(objectMapper.writeValueAsString(new CreateDirectoryRequest("test", "test", false, false))))
                 .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 

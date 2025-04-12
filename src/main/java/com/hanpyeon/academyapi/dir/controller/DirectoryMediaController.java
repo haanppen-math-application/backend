@@ -1,5 +1,7 @@
 package com.hanpyeon.academyapi.dir.controller;
 
+import com.hanpyeon.academyapi.dir.controller.Requests.MediaSaveRequest;
+import com.hanpyeon.academyapi.dir.controller.Requests.MediaSaveResponse;
 import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.dir.dto.DeleteMediaDto;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
@@ -8,9 +10,6 @@ import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,7 +35,7 @@ public class DirectoryMediaController {
             @RequestPart(value = "info") @Valid final MediaSaveRequest request,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final UploadMediaDto mediaSaveDto = request.create(multipartFile, memberPrincipal.memberId());
+        final UploadMediaDto mediaSaveDto = request.toCommand(multipartFile, memberPrincipal.memberId());
         final ChunkStoreResult chunkStoreResult = mediaService.uploadChunk(mediaSaveDto);
 
         return mapToResponse(chunkStoreResult);
@@ -62,46 +61,4 @@ public class DirectoryMediaController {
         return ResponseEntity.created(null).build();
     }
 
-    record MediaSaveResponse(
-            Long nextChunkIndex,
-            Long remainSize,
-            Boolean needMore,
-            Boolean isWrongChunk,
-            String errorMessage
-    ) {
-        static MediaSaveResponse of(final ChunkStoreResult result) {
-            return new MediaSaveResponse(
-                    result.getNextChunkIndex(),
-                    result.getRemainSize(),
-                    result.getNeedMore(),
-                    result.getIsWrongChunk(),
-                    result.getErrorInformation()
-            );
-        }
-    }
-
-    record MediaSaveRequest(
-            @NotBlank @Pattern(regexp = "^/.*$") String targetDirectoryPath,
-            @NotBlank String fileName,
-            @Nonnull Long totalChunkCount,
-            @Nonnull Long currChunkIndex,
-            @Nonnull Boolean isLast,
-            @Nonnull String extension,
-            @NonNull Long mediaDuration
-    ) {
-
-        UploadMediaDto create(final MultipartFile multipartFile, final Long requestMemberId) {
-            return new UploadMediaDto(
-                    multipartFile,
-                    fileName(),
-                    totalChunkCount(),
-                    currChunkIndex(),
-                    isLast(),
-                    requestMemberId,
-                    targetDirectoryPath(),
-                    extension(),
-                    mediaDuration()
-            );
-        }
-    }
 }
