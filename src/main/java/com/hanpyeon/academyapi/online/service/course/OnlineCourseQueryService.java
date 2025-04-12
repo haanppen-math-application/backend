@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.online.service.course;
 
-import com.hanpyeon.academyapi.course.application.dto.TeacherPreview;
+import com.hanpyeon.academyapi.course.controller.Responses.TeacherPreviewResponse;
 import com.hanpyeon.academyapi.online.dao.OnlineCategory;
 import com.hanpyeon.academyapi.online.dao.OnlineCourse;
 import com.hanpyeon.academyapi.online.dao.OnlineCourseRepository;
@@ -80,7 +80,7 @@ public class OnlineCourseQueryService {
     private OnlineCoursePreview mapToCoursePreview(final OnlineCourse onlineCourse) {
         return new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(),
                 onlineCourse.getOnlineStudents().size(),
-                new TeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId()),
+                new TeacherPreviewResponse(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId()),
                 mapToCategoryInfo(onlineCourse.getOnlineCategory()),
                 onlineCourse.getImage() == null ? null : onlineCourse.getImage().getSrc()
         );

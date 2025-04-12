@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryCommand;
-import com.hanpyeon.academyapi.course.application.dto.MemoView;
+import com.hanpyeon.academyapi.course.controller.Responses.MemoViewResponse;
 import com.hanpyeon.academyapi.course.application.exception.NoSuchCourseException;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemoMediaPort;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemosPort;
@@ -18,10 +18,10 @@ class LoadMemosAdapter implements QueryMemosPort {
     private final QueryMemoMediaPort queryMemoMediaPort;
 
     @Override
-    public Page<MemoView> loadMemos(final MemoQueryCommand memoQueryCommand) {
+    public Page<MemoViewResponse> loadMemos(final MemoQueryCommand memoQueryCommand) {
         isExistCourse(memoQueryCommand.courseId());
         return memoRepository.findByCourseId(memoQueryCommand.courseId(), memoQueryCommand.pageable())
-                .map(memo -> new MemoView(
+                .map(memo -> new MemoViewResponse(
                         memo.getId(),
                         memo.getTitle(),
                         memo.getContent(),

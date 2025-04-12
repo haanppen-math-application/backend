@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.CourseDetails;
+import com.hanpyeon.academyapi.course.controller.Responses.CourseDetailResponse;
 import com.hanpyeon.academyapi.course.application.port.in.LoadCourseDetailsQuery;
 import com.hanpyeon.academyapi.course.application.port.out.LoadCoursePort;
 import com.hanpyeon.academyapi.course.domain.Course;
@@ -16,8 +16,8 @@ public class LoadCourseDetailsQueryService implements LoadCourseDetailsQuery {
 
     @Override
     @Transactional(readOnly = true)
-    public CourseDetails loadCourseDetails(final Long courseId) {
+    public CourseDetailResponse loadCourseDetails(final Long courseId) {
         final Course course = loadCoursePort.loadCourse(courseId);
-        return CourseDetails.of(course);
+        return CourseDetailResponse.of(course);
     }
 }

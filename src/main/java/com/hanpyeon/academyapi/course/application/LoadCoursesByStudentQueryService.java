@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
+import com.hanpyeon.academyapi.course.controller.Responses.CoursePreviewResponse;
 import com.hanpyeon.academyapi.course.application.port.in.LoadCoursesByStudentQuery;
 import com.hanpyeon.academyapi.course.application.port.out.LoadAllCoursesByStudentIdPort;
 import com.hanpyeon.academyapi.course.domain.Course;
@@ -14,10 +14,10 @@ public class LoadCoursesByStudentQueryService implements LoadCoursesByStudentQue
 
     private final LoadAllCoursesByStudentIdPort loadAllCoursesByStudentIdPort;
     @Override
-    public List<CoursePreview> loadCoursePreviews(final Long studentId) {
+    public List<CoursePreviewResponse> loadCoursePreviews(final Long studentId) {
         final List<Course> courses = loadAllCoursesByStudentIdPort.loadAll(studentId);
         return courses.stream()
-                .map(CoursePreview::of)
+                .map(CoursePreviewResponse::of)
                 .toList();
     }
 }

@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application.query;
 
-import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
+import com.hanpyeon.academyapi.course.controller.Responses.CoursePreviewResponse;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.domain.Course;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -16,7 +16,7 @@ public class QueryCourseByMemberIdManager {
     private final List<QueryCourseByMemberIdHandler> handlers;
 
     @Transactional
-    public List<CoursePreview> query(final Long memberId) {
+    public List<CoursePreviewResponse> query(final Long memberId) {
         return handlers.stream()
                 .filter(queryCourseByMemberRoleAndIdHandler -> queryCourseByMemberRoleAndIdHandler.applicable(memberId))
                 .findAny()
@@ -26,7 +26,7 @@ public class QueryCourseByMemberIdManager {
                 .collect(Collectors.toList());
     }
 
-    private CoursePreview mapToPreview(final Course course) {
-        return CoursePreview.of(course);
+    private CoursePreviewResponse mapToPreview(final Course course) {
+        return CoursePreviewResponse.of(course);
     }
 }

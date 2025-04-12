@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.application;
 
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryByCourseIdAndDateCommand;
-import com.hanpyeon.academyapi.course.application.dto.MemoView;
+import com.hanpyeon.academyapi.course.controller.Responses.MemoViewResponse;
 import com.hanpyeon.academyapi.course.application.port.in.QueryMemoByCourseIdAndDateUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemoByCourseIdAndDatePort;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ public class QueryMemoByCourseIdAndDateService implements QueryMemoByCourseIdAnd
 
     private final QueryMemoByCourseIdAndDatePort queryMemoByCourseIdAndDatePort;
     @Override
-    public MemoView loadSingleMemo(MemoQueryByCourseIdAndDateCommand memoQueryByCourseIdAndDateCommand) {
+    public MemoViewResponse loadSingleMemo(MemoQueryByCourseIdAndDateCommand memoQueryByCourseIdAndDateCommand) {
         return queryMemoByCourseIdAndDatePort.query(memoQueryByCourseIdAndDateCommand);
     }
 }

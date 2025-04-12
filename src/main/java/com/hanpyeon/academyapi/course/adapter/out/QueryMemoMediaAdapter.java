@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
-import com.hanpyeon.academyapi.course.application.dto.MemoMediaView;
+import com.hanpyeon.academyapi.course.controller.Responses.MediaViewResponse;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemoMediaPort;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -20,7 +20,7 @@ public class QueryMemoMediaAdapter implements QueryMemoMediaPort {
     private final QueryMemoMediaAttachmentAdapter queryMemoMediaAttachmentAdapter;
 
     @Override
-    public List<MemoMediaView> queryMedias(Long memoId) {
+    public List<MediaViewResponse> queryMedias(Long memoId) {
         if (Objects.isNull(memoId)) {
             throw new CourseException("메모를 찾을 수 없음 : " + memoId, ErrorCode.MEMO_NOT_EXIST);
         }
@@ -28,7 +28,7 @@ public class QueryMemoMediaAdapter implements QueryMemoMediaPort {
         return memoMedias.stream()
                 .map(memoMedia -> {
                     final Media media = memoMedia.getMedia();
-                    final MemoMediaView view = new MemoMediaView(memoMedia.getId(), media.getMediaName(), media.getSrc(), memoMedia.getSequence(), queryMemoMediaAttachmentAdapter.query(memoMedia.getId()));
+                    final MediaViewResponse view = new MediaViewResponse(memoMedia.getId(), media.getMediaName(), media.getSrc(), memoMedia.getSequence(), queryMemoMediaAttachmentAdapter.query(memoMedia.getId()));
                     log.debug(view.toString());
                     return view;
                 })

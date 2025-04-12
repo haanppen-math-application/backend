@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.controller;
 
-import com.hanpyeon.academyapi.course.application.dto.CourseDetails;
-import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
+import com.hanpyeon.academyapi.course.controller.Responses.CourseDetailResponse;
+import com.hanpyeon.academyapi.course.controller.Responses.CoursePreviewResponse;
 import com.hanpyeon.academyapi.course.application.port.in.LoadCourseDetailsQuery;
 import com.hanpyeon.academyapi.course.application.port.in.LoadCoursesByStudentQuery;
 import com.hanpyeon.academyapi.course.application.port.in.QueryAllCourseUseCase;
@@ -33,7 +33,7 @@ public class CourseQueryController {
     }
 
     @GetMapping(value = "/api/courses/my")
-    public ResponseEntity<List<CoursePreview>> queryMyCourses(
+    public ResponseEntity<List<CoursePreviewResponse>> queryMyCourses(
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         return ResponseEntity.ok(queryCourseByMemberIdUseCase.loadCoursePreviews(memberPrincipal.memberId()));
@@ -42,7 +42,7 @@ public class CourseQueryController {
     @GetMapping("/api/courses/students/{studentId}")
     @Operation(summary = "학생 ID 를 이용한 반 조회", description = "선생님, 원장님만 접근 가능합니다")
     @SecurityRequirement(name = "jwtAuth")
-    public ResponseEntity<List<CoursePreview>> loadCourses(
+    public ResponseEntity<List<CoursePreviewResponse>> loadCourses(
             @PathVariable final Long studentId
     ) {
         return ResponseEntity.ok(loadCoursesByStudentQuery.loadCoursePreviews(studentId));
@@ -51,7 +51,7 @@ public class CourseQueryController {
     @GetMapping(value = "/api/courses/teachers/{teacherId}")
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "선생님 아이디로 담당 수업 조회 API", description = "선생님 멤버 ID를 통해 관리중인 반 정보를 조회할 수 있습니다. 선생님, 원장님 권한으로 가능합니다.")
-    public ResponseEntity<List<CoursePreview>> getCourses(
+    public ResponseEntity<List<CoursePreviewResponse>> getCourses(
             @PathVariable final Long teacherId
     ) {
         return ResponseEntity.ok(queryCourseByMemberIdUseCase.loadCoursePreviews(teacherId));
@@ -60,7 +60,7 @@ public class CourseQueryController {
     @GetMapping("/api/manage/courses/{courseId}")
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "반의 세부사항( 메모 X )을 조회하는 기능입니다", description = "선생님이상의 권한을 가져야 합니다")
-    public ResponseEntity<CourseDetails> loadCourseDetails(
+    public ResponseEntity<CourseDetailResponse> loadCourseDetails(
             @PathVariable final Long courseId
     ) {
         return ResponseEntity.ok(loadCourseDetailsQuery.loadCourseDetails(courseId));

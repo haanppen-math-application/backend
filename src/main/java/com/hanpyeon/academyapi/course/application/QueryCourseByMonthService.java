@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.MemoAppliedDayResult;
+import com.hanpyeon.academyapi.course.controller.Responses.MemoAppliedDayResponse;
 import com.hanpyeon.academyapi.course.application.port.in.QueryCourseByMonthUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemosByMonthPort;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ public class QueryCourseByMonthService implements QueryCourseByMonthUseCase {
     private final QueryMemosByMonthPort queryMemosByMonthPort;
 
     @Override
-    public List<MemoAppliedDayResult> query(final LocalDate registeredDate, final Long studentId) {
+    public List<MemoAppliedDayResponse> query(final LocalDate registeredDate, final Long studentId) {
         final LocalDate startDate = registeredDate.withDayOfMonth(1);
         final LocalDate endDate = registeredDate.withDayOfMonth(registeredDate.lengthOfMonth());
 

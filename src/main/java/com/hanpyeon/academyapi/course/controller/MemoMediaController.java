@@ -11,7 +11,7 @@ import com.hanpyeon.academyapi.course.application.port.in.DeleteMemoMediaUseCase
 import com.hanpyeon.academyapi.course.application.port.in.RegisterAttachmentUseCase;
 import com.hanpyeon.academyapi.course.application.port.in.RegisterMemoMediaUseCase;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateMemoMediaUseCase;
-import com.hanpyeon.academyapi.course.controller.Requests.RegisterAttachmentChunkResponse;
+import com.hanpyeon.academyapi.course.controller.Responses.RegisterAttachmentChunkResponse;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -77,7 +77,7 @@ public class MemoMediaController {
         if (result.getIsUploaded()) {
             return ResponseEntity.created(null).build();
         }
-        final RegisterAttachmentChunkResponse response = Requests.RegisterAttachmentChunkResponse.of(result);
+        final RegisterAttachmentChunkResponse response = Responses.RegisterAttachmentChunkResponse.of(result);
         if (result.getIsWrongChunk()) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
         }

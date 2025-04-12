@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.course.controller;
 
-import com.hanpyeon.academyapi.course.application.dto.AttachmentChunkResult;
 import com.hanpyeon.academyapi.course.application.dto.CourseRegisterCommand;
 import com.hanpyeon.academyapi.course.application.dto.CourseUpdateCommand;
 import com.hanpyeon.academyapi.course.application.dto.DeleteCourseCommand;
@@ -157,24 +156,6 @@ public class Requests {
                     currChunkIndex(),
                     isLast(),
                     extension()
-            );
-        }
-    }
-
-    record RegisterAttachmentChunkResponse(
-            Long nextChunkIndex,
-            Long remainSize,
-            Boolean needMore,
-            Boolean isWrongChunk,
-            String errorMessage
-    ) {
-        static RegisterAttachmentChunkResponse of(final AttachmentChunkResult result) {
-            return new RegisterAttachmentChunkResponse(
-                    result.getNextRequireChunkIndex(),
-                    result.getRemainSize(),
-                    result.getNeedMore(),
-                    result.getIsWrongChunk(),
-                    result.getErrorMessage()
             );
         }
     }

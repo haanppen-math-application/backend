@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
+import com.hanpyeon.academyapi.course.controller.Responses.CoursePreviewResponse;
 import com.hanpyeon.academyapi.course.application.port.in.QueryCourseByMemberIdUseCase;
 import com.hanpyeon.academyapi.course.application.query.QueryCourseByMemberIdManager;
 import java.util.List;
@@ -14,7 +14,7 @@ public class QueryCourseByMemberIdService implements QueryCourseByMemberIdUseCas
     private final QueryCourseByMemberIdManager queryCourseByMemberIdManager;
 
     @Override
-    public List<CoursePreview> loadCoursePreviews(final Long memberId) {
+    public List<CoursePreviewResponse> loadCoursePreviews(final Long memberId) {
         return queryCourseByMemberIdManager.query(memberId);
     }
 }

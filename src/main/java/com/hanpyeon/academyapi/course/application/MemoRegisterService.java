@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.course.application;
 
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryByCourseIdAndDateCommand;
 import com.hanpyeon.academyapi.course.application.dto.MemoRegisterCommand;
-import com.hanpyeon.academyapi.course.application.dto.MemoView;
+import com.hanpyeon.academyapi.course.controller.Responses.MemoViewResponse;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.application.exception.InvalidCourseAccessException;
 import com.hanpyeon.academyapi.course.application.port.in.MemoRegisterUseCase;
@@ -36,7 +36,7 @@ public class MemoRegisterService implements MemoRegisterUseCase {
     }
 
     private void isDuplicated(final Long courseId, final LocalDate localDate) {
-        final MemoView memoView = queryMemoByCourseIdAndDatePort.query(new MemoQueryByCourseIdAndDateCommand(courseId, localDate));
+        final MemoViewResponse memoView = queryMemoByCourseIdAndDatePort.query(new MemoQueryByCourseIdAndDateCommand(courseId, localDate));
         if (memoView == null) {
             return;
         }

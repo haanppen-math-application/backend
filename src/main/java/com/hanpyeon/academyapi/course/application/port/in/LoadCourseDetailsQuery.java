@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.application.port.in;
 
-import com.hanpyeon.academyapi.course.application.dto.CourseDetails;
+import com.hanpyeon.academyapi.course.controller.Responses.CourseDetailResponse;
 
 public interface LoadCourseDetailsQuery {
-    CourseDetails loadCourseDetails(final Long courseId);
+    CourseDetailResponse loadCourseDetails(final Long courseId);
 }

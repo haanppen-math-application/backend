@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
+import com.hanpyeon.academyapi.course.controller.Responses.CoursePreviewResponse;
 import com.hanpyeon.academyapi.course.application.port.in.QueryAllCourseUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.LoadAllCoursePort;
 import java.util.List;
@@ -15,10 +15,10 @@ public class QueryAllCourseService implements QueryAllCourseUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CoursePreview> loadAllCoursePreviews() {
+    public List<CoursePreviewResponse> loadAllCoursePreviews() {
         return loadAllCoursePort.loadAllCourses()
                 .stream()
-                .map(CoursePreview::of)
+                .map(CoursePreviewResponse::of)
                 .toList();
     }
 }

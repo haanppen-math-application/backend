@@ -1,12 +1,12 @@
 package com.hanpyeon.academyapi.online.dto;
 
-import com.hanpyeon.academyapi.course.application.dto.TeacherPreview;
+import com.hanpyeon.academyapi.course.controller.Responses.TeacherPreviewResponse;
 
 public record OnlineCoursePreview(
         String courseName,
         Long courseId,
         Integer studentSize,
-        TeacherPreview teacherPreview,
+        TeacherPreviewResponse teacherPreview,
         LessonCategoryInfo lessonCategoryInfo,
         String imageSrc
 ){

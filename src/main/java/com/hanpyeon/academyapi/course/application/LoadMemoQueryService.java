@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.application;
 
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryCommand;
-import com.hanpyeon.academyapi.course.application.dto.MemoView;
+import com.hanpyeon.academyapi.course.controller.Responses.MemoViewResponse;
 import com.hanpyeon.academyapi.course.application.port.in.LoadMemoQuery;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemosPort;
 import jakarta.validation.Valid;
@@ -16,7 +16,7 @@ public class LoadMemoQueryService implements LoadMemoQuery {
     private final QueryMemosPort queryMemosPort;
 
     @Override
-    public Page<MemoView> loadMemos(final @Valid MemoQueryCommand command) {;
+    public Page<MemoViewResponse> loadMemos(final @Valid MemoQueryCommand command) {;
         return queryMemosPort.loadMemos(command);
     }
 }

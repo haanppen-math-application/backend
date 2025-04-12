@@ -1,8 +1,8 @@
 package com.hanpyeon.academyapi.course.application.port.in;
 
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryByCourseIdAndDateCommand;
-import com.hanpyeon.academyapi.course.application.dto.MemoView;
+import com.hanpyeon.academyapi.course.controller.Responses.MemoViewResponse;
 
 public interface QueryMemoByCourseIdAndDateUseCase {
-    MemoView loadSingleMemo(final MemoQueryByCourseIdAndDateCommand memoQueryByCourseIdAndDateCommand);
+    MemoViewResponse loadSingleMemo(final MemoQueryByCourseIdAndDateCommand memoQueryByCourseIdAndDateCommand);
 }

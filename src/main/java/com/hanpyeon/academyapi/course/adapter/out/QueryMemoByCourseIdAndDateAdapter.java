@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.course.adapter.out;
 
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryByCourseIdAndDateCommand;
-import com.hanpyeon.academyapi.course.application.dto.MemoView;
+import com.hanpyeon.academyapi.course.controller.Responses.MemoViewResponse;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.application.port.out.QueryMemoByCourseIdAndDatePort;
 import com.hanpyeon.academyapi.exception.ErrorCode;
@@ -17,7 +17,7 @@ public class QueryMemoByCourseIdAndDateAdapter implements QueryMemoByCourseIdAnd
     private final QueryMemoMediaAdapter queryMemoMediaAdapter;
 
     @Override
-    public MemoView query(MemoQueryByCourseIdAndDateCommand command) {
+    public MemoViewResponse query(MemoQueryByCourseIdAndDateCommand command) {
         final List<com.hanpyeon.academyapi.course.adapter.out.Memo> memos = memoRepository.findAllByCourseIdAndTargetDate(
                 command.getCourseId(),
                 command.getLocalDate()
@@ -35,8 +35,8 @@ public class QueryMemoByCourseIdAndDateAdapter implements QueryMemoByCourseIdAnd
         }
     }
 
-    private MemoView mapTomMemoView(final com.hanpyeon.academyapi.course.adapter.out.Memo memo) {
-        return new MemoView(
+    private MemoViewResponse mapTomMemoView(final com.hanpyeon.academyapi.course.adapter.out.Memo memo) {
+        return new MemoViewResponse(
                 memo.getId(),
                 memo.getTitle(),
                 memo.getContent(),

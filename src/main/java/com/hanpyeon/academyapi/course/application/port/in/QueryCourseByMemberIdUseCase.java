@@ -1,8 +1,8 @@
 package com.hanpyeon.academyapi.course.application.port.in;
 
-import com.hanpyeon.academyapi.course.application.dto.CoursePreview;
+import com.hanpyeon.academyapi.course.controller.Responses.CoursePreviewResponse;
 import java.util.List;
 
 public interface QueryCourseByMemberIdUseCase {
-    List<CoursePreview> loadCoursePreviews(final Long memberId);
+    List<CoursePreviewResponse> loadCoursePreviews(final Long memberId);
 }
