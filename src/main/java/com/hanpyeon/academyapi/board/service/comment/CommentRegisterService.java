@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class CommentRegisterManager {
+public class CommentRegisterService {
     private final ImageService imageService;
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
@@ -55,7 +55,6 @@ public class CommentRegisterManager {
     private Question findQuestion(final Long questionId) {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION));
-        verifyQuestion(question);
         return question;
     }
 
@@ -64,9 +63,6 @@ public class CommentRegisterManager {
                 .orElseThrow(() -> new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER));
         verifyMember(member);
         return member;
-    }
-
-    protected void verifyQuestion(Question question) {
     }
 
     protected void verifyMember(Member member) {

@@ -8,7 +8,6 @@ import com.hanpyeon.academyapi.board.dto.CommentUpdateCommand;
 import com.hanpyeon.academyapi.board.entity.Comment;
 import com.hanpyeon.academyapi.board.exception.BoardException;
 import com.hanpyeon.academyapi.board.exception.NoSuchCommentException;
-import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManager;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.service.ImageService;
@@ -26,8 +25,7 @@ import org.springframework.validation.annotation.Validated;
 @Slf4j
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final CommentRegisterManager commentRegisterManager;
-    private final CommentContentManager commentContentManager;
+    private final CommentRegisterService commentRegisterManager;
     private final ImageService imageService;
 
     @Transactional

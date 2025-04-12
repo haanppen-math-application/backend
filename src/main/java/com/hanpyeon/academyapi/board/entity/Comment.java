@@ -64,20 +64,9 @@ public class Comment {
     void setQuestion(final Question question) {
         this.question = question;
     }
-    void singleAdopt() {
-        this.adopted = true;
-    }
+
     void singleDeAdopt() {
         this.adopted = false;
-    }
-    public void adopt() {
-        question.clearCommentsAdoptedStatus();
-        question.singleSolved();
-        singleAdopt();
-    }
-    public void deAdopt() {
-        question.singleUnsolved();
-        question.clearCommentsAdoptedStatus();
     }
 
     public void delete() {

@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.hanpyeon.academyapi.board.dao.CommentRepository;
 import com.hanpyeon.academyapi.board.dto.CommentRegisterCommand;
 import com.hanpyeon.academyapi.board.entity.Comment;
-import com.hanpyeon.academyapi.board.service.comment.content.CommentContentManager;
 import com.hanpyeon.academyapi.media.service.ImageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,9 +19,7 @@ class CommentServiceTest {
     @Mock
     CommentRepository commentRepository;
     @Mock
-    CommentRegisterManager commentRegisterManager;
-    @Mock
-    CommentContentManager commentContentManager;
+    CommentRegisterService commentRegisterManager;
     @Mock
     ImageService imageService;
 
@@ -30,7 +27,7 @@ class CommentServiceTest {
 
     @BeforeEach
     void init() {
-        this.commentService = new CommentService(commentRepository, commentRegisterManager, commentContentManager, imageService);
+        this.commentService = new CommentService(commentRepository, commentRegisterManager, imageService);
     }
 
     @Test
