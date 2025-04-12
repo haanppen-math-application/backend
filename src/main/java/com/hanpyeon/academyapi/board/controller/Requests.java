@@ -5,6 +5,8 @@ import com.hanpyeon.academyapi.board.dto.CommentUpdateCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionDeleteCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionRegisterCommand;
 import com.hanpyeon.academyapi.board.dto.QuestionUpdateCommand;
+import com.hanpyeon.academyapi.board.service.comment.validate.CommentContentConstraint;
+import com.hanpyeon.academyapi.board.service.comment.validate.CommentImageConstraint;
 import com.hanpyeon.academyapi.board.service.question.validate.QuestionContentConstraint;
 import com.hanpyeon.academyapi.board.service.question.validate.QuestionImageConstraint;
 import com.hanpyeon.academyapi.board.service.question.validate.QuestionTitleConstraint;
@@ -18,9 +20,9 @@ class Requests {
     record CommentRegisterRequest(
             @NotNull
             Long questionId,
-            @QuestionContentConstraint
+            @CommentContentConstraint
             String content,
-            @QuestionImageConstraint
+            @CommentImageConstraint
             List<String> images
     ) {
         CommentRegisterCommand toCommand(final Long requestMemberId) {
@@ -33,9 +35,9 @@ class Requests {
             @NotNull
             Long commentId,
             @Schema(description = "바뀐 전체 본문을 보내야 합니다.")
-            @QuestionContentConstraint
+            @CommentContentConstraint
             String content,
-            @QuestionImageConstraint
+            @CommentImageConstraint
             List<String> imageSources
     ) {
         CommentUpdateCommand toCommand(final Long requestMemberId, final Role role) {
