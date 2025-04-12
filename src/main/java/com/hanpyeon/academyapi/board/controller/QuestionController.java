@@ -12,6 +12,7 @@ import com.hanpyeon.academyapi.board.service.question.QuestionUpdateService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequestMapping("/api/board/questions")
 @RequiredArgsConstructor
+@Tag(name = "Questions")
 public class QuestionController {
     private final QuestionUpdateService questionUpdateService;
     private final QuestionRegisterService questionRegisterService;
