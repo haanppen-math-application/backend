@@ -4,6 +4,8 @@ import com.hanpyeon.academyapi.course.application.dto.CourseRegisterCommand;
 import com.hanpyeon.academyapi.course.application.dto.CourseUpdateCommand;
 import com.hanpyeon.academyapi.course.application.dto.DeleteCourseCommand;
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryByCourseIdAndDateCommand;
+import com.hanpyeon.academyapi.course.application.dto.MemoRegisterCommand;
+import com.hanpyeon.academyapi.course.application.dto.ModifyMemoTextCommand;
 import com.hanpyeon.academyapi.course.application.dto.RegisterStudentCommand;
 import com.hanpyeon.academyapi.course.application.dto.UpdateCourseStudentsCommand;
 import com.hanpyeon.academyapi.security.Role;
@@ -31,7 +33,6 @@ public class Requests {
         DeleteCourseCommand toCommand(final MemberPrincipal memberPrincipal) {
             return new DeleteCourseCommand(courseId, memberPrincipal.role(), memberPrincipal.memberId());
         }
-
     }
 
     record UpdateCourseStudentsRequest(
@@ -86,7 +87,39 @@ public class Requests {
             return new RegisterStudentCommand(
                     requestMemberId,
                     courseId(),
-                    targetStudentIds());
+                    targetStudentIds()
+            );
+        }
+    }
+
+    record MemoTextModifyRequest(
+            Long memoId,
+            String title,
+            String content
+    ) {
+        ModifyMemoTextCommand toCommand(final Long requestMemberId) {
+            return new ModifyMemoTextCommand(memoId, title, content, requestMemberId);
+        }
+    }
+
+    record RegisterMemoRequest(
+            @Nonnull
+            Long targetCourseId,
+            @Nonnull
+            String title,
+            @Nonnull
+            String content,
+            @Nonnull
+            LocalDate registerTargetDateTime
+    ) {
+        MemoRegisterCommand toCommand(final Long requestMemberId) {
+            return new MemoRegisterCommand(
+                    requestMemberId,
+                    this.targetCourseId,
+                    this.title,
+                    this.content,
+                    this.registerTargetDateTime
+            );
         }
     }
 }
