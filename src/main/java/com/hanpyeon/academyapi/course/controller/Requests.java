@@ -1,19 +1,27 @@
 package com.hanpyeon.academyapi.course.controller;
 
+import com.hanpyeon.academyapi.course.application.dto.AttachmentChunkResult;
 import com.hanpyeon.academyapi.course.application.dto.CourseRegisterCommand;
 import com.hanpyeon.academyapi.course.application.dto.CourseUpdateCommand;
 import com.hanpyeon.academyapi.course.application.dto.DeleteCourseCommand;
+import com.hanpyeon.academyapi.course.application.dto.MemoMediaUpdateSequenceCommand;
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryByCourseIdAndDateCommand;
 import com.hanpyeon.academyapi.course.application.dto.MemoRegisterCommand;
 import com.hanpyeon.academyapi.course.application.dto.ModifyMemoTextCommand;
+import com.hanpyeon.academyapi.course.application.dto.RegisterAttachmentChunkCommand;
+import com.hanpyeon.academyapi.course.application.dto.RegisterMemoMediaCommand;
 import com.hanpyeon.academyapi.course.application.dto.RegisterStudentCommand;
 import com.hanpyeon.academyapi.course.application.dto.UpdateCourseStudentsCommand;
+import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
 import com.hanpyeon.academyapi.security.Role;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import jakarta.annotation.Nonnull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.web.multipart.MultipartFile;
 
 public class Requests {
     record QueryMemoByCourseIdAndDateRequest(
@@ -120,6 +128,88 @@ public class Requests {
                     this.content,
                     this.registerTargetDateTime
             );
+        }
+    }
+
+    record RegisterAttachmentWithChunkRequest(
+            @Nonnull
+            Long memoMediaId,
+            @NotBlank
+            String fileName,
+            @Nonnull
+            MultipartFile chunkedFile,
+            @Nonnull
+            Long totalChunkCount,
+            @Nonnull
+            Long currChunkIndex,
+            @Nonnull
+            Boolean isLast,
+            @Nonnull
+            String extension
+    ) {
+        RegisterAttachmentChunkCommand toCommand(final Long requestMemberId) {
+            return new RegisterAttachmentChunkCommand(
+                    requestMemberId,
+                    memoMediaId(),
+                    chunkedFile(),
+                    fileName(),
+                    totalChunkCount(),
+                    currChunkIndex(),
+                    isLast(),
+                    extension()
+            );
+        }
+    }
+
+    record RegisterAttachmentChunkResponse(
+            Long nextChunkIndex,
+            Long remainSize,
+            Boolean needMore,
+            Boolean isWrongChunk,
+            String errorMessage
+    ) {
+        static RegisterAttachmentChunkResponse of(final AttachmentChunkResult result) {
+            return new RegisterAttachmentChunkResponse(
+                    result.getNextRequireChunkIndex(),
+                    result.getRemainSize(),
+                    result.getNeedMore(),
+                    result.getIsWrongChunk(),
+                    result.getErrorMessage()
+            );
+        }
+    }
+
+    record RegisterMemoMediaRequest(
+            @Nonnull
+            String mediaSource,
+            @Nonnull
+            Long memoId
+    ) {
+        RegisterMemoMediaCommand toCommand(final Long requestMemberId) {
+            return new RegisterMemoMediaCommand(mediaSource, memoId, requestMemberId);
+        }
+    }
+
+    record UpdateMemoMediaRequest(
+            @Nonnull
+            Long memoId,
+            @Nonnull
+            List<MediaSequenceUpdateRequest> sequenceUpdateRequests
+    ) {
+        UpdateMediaMemoCommand toCommand(final Long requestMemberId) {
+            final List<MemoMediaUpdateSequenceCommand> updateMediaMemoCommands = sequenceUpdateRequests.stream()
+                    .map(mediaInfo -> mediaInfo.toCommand())
+                    .collect(Collectors.toList());
+            return new UpdateMediaMemoCommand(memoId, updateMediaMemoCommands, requestMemberId);
+        }
+
+        record MediaSequenceUpdateRequest(
+                Long memoMediaId,
+                Integer sequence
+        ) {
+            MemoMediaUpdateSequenceCommand toCommand() {
+                return new MemoMediaUpdateSequenceCommand(memoMediaId, sequence);
+            }
         }
     }
 }

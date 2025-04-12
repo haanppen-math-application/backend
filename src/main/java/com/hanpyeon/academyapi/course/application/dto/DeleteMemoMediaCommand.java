@@ -5,4 +5,7 @@ public record DeleteMemoMediaCommand(
         Long memoId,
         Long requestMemberId
 ) {
+    public static DeleteMemoMediaCommand of(final Long memoMediaId, final Long memoId, final Long requestMemberId) {
+        return new DeleteMemoMediaCommand(memoMediaId, memoId, requestMemberId);
+    }
 }
