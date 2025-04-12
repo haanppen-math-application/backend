@@ -46,7 +46,7 @@ public class MemoQueryController {
     public ResponseEntity<MemoView> loadMemo(
             @ModelAttribute @Valid final QueryMemoByCourseIdAndDateRequest queryMemoByCourseIdAndDateRequest
     ) {
-        final MemoQueryByCourseIdAndDateCommand command = queryMemoByCourseIdAndDateRequest.createCommand();
+        final MemoQueryByCourseIdAndDateCommand command = queryMemoByCourseIdAndDateRequest.toCommand();
         final MemoView memoView = queryMemoByCourseIdAndDateUseCase.loadSingleMemo(command);
         if (Objects.isNull(memoView)) {
             return ResponseEntity.noContent().build();

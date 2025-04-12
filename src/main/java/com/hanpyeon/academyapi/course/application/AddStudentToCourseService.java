@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.RegisterStudentDto;
+import com.hanpyeon.academyapi.course.application.dto.RegisterStudentCommand;
 import com.hanpyeon.academyapi.course.application.port.in.AddStudentToCourseUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.AddCourseStudentPort;
 import com.hanpyeon.academyapi.course.application.port.out.LoadCoursePort;
@@ -22,7 +22,7 @@ public class AddStudentToCourseService implements AddStudentToCourseUseCase {
     private final AddCourseStudentPort addCourseStudentPort;
 
     @Override
-    public void addStudentToCourse(RegisterStudentDto registerStudentDto) {
+    public void addStudentToCourse(RegisterStudentCommand registerStudentDto) {
         final Course course = loadCoursePort.loadCourse(registerStudentDto.courseId());
         final List<Student> students = loadStudentsPort.loadStudents(registerStudentDto.targetMembersId());
 

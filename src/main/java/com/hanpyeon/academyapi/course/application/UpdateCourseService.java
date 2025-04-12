@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.CourseUpdateDto;
+import com.hanpyeon.academyapi.course.application.dto.CourseUpdateCommand;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateCourseUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.LoadCoursePort;
 import com.hanpyeon.academyapi.course.application.port.out.LoadTeacherPort;
@@ -21,7 +21,7 @@ public class UpdateCourseService implements UpdateCourseUseCase {
     private final UpdateCoursePort updateCoursePort;
     @Override
     @Transactional
-    public void updateCourse(final @Valid CourseUpdateDto courseUpdateDto) {
+    public void updateCourse(final @Valid CourseUpdateCommand courseUpdateDto) {
         final Course course = loadCoursePort.loadCourse(courseUpdateDto.courseId());
 
         if (Objects.nonNull(courseUpdateDto.courseName())){

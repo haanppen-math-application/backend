@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.course.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.hanpyeon.academyapi.course.application.dto.CourseRegisterDto;
+import com.hanpyeon.academyapi.course.application.dto.CourseRegisterCommand;
 import com.hanpyeon.academyapi.course.application.port.out.LoadStudentsPort;
 import com.hanpyeon.academyapi.course.application.port.out.LoadTeacherPort;
 import com.hanpyeon.academyapi.course.application.port.out.RegisterCoursePort;
@@ -32,7 +32,7 @@ class CourseRegisterServiceTest {
 
     @Test
     void 등록_테스트() {
-        CourseRegisterDto courseRegisterDto = new CourseRegisterDto("1", 1l, null, 1l, Role.TEACHER);
+        CourseRegisterCommand courseRegisterDto = new CourseRegisterCommand("1", 1l, null, 1l, Role.TEACHER);
 
 
         Mockito.when(registerCoursePort.register(Mockito.any()))

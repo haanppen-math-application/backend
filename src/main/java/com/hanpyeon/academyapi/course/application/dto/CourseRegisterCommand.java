@@ -4,7 +4,7 @@ import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
-public record CourseRegisterDto(
+public record CourseRegisterCommand(
         @NotNull String courseName,
         @NotNull Long teacherId,
         List<Long> students,

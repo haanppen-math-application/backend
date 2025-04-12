@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.UpdateCourseStudentsDto;
+import com.hanpyeon.academyapi.course.application.dto.UpdateCourseStudentsCommand;
 import com.hanpyeon.academyapi.course.application.port.in.UpdateCourseStudentsUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.LoadCoursePort;
 import com.hanpyeon.academyapi.course.application.port.out.LoadStudentsPort;
@@ -20,7 +20,7 @@ public class UpdateCourseStudentsService implements UpdateCourseStudentsUseCase 
     private final UpdateCoursePort updateCoursePort;
 
     @Transactional
-    public void updateStudents(UpdateCourseStudentsDto updateCourseStudentsDto) {
+    public void updateStudents(UpdateCourseStudentsCommand updateCourseStudentsDto) {
         final List<Student> students = loadStudentsPort.loadStudents(updateCourseStudentsDto.studentIds());
         final Course targetCourse = loadCoursePort.loadCourse(updateCourseStudentsDto.courseId());
         targetCourse.setStudents(students);

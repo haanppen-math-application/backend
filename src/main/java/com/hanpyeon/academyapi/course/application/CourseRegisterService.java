@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application;
 
-import com.hanpyeon.academyapi.course.application.dto.CourseRegisterDto;
+import com.hanpyeon.academyapi.course.application.dto.CourseRegisterCommand;
 import com.hanpyeon.academyapi.course.application.exception.CourseException;
 import com.hanpyeon.academyapi.course.application.port.in.CourseRegisterUseCase;
 import com.hanpyeon.academyapi.course.application.port.out.LoadStudentsPort;
@@ -28,7 +28,7 @@ public class CourseRegisterService implements CourseRegisterUseCase {
     private final RegisterCoursePort registerCoursePort;
 
     @Override
-    public Long register(@Validated final CourseRegisterDto courseRegisterDto) {
+    public Long register(@Validated final CourseRegisterCommand courseRegisterDto) {
         validate(courseRegisterDto.role(), courseRegisterDto.requestMemberId(), courseRegisterDto.teacherId());
         final Course course = mapToCourse(courseRegisterDto);
         return registerCoursePort.register(course);
@@ -44,7 +44,7 @@ public class CourseRegisterService implements CourseRegisterUseCase {
         throw new CourseException("선생님은 본인의 수업만 만들 수 있습니다", ErrorCode.INVALID_COURSE_ACCESS);
     }
 
-    private Course mapToCourse(final CourseRegisterDto courseRegisterDto) {
+    private Course mapToCourse(final CourseRegisterCommand courseRegisterDto) {
         return Course.createNewCourse(
                 courseRegisterDto.courseName(),
                 getStudents(courseRegisterDto.students()),
