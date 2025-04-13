@@ -3,7 +3,7 @@ package com.hanpyeon.academyapi.dir.service.media.delete;
 import com.hanpyeon.academyapi.course.adapter.out.MediaAttachmentRepository;
 import com.hanpyeon.academyapi.course.adapter.out.MemoMediaRepository;
 import com.hanpyeon.academyapi.dir.dao.DirectoryRepository;
-import com.hanpyeon.academyapi.dir.dto.DeleteMediaDto;
+import com.hanpyeon.academyapi.dir.dto.DeleteMediaCommand;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.entity.Media;
 import com.hanpyeon.academyapi.media.exception.MediaException;
@@ -23,7 +23,7 @@ public class DeleteService {
     private final MediaAttachmentRepository mediaAttachmentRepository;
 
     @Transactional
-    public void delete(final DeleteMediaDto deleteMediaDto) {
+    public void delete(final DeleteMediaCommand deleteMediaDto) {
         validate(deleteMediaDto.memberPrincipal(), deleteMediaDto.mediaSrc());
         final Media media = mediaRepository.findBySrc(deleteMediaDto.mediaSrc())
                         .orElseThrow(() -> new MediaException(ErrorCode.NO_SUCH_MEDIA));

@@ -1,7 +1,8 @@
 package com.hanpyeon.academyapi.dir.controller;
 
 import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
-import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
+import com.hanpyeon.academyapi.dir.dto.CreateDirectoryCommand;
+import com.hanpyeon.academyapi.dir.dto.UploadMediaCommand;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +11,6 @@ import lombok.NonNull;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Requests {
-
     record UpdateDirectoryRequest(
             @NotBlank @Pattern(regexp = "^/.*$") String targetDirPath,
             @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9 ]+$") String newDirName
@@ -23,6 +23,11 @@ public class Requests {
             @NotNull Boolean canViewByEveryone,
             @NotNull Boolean canModifyByEveryone
     ) {
+        CreateDirectoryCommand toCommand(final Long requestMemberId) {
+            return new CreateDirectoryCommand(
+                    directoryName(), directoryPath(), requestMemberId, canViewByEveryone, canModifyByEveryone
+            );
+        }
     }
 
     record DeleteDirectoryRequest(
@@ -59,8 +64,8 @@ public class Requests {
             @NonNull Long mediaDuration
     ) {
 
-        UploadMediaDto toCommand(final MultipartFile multipartFile, final Long requestMemberId) {
-            return new UploadMediaDto(
+        UploadMediaCommand toCommand(final MultipartFile multipartFile, final Long requestMemberId) {
+            return new UploadMediaCommand(
                     multipartFile,
                     fileName(),
                     totalChunkCount(),

@@ -3,8 +3,8 @@ package com.hanpyeon.academyapi.dir.controller;
 import com.hanpyeon.academyapi.dir.controller.Requests.MediaSaveRequest;
 import com.hanpyeon.academyapi.dir.controller.Requests.MediaSaveResponse;
 import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
-import com.hanpyeon.academyapi.dir.dto.DeleteMediaDto;
-import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
+import com.hanpyeon.academyapi.dir.dto.DeleteMediaCommand;
+import com.hanpyeon.academyapi.dir.dto.UploadMediaCommand;
 import com.hanpyeon.academyapi.dir.service.MediaService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +35,7 @@ public class DirectoryMediaController {
             @RequestPart(value = "info") @Valid final MediaSaveRequest request,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final UploadMediaDto mediaSaveDto = request.toCommand(multipartFile, memberPrincipal.memberId());
+        final UploadMediaCommand mediaSaveDto = request.toCommand(multipartFile, memberPrincipal.memberId());
         final ChunkStoreResult chunkStoreResult = mediaService.uploadChunk(mediaSaveDto);
 
         return mapToResponse(chunkStoreResult);
@@ -46,7 +46,7 @@ public class DirectoryMediaController {
             @RequestParam(required = true) final String mediaSrc,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        mediaService.deleteMedia(new DeleteMediaDto(mediaSrc, memberPrincipal));
+        mediaService.deleteMedia(new DeleteMediaCommand(mediaSrc, memberPrincipal));
         return ResponseEntity.noContent().build();
     }
 

@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.dir.service.create.validate;
 
-import com.hanpyeon.academyapi.dir.dto.CreateDirectoryCommand;
+import com.hanpyeon.academyapi.dir.dao.Directory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class DirectoryCreationValidateManager {
     private final List<DirectoryCreateValidator> createValidators;
 
     @Transactional
-    public void validate(final CreateDirectoryCommand createDirectoryCommand) {
-        createValidators.stream().forEach(directoryCreateValidator -> directoryCreateValidator.validate(createDirectoryCommand));
+    public void validate(final Directory directory) {
+        createValidators.forEach(dirValidator -> dirValidator.validate(directory));
     }
 }

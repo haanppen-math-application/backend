@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.dir.service.media.upload.chunk.group;
 
-import com.hanpyeon.academyapi.dir.dto.UploadMediaDto;
+import com.hanpyeon.academyapi.dir.dto.UploadMediaCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class BasicChunkedFileFactory {
 
-    public ChunkedFile create(final UploadMediaDto uploadMediaDto, final ChunkGroupInfo chunkGroupInfo) {
+    public ChunkedFile create(final UploadMediaCommand uploadMediaDto, final ChunkGroupInfo chunkGroupInfo) {
         return new BasicChunkedFile(
                 uploadMediaDto.getFile(),
                 chunkGroupInfo,

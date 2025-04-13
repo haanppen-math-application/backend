@@ -1,9 +1,9 @@
 package com.hanpyeon.academyapi.dir.service;
 
-import com.hanpyeon.academyapi.dir.dto.CreateDirectoryDto;
+import com.hanpyeon.academyapi.dir.dto.CreateDirectoryCommand;
 import com.hanpyeon.academyapi.dir.dto.DeleteDirectoryDto;
 import com.hanpyeon.academyapi.dir.dto.FileView;
-import com.hanpyeon.academyapi.dir.dto.QueryDirectoryDto;
+import com.hanpyeon.academyapi.dir.dto.QueryDirectory;
 import com.hanpyeon.academyapi.dir.dto.UpdateDirectoryDto;
 import com.hanpyeon.academyapi.dir.service.create.DirectoryCreateService;
 import com.hanpyeon.academyapi.dir.service.delete.DirectoryDeleteService;
@@ -23,12 +23,12 @@ public class DirectoryService {
     private final DirectoryCreateService directoryCreateService;
     private final DirectoryDeleteService directoryDeleteService;
     @Transactional
-    public void addNewDirectory(@Validated final CreateDirectoryDto createDirectoryDto) {
+    public void addNewDirectory(@Validated final CreateDirectoryCommand createDirectoryDto) {
         directoryCreateService.addNewDirectory(createDirectoryDto);
     }
 
     @Transactional(readOnly = true)
-    public List<FileView> loadCurrFiles(@Validated final QueryDirectoryDto queryDirectoryDto) {
+    public List<FileView> loadCurrFiles(@Validated final QueryDirectory queryDirectoryDto) {
         return directoryQueryService.queryDirectory(queryDirectoryDto);
     }
 

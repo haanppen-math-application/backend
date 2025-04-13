@@ -1,11 +1,17 @@
 package com.hanpyeon.academyapi.dir.controller;
 
-import com.hanpyeon.academyapi.dir.dto.CreateDirectoryDto;
+import com.hanpyeon.academyapi.dir.controller.Requests.CreateDirectoryRequest;
+import com.hanpyeon.academyapi.dir.controller.Requests.DeleteDirectoryRequest;
+import com.hanpyeon.academyapi.dir.controller.Requests.UpdateDirectoryRequest;
+import com.hanpyeon.academyapi.dir.dto.CreateDirectoryCommand;
 import com.hanpyeon.academyapi.dir.dto.DeleteDirectoryDto;
 import com.hanpyeon.academyapi.dir.dto.FileView;
-import com.hanpyeon.academyapi.dir.dto.QueryDirectoryDto;
+import com.hanpyeon.academyapi.dir.dto.QueryDirectory;
 import com.hanpyeon.academyapi.dir.dto.UpdateDirectoryDto;
-import com.hanpyeon.academyapi.dir.service.DirectoryService;
+import com.hanpyeon.academyapi.dir.service.create.DirectoryCreateService;
+import com.hanpyeon.academyapi.dir.service.delete.DirectoryDeleteService;
+import com.hanpyeon.academyapi.dir.service.query.DirectoryQueryService;
+import com.hanpyeon.academyapi.dir.service.update.DirectoryUpdateService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -28,17 +34,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/directories")
 @RequiredArgsConstructor
 public class DirectoryController {
-    private final DirectoryService directoryService;
+    private final DirectoryQueryService directoryQueryService;
+    private final DirectoryUpdateService directoryUpdateService;
+    private final DirectoryCreateService directoryCreateService;
+    private final DirectoryDeleteService directoryDeleteService;
 
     @PostMapping
     @Operation(summary = "디렉토리를 새로 생성하는 api 입니다", description = "기본 디렉토리로 /, /teachers 가 존재합니다")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> createDirectory(
-            @RequestBody @Valid final Requests.CreateDirectoryRequest createDirectoryRequest,
+            @RequestBody @Valid final CreateDirectoryRequest createDirectoryRequest,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final CreateDirectoryDto createDirectoryDto = new CreateDirectoryDto(createDirectoryRequest.directoryName(), createDirectoryRequest.directoryPath(), memberPrincipal.memberId(), createDirectoryRequest.canViewByEveryone(), createDirectoryRequest.canModifyByEveryone());
-        directoryService.addNewDirectory(createDirectoryDto);
+        final CreateDirectoryCommand createDirectoryDto = createDirectoryRequest.toCommand(memberPrincipal.memberId());
+        directoryCreateService.addNewDirectory(createDirectoryDto);
         return ResponseEntity.ok(null);
     }
 
@@ -49,18 +58,18 @@ public class DirectoryController {
             @RequestParam(defaultValue = "/") final String dirPath,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        return ResponseEntity.ok(directoryService.loadCurrFiles(new QueryDirectoryDto(dirPath, memberPrincipal.memberId())));
+        return ResponseEntity.ok(directoryQueryService.queryDirectory(new QueryDirectory(dirPath, memberPrincipal.memberId())));
     }
 
     @PutMapping
     @Operation(summary = "디렉토리 수정하는 api 입니다" )
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateDirectory(
-            @RequestBody @Valid final Requests.UpdateDirectoryRequest renameDirectoryRequest,
+            @RequestBody @Valid final UpdateDirectoryRequest renameDirectoryRequest,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
         final UpdateDirectoryDto updateDirectoryDto = new UpdateDirectoryDto(renameDirectoryRequest.targetDirPath(), renameDirectoryRequest.newDirName(), memberPrincipal.memberId());
-        directoryService.updateDirectory(updateDirectoryDto);
+        directoryUpdateService.updateDirectory(updateDirectoryDto);
         return ResponseEntity.ok(null);
     }
 
@@ -68,11 +77,11 @@ public class DirectoryController {
     @Operation(summary = "디렉토리를 삭제하는 api", description = "하위 디렉토리가 포함된 디렉토리를 삭제하기 위해선 _ 필드를 true로 해주세요")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> deleteDirectory(
-            @ModelAttribute @Valid Requests.DeleteDirectoryRequest deleteDirectoryRequest,
+            @ModelAttribute @Valid DeleteDirectoryRequest deleteDirectoryRequest,
             @AuthenticationPrincipal MemberPrincipal memberPrincipal
     ) {
         final DeleteDirectoryDto deleteDirectoryDto = new DeleteDirectoryDto(deleteDirectoryRequest.targetDirectory(), memberPrincipal.memberId(), deleteDirectoryRequest.deleteChildes());
-        directoryService.deleteDirectory(deleteDirectoryDto);
+        directoryDeleteService.delete(deleteDirectoryDto);
         return ResponseEntity.ok(null);
     }
 }

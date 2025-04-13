@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Getter
 @ToString
-public final class UploadMediaDto {
+public final class UploadMediaCommand {
     private final MultipartFile file;
     private final String fileName;
     private final Long totalChunkCount;

@@ -3,7 +3,6 @@ package com.hanpyeon.academyapi.dir.service.create.validate;
 import com.hanpyeon.academyapi.account.entity.Member;
 import com.hanpyeon.academyapi.dir.dao.Directory;
 import com.hanpyeon.academyapi.dir.dao.DirectoryRepository;
-import com.hanpyeon.academyapi.dir.dto.CreateDirectoryCommand;
 import com.hanpyeon.academyapi.dir.exception.DirectoryException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.security.Role;
@@ -18,19 +17,23 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
     private final DirectoryRepository directoryRepository;
 
     @Override
-    public void validate(final CreateDirectoryCommand createDirectoryCommand) {
-        final Directory targetDirectory = directoryRepository.findDirectoryByPath(createDirectoryCommand.dirPath())
-                .orElseThrow(() -> new DirectoryException(ErrorCode.NOT_EXIST_DIRECTORY));
-        if (isOverManager(createDirectoryCommand.requestMember())) {
+    public void validate(final Directory directory) {
+        final Directory parentDirectory = getParentDirectory(directory);
+        if (isOverManager(directory.getOwner())) {
             return;
         }
-        if (canAddByEveryOne(targetDirectory)) {
+        if (canAddByEveryOne(parentDirectory)) {
             return;
         }
-        if (isRequestMemberIsOwner(targetDirectory, createDirectoryCommand.requestMember())) {
+        if (isRequestMemberIsOwner(parentDirectory, directory.getOwner())) {
             return;
         }
         throw new DirectoryException("디렉토리 ACCESS 권한 부재", ErrorCode.ITS_NOT_YOUR_DIRECTORY);
+    }
+
+    private Directory getParentDirectory(final Directory directory) {
+        return directoryRepository.findDirectoryByPath(getParentPath(directory.getPath()))
+                .orElseThrow(() -> new DirectoryException(ErrorCode.NOT_EXIST_DIRECTORY));
     }
 
     private boolean isRequestMemberIsOwner(final Directory targetDirectory, final Member requestMember) {
@@ -53,5 +56,14 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
             return true;
         }
         return false;
+    }
+
+    private String getParentPath(final String path) {
+        final int endIndex = path.lastIndexOf('/', path.length() - 2);
+        if (endIndex == -1) {
+            throw new DirectoryException("부모 디렉토리 존재 X", ErrorCode.NOT_EXIST_DIRECTORY);
+        }
+        final String parentPath = path.substring(0, endIndex + 1);
+        return parentPath;
     }
 }

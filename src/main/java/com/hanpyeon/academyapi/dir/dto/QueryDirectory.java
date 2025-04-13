@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.dir.dto;
 
-public record QueryDirectoryDto(
+public record QueryDirectory(
         String path,
         Long requestMemberId
 ) {
