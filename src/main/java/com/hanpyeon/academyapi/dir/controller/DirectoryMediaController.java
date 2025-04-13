@@ -5,7 +5,7 @@ import com.hanpyeon.academyapi.dir.controller.Requests.MediaSaveResponse;
 import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.dir.dto.DeleteMediaCommand;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaCommand;
-import com.hanpyeon.academyapi.dir.service.MediaService;
+import com.hanpyeon.academyapi.media.service.MediaService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Nonnull;

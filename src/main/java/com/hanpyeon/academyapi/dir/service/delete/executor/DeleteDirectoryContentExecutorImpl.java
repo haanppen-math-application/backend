@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.dir.service.delete.executor;
 
 import com.hanpyeon.academyapi.dir.dao.Directory;
 import com.hanpyeon.academyapi.dir.dao.DirectoryRepository;
-import com.hanpyeon.academyapi.dir.service.MediaService;
+import com.hanpyeon.academyapi.media.service.MediaService;
 import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

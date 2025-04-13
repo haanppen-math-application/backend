@@ -5,7 +5,7 @@ import com.hanpyeon.academyapi.media.dto.HttpStreamingCommand;
 import com.hanpyeon.academyapi.media.dto.StreamingCommand;
 import com.hanpyeon.academyapi.media.dto.StreamingResult;
 import com.hanpyeon.academyapi.media.exception.MediaException;
-import com.hanpyeon.academyapi.media.service.MediaService;
+import com.hanpyeon.academyapi.media.service.StreamingService;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class StreamingController {
 
-    private final MediaService mediaService;
+    private final StreamingService mediaService;
 
     @GetMapping("/api/media/stream")
     public ResponseEntity<?> streamMedia(

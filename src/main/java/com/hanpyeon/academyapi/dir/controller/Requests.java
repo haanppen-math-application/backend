@@ -2,6 +2,7 @@ package com.hanpyeon.academyapi.dir.controller;
 
 import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.dir.dto.CreateDirectoryCommand;
+import com.hanpyeon.academyapi.dir.dto.DeleteDirectoryDto;
 import com.hanpyeon.academyapi.dir.dto.UploadMediaCommand;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotBlank;
