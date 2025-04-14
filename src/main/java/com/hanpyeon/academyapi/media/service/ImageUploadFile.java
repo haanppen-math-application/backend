@@ -8,6 +8,11 @@ import java.io.InputStream;
 import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * UploadFile의 스트림 기반 추상 클래스 입니다. 메모리 사용량이 낮습니다.
+ * <p>
+ * 비동기 처리에 대해 안전하지 않습니다. ( MultipartFile )
+ */
 public class ImageUploadFile implements UploadFile {
     private final MultipartFile multipartFile;
     private final String newFileName;
