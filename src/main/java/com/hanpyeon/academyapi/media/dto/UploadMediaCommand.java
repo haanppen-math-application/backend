@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.dir.dto;
+package com.hanpyeon.academyapi.media.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

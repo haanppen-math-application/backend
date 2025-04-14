@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.web.multipart.MultipartFile;
 
-public class Requests {
+class Requests {
     record QueryMemoByCourseIdAndDateRequest(
             @Nonnull
             Long courseId,

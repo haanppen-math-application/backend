@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.course.application.dto;
 
-import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
+import com.hanpyeon.academyapi.media.dto.ChunkStoreResult;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

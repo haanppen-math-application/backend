@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.media.service.upload;
 
-import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
-import com.hanpyeon.academyapi.dir.dto.UploadMediaCommand;
+import com.hanpyeon.academyapi.media.dto.ChunkStoreResult;
+import com.hanpyeon.academyapi.media.dto.UploadMediaCommand;
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.media.service.upload.chunk.ChunkHandlerManager;
 import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkFactory;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UploadService {
+public class MediaUploadService {
 
     private final ChunkFactory chunkFactory;
     private final @Qualifier(value = "chunkStorage") ChunkStorage chunkStorage;

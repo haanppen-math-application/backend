@@ -3,9 +3,9 @@ package com.hanpyeon.academyapi.course.adapter.out;
 import com.hanpyeon.academyapi.course.application.dto.AttachmentUploadChunkFile;
 import com.hanpyeon.academyapi.course.application.dto.ChunkProcessedResult;
 import com.hanpyeon.academyapi.course.application.port.out.ChunkFileHandlerPort;
-import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
-import com.hanpyeon.academyapi.dir.dto.UploadMediaCommand;
-import com.hanpyeon.academyapi.media.service.upload.UploadService;
+import com.hanpyeon.academyapi.media.dto.ChunkStoreResult;
+import com.hanpyeon.academyapi.media.dto.UploadMediaCommand;
+import com.hanpyeon.academyapi.media.service.upload.MediaUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class ChunkFileStoreAdapter implements ChunkFileHandlerPort {
 
     @Value("${memo.attachment.directory.path}")
     private String attachmentFileDirectoryPath;
-    private final UploadService uploadService;
+    private final MediaUploadService uploadService;
 
 
     @Override

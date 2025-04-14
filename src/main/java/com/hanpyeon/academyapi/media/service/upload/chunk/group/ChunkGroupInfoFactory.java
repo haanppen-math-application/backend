@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.media.service.upload.chunk.group;
 
-import com.hanpyeon.academyapi.dir.dto.UploadMediaCommand;
+import com.hanpyeon.academyapi.media.dto.UploadMediaCommand;
 import com.hanpyeon.academyapi.dir.service.form.resolver.DirectoryPathFormResolver;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.exception.MediaException;

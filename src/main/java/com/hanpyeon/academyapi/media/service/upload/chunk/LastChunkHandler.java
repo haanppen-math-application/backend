@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.media.service.upload.chunk;
 
-import com.hanpyeon.academyapi.dir.dto.ChunkStoreResult;
+import com.hanpyeon.academyapi.media.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.media.service.upload.ChunkedFileTransferManager;
 import com.hanpyeon.academyapi.media.service.upload.DirectoryMediaUpdateManager;
 import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkedFile;
