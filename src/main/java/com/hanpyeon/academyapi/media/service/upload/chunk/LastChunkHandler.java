@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.media.service.upload.chunk;
 
 import com.hanpyeon.academyapi.media.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.media.service.upload.ChunkedFileTransferManager;
-import com.hanpyeon.academyapi.media.service.upload.DirectoryMediaUpdateManager;
+import com.hanpyeon.academyapi.media.service.upload.MediaUpdateManager;
 import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkedFile;
 import com.hanpyeon.academyapi.media.service.upload.chunk.merger.ChunkMerger;
 import com.hanpyeon.academyapi.media.service.upload.chunk.merger.MergedUploadFile;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 class LastChunkHandler implements ChunkHandler {
     private final ChunkMerger chunkMerger;
     private final ChunkedFileTransferManager chunkedFileTransferManager;
-    private final DirectoryMediaUpdateManager directoryMediaUpdateManager;
+    private final MediaUpdateManager mediaUpdateManager;
 
     @Override
     @Transactional
@@ -26,7 +26,7 @@ class LastChunkHandler implements ChunkHandler {
         log.debug("RUNNED");
         final MergedUploadFile mergedUploadFile = chunkMerger.merge(chunkStorage, chunkedFile.getChunkGroupInfo());
         final String savedFileName = chunkedFileTransferManager.sendToMediaStorage(mergedUploadFile);
-//        directoryMediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), mergedUploadFile.getDuration(), savedFileName, chunkedFile.getRequestMemberId(), chunkedFile.getChunkGroupInfo().getTotalSize());
+        mediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), mergedUploadFile.getDuration(), savedFileName, chunkedFile.getRequestMemberId(), chunkedFile.getChunkGroupInfo().getTotalSize());
         final String userDefinedFileName = chunkedFile.getChunkGroupInfo().getFileName();
         return ChunkStoreResult.completed(savedFileName, userDefinedFileName);
     }

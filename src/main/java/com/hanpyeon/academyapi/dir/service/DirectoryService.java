@@ -22,6 +22,7 @@ public class DirectoryService {
     private final DirectoryUpdateService directoryUpdateService;
     private final DirectoryCreateService directoryCreateService;
     private final DirectoryDeleteService directoryDeleteService;
+
     @Transactional
     public void addNewDirectory(@Validated final CreateDirectoryCommand createDirectoryDto) {
         directoryCreateService.addNewDirectory(createDirectoryDto);

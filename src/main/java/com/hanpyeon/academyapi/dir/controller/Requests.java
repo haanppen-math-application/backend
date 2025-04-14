@@ -1,6 +1,8 @@
 package com.hanpyeon.academyapi.dir.controller;
 
 import com.hanpyeon.academyapi.dir.dto.CreateDirectoryCommand;
+import com.hanpyeon.academyapi.dir.dto.SaveMediaToDirectoryCommand;
+import com.hanpyeon.academyapi.security.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -29,5 +31,19 @@ class Requests {
             @NotBlank @Pattern(regexp = "^/.*$") String targetDirectory,
             @NotNull Boolean deleteChildes
     ) {
+    }
+
+    record SaveMediaToDirectoryRequest(
+            String directoryPath,
+            String mediaSrc
+    ) {
+        SaveMediaToDirectoryCommand toCommand(final Long requestMemberId, final Role role) {
+            return new SaveMediaToDirectoryCommand(
+                    directoryPath(),
+                    mediaSrc(),
+                    requestMemberId,
+                    role
+            );
+        }
     }
 }
