@@ -44,6 +44,6 @@ class LocalStorageTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String newFileName = localStorage.store(new ImageUploadFile(new MockMultipartFile("hee1.png", "origin.png", null, imageInputStream)));
+        localStorage.store(new ImageUploadFile(new MockMultipartFile("hee1.png", "origin.png", null, imageInputStream)));
     }
 }

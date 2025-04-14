@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
@@ -22,11 +23,13 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
 @Profile("local")
 @Primary
+@Slf4j
 public class LocalStorage implements MediaStorage {
 
     protected final String storagePath;
@@ -36,14 +39,15 @@ public class LocalStorage implements MediaStorage {
     }
 
     @Override
-    public String store(final UploadFile uploadFile) {
+    @Async
+    public void store(final UploadFile uploadFile) {
+        log.info("Storing file {}", uploadFile);
         final Path path = resolveFilePath(uploadFile.getUniqueFileName());
         try (final OutputStream outputStream = Files.newOutputStream(path, StandardOpenOption.CREATE_NEW)) {
             uploadFile.getInputStream().transferTo(outputStream);
         } catch (IOException e) {
             throw new StorageException("서버 상에서 오류가 발생했습니다. 다시 시도해주세요" + e, ErrorCode.MEDIA_STORE_EXCEPTION);
         }
-        return uploadFile.getUniqueFileName();
     }
 
     @Override

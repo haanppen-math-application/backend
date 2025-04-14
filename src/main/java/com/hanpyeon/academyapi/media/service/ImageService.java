@@ -42,9 +42,10 @@ public class ImageService {
                 .filter(multipartFile -> !multipartFile.isEmpty())
                 .map(mediaMapper::createImageUploadFile)
                 .toList();
+        uploadFiles.forEach(mediaStorage::store);
         return saveImageNames(
                 uploadFiles.stream()
-                        .map(uploadFile -> mediaStorage.store(uploadFile))
+                        .map(UploadFile::getUniqueFileName)
                         .toList()
         );
     }
@@ -65,18 +66,6 @@ public class ImageService {
                 .map(imageEntity -> new ImageUrlDto(imageEntity.getSrc()))
                 .findAny()
                 .orElseThrow(() -> new MediaStoreException(ErrorCode.MEDIA_STORE_EXCEPTION));
-    }
-
-    @Transactional
-    public void updateImage(final Comment comment, final List<MultipartFile> images) {
-        this.removeImage(comment.getImages());
-        comment.changeImagesTo(saveImage(images));
-    }
-
-    @Transactional
-    public void updateImage(final Question question, final List<MultipartFile> images) {
-        this.removeImage(question.getImages());
-        question.changeImages(saveImage(images));
     }
 
     @Transactional

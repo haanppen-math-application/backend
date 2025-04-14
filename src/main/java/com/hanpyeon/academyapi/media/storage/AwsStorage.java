@@ -31,7 +31,7 @@ public class AwsStorage implements MediaStorage {
     }
 
     @Override
-    public String store(UploadFile uploadFile) {
+    public void store(UploadFile uploadFile) {
 
         final ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(uploadFile.getExtension());
@@ -43,7 +43,6 @@ public class AwsStorage implements MediaStorage {
                 uploadFile.getInputStream(),
                 objectMetadata
         );
-        return uploadFile.getUniqueFileName();
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @ErrorLoggable
 public interface MediaStorage {
-    String store(UploadFile uploadFile);
+    void store(UploadFile uploadFile);
     void remove(String fileName);
 
     MediaDto loadFile(String fileName);
