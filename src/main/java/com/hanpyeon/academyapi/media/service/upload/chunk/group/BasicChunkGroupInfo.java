@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 class BasicChunkGroupInfo implements ChunkGroupInfo {
     private final ChunkGroupIdManager chunkGroupIdManager;
     private final Long requestMemberId;
-    private final String dirPath;
     private final String fileName;
     private final Long totalChunkSize;
     private final String fileExtension;
@@ -23,14 +22,13 @@ class BasicChunkGroupInfo implements ChunkGroupInfo {
         if (o == null || getClass() != o.getClass()) return false;
         BasicChunkGroupInfo that = (BasicChunkGroupInfo) o;
         return Objects.equals(requestMemberId, that.requestMemberId) &&
-                Objects.equals(dirPath, that.dirPath) &&
                 Objects.equals(fileName, that.fileName) &&
                 Objects.equals(totalChunkSize, that.totalChunkSize);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(requestMemberId, dirPath, fileName, totalChunkSize);
+        return Objects.hash(requestMemberId, fileName, totalChunkSize);
     }
 
     @Override
@@ -53,11 +51,6 @@ class BasicChunkGroupInfo implements ChunkGroupInfo {
     @Override
     public boolean clear() {
         return this.chunkGroupIdManager.removeGroupID(this);
-    }
-
-    @Override
-    public String getDirPath() {
-        return this.dirPath;
     }
 
     @Override

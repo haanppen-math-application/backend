@@ -18,24 +18,21 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DirectoryMediaUpdateManager {
 
-    private final DirectoryRepository directoryRepository;
     private final MemberRepository memberRepository;
     private final MediaRepository mediaRepository;
 
     @Transactional
     public void update(final ChunkGroupInfo chunkGroupInfo, final String savedPath, final Long memberId) {
-        final Directory directory = this.findTargetDirectory(chunkGroupInfo.getDirPath());
         final Media media = create(chunkGroupInfo.getFileName() + chunkGroupInfo.getExtension(), savedPath, memberId);
         mediaRepository.save(media);
-        directory.add(media);
     }
 
     @Transactional
     public void update(final ChunkGroupInfo chunkGroupInfo, final Long duration, final String savedPath, final Long memberId, final Long fileSize) {
-        final Directory directory = this.findTargetDirectory(chunkGroupInfo.getDirPath());
+//        final Directory directory = this.findTargetDirectory(chunkGroupInfo.getDirPath());
         final Media media = create(chunkGroupInfo.getFileName() + chunkGroupInfo.getExtension(), savedPath, memberId, duration, fileSize);
         mediaRepository.save(media);
-        directory.add(media);
+//        directory.add(media);
     }
 
     private Media create(final String fileName, final String savedPath, final Long memberId) {
@@ -52,12 +49,4 @@ public class DirectoryMediaUpdateManager {
         return memberRepository.findMemberByIdAndRemovedIsFalse(memberId)
                 .orElseThrow(() -> new AccountException(ErrorCode.NO_SUCH_MEMBER));
     }
-
-    private Directory findTargetDirectory(final String resolvedDirPath) {
-        final Directory directory = directoryRepository.findDirectoryByPath(resolvedDirPath)
-                .orElseThrow(() -> new DirectoryException(ErrorCode.NOT_EXIST_DIRECTORY));
-        // 업로드 권한 확인로직 추가 필요
-        return directory;
-    }
-
 }

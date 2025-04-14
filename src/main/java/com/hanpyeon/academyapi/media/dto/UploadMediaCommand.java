@@ -16,7 +16,6 @@ public final class UploadMediaCommand {
     private final Long currChunkIndex;
     private final Boolean isLast;
     private final Long requestMemberId;
-    private final String targetDirectory;
     private final String extension;
     private final Long mediaDuration;
 }

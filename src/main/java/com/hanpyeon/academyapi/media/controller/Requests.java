@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 class Requests {
     record MediaSaveRequest(
-            @NotBlank @Pattern(regexp = "^/.*$") String targetDirectoryPath,
             @NotBlank String fileName,
             @Nonnull Long totalChunkCount,
             @Nonnull Long currChunkIndex,
@@ -26,7 +25,6 @@ class Requests {
                     currChunkIndex(),
                     isLast(),
                     requestMemberId,
-                    targetDirectoryPath(),
                     extension(),
                     mediaDuration()
             );

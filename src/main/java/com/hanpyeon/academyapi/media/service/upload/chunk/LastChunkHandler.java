@@ -26,7 +26,7 @@ class LastChunkHandler implements ChunkHandler {
         log.debug("RUNNED");
         final MergedUploadFile mergedUploadFile = chunkMerger.merge(chunkStorage, chunkedFile.getChunkGroupInfo());
         final String savedFileName = chunkedFileTransferManager.sendToMediaStorage(mergedUploadFile);
-        directoryMediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), mergedUploadFile.getDuration(), savedFileName, chunkedFile.getRequestMemberId(), chunkedFile.getChunkGroupInfo().getTotalSize());
+//        directoryMediaUpdateManager.update(chunkedFile.getChunkGroupInfo(), mergedUploadFile.getDuration(), savedFileName, chunkedFile.getRequestMemberId(), chunkedFile.getChunkGroupInfo().getTotalSize());
         final String userDefinedFileName = chunkedFile.getChunkGroupInfo().getFileName();
         return ChunkStoreResult.completed(savedFileName, userDefinedFileName);
     }

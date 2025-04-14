@@ -34,7 +34,6 @@ public class ChunkFileStoreAdapter implements ChunkFileHandlerPort {
                 chunkFile.getCurrChunkIndex(),
                 chunkFile.getIsLast(),
                 chunkFile.getRequestMemberId(),
-                this.attachmentFileDirectoryPath,
                 chunkFile.getExtension(),
                 null
         );

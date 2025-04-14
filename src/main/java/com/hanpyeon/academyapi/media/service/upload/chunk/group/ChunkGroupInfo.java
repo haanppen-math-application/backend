@@ -10,8 +10,6 @@ public interface ChunkGroupInfo {
 
     boolean clear();
 
-    String getDirPath();
-
     String getFileName();
 
     String getExtension();
