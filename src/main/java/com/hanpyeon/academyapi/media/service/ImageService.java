@@ -1,8 +1,7 @@
 package com.hanpyeon.academyapi.media.service;
 
+import com.amazonaws.services.s3.transfer.Upload;
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
-import com.hanpyeon.academyapi.board.entity.Comment;
-import com.hanpyeon.academyapi.board.entity.Question;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.MediaMapper;
 import com.hanpyeon.academyapi.media.dto.ImageUrlDto;
@@ -10,6 +9,8 @@ import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.exception.MediaStoreException;
 import com.hanpyeon.academyapi.media.repository.ImageRepository;
+import com.hanpyeon.academyapi.media.storage.StorageAsyncDecorator;
+import com.hanpyeon.academyapi.media.storage.AsyncUploadFile;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +27,7 @@ public class ImageService {
     private final ImageRepository imageRepository;
     private final MediaStorage mediaStorage;
     private final MediaMapper mediaMapper;
+    private final StorageAsyncDecorator storageAsyncDecorator;
 
     /**
      * MultipartFile 을 처리하고, ImageRepository 엔티티 저장하는 역할을 수행합니다.
@@ -38,11 +40,11 @@ public class ImageService {
         if (!checkImagesPresence(imageFiles)) {
             return Collections.emptyList();
         }
-        final List<? extends UploadFile> uploadFiles = imageFiles.stream()
+        final List<AsyncImageUploadFile> uploadFiles = imageFiles.stream()
                 .filter(multipartFile -> !multipartFile.isEmpty())
                 .map(mediaMapper::createImageUploadFile)
                 .toList();
-        uploadFiles.forEach(mediaStorage::store);
+        uploadFiles.forEach(storageAsyncDecorator::store);
         return saveImageNames(
                 uploadFiles.stream()
                         .map(UploadFile::getUniqueFileName)

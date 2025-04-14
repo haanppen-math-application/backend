@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.media.service;
 
+import com.hanpyeon.academyapi.media.storage.AsyncUploadFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,10 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
  * <p>
  * MultiPartFile 대한 비동기처리를 안전하게 할 수 있도록 돕습니다.
  */
-public class AsyncSupportedImageUploadFile extends ImageUploadFile {
+public class AsyncImageUploadFile extends ImageUploadFile implements AsyncUploadFile {
     private final byte[] data;
 
-    public AsyncSupportedImageUploadFile(final MultipartFile multipartFile) {
+    public AsyncImageUploadFile(final MultipartFile multipartFile) {
         super(multipartFile);
         try {
             data = multipartFile.getBytes();

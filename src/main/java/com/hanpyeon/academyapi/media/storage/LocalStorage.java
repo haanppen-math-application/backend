@@ -23,7 +23,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,7 +38,6 @@ public class LocalStorage implements MediaStorage {
     }
 
     @Override
-    @Async
     public void store(final UploadFile uploadFile) {
         log.info("Storing file {}", uploadFile);
         final Path path = resolveFilePath(uploadFile.getUniqueFileName());
