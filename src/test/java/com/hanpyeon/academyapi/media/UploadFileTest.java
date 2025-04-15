@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.hanpyeon.academyapi.media.exception.InvalidUploadFileException;
 import com.hanpyeon.academyapi.media.storage.uploadfile.ImageUploadFile;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
-import com.hanpyeon.academyapi.media.validator.UploadFileValidator;
 import org.apache.http.entity.ContentType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +15,6 @@ import org.springframework.mock.web.MockMultipartFile;
 
 @ExtendWith(MockitoExtension.class)
 class UploadFileTest {
-    @Mock
-    UploadFileValidator uploadFileValidator;
     @Mock
     MediaStorage mediaStorage;
 
