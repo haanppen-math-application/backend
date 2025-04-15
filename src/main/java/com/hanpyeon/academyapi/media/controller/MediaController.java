@@ -1,12 +1,10 @@
 package com.hanpyeon.academyapi.media.controller;
 
-import static com.hanpyeon.academyapi.media.controller.Requests.MediaSaveRequest;
-
 import com.hanpyeon.academyapi.dir.dto.DeleteMediaCommand;
 import com.hanpyeon.academyapi.media.dto.ChunkStoreResult;
-import com.hanpyeon.academyapi.media.dto.UploadMediaCommand;
+import com.hanpyeon.academyapi.media.dto.ChunkFileUploadCommand;
 import com.hanpyeon.academyapi.media.service.MediaDeleteService;
-import com.hanpyeon.academyapi.media.service.MediaUploadService;
+import com.hanpyeon.academyapi.media.service.ChunkFileUploadService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Nonnull;
@@ -28,18 +26,18 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/v1/media/chunks")
 @RequiredArgsConstructor
 public class MediaController {
-    private final MediaUploadService mediaUploadService;
+    private final ChunkFileUploadService chunkFileUploadService;
     private final MediaDeleteService mediaDeleteService;
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "청크 파일을 저장하는 api 입니다.")
     public ResponseEntity<Responses.MediaSaveResponse> saveMedia(
             @RequestPart(value = "media") @Nonnull final MultipartFile multipartFile,
-            @RequestPart(value = "info") @Valid final MediaSaveRequest request,
+            @RequestPart(value = "info") @Valid final Requests.ChunkUploadRequest request,
             @AuthenticationPrincipal final MemberPrincipal memberPrincipal
     ) {
-        final UploadMediaCommand mediaSaveDto = request.toCommand(multipartFile, memberPrincipal.memberId());
-        final ChunkStoreResult chunkStoreResult = mediaUploadService.upload(mediaSaveDto);
+        final ChunkFileUploadCommand mediaSaveDto = request.toCommand(multipartFile, memberPrincipal.memberId());
+        final ChunkStoreResult chunkStoreResult = chunkFileUploadService.upload(mediaSaveDto);
 
         return mapToResponse(chunkStoreResult);
     }
