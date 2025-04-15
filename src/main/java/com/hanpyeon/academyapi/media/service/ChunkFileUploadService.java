@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class ChunkFileUploadService {
 
     private final ChunkFactory chunkFactory;
-    private final @Qualifier(value = "chunkStorage") ChunkStorage chunkStorage;
+    private final ChunkStorage chunkStorage;
     private final ChunkHandlerManager chunkHandlerManager;
     private final ChunkValidateManager chunkValidateManager;
 
