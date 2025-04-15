@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class FileController {
+public class FileDownloadController {
 
     private final DownloadService downloadService;
     @GetMapping("/api/file/download")

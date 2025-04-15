@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.media.service.upload;
+package com.hanpyeon.academyapi.media.service;
 
 import com.hanpyeon.academyapi.media.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.media.dto.UploadMediaCommand;

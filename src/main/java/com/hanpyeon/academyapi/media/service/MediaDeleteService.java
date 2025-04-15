@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.media.service.delete;
+package com.hanpyeon.academyapi.media.service;
 
 import com.hanpyeon.academyapi.course.adapter.out.MediaAttachmentRepository;
 import com.hanpyeon.academyapi.course.adapter.out.MemoMediaRepository;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class DeleteService {
+public class MediaDeleteService {
     private final MediaRepository mediaRepository;
     private final DirectoryRepository directoryRepository;
     private final MemoMediaRepository memoMediaRepository;

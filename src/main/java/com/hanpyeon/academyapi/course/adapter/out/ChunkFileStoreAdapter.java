@@ -5,7 +5,7 @@ import com.hanpyeon.academyapi.course.application.dto.ChunkProcessedResult;
 import com.hanpyeon.academyapi.course.application.port.out.ChunkFileHandlerPort;
 import com.hanpyeon.academyapi.media.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.media.dto.UploadMediaCommand;
-import com.hanpyeon.academyapi.media.service.upload.MediaUploadService;
+import com.hanpyeon.academyapi.media.service.MediaUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
