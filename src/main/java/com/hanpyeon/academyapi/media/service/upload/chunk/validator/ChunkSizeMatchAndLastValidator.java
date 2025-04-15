@@ -1,7 +1,7 @@
 package com.hanpyeon.academyapi.media.service.upload.chunk.validator;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
-import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkedFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.ChunkedFile;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

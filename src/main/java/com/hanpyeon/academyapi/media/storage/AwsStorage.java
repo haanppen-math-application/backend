@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 import com.hanpyeon.academyapi.media.dto.MediaDto;
-import com.hanpyeon.academyapi.media.service.UploadFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.UploadFile;
 import java.net.URLConnection;
 import java.util.Set;
 import java.util.stream.Collectors;

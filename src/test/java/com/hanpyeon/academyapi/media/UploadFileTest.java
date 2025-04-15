@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.hanpyeon.academyapi.media.exception.InvalidUploadFileException;
-import com.hanpyeon.academyapi.media.service.ImageUploadFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.ImageUploadFile;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
 import com.hanpyeon.academyapi.media.validator.UploadFileValidator;
 import org.apache.http.entity.ContentType;

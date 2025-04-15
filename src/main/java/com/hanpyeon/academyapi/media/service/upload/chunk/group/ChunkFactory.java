@@ -1,6 +1,7 @@
 package com.hanpyeon.academyapi.media.service.upload.chunk.group;
 
 import com.hanpyeon.academyapi.media.dto.UploadMediaCommand;
+import com.hanpyeon.academyapi.media.storage.uploadfile.ChunkedFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

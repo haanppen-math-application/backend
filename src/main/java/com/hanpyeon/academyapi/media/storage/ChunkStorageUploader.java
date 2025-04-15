@@ -1,6 +1,6 @@
-package com.hanpyeon.academyapi.media.service.upload.chunk.storage;
+package com.hanpyeon.academyapi.media.storage;
 
-import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkedFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.ChunkedFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -2,8 +2,8 @@ package com.hanpyeon.academyapi.media.service.upload.chunk;
 
 import com.hanpyeon.academyapi.media.dto.ChunkStoreResult;
 import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkGroupInfo;
-import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkedFile;
-import com.hanpyeon.academyapi.media.service.upload.chunk.storage.ChunkStorage;
+import com.hanpyeon.academyapi.media.storage.uploadfile.ChunkedFile;
+import com.hanpyeon.academyapi.media.storage.ChunkStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

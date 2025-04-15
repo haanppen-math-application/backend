@@ -2,7 +2,7 @@ package com.hanpyeon.academyapi.media;
 
 import com.hanpyeon.academyapi.media.dto.ImageUrlDto;
 import com.hanpyeon.academyapi.media.entity.Image;
-import com.hanpyeon.academyapi.media.service.AsyncImageUploadFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.AsyncImageUploadFile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 

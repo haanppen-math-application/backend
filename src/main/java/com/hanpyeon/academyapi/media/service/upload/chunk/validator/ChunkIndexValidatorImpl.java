@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.media.service.upload.chunk.validator;
 
-import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkedFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.ChunkedFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

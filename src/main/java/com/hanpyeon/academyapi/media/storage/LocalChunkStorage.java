@@ -1,11 +1,10 @@
-package com.hanpyeon.academyapi.media.service.upload.chunk.storage;
+package com.hanpyeon.academyapi.media.storage;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkGroup;
 import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkGroupInfo;
-import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkedFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.ChunkedFile;
 import com.hanpyeon.academyapi.exception.ErrorCode;
-import com.hanpyeon.academyapi.media.storage.LocalStorage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;

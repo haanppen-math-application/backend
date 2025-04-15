@@ -5,7 +5,7 @@ import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.exception.NoSuchMediaException;
 import com.hanpyeon.academyapi.media.exception.NotSupportedMediaException;
 import com.hanpyeon.academyapi.media.exception.StorageException;
-import com.hanpyeon.academyapi.media.service.UploadFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.UploadFile;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;

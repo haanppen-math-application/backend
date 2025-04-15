@@ -1,6 +1,5 @@
 package com.hanpyeon.academyapi.media.service;
 
-import com.amazonaws.services.s3.transfer.Upload;
 import com.hanpyeon.academyapi.aspect.log.WarnLoggable;
 import com.hanpyeon.academyapi.exception.ErrorCode;
 import com.hanpyeon.academyapi.media.MediaMapper;
@@ -9,9 +8,10 @@ import com.hanpyeon.academyapi.media.dto.MediaDto;
 import com.hanpyeon.academyapi.media.entity.Image;
 import com.hanpyeon.academyapi.media.exception.MediaStoreException;
 import com.hanpyeon.academyapi.media.repository.ImageRepository;
+import com.hanpyeon.academyapi.media.storage.uploadfile.AsyncImageUploadFile;
 import com.hanpyeon.academyapi.media.storage.StorageAsyncDecorator;
-import com.hanpyeon.academyapi.media.storage.AsyncUploadFile;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
+import com.hanpyeon.academyapi.media.storage.uploadfile.UploadFile;
 import java.util.Collections;
 import java.util.List;
 import lombok.AllArgsConstructor;

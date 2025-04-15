@@ -1,7 +1,8 @@
-package com.hanpyeon.academyapi.media.service.upload.chunk.group;
+package com.hanpyeon.academyapi.media.storage.uploadfile;
 
 import com.hanpyeon.academyapi.dir.exception.ChunkException;
 import com.hanpyeon.academyapi.exception.ErrorCode;
+import com.hanpyeon.academyapi.media.service.upload.chunk.group.ChunkGroupInfo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @Slf4j
-class BasicChunkedFile implements ChunkedFile {
+public class BasicChunkedFile implements ChunkedFile {
 
     private final MultipartFile multipartFile;
     private final ChunkGroupInfo chunkGroupInfo;

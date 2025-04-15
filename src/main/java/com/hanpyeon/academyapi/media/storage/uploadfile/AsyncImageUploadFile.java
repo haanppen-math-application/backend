@@ -1,6 +1,5 @@
-package com.hanpyeon.academyapi.media.service;
+package com.hanpyeon.academyapi.media.storage.uploadfile;
 
-import com.hanpyeon.academyapi.media.storage.AsyncUploadFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;

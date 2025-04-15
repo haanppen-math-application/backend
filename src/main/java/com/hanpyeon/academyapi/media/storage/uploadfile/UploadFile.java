@@ -1,4 +1,4 @@
-package com.hanpyeon.academyapi.media.service;
+package com.hanpyeon.academyapi.media.storage.uploadfile;
 
 import java.io.InputStream;
 

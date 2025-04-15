@@ -1,6 +1,4 @@
-package com.hanpyeon.academyapi.media.service.upload.chunk.merger;
-
-import com.hanpyeon.academyapi.media.service.UploadFile;
+package com.hanpyeon.academyapi.media.storage.uploadfile;
 
 public interface MergedUploadFile extends UploadFile {
     boolean completed();

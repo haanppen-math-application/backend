@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.media.validator;
 
-import com.hanpyeon.academyapi.media.service.UploadFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.UploadFile;
 import org.springframework.stereotype.Component;
 
 @Component

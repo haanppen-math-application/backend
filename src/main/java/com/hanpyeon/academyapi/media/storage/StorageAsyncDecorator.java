@@ -1,5 +1,6 @@
 package com.hanpyeon.academyapi.media.storage;
 
+import com.hanpyeon.academyapi.media.storage.uploadfile.AsyncUploadFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;

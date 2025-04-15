@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.media.service.upload;
 
-import com.hanpyeon.academyapi.media.service.upload.chunk.merger.MergedUploadFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.MergedUploadFile;
 import com.hanpyeon.academyapi.media.storage.MediaStorage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

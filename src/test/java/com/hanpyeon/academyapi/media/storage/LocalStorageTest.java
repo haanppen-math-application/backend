@@ -1,6 +1,6 @@
 package com.hanpyeon.academyapi.media.storage;
 
-import com.hanpyeon.academyapi.media.service.ImageUploadFile;
+import com.hanpyeon.academyapi.media.storage.uploadfile.ImageUploadFile;
 import jakarta.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
