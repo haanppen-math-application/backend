@@ -3,7 +3,7 @@ package com.hanpyeon.academyapi.course.controller;
 import com.hanpyeon.academyapi.course.application.dto.AttachmentChunkResult;
 import com.hanpyeon.academyapi.course.application.dto.DeleteAttachmentCommand;
 import com.hanpyeon.academyapi.course.application.dto.DeleteMemoMediaCommand;
-import com.hanpyeon.academyapi.course.application.dto.RegisterAttachmentChunkCommand;
+import com.hanpyeon.academyapi.course.application.dto.RegisterAttachmentCommand;
 import com.hanpyeon.academyapi.course.application.dto.RegisterMemoMediaCommand;
 import com.hanpyeon.academyapi.course.application.dto.UpdateMediaMemoCommand;
 import com.hanpyeon.academyapi.course.application.port.in.DeleteAttachmentUseCase;
@@ -67,21 +67,10 @@ public class MemoMediaController {
             @ModelAttribute @Valid final Requests.RegisterAttachmentWithChunkRequest request,
             @AuthenticationPrincipal @Nonnull final MemberPrincipal memberPrincipal
     ) {
-        final RegisterAttachmentChunkCommand command = request.toCommand(memberPrincipal.memberId());
-        final AttachmentChunkResult result = registerAttachmentUseCase.register(command);
+        final RegisterAttachmentCommand command = request.toCommand(memberPrincipal.memberId());
+        registerAttachmentUseCase.register(command);
 
-        return getResponse(result);
-    }
-
-    private ResponseEntity<RegisterAttachmentChunkResponse> getResponse(final AttachmentChunkResult result) {
-        if (result.getIsUploaded()) {
-            return ResponseEntity.created(null).build();
-        }
-        final RegisterAttachmentChunkResponse response = Responses.RegisterAttachmentChunkResponse.of(result);
-        if (result.getIsWrongChunk()) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
-        }
-        return ResponseEntity.accepted().body(response);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/api/course/memo/media")

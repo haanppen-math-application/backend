@@ -1,8 +1,7 @@
 package com.hanpyeon.academyapi.course.application.port.in;
 
-import com.hanpyeon.academyapi.course.application.dto.AttachmentChunkResult;
-import com.hanpyeon.academyapi.course.application.dto.RegisterAttachmentChunkCommand;
+import com.hanpyeon.academyapi.course.application.dto.RegisterAttachmentCommand;
 
 public interface RegisterAttachmentUseCase {
-    AttachmentChunkResult register(final RegisterAttachmentChunkCommand registerAttachmentCommand);
+    void register(final RegisterAttachmentCommand registerAttachmentCommand);
 }

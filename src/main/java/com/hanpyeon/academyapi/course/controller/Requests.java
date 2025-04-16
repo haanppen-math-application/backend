@@ -7,7 +7,7 @@ import com.hanpyeon.academyapi.course.application.dto.MemoMediaUpdateSequenceCom
 import com.hanpyeon.academyapi.course.application.dto.MemoQueryByCourseIdAndDateCommand;
 import com.hanpyeon.academyapi.course.application.dto.MemoRegisterCommand;
 import com.hanpyeon.academyapi.course.application.dto.ModifyMemoTextCommand;
-import com.hanpyeon.academyapi.course.application.dto.RegisterAttachmentChunkCommand;
+import com.hanpyeon.academyapi.course.application.dto.RegisterAttachmentCommand;
 import com.hanpyeon.academyapi.course.application.dto.RegisterMemoMediaCommand;
 import com.hanpyeon.academyapi.course.application.dto.RegisterStudentCommand;
 import com.hanpyeon.academyapi.course.application.dto.UpdateCourseStudentsCommand;
@@ -20,7 +20,6 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.web.multipart.MultipartFile;
 
 class Requests {
     record QueryMemoByCourseIdAndDateRequest(
@@ -134,28 +133,13 @@ class Requests {
             @Nonnull
             Long memoMediaId,
             @NotBlank
-            String fileName,
-            @Nonnull
-            MultipartFile chunkedFile,
-            @Nonnull
-            Long totalChunkCount,
-            @Nonnull
-            Long currChunkIndex,
-            @Nonnull
-            Boolean isLast,
-            @Nonnull
-            String extension
+            String mediaSrc
     ) {
-        RegisterAttachmentChunkCommand toCommand(final Long requestMemberId) {
-            return new RegisterAttachmentChunkCommand(
+        RegisterAttachmentCommand toCommand(final Long requestMemberId) {
+            return new RegisterAttachmentCommand(
                     requestMemberId,
                     memoMediaId(),
-                    chunkedFile(),
-                    fileName(),
-                    totalChunkCount(),
-                    currChunkIndex(),
-                    isLast(),
-                    extension()
+                    mediaSrc()
             );
         }
     }
