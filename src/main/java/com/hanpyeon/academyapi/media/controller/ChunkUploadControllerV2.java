@@ -12,7 +12,9 @@ import com.hanpyeon.academyapi.media.dto.RequiredChunkInfo;
 import com.hanpyeon.academyapi.media.dto.UploadInitializeResult;
 import com.hanpyeon.academyapi.media.service.uploadV2.MultiPartUploadService;
 import com.hanpyeon.academyapi.security.authentication.MemberPrincipal;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,7 +43,8 @@ public class ChunkUploadControllerV2 {
         return ResponseEntity.ok(ChunkUploadStartResponse.of(result));
     }
 
-    @GetMapping
+    @GetMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @Operation(summary = "청크 파일을 저장하는 api 입니다.")
     public ResponseEntity<RequiredChunkPartsResponse> getRequiredParts(
             @RequestParam(required = true) final String uniqueId
     ) {
