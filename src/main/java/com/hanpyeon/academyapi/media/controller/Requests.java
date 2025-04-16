@@ -1,6 +1,9 @@
 package com.hanpyeon.academyapi.media.controller;
 
 import com.hanpyeon.academyapi.media.dto.ChunkFileUploadCommand;
+import com.hanpyeon.academyapi.media.dto.ChunkMergeCommandV2;
+import com.hanpyeon.academyapi.media.dto.ChunkUploadCommand;
+import com.hanpyeon.academyapi.media.dto.ChunkUploadInitializeCommand;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotBlank;
 import lombok.NonNull;
@@ -27,6 +30,43 @@ class Requests {
                     extension(),
                     mediaDuration()
             );
+        }
+    }
+
+    record ChunkUploadStartRequestV2(
+            Integer totalPartCount
+    ) {
+        ChunkUploadInitializeCommand toCommand() {
+            return new ChunkUploadInitializeCommand(totalPartCount);
+        }
+    }
+
+    record ChunkMergeRequestV2(
+            String uniqueId,
+            String userDefinedFileName,
+            String extension,
+            Long fileSize,
+            Long duration
+    ) {
+        ChunkMergeCommandV2 toCommand(final Long requestMemberId) {
+            return new ChunkMergeCommandV2(
+                    uniqueId(),
+                    userDefinedFileName(),
+                    extension(),
+                    fileSize(),
+                    duration(),
+                    requestMemberId
+            );
+        }
+    }
+
+    record ChunkUploadRequestV2(
+            MultipartFile file,
+            Integer partNumber,
+            String uniqueId
+    ) {
+        ChunkUploadCommand toCommand() {
+            return new ChunkUploadCommand(uniqueId(), partNumber(), file);
         }
     }
 }

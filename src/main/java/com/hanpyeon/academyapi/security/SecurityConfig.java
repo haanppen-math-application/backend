@@ -231,8 +231,7 @@ public class SecurityConfig {
                                     Role.MANAGER.getSecurityRole()
                             );
 
-                    request.requestMatchers(HttpMethod.GET)
-                            .authenticated();
+//                    request.requestMatchers(HttpMethod.GET).authenticated();
                     // 404 NOT FOUND EXCEPTION
                     request.anyRequest().permitAll();
                 })

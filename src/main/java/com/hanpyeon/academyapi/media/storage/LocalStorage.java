@@ -43,6 +43,7 @@ public class LocalStorage implements MediaStorage {
         final Path path = resolveFilePath(uploadFile.getUniqueFileName());
         try (final OutputStream outputStream = Files.newOutputStream(path, StandardOpenOption.CREATE_NEW)) {
             uploadFile.getInputStream().transferTo(outputStream);
+            uploadFile.getInputStream().close();
         } catch (IOException e) {
             throw new StorageException("서버 상에서 오류가 발생했습니다. 다시 시도해주세요" + e, ErrorCode.MEDIA_STORE_EXCEPTION);
         }

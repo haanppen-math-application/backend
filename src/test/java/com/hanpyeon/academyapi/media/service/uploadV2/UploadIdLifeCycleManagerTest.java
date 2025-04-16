@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class UploadIdManagerTest {
+class UploadIdLifeCycleManagerTest {
     private final LocalDateTime testTime = LocalDateTime.of(2020, 1, 1, 0, 0);
     private final Long expireTime = 4L;
     private final TimeProvider testTimeProvider = new TimeProvider() {
