@@ -1,1 +1,3 @@
 rootProject.name = 'academyapi'
+
+include('hpmath-core-api', 'hpmath-sms-client')

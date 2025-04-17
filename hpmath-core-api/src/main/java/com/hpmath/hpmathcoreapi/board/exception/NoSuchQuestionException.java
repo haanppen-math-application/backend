@@ -1,0 +1,13 @@
+package com.hpmath.hpmathcoreapi.board.exception;
+
+import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+
+public class NoSuchQuestionException extends BoardException {
+    public NoSuchQuestionException(ErrorCode errorCode) {
+        super(errorCode);
+    }
+
+    public NoSuchQuestionException(String detailMessage, ErrorCode errorCode) {
+        super(detailMessage, errorCode);
+    }
+}
