@@ -13,11 +13,6 @@ public class AccountConfig {
     }
 
     @Bean
-    TimeProvider timeProvider() {
-        return new TimeProvider();
-    }
-
-    @Bean
     AccountScheduler accountScheduler(final MemberRepository memberRepository) {
         return new AccountScheduler(memberRepository);
     }

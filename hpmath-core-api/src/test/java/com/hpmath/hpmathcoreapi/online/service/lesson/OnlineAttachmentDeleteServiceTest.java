@@ -3,8 +3,6 @@ package com.hpmath.hpmathcoreapi.online.service.lesson;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
-import com.hpmath.hpmathcoreapi.media.entity.Media;
-import com.hpmath.hpmathcoreapi.media.repository.MediaRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourse;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourseRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideo;
@@ -12,6 +10,8 @@ import com.hpmath.hpmathcoreapi.online.dao.OnlineVideoAttachment;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideoAttachmentRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideoRepository;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineVideoAttachmentCommand;
+import com.hpmath.hpmathmediadomain.media.entity.Media;
+import com.hpmath.hpmathmediadomain.media.repository.MediaRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ class OnlineAttachmentDeleteServiceTest {
                 .build();
 
         final OnlineCourse onlineCourse = new OnlineCourse(member, "test");
-        final Media media = new Media("test", "src", member);
+        final Media media = new Media("test", "src", member.getId());
         final OnlineVideo onlineVideo = new OnlineVideo(onlineCourse, media, "name", true, 1);
         final OnlineVideoAttachment onlineVideoAttachment = new OnlineVideoAttachment(onlineVideo,"title", "test");
 

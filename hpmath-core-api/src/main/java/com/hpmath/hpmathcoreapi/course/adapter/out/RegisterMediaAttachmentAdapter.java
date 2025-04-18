@@ -5,8 +5,8 @@ import com.hpmath.hpmathcoreapi.course.application.port.out.RegisterMediaAttachm
 import com.hpmath.hpmathcoreapi.course.entity.MemoMediaAttachment;
 import com.hpmath.hpmathcoreapi.course.entity.MemoMedia;
 import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathcoreapi.media.entity.Media;
-import com.hpmath.hpmathcoreapi.media.repository.MediaRepository;
+import com.hpmath.hpmathmediadomain.media.entity.Media;
+import com.hpmath.hpmathmediadomain.media.repository.MediaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

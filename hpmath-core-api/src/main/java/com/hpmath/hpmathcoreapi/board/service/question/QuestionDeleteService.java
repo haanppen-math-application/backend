@@ -9,7 +9,7 @@ import com.hpmath.hpmathcoreapi.board.entity.Question;
 import com.hpmath.hpmathcoreapi.board.exception.NoSuchQuestionException;
 import com.hpmath.hpmathcoreapi.course.application.exception.CourseException;
 import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathcoreapi.media.service.ImageService;
+import com.hpmath.hpmathmediadomain.media.service.ImageService;
 import jakarta.validation.Valid;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;

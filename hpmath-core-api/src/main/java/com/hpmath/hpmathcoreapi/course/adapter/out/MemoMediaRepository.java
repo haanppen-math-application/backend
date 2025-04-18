@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
 import com.hpmath.hpmathcoreapi.course.entity.MemoMedia;
-import com.hpmath.hpmathcoreapi.media.entity.Media;
+import com.hpmath.hpmathmediadomain.media.entity.Media;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

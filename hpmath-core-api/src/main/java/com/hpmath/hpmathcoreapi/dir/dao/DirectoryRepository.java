@@ -1,6 +1,5 @@
 package com.hpmath.hpmathcoreapi.dir.dao;
 
-import com.hpmath.hpmathcoreapi.media.entity.Media;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +15,4 @@ public interface DirectoryRepository extends JpaRepository<Directory, Long> {
     @Query("SELECT e FROM Directory e WHERE e.path LIKE concat(:dirPath, '%')")
     List<Directory> queryChildDirectories(@Param("dirPath") final String dirPath);
     Boolean existsAllByPathIn(List<String> paths);
-    List<Directory> findDirectoriesByMediasContaining(final Media media);
 }

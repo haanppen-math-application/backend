@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.dao;
 
-import com.hpmath.hpmathcoreapi.media.entity.Media;
+import com.hpmath.hpmathmediadomain.media.entity.Media;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;

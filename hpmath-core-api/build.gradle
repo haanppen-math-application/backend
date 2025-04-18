@@ -52,6 +52,7 @@ dependencies {
     implementation project(":hpmath-sms-client")
     implementation project(":hpmath-core")
     implementation project(":hpmath-web-common")
+    implementation project(":hpmath-media-domain")
 }
 
 tasks.named('test') {

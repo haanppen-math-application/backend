@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.entity;
 
-import com.hpmath.hpmathcoreapi.media.entity.Media;
+import com.hpmath.hpmathmediadomain.media.entity.Media;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;

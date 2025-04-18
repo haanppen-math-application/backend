@@ -1,9 +1,0 @@
-package com.hpmath.hpmathcoreapi.dir.dto;
-
-import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
-
-public record DeleteMediaCommand(
-        String mediaSrc,
-        MemberPrincipal memberPrincipal
-) {
-}

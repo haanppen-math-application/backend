@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.controller;
 
-import com.hpmath.hpmathcoreapi.media.dto.ImageUrlDto;
+import com.hpmath.hpmathmediadomain.media.dto.ImageUrlDto;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;

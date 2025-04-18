@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.account.service;
 
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.TimeProvider;
+import com.hpmath.hpmathcore.TimeProvider;
 import com.hpmath.hpmathcoreapi.account.dto.JwtDto;
 import com.hpmath.hpmathcoreapi.account.dto.Password;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
