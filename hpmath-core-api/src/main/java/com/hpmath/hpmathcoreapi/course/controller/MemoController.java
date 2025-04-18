@@ -1,11 +1,13 @@
 package com.hpmath.hpmathcoreapi.course.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.course.application.dto.DeleteMemoCommand;
 import com.hpmath.hpmathcoreapi.course.application.dto.ModifyMemoTextCommand;
 import com.hpmath.hpmathcoreapi.course.application.port.in.DeleteMemoUseCase;
 import com.hpmath.hpmathcoreapi.course.application.port.in.MemoRegisterUseCase;
 import com.hpmath.hpmathcoreapi.course.application.port.in.ModifyMemoTextUseCase;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -31,6 +33,7 @@ public class MemoController {
     @DeleteMapping("/api/courses/memos/{targetMemoId}")
     @Operation(summary = "메모 삭제 API")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> deleteMemo(
             @Nonnull @PathVariable final Long targetMemoId,
             @Nonnull @LoginInfo final MemberPrincipal memberPrincipal
@@ -42,6 +45,7 @@ public class MemoController {
 
     @PostMapping("/api/courses/memos")
     @Operation(summary = "반에 메모를 등록하는 API", description = "메모 등록은 담당 선생님만 가능")
+    @Authorization(values = Role.TEACHER)
     public ResponseEntity<?> addMemo(
             @LoginInfo @NotNull final MemberPrincipal memberPrincipal,
             @RequestBody @Valid final Requests.RegisterMemoRequest registerMemoRequest
@@ -51,6 +55,7 @@ public class MemoController {
     }
 
     @PutMapping("/api/course/memo")
+    @Authorization(values = Role.TEACHER)
     public ResponseEntity<?> putMemo(
             @RequestBody @Valid Requests.MemoTextModifyRequest memoTextModifyRequest,
             @LoginInfo MemberPrincipal memberPrincipal

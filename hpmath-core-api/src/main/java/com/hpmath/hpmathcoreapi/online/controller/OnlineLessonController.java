@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineCourseVideoRequest;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineVideoCommand;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineCourseVideoCommand;
@@ -20,6 +21,7 @@ import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineVideoDeleteService;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineVideoRegisterService;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineVideoSequenceUpdateService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -51,6 +53,7 @@ class OnlineLessonController {
 
     @PutMapping
     @Operation(summary = "온라인 수업의 대표 정보를 수정하는 API 입니다", description = "필드를 null로 보내면, 해당 필드는 수정하지 않습니다.")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateOnlineLessonInfo(
             @Validated @RequestBody final UpdateOnlineLessonInfoRequest updateOnlineLessonInfoRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -65,6 +68,7 @@ class OnlineLessonController {
 
     @DeleteMapping("{lessonId}")
     @Operation(summary = "온라인 수업의 내용을 초기화 API", description = "등록된 영상 및 첨부파일, 수업 제목, 수업 범위, 수업 내용 삭제")
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<?> initializeLesson(
             @PathVariable(required = true) final Long lessonId,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -76,6 +80,7 @@ class OnlineLessonController {
 
     @PutMapping("/videos/sequence")
     @Operation(summary = "온라인 수업 영상 순서 수정 API")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> changeSequence(
             @Validated @RequestBody final UpdateOnlineVideoSequenceRequest request,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -87,6 +92,7 @@ class OnlineLessonController {
 
     @PostMapping("/videos")
     @Operation(summary = "온라인 수업에 영상 등록 API")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateOnlineCourseVideos(
             @Validated @RequestBody final AddOnlineCourseVideoRequest addOnlineCourseVideosRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -100,6 +106,7 @@ class OnlineLessonController {
 
     @PutMapping("/videos")
     @Operation(summary = "온라인 수업 영상 Preview 옵션 수정 API")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateOnlineVideoPreviewStatus(
             @Valid @RequestBody final OnlineVideoPreviewUpdateRequest request,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -111,6 +118,7 @@ class OnlineLessonController {
 
     @DeleteMapping("{onlineCourseId}/videos/{onlineVideoId}")
     @Operation(summary = "온라인 수업 영상 삭제 API", description = "온라인 수업 영상을 삭제, 첨부자료까지 모두 삭제")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> deleteOnlineCourseVideo(
             @PathVariable final Long onlineCourseId,
             @PathVariable final Long onlineVideoId,
@@ -125,6 +133,7 @@ class OnlineLessonController {
 
     @PostMapping("/{onlineCourseId}/videos/{onlineVideoId}/attachments")
     @Operation(summary = "온라인 영상 첨부자료 추가 API", description = "첨부자료 추가")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> registerAttachment(
             @PathVariable(required = true) final Long onlineCourseId,
             @PathVariable(required = true) final Long onlineVideoId,
@@ -139,6 +148,7 @@ class OnlineLessonController {
 
     @DeleteMapping("/{onlineCourseId}/videos/{onlineVideoId}/attachments/{attachmentId}")
     @Operation(summary = "온라인 영상 첨부자료 삭제 API")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> deleteAttachment(
             @PathVariable(required = true) final Long onlineCourseId,
             @PathVariable(required = true) final Long onlineVideoId,

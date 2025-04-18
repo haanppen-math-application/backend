@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.dir.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.dir.controller.Requests.CreateDirectoryRequest;
 import com.hpmath.hpmathcoreapi.dir.controller.Requests.DeleteDirectoryRequest;
 import com.hpmath.hpmathcoreapi.dir.controller.Requests.UpdateDirectoryRequest;
@@ -13,6 +14,7 @@ import com.hpmath.hpmathcoreapi.dir.service.delete.DirectoryDeleteService;
 import com.hpmath.hpmathcoreapi.dir.service.query.DirectoryQueryService;
 import com.hpmath.hpmathcoreapi.dir.service.update.DirectoryUpdateService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -42,6 +44,7 @@ public class DirectoryController {
     @PostMapping
     @Operation(summary = "디렉토리를 새로 생성하는 api 입니다", description = "기본 디렉토리로 /, /teachers 가 존재합니다")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> createDirectory(
             @RequestBody @Valid final CreateDirectoryRequest createDirectoryRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -54,6 +57,7 @@ public class DirectoryController {
     @GetMapping
     @Operation(summary = "디렉토리를 조회하는 api 입니다", description = "dirPath를 작성하지 않을 시, / 의 디렉토리를 조회합니다")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<List<FileView>> queryCurrDirPath(
             @RequestParam(defaultValue = "/") final String dirPath,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -64,6 +68,7 @@ public class DirectoryController {
     @PutMapping
     @Operation(summary = "디렉토리 수정하는 api 입니다" )
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateDirectory(
             @RequestBody @Valid final UpdateDirectoryRequest renameDirectoryRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -76,6 +81,7 @@ public class DirectoryController {
     @DeleteMapping
     @Operation(summary = "디렉토리를 삭제하는 api", description = "하위 디렉토리가 포함된 디렉토리를 삭제하기 위해선 _ 필드를 true로 해주세요")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> deleteDirectory(
             @ModelAttribute @Valid DeleteDirectoryRequest deleteDirectoryRequest,
             @LoginInfo MemberPrincipal memberPrincipal

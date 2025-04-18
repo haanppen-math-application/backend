@@ -57,7 +57,6 @@ public class AccountController {
 
     @PostMapping("/password/verification")
     @ResponseStatus(HttpStatus.CREATED)
-    @Authorization(opened = true)
     public ResponseEntity<?> authenticateForRefreshPassword(
             @RequestParam(required = true) final String phoneNumber
     ) {
@@ -78,7 +77,7 @@ public class AccountController {
     @Operation(summary = "계정 등록", description = "어플리케이션에 계정을 등록하기 위한 API 입니다 ")
     @ApiResponse(responseCode = "201", description = "계정 생성 성공")
     @SecurityRequirement(name = "jwtAuth")
-    @Authorization(values = {Role.ADMIN, Role.TEACHER, Role.MANAGER})
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> registerMember(
             @Valid @RequestBody final RegisterMemberRequest registerMemberRequest
     ) {
@@ -111,6 +110,7 @@ public class AccountController {
     @DeleteMapping
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "계정 삭제 API", description = "계정을 삭제하기 위한 API 입니다. (원장님, 개발자)만 사용 가능합니다")
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<?> deleteAccounts(
             @RequestBody @Valid AccountRemoveRequest accountRemoveRequest
     ) {
@@ -122,6 +122,7 @@ public class AccountController {
     @PutMapping("/student")
     @Operation(summary = "학생 수정 API", description = "선생님, 원장님이 학생 정보를 수정하는 API")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> modifyStudent(
             @RequestBody @Valid ModifyStudentRequest modifyStudentRequest
     ) {
@@ -133,6 +134,7 @@ public class AccountController {
     @PutMapping("/teacher")
     @Operation(summary = "선생 수정 API", description = "원장님만 사용가능한 API")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<?> modifyTeacher(
             @RequestBody @Valid ModifyTeacherRequest modifyTeacherRequest
     ) {

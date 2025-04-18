@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.board.controller.Requests.CommentRegisterRequest;
 import com.hpmath.hpmathcoreapi.board.controller.Requests.CommentUpdateRequest;
 import com.hpmath.hpmathcoreapi.board.dto.CommentDeleteCommand;
@@ -8,6 +9,7 @@ import com.hpmath.hpmathcoreapi.board.dto.CommentUpdateCommand;
 import com.hpmath.hpmathcoreapi.board.service.comment.CommentRegisterService;
 import com.hpmath.hpmathcoreapi.board.service.comment.CommentService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -35,6 +37,7 @@ public class CommentController {
     @Operation(summary = "댓글 등록 API", description = "질문 게시글에 댓글을 달 수 있도록 하는 API 입니다.")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> addComment(
             @Valid @RequestBody final CommentRegisterRequest commentRegisterRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -53,6 +56,7 @@ public class CommentController {
     @Operation(summary = "댓글 내용 수정 API")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateComment(
             @Valid @RequestBody final CommentUpdateRequest commentUpdateRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -67,6 +71,7 @@ public class CommentController {
     @Operation(summary = "댓글 삭제 API", description = "댓글을 삭제할 수 있는 API 입니다")
     @DeleteMapping("/{commentId}")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> deleteComment(
             @NotNull @PathVariable final Long commentId,
             @LoginInfo final MemberPrincipal memberPrincipal
