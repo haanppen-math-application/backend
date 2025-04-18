@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Authorization {
-    Role[] values();
+    Role[] values() default {};
     boolean opened() default false;
 }
