@@ -57,6 +57,7 @@ public class AccountController {
 
     @PostMapping("/password/verification")
     @ResponseStatus(HttpStatus.CREATED)
+    @Authorization(opened = true)
     public ResponseEntity<?> authenticateForRefreshPassword(
             @RequestParam(required = true) final String phoneNumber
     ) {
@@ -77,6 +78,7 @@ public class AccountController {
     @Operation(summary = "계정 등록", description = "어플리케이션에 계정을 등록하기 위한 API 입니다 ")
     @ApiResponse(responseCode = "201", description = "계정 생성 성공")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER, Role.MANAGER})
     public ResponseEntity<?> registerMember(
             @Valid @RequestBody final RegisterMemberRequest registerMemberRequest
     ) {
@@ -89,7 +91,7 @@ public class AccountController {
     @Operation(summary = "이름, 전화번호, 비밀번호 수정  API", description = "본인 계정을 수정하기 위한 API 입니다.\n" +
             "필드에 입력된 값이 기존과 같을 경우 || 필드가 null 경우  => 수정되지 않습니다. \n" +
             "다만, 비밀번호의 경우 null이 아니라면 변경작업이 실행됩니다. (이전 비밀번호 검증)")
-    @Authorization(values = {Role.ADMIN, Role.MANAGER, Role.STUDENT, Role.TEACHER})
+    @Authorization(opened = true)
     public ResponseEntity<?> updateAccount(
             @LoginInfo final MemberPrincipal info,
             @RequestBody @Valid AccountUpdateRequest accountUpdateRequest
