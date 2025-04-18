@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-class AuthorizationFilter extends OncePerRequestFilter {
+class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
 
     @Override
@@ -25,11 +25,18 @@ class AuthorizationFilter extends OncePerRequestFilter {
         final String authorizationHeader = request.getHeader(JwtUtils.HEADER);
 
         if (containsJwtAuthorization(authorizationHeader)) {
-            final Claims claims = jwtUtils.parseToken(authorizationHeader);
-
-            final Role role = jwtUtils.getMemberRole(claims).orElseThrow();
-            final Long userId = jwtUtils.getMemberId(claims).orElseThrow();
-
+            final Claims claims;
+            final Role role;
+            final Long userId;
+            try {
+                claims = jwtUtils.parseToken(authorizationHeader);
+                role = jwtUtils.getMemberRole(claims).orElseThrow();
+                userId = jwtUtils.getMemberId(claims).orElseThrow();
+            } catch (Exception e) {
+                log.warn("Error parsing authorization header : {}", e.toString());
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
             filterChain.doFilter(new JwtRequestWrapper(request, new MemberPrincipal(userId, role)), response);
         } else {
             filterChain.doFilter(request, response);
