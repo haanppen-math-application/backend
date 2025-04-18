@@ -1,8 +1,8 @@
 package com.hpmath.hpmathcoreapi.online.dto;
 
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.BusinessException;
+import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.hpmathcore.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;

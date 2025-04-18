@@ -2,7 +2,7 @@ package com.hpmath.hpmathcoreapi.account.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hpmath.hpmathcoreapi.account.validation.PasswordConstraint;
-import com.hpmath.hpmathcoreapi.security.PasswordHandler;
+import com.hpmath.hpmathwebcommon.PasswordHandler;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.board.exception;
 
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.BusinessException;
+import com.hpmath.hpmathcore.ErrorCode;
 
 public class BoardException extends BusinessException {
     public BoardException(ErrorCode errorCode) {

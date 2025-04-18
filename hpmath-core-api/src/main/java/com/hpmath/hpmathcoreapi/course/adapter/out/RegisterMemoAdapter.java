@@ -4,7 +4,7 @@ import com.hpmath.hpmathcoreapi.course.application.exception.NoSuchCourseExcepti
 import com.hpmath.hpmathcoreapi.course.application.port.out.RegisterMemoPort;
 import com.hpmath.hpmathcoreapi.course.domain.Memo;
 import com.hpmath.hpmathcoreapi.course.entity.Course;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

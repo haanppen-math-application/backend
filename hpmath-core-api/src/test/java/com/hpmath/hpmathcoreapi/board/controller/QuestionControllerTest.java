@@ -12,7 +12,6 @@ import com.hpmath.hpmathcoreapi.board.service.question.QuestionDeleteService;
 import com.hpmath.hpmathcoreapi.board.service.question.QuestionQueryService;
 import com.hpmath.hpmathcoreapi.board.service.question.QuestionRegisterService;
 import com.hpmath.hpmathcoreapi.board.service.question.QuestionUpdateService;
-import com.hpmath.hpmathcoreapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,11 +26,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-@WebMvcTest(controllers = {QuestionController.class, QuestionQueryController.class},
-        excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
-        excludeFilters = {
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class, JwtAuthenticationFilter.class})
-        })
+@WebMvcTest(controllers = {QuestionController.class, QuestionQueryController.class})
 class QuestionControllerTest {
     @Autowired
     private MockMvc mockMvc;

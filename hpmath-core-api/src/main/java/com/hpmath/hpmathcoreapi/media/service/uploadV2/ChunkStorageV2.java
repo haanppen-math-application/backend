@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.media.service.uploadV2;
 
 import com.hpmath.hpmathcoreapi.dir.exception.ChunkException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.storage.LocalStorage;
 import java.io.BufferedInputStream;
 import java.io.IOException;

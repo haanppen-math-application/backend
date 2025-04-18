@@ -1,11 +1,11 @@
 package com.hpmath.hpmathcoreapi.banner;
 
+import com.hpmath.hpmathcore.BusinessException;
 import com.hpmath.hpmathcoreapi.banner.dto.AddBannerCommand;
 import com.hpmath.hpmathcoreapi.banner.dto.BannerResponse;
 import com.hpmath.hpmathcoreapi.banner.dto.ChangeBannerCommand;
 import com.hpmath.hpmathcoreapi.banner.dto.DeleteBannerCommand;
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

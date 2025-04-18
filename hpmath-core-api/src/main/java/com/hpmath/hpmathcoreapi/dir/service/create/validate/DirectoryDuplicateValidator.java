@@ -3,7 +3,7 @@ package com.hpmath.hpmathcoreapi.dir.service.create.validate;
 import com.hpmath.hpmathcoreapi.dir.dao.Directory;
 import com.hpmath.hpmathcoreapi.dir.dao.DirectoryRepository;
 import com.hpmath.hpmathcoreapi.dir.exception.DirectoryException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

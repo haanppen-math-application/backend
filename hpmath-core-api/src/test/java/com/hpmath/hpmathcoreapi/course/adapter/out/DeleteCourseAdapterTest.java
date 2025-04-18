@@ -2,11 +2,11 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.application.port.out.DeleteCoursePort;
 import com.hpmath.hpmathcoreapi.course.entity.Course;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

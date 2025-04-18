@@ -1,10 +1,10 @@
 package com.hpmath.hpmathcoreapi.dir.service.delete.validate;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.dir.exception.DirectoryException;
 import com.hpmath.hpmathcoreapi.dir.service.delete.DirectoryDeleteCommand;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
 import org.springframework.stereotype.Service;
 
 @Service

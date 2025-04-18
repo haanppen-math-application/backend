@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.service.question;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.board.dao.MemberManager;
 import com.hpmath.hpmathcoreapi.board.dao.QuestionRepository;
@@ -8,10 +9,9 @@ import com.hpmath.hpmathcoreapi.board.entity.Question;
 import com.hpmath.hpmathcoreapi.board.exception.NoSuchQuestionException;
 import com.hpmath.hpmathcoreapi.board.exception.RequestDeniedException;
 import com.hpmath.hpmathcoreapi.board.service.question.validate.QuestionValidateManager;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.entity.Image;
 import com.hpmath.hpmathcoreapi.media.service.ImageService;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;

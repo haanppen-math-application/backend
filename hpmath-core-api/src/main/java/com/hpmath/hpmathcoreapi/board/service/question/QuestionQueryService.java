@@ -7,7 +7,7 @@ import com.hpmath.hpmathcoreapi.board.dao.QuestionRepository;
 import com.hpmath.hpmathcoreapi.board.entity.Question;
 import com.hpmath.hpmathcoreapi.board.exception.NoSuchQuestionException;
 import com.hpmath.hpmathcoreapi.board.mapper.BoardMapper;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.paging.PagedResponse;
 import java.util.Objects;
 import lombok.AllArgsConstructor;

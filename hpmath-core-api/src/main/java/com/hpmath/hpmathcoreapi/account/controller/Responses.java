@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.account.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.dto.Password;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.time.LocalDateTime;
 
 public class Responses {

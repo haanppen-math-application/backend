@@ -2,8 +2,8 @@ package com.hpmath.hpmathcoreapi.account.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

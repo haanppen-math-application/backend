@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.media.controller;
 
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.dto.HttpStreamingCommand;
 import com.hpmath.hpmathcoreapi.media.dto.StreamingCommand;
 import com.hpmath.hpmathcoreapi.media.dto.StreamingResult;

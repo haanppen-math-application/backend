@@ -1,11 +1,11 @@
 package com.hpmath.hpmathcoreapi.online.service.course;
 
+import com.hpmath.hpmathcore.BusinessException;
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.exceptions.NoSuchMemberException;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

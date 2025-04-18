@@ -7,6 +7,7 @@ import static com.hpmath.hpmathcoreapi.account.controller.Requests.ModifyStudent
 import static com.hpmath.hpmathcoreapi.account.controller.Requests.ModifyTeacherRequest;
 import static com.hpmath.hpmathcoreapi.account.controller.Requests.RegisterMemberRequest;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.controller.Responses.ChangedPasswordResponse;
 import com.hpmath.hpmathcoreapi.account.controller.Responses.MyAccountInfoResponse;
 import com.hpmath.hpmathcoreapi.account.dto.AccountRemoveCommand;
@@ -21,7 +22,9 @@ import com.hpmath.hpmathcoreapi.account.service.AccountQueryService;
 import com.hpmath.hpmathcoreapi.account.service.AccountRegisterService;
 import com.hpmath.hpmathcoreapi.account.service.AccountRemoveService;
 import com.hpmath.hpmathcoreapi.account.service.AccountUpdateService;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -30,7 +33,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,6 +42,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -53,6 +56,7 @@ public class AccountController {
     private final AccountQueryService queryService;
 
     @PostMapping("/password/verification")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> authenticateForRefreshPassword(
             @RequestParam(required = true) final String phoneNumber
     ) {
@@ -85,20 +89,21 @@ public class AccountController {
     @Operation(summary = "이름, 전화번호, 비밀번호 수정  API", description = "본인 계정을 수정하기 위한 API 입니다.\n" +
             "필드에 입력된 값이 기존과 같을 경우 || 필드가 null 경우  => 수정되지 않습니다. \n" +
             "다만, 비밀번호의 경우 null이 아니라면 변경작업이 실행됩니다. (이전 비밀번호 검증)")
+    @Authorization(values = {Role.ADMIN, Role.MANAGER, Role.STUDENT, Role.TEACHER})
     public ResponseEntity<?> updateAccount(
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
+            @LoginInfo final MemberPrincipal info,
             @RequestBody @Valid AccountUpdateRequest accountUpdateRequest
     ) {
-        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(memberPrincipal.memberId());
+        final AccountUpdateCommand accountUpdateCommand = accountUpdateRequest.toCommand(info.memberId());
         accountUpdateService.updateMember(accountUpdateCommand);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/my")
     public ResponseEntity<MyAccountInfoResponse> getMyAccountInfo(
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final Long userId
     ) {
-        return ResponseEntity.ok(queryService.getMyInfo(memberPrincipal.memberId()));
+        return ResponseEntity.ok(queryService.getMyInfo(userId));
     }
 
     @DeleteMapping

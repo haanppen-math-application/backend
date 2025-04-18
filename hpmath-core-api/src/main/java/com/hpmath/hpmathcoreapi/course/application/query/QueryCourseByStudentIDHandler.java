@@ -1,9 +1,9 @@
 package com.hpmath.hpmathcoreapi.course.application.query;
 
+import com.hpmath.hpmathcore.BusinessException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadAllCoursesByStudentIdPort;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadStudentsPort;
 import com.hpmath.hpmathcoreapi.course.domain.Course;
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

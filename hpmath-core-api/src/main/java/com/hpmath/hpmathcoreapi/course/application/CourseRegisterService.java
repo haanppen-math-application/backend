@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.application;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.course.application.dto.CourseRegisterCommand;
 import com.hpmath.hpmathcoreapi.course.application.exception.CourseException;
 import com.hpmath.hpmathcoreapi.course.application.port.in.CourseRegisterUseCase;
@@ -9,8 +10,7 @@ import com.hpmath.hpmathcoreapi.course.application.port.out.RegisterCoursePort;
 import com.hpmath.hpmathcoreapi.course.domain.Course;
 import com.hpmath.hpmathcoreapi.course.domain.Student;
 import com.hpmath.hpmathcoreapi.course.domain.Teacher;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

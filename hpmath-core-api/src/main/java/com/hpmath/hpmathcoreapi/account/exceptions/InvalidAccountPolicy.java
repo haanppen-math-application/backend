@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.account.exceptions;
 
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 
 public class InvalidAccountPolicy extends AccountException{
     public InvalidAccountPolicy(ErrorCode errorCode) {

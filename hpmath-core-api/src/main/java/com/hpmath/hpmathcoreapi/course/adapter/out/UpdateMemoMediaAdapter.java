@@ -4,7 +4,7 @@ import com.hpmath.hpmathcoreapi.course.application.exception.CourseException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.UpdateMemoMediaPort;
 import com.hpmath.hpmathcoreapi.course.domain.Memo;
 import com.hpmath.hpmathcoreapi.course.entity.MemoMedia;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.entity.Media;
 import com.hpmath.hpmathcoreapi.media.exception.NoSuchMediaException;
 import com.hpmath.hpmathcoreapi.media.repository.MediaRepository;

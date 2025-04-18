@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.account.entity;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.course.entity.CourseStudent;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

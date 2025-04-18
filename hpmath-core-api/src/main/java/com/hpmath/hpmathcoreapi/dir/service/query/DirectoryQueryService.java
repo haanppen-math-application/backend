@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.dir.service.query;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.exceptions.NoSuchMemberException;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
@@ -9,8 +10,7 @@ import com.hpmath.hpmathcoreapi.dir.dto.FileView;
 import com.hpmath.hpmathcoreapi.dir.dto.QueryDirectory;
 import com.hpmath.hpmathcoreapi.dir.exception.DirectoryException;
 import com.hpmath.hpmathcoreapi.dir.service.form.resolver.DirectoryPathFormResolver;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

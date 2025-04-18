@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.media.service;
 
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.dto.DownloadCommand;
 import com.hpmath.hpmathcoreapi.media.dto.DownloadResult;
 import com.hpmath.hpmathcoreapi.media.dto.MediaDto;

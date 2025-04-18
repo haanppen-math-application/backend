@@ -12,14 +12,14 @@ import com.hpmath.hpmathcoreapi.dir.service.create.DirectoryCreateService;
 import com.hpmath.hpmathcoreapi.dir.service.delete.DirectoryDeleteService;
 import com.hpmath.hpmathcoreapi.dir.service.query.DirectoryQueryService;
 import com.hpmath.hpmathcoreapi.dir.service.update.DirectoryUpdateService;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,7 +44,7 @@ public class DirectoryController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> createDirectory(
             @RequestBody @Valid final CreateDirectoryRequest createDirectoryRequest,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final CreateDirectoryCommand createDirectoryDto = createDirectoryRequest.toCommand(memberPrincipal.memberId());
         directoryCreateService.addNewDirectory(createDirectoryDto);
@@ -56,7 +56,7 @@ public class DirectoryController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<List<FileView>> queryCurrDirPath(
             @RequestParam(defaultValue = "/") final String dirPath,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         return ResponseEntity.ok(directoryQueryService.queryDirectory(new QueryDirectory(dirPath, memberPrincipal.memberId())));
     }
@@ -66,7 +66,7 @@ public class DirectoryController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateDirectory(
             @RequestBody @Valid final UpdateDirectoryRequest renameDirectoryRequest,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final UpdateDirectoryDto updateDirectoryDto = new UpdateDirectoryDto(renameDirectoryRequest.targetDirPath(), renameDirectoryRequest.newDirName(), memberPrincipal.memberId());
         directoryUpdateService.updateDirectory(updateDirectoryDto);
@@ -78,7 +78,7 @@ public class DirectoryController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> deleteDirectory(
             @ModelAttribute @Valid DeleteDirectoryRequest deleteDirectoryRequest,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal
+            @LoginInfo MemberPrincipal memberPrincipal
     ) {
         final DeleteDirectoryDto deleteDirectoryDto = new DeleteDirectoryDto(deleteDirectoryRequest.targetDirectory(), memberPrincipal.memberId(), deleteDirectoryRequest.deleteChildes());
         directoryDeleteService.delete(deleteDirectoryDto);

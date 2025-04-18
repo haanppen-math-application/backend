@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.board.dto.CommentRegisterCommand;
 import com.hpmath.hpmathcoreapi.board.dto.CommentUpdateCommand;
 import com.hpmath.hpmathcoreapi.board.dto.QuestionDeleteCommand;
@@ -10,7 +11,6 @@ import com.hpmath.hpmathcoreapi.board.service.comment.validate.CommentImageConst
 import com.hpmath.hpmathcoreapi.board.service.question.validate.QuestionContentConstraint;
 import com.hpmath.hpmathcoreapi.board.service.question.validate.QuestionImageConstraint;
 import com.hpmath.hpmathcoreapi.board.service.question.validate.QuestionTitleConstraint;
-import com.hpmath.hpmathcoreapi.security.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;

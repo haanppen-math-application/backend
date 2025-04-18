@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.exception;
 
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 
 public class InvalidTargetException extends BoardException {
     public InvalidTargetException(ErrorCode errorCode) {

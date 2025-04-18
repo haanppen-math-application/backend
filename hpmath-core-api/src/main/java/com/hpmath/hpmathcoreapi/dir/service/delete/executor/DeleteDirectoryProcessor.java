@@ -2,7 +2,7 @@ package com.hpmath.hpmathcoreapi.dir.service.delete.executor;
 
 import com.hpmath.hpmathcoreapi.dir.exception.DirectoryException;
 import com.hpmath.hpmathcoreapi.dir.service.delete.DirectoryDeleteCommand;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

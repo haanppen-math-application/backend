@@ -1,10 +1,10 @@
 package com.hpmath.hpmathcoreapi.board.dao;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.board.exception.NoSuchMemberException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import lombok.AllArgsConstructor;

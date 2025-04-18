@@ -3,7 +3,7 @@ package com.hpmath.hpmathcoreapi.course.application.media.validate;
 import com.hpmath.hpmathcoreapi.course.application.exception.MemoMediaException;
 import com.hpmath.hpmathcoreapi.course.domain.MemoMedia;
 import com.hpmath.hpmathcoreapi.course.domain.MemoMediaContainer;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

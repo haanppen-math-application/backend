@@ -3,7 +3,7 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 import com.hpmath.hpmathcoreapi.course.application.exception.CourseException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.DeleteCoursePort;
 import com.hpmath.hpmathcoreapi.course.entity.Course;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

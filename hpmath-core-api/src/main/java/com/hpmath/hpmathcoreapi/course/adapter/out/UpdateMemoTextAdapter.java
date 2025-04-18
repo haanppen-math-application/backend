@@ -3,7 +3,7 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 import com.hpmath.hpmathcoreapi.course.application.exception.CourseException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.UpdateMemoTextPort;
 import com.hpmath.hpmathcoreapi.course.domain.Memo;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

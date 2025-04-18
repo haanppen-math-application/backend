@@ -2,11 +2,11 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.entity.Course;
 import com.hpmath.hpmathcoreapi.course.entity.CourseStudent;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;

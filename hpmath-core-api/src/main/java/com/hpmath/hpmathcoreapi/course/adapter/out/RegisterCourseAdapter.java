@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.application.port.out.RegisterCoursePort;
@@ -7,7 +8,6 @@ import com.hpmath.hpmathcoreapi.course.domain.Student;
 import com.hpmath.hpmathcoreapi.course.domain.Teacher;
 import com.hpmath.hpmathcoreapi.course.entity.Course;
 import com.hpmath.hpmathcoreapi.course.entity.CourseStudent;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

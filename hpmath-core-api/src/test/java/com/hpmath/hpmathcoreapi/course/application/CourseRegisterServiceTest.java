@@ -2,13 +2,13 @@ package com.hpmath.hpmathcoreapi.course.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.course.application.dto.CourseRegisterCommand;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadStudentsPort;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadTeacherPort;
 import com.hpmath.hpmathcoreapi.course.application.port.out.RegisterCoursePort;
 import com.hpmath.hpmathcoreapi.course.domain.Student;
 import com.hpmath.hpmathcoreapi.course.domain.Teacher;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

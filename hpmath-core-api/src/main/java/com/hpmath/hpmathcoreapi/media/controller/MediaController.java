@@ -2,10 +2,10 @@ package com.hpmath.hpmathcoreapi.media.controller;
 
 import com.hpmath.hpmathcoreapi.dir.dto.DeleteMediaCommand;
 import com.hpmath.hpmathcoreapi.media.service.MediaDeleteService;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ public class MediaController {
     @DeleteMapping(value = "/api/media")
     public ResponseEntity<?> deleteMedia(
             @RequestParam(required = true) final String mediaSrc,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         mediaDeleteService.delete(new DeleteMediaCommand(mediaSrc, memberPrincipal));
         return ResponseEntity.noContent().build();

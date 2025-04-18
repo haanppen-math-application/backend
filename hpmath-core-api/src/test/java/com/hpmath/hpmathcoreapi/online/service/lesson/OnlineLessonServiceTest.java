@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.service.lesson;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCategory;
@@ -7,7 +8,6 @@ import com.hpmath.hpmathcoreapi.online.dao.OnlineCategoryRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourse;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourseRepository;
 import com.hpmath.hpmathcoreapi.online.dto.UpdateOnlineLessonInfoCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;

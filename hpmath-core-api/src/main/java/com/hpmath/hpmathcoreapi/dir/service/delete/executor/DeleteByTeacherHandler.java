@@ -1,9 +1,9 @@
 package com.hpmath.hpmathcoreapi.dir.service.delete.executor;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.dir.dao.Directory;
 import com.hpmath.hpmathcoreapi.dir.service.delete.DirectoryDeleteCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;

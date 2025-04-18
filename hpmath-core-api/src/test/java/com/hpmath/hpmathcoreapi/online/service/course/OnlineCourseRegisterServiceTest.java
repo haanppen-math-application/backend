@@ -1,11 +1,11 @@
 package com.hpmath.hpmathcoreapi.online.service.course;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourseRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineStudentRepository;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineCourseCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import org.assertj.core.api.Assertions;

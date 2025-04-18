@@ -4,7 +4,7 @@ import com.hpmath.hpmathcoreapi.course.application.exception.MemoMediaException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.UpdateMemoMediaContainerPort;
 import com.hpmath.hpmathcoreapi.course.domain.MemoMedia;
 import com.hpmath.hpmathcoreapi.course.domain.MemoMediaContainer;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

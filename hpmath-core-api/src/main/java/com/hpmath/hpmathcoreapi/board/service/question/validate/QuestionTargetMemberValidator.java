@@ -1,9 +1,9 @@
 package com.hpmath.hpmathcoreapi.board.service.question.validate;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.board.entity.Question;
 import com.hpmath.hpmathcoreapi.board.exception.InvalidTargetException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
 import org.springframework.stereotype.Component;
 
 @Component

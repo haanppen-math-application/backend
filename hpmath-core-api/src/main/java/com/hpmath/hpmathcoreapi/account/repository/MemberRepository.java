@@ -1,8 +1,8 @@
 package com.hpmath.hpmathcoreapi.account.repository;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.controller.Responses.MemberInfoResponse;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

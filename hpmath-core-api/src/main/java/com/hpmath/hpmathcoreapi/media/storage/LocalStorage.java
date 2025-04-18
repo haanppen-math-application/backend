@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.media.storage;
 
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.dto.MediaDto;
 import com.hpmath.hpmathcoreapi.media.exception.NoSuchMediaException;
 import com.hpmath.hpmathcoreapi.media.exception.NotSupportedMediaException;

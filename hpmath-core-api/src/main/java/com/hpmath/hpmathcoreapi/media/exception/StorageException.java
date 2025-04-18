@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.media.exception;
 
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.BusinessException;
+import com.hpmath.hpmathcore.ErrorCode;
 
 public class StorageException extends BusinessException {
     public StorageException(ErrorCode errorCode) {

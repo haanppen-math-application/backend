@@ -10,8 +10,7 @@ import com.hpmath.hpmathcoreapi.account.service.AccountQueryService;
 import com.hpmath.hpmathcoreapi.account.service.AccountRegisterService;
 import com.hpmath.hpmathcoreapi.account.service.AccountRemoveService;
 import com.hpmath.hpmathcoreapi.account.service.AccountUpdateService;
-import com.hpmath.hpmathcoreapi.security.PasswordHandler;
-import com.hpmath.hpmathcoreapi.security.filter.JwtAuthenticationFilter;
+import com.hpmath.hpmathwebcommon.PasswordHandler;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -29,11 +28,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
-@WebMvcTest(controllers = AccountController.class,
-        excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
-        excludeFilters = {
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class, JwtAuthenticationFilter.class})
-        })
+@WebMvcTest(controllers = AccountController.class)
 public class AccountControllerTest {
     private static final String BASE_URL = "/api/accounts";
     @Autowired

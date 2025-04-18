@@ -1,15 +1,15 @@
 package com.hpmath.hpmathcoreapi.media.service;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.course.adapter.out.MediaAttachmentRepository;
 import com.hpmath.hpmathcoreapi.course.adapter.out.MemoMediaRepository;
 import com.hpmath.hpmathcoreapi.dir.dao.DirectoryRepository;
 import com.hpmath.hpmathcoreapi.dir.dto.DeleteMediaCommand;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.entity.Media;
 import com.hpmath.hpmathcoreapi.media.exception.MediaException;
 import com.hpmath.hpmathcoreapi.media.repository.MediaRepository;
-import com.hpmath.hpmathcoreapi.security.Role;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

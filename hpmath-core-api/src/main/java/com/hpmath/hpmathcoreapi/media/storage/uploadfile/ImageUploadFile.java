@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.media.storage.uploadfile;
 
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.exception.InvalidUploadFileException;
 import com.hpmath.hpmathcoreapi.media.exception.StorageException;
 import java.io.IOException;

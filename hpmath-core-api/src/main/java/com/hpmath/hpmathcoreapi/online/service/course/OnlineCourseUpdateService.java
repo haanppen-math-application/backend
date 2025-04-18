@@ -1,7 +1,8 @@
 package com.hpmath.hpmathcoreapi.online.service.course;
 
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.BusinessException;
+import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourse;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourseRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineStudentRepository;
@@ -10,7 +11,6 @@ import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseInfoUpdateCommand;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseStudentUpdateCommand;
 import com.hpmath.hpmathcoreapi.online.service.course.update.OnlineCourseStudentsUpdateHandler;
 import com.hpmath.hpmathcoreapi.online.service.course.update.OnlineCourseUpdateManager;
-import com.hpmath.hpmathcoreapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

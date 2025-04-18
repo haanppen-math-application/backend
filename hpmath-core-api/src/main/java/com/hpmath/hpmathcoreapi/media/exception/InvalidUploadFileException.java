@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.media.exception;
 
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 
 public class InvalidUploadFileException extends StorageException {
     public InvalidUploadFileException(ErrorCode errorCode) {

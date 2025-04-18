@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.online.domain;
 
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.BusinessException;
+import com.hpmath.hpmathcore.ErrorCode;
 
 public record OnlineCourseRange(String range) {
     private static final int RANGE_MAX_SIZE = 100;

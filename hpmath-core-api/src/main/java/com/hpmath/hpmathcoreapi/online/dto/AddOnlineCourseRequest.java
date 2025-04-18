@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.dto;
 
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;

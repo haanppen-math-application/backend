@@ -7,14 +7,14 @@ import com.hpmath.hpmathcoreapi.online.dto.QueryOnlineCourseByStudentIdCommand;
 import com.hpmath.hpmathcoreapi.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hpmath.hpmathcoreapi.online.dto.QueryOnlineCourseDetailsCommand;
 import com.hpmath.hpmathcoreapi.online.service.course.OnlineCourseQueryService;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +59,7 @@ public class OnlineCourseQueryController {
     @GetMapping("/my")
     @Operation(summary = "자신이 속한, 혹은 만든 반 조회")
     public ResponseEntity<List<OnlineCoursePreview>> queryOnlineCoursesByStudentId(
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final QueryMyOnlineCourseCommand queryMyOnlineCourseCommand = new QueryMyOnlineCourseCommand(
                 memberPrincipal.memberId(), memberPrincipal.role());

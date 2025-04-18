@@ -2,11 +2,11 @@ package com.hpmath.hpmathcoreapi.board.service.question;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.board.dao.QuestionRepository;
 import com.hpmath.hpmathcoreapi.board.dto.QuestionDeleteCommand;
 import com.hpmath.hpmathcoreapi.board.dto.QuestionRegisterCommand;
 import com.hpmath.hpmathcoreapi.board.dto.QuestionUpdateCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import java.util.Collections;

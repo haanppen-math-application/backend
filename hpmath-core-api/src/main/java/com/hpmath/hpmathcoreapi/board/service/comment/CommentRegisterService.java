@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.service.comment;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.board.dao.CommentRepository;
@@ -12,11 +13,10 @@ import com.hpmath.hpmathcoreapi.board.exception.NoSuchQuestionException;
 import com.hpmath.hpmathcoreapi.board.exception.NotAllowedCommentException;
 import com.hpmath.hpmathcoreapi.board.exception.RequestDeniedException;
 import com.hpmath.hpmathcoreapi.board.mapper.BoardMapper;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.entity.Image;
 import com.hpmath.hpmathcoreapi.media.exception.MediaStoreException;
 import com.hpmath.hpmathcoreapi.media.service.ImageService;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

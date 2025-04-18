@@ -4,7 +4,7 @@ import com.hpmath.hpmathcoreapi.account.dto.RegisterMemberCommand;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.account.service.policy.AccountPolicyManager;
-import com.hpmath.hpmathcoreapi.security.PasswordHandler;
+import com.hpmath.hpmathwebcommon.PasswordHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

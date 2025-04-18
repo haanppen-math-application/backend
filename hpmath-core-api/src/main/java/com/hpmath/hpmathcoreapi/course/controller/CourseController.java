@@ -12,14 +12,14 @@ import com.hpmath.hpmathcoreapi.course.application.port.in.UpdateCourseStudentsU
 import com.hpmath.hpmathcoreapi.course.application.port.in.UpdateCourseUseCase;
 import com.hpmath.hpmathcoreapi.course.controller.Requests.CourseUpdateRequest;
 import com.hpmath.hpmathcoreapi.course.controller.Requests.DeleteCourseRequest;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,10 +45,10 @@ public class CourseController {
     @Operation(summary = "반에 학생 추가 API", description = "존재하는 반에 학생들을 등록하는 기능입니다. 중복되는 학생들은 중복되어 등록되지 않습니다.")
     public ResponseEntity<?> addStudent(
             @Valid @RequestBody final Requests.RegisterStudentRequest registerStudentRequest,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal) {
+            @LoginInfo final Long loginId) {
 
         final RegisterStudentCommand registerStudentDto = registerStudentRequest.toCommand(
-                memberPrincipal.memberId()
+                loginId
         );
         addStudentToCourseUseCase.addStudentToCourse(registerStudentDto);
         return ResponseEntity.ok(null);
@@ -59,9 +59,9 @@ public class CourseController {
     @Operation(summary = "반을 삭제하는 API 입니다", description = "반을 삭제하는 기능은 원장님 권한 이상 필요")
     public ResponseEntity<?> delete(
             @ModelAttribute final DeleteCourseRequest deleteCourseRequest,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
-        final DeleteCourseCommand deleteCommand = deleteCourseRequest.toCommand(memberPrincipal);
+        final DeleteCourseCommand deleteCommand = deleteCourseRequest.toCommand(memberPrincipal.role(), memberPrincipal.memberId());
         deleteCourseAdapter.delete(deleteCommand);
         return ResponseEntity.noContent().build();
     }
@@ -71,7 +71,7 @@ public class CourseController {
     @Operation(summary = "반 등록 API", description = "반을 등록하기 위한 API 입니다, 반 등록은 학생은 허용되지 않습니다.")
     public ResponseEntity<?> registerCourse(
             @Valid @RequestBody final Requests.CourseRegisterRequest courseRegisterRequestDto,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final CourseRegisterCommand courseRegisterDto = courseRegisterRequestDto.toCommand(memberPrincipal.memberId(), memberPrincipal.role());
         final Long createdCourseId = courseRegisterUseCase.register(courseRegisterDto);
@@ -88,7 +88,7 @@ public class CourseController {
     public ResponseEntity<?> updateCourseName(
             final @PathVariable Long courseId,
             final @RequestBody CourseUpdateRequest courseUpdateRequest,
-            final @AuthenticationPrincipal MemberPrincipal memberPrincipal
+            final @LoginInfo MemberPrincipal memberPrincipal
     ) {
         final CourseUpdateCommand courseUpdateDto = courseUpdateRequest.toCommand(courseId, memberPrincipal.memberId());
         updateCourseNameUseCase.updateCourse(courseUpdateDto);
@@ -98,7 +98,7 @@ public class CourseController {
 
     @PutMapping("/api/course/{courseId}/students")
     @Operation(summary = "반 학생 업데이트를 위한 API")
-    public ResponseEntity<?> deleteStudents(@AuthenticationPrincipal MemberPrincipal memberPrincipal,
+    public ResponseEntity<?> deleteStudents(@LoginInfo MemberPrincipal memberPrincipal,
                                             @PathVariable Long courseId,
                                             @RequestBody Requests.UpdateCourseStudentsRequest updateCourseStudentsRequest
     ) {

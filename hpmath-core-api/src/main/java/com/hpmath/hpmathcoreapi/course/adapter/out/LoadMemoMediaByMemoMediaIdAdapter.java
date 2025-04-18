@@ -3,7 +3,7 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 import com.hpmath.hpmathcoreapi.course.application.exception.MemoMediaException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadMemoMediaByMemoMediaIdPort;
 import com.hpmath.hpmathcoreapi.course.domain.MemoMedia;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

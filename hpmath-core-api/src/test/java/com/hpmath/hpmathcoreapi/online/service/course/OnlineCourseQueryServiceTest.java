@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.service.course;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCategory;
@@ -9,7 +10,6 @@ import com.hpmath.hpmathcoreapi.online.dao.OnlineCourseRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineStudent;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineStudentRepository;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCoursePreview;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

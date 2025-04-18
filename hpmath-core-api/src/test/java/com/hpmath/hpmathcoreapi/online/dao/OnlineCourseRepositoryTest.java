@@ -1,8 +1,8 @@
 package com.hpmath.hpmathcoreapi.online.dao;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;

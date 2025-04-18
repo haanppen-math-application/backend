@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.service.lesson;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourse;
@@ -7,7 +8,6 @@ import com.hpmath.hpmathcoreapi.online.dao.OnlineCourseRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideo;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideoRepository;
 import com.hpmath.hpmathcoreapi.online.dto.UpdateOnlineVideoSequenceCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
