@@ -1,12 +1,12 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.board.exception.InvalidTargetException;
 import com.hpmath.hpmathcoreapi.course.domain.Student;
 import com.hpmath.hpmathcoreapi.course.domain.Teacher;
 import com.hpmath.hpmathcoreapi.course.entity.Course;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
 import org.springframework.stereotype.Component;
 
 @Component

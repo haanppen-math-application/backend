@@ -7,7 +7,8 @@ import com.hpmath.hpmathcoreapi.board.dto.CommentRegisterCommand;
 import com.hpmath.hpmathcoreapi.board.dto.CommentUpdateCommand;
 import com.hpmath.hpmathcoreapi.board.service.comment.CommentRegisterService;
 import com.hpmath.hpmathcoreapi.board.service.comment.CommentService;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -15,7 +16,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +37,7 @@ public class CommentController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> addComment(
             @Valid @RequestBody final CommentRegisterRequest commentRegisterRequest,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final CommentRegisterCommand commentRegisterDto = commentRegisterRequest.toCommand(memberPrincipal.memberId());
         final Long createdCommentId = commentRegisterService.register(commentRegisterDto);
@@ -55,7 +55,7 @@ public class CommentController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateComment(
             @Valid @RequestBody final CommentUpdateRequest commentUpdateRequest,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final CommentUpdateCommand commentUpdateDto = commentUpdateRequest.toCommand(memberPrincipal.memberId(),
                 memberPrincipal.role());
@@ -69,7 +69,7 @@ public class CommentController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> deleteComment(
             @NotNull @PathVariable final Long commentId,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final CommentDeleteCommand commentDeleteDto = new CommentDeleteCommand(commentId, memberPrincipal.memberId(),
                 memberPrincipal.role());

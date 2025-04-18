@@ -3,7 +3,7 @@ package com.hpmath.hpmathcoreapi.dir.service.delete.validate;
 import com.hpmath.hpmathcoreapi.dir.dao.Directory;
 import com.hpmath.hpmathcoreapi.dir.exception.DirectoryException;
 import com.hpmath.hpmathcoreapi.dir.service.delete.DirectoryDeleteCommand;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

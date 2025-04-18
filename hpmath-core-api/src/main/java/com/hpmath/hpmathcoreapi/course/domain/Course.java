@@ -4,7 +4,7 @@ import com.hpmath.hpmathcoreapi.course.application.exception.IllegalCourseNameEx
 import com.hpmath.hpmathcoreapi.course.application.exception.IllegalCourseStudentSizeException;
 import com.hpmath.hpmathcoreapi.course.application.exception.IllegalCourseStudentStateException;
 import com.hpmath.hpmathcoreapi.course.application.exception.NotFoundTeacherException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

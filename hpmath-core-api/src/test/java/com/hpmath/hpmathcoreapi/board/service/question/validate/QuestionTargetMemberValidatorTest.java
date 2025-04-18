@@ -2,10 +2,10 @@ package com.hpmath.hpmathcoreapi.board.service.question.validate;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.board.entity.Question;
 import com.hpmath.hpmathcoreapi.board.exception.InvalidTargetException;
-import com.hpmath.hpmathcoreapi.security.Role;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,12 +1,12 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.board.exception.NoSuchMemberException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadTeacherPort;
 import com.hpmath.hpmathcoreapi.course.domain.Teacher;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

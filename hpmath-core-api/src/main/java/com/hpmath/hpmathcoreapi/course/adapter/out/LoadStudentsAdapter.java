@@ -1,9 +1,9 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadStudentsPort;
 import com.hpmath.hpmathcoreapi.course.domain.Student;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.account.service;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.TimeProvider;
 import com.hpmath.hpmathcoreapi.account.dto.JwtDto;
 import com.hpmath.hpmathcoreapi.account.dto.Password;
@@ -10,10 +11,9 @@ import com.hpmath.hpmathcoreapi.account.exceptions.NoSuchMemberException;
 import com.hpmath.hpmathcoreapi.account.exceptions.ReLoginRequiredException;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.aspect.log.WarnLoggable;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.JwtUtils;
-import com.hpmath.hpmathcoreapi.security.PasswordHandler;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.hpmathwebcommon.JwtUtils;
+import com.hpmath.hpmathwebcommon.PasswordHandler;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import java.time.LocalDateTime;

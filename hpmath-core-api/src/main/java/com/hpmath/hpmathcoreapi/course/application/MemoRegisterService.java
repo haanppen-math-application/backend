@@ -10,7 +10,7 @@ import com.hpmath.hpmathcoreapi.course.application.port.out.LoadCourseTeacherIdP
 import com.hpmath.hpmathcoreapi.course.application.port.out.QueryMemoByCourseIdAndDatePort;
 import com.hpmath.hpmathcoreapi.course.application.port.out.RegisterMemoPort;
 import com.hpmath.hpmathcoreapi.course.domain.Memo;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

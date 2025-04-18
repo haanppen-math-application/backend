@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.service.comment;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.aspect.log.WarnLoggable;
 import com.hpmath.hpmathcoreapi.board.dao.CommentRepository;
 import com.hpmath.hpmathcoreapi.board.dto.CommentDeleteCommand;
@@ -7,10 +8,9 @@ import com.hpmath.hpmathcoreapi.board.dto.CommentUpdateCommand;
 import com.hpmath.hpmathcoreapi.board.entity.Comment;
 import com.hpmath.hpmathcoreapi.board.exception.BoardException;
 import com.hpmath.hpmathcoreapi.board.exception.NoSuchCommentException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.entity.Image;
 import com.hpmath.hpmathcoreapi.media.service.ImageService;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

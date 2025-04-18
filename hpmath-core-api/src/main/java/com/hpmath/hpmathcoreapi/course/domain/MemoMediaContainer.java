@@ -2,7 +2,7 @@ package com.hpmath.hpmathcoreapi.course.domain;
 
 import com.hpmath.hpmathcoreapi.course.application.dto.MemoMediaUpdateSequenceCommand;
 import com.hpmath.hpmathcoreapi.course.application.exception.MemoMediaException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.Collections;
 import java.util.List;
 import lombok.AccessLevel;

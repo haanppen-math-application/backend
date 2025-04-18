@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.account.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.dto.AccountRemoveCommand;
 import com.hpmath.hpmathcoreapi.account.dto.AccountUpdateCommand;
 import com.hpmath.hpmathcoreapi.account.dto.Password;
@@ -10,7 +11,6 @@ import com.hpmath.hpmathcoreapi.account.validation.GradeConstraint;
 import com.hpmath.hpmathcoreapi.account.validation.NameConstraint;
 import com.hpmath.hpmathcoreapi.account.validation.PhoneNumberConstraint;
 import com.hpmath.hpmathcoreapi.account.validation.RoleConstraint;
-import com.hpmath.hpmathcoreapi.security.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

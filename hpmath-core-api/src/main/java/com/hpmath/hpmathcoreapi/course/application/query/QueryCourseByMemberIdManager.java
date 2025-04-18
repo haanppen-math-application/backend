@@ -3,7 +3,7 @@ package com.hpmath.hpmathcoreapi.course.application.query;
 import com.hpmath.hpmathcoreapi.course.controller.Responses.CoursePreviewResponse;
 import com.hpmath.hpmathcoreapi.course.application.exception.CourseException;
 import com.hpmath.hpmathcoreapi.course.domain.Course;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

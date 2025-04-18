@@ -9,7 +9,7 @@ import com.hpmath.hpmathcoreapi.board.dto.QuestionUpdateCommand;
 import com.hpmath.hpmathcoreapi.board.service.question.QuestionDeleteService;
 import com.hpmath.hpmathcoreapi.board.service.question.QuestionRegisterService;
 import com.hpmath.hpmathcoreapi.board.service.question.QuestionUpdateService;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,7 +17,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +41,7 @@ public class QuestionController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addQuestion(
             @Valid @RequestBody final QuestionRegisterRequest questionRegisterRequestDto,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final QuestionRegisterCommand questionRegisterCommand = questionRegisterRequestDto.toCommand(memberPrincipal.memberId());
         final Long createdQuestionId = questionRegisterService.addQuestion(questionRegisterCommand);
@@ -58,7 +58,7 @@ public class QuestionController {
     @PutMapping
     public ResponseEntity<?> updateQuestion(
             @Valid @RequestBody final QuestionUpdateRequest questionUpdateRequestDto,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final QuestionUpdateCommand questionUpdateCommand = questionUpdateRequestDto.toCommand(
                 memberPrincipal.memberId(),
@@ -72,7 +72,7 @@ public class QuestionController {
     @DeleteMapping("/{questionId}")
     public ResponseEntity<?> deleteQuestion(
             @ModelAttribute @Valid final QuestionDeleteRequest questionDeleteRequestDto,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final QuestionDeleteCommand questionDeleteDto = questionDeleteRequestDto.toCommand(
                 memberPrincipal.memberId(),

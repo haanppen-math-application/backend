@@ -37,3 +37,5 @@ out/
 ### VS Code ###
 .vscode/
 .DS_Store
+
+hpmath-core-api/src/main/resources/application.properties

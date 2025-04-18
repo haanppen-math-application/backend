@@ -3,13 +3,13 @@ package com.hpmath.hpmathcoreapi.online.controller;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonDetail;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonQueryCommand;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineLessonQueryService;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +25,7 @@ public class OnlineLessonQueryController {
     @Operation(summary = "온라인 수업 상세 정보 조회 API")
     public ResponseEntity<OnlineLessonDetail> queryDetails(
             @PathVariable(required = true) final Long lessonId,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final OnlineLessonQueryCommand command = new OnlineLessonQueryCommand(lessonId, memberPrincipal.memberId(), memberPrincipal.role());
         return ResponseEntity.ok(onlineLessonQueryService.loadDetails(command));

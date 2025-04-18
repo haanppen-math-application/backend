@@ -1,11 +1,11 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.entity.Course;
 import com.hpmath.hpmathcoreapi.course.entity.CourseStudent;
 import com.hpmath.hpmathcoreapi.course.entity.Memo;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

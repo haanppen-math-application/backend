@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.service.course;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.course.controller.Responses.TeacherPreviewResponse;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCategory;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourse;
@@ -14,7 +15,6 @@ import com.hpmath.hpmathcoreapi.online.dto.QueryMyOnlineCourseCommand;
 import com.hpmath.hpmathcoreapi.online.dto.QueryOnlineCourseByStudentIdCommand;
 import com.hpmath.hpmathcoreapi.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hpmath.hpmathcoreapi.online.dto.QueryOnlineCourseDetailsCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

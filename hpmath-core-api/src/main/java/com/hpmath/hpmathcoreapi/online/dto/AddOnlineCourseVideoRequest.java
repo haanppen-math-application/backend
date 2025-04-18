@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.online.dto;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineVideoCommand.OnlineVideoCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
 
 public record AddOnlineCourseVideoRequest(
         Long onlineCourseId,

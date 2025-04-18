@@ -1,7 +1,8 @@
 package com.hpmath.hpmathcoreapi.online.service.lesson;
 
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.BusinessException;
+import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCategory;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourse;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourseRepository;
@@ -13,7 +14,6 @@ import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonDetail;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonQueryCommand;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineVideoAttachmentDetail;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineVideoDetail;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

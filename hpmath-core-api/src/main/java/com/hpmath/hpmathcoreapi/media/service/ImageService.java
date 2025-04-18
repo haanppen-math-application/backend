@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.media.service;
 
 import com.hpmath.hpmathcoreapi.aspect.log.WarnLoggable;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.MediaMapper;
 import com.hpmath.hpmathcoreapi.media.dto.ImageUrlDto;
 import com.hpmath.hpmathcoreapi.media.dto.MediaDto;

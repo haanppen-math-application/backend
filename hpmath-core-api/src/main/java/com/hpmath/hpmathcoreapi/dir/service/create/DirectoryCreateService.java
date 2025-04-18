@@ -8,7 +8,7 @@ import com.hpmath.hpmathcoreapi.dir.dto.CreateDirectoryCommand;
 import com.hpmath.hpmathcoreapi.dir.exception.DirectoryException;
 import com.hpmath.hpmathcoreapi.dir.service.create.validate.DirectoryCreationValidateManager;
 import com.hpmath.hpmathcoreapi.dir.service.form.resolver.DirectoryPathFormResolver;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

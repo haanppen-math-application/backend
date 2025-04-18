@@ -10,7 +10,8 @@ import com.hpmath.hpmathcoreapi.course.application.port.in.LoadMemoQuery;
 import com.hpmath.hpmathcoreapi.course.application.port.in.QueryCourseByMonthUseCase;
 import com.hpmath.hpmathcoreapi.course.application.port.in.QueryMemoByCourseIdAndDateUseCase;
 import com.hpmath.hpmathcoreapi.paging.PagedResponse;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
@@ -24,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,7 +74,7 @@ public class MemoQueryController {
     @Operation(summary = "로그인된 학생 ID와 날짜정보를 활용하여, 해당 달의 학생 수업 정보를 가져오는 API")
     public ResponseEntity<List<MemoAppliedDayResponse>> queryByMonthInfo(
             @RequestParam(required = true) final LocalDate monthInfo,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         return ResponseEntity.ok(queryCourseByMonthUseCase.query(monthInfo, memberPrincipal.memberId()));
     }

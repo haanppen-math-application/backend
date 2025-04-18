@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.dto;
 
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.Role;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 

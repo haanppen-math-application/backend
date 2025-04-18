@@ -6,13 +6,12 @@ import com.hpmath.hpmathcoreapi.course.application.port.in.LoadCourseDetailsQuer
 import com.hpmath.hpmathcoreapi.course.application.port.in.LoadCoursesByStudentQuery;
 import com.hpmath.hpmathcoreapi.course.application.port.in.QueryAllCourseUseCase;
 import com.hpmath.hpmathcoreapi.course.application.port.in.QueryCourseByMemberIdUseCase;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,9 +33,9 @@ public class CourseQueryController {
 
     @GetMapping(value = "/api/courses/my")
     public ResponseEntity<List<CoursePreviewResponse>> queryMyCourses(
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final Long loginId
     ) {
-        return ResponseEntity.ok(queryCourseByMemberIdUseCase.loadCoursePreviews(memberPrincipal.memberId()));
+        return ResponseEntity.ok(queryCourseByMemberIdUseCase.loadCoursePreviews(loginId));
     }
 
     @GetMapping("/api/courses/students/{studentId}")

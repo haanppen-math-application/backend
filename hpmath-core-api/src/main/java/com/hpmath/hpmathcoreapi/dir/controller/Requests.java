@@ -1,8 +1,8 @@
 package com.hpmath.hpmathcoreapi.dir.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.dir.dto.CreateDirectoryCommand;
 import com.hpmath.hpmathcoreapi.dir.dto.SaveMediaToDirectoryCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

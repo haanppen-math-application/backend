@@ -1,13 +1,13 @@
 package com.hpmath.hpmathcoreapi.dir.service;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.dir.dao.Directory;
 import com.hpmath.hpmathcoreapi.dir.dao.DirectoryRepository;
 import com.hpmath.hpmathcoreapi.dir.dto.SaveMediaToDirectoryCommand;
 import com.hpmath.hpmathcoreapi.dir.exception.DirectoryException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.entity.Media;
 import com.hpmath.hpmathcoreapi.media.repository.MediaRepository;
-import com.hpmath.hpmathcoreapi.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

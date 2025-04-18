@@ -4,7 +4,6 @@ import com.hpmath.hpmathcoreapi.course.application.LoadCoursesByStudentQueryServ
 import com.hpmath.hpmathcoreapi.course.application.port.in.LoadCourseDetailsQuery;
 import com.hpmath.hpmathcoreapi.course.application.port.in.QueryAllCourseUseCase;
 import com.hpmath.hpmathcoreapi.course.application.port.in.QueryCourseByMemberIdUseCase;
-import com.hpmath.hpmathcoreapi.security.filter.JwtAuthenticationFilter;
 import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@WebMvcTest(controllers = CourseQueryController.class,
-        excludeAutoConfiguration = SecurityAutoConfiguration.class, // 추가
-        excludeFilters = {
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class, JwtAuthenticationFilter.class})
-        })
+@WebMvcTest(controllers = CourseQueryController.class)
 class CourseQueryControllerTest {
     @Autowired
     MockMvc mockMvc;

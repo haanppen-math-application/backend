@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.application.exception;
 
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 
 public class NoSuchCourseException extends CourseException{
     public NoSuchCourseException(ErrorCode errorCode) {

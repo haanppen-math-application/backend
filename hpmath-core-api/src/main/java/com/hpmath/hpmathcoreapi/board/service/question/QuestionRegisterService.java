@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.service.question;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.board.dao.MemberManager;
 import com.hpmath.hpmathcoreapi.board.dto.QuestionRegisterCommand;
@@ -8,7 +9,6 @@ import com.hpmath.hpmathcoreapi.board.mapper.BoardMapper;
 import com.hpmath.hpmathcoreapi.board.service.question.validate.QuestionValidateManager;
 import com.hpmath.hpmathcoreapi.media.entity.Image;
 import com.hpmath.hpmathcoreapi.media.service.ImageService;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

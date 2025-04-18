@@ -11,12 +11,12 @@ import com.hpmath.hpmathcoreapi.media.dto.ChunkUploadInitializeCommand;
 import com.hpmath.hpmathcoreapi.media.dto.RequiredChunkInfo;
 import com.hpmath.hpmathcoreapi.media.dto.UploadInitializeResult;
 import com.hpmath.hpmathcoreapi.media.service.uploadV2.MultiPartUploadService;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,7 +66,7 @@ public class ChunkUploadControllerV2 {
     @PutMapping
     public ResponseEntity<Void> mergeChunks(
             @RequestBody final ChunkMergeRequestV2 chunkMergeRequestV2,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final ChunkMergeCommandV2 command = chunkMergeRequestV2.toCommand(memberPrincipal.memberId());
         multiPartUploadService.mergeAll(command);

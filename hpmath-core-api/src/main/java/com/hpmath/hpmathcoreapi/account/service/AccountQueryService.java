@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.account.service;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.controller.Responses;
 import com.hpmath.hpmathcoreapi.account.dto.StudentPageQuery;
 import com.hpmath.hpmathcoreapi.account.dto.StudentQuery;
@@ -8,9 +9,8 @@ import com.hpmath.hpmathcoreapi.account.dto.TeacherQuery;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.exceptions.NoSuchMemberException;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.paging.CursorResponse;
-import com.hpmath.hpmathcoreapi.security.Role;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;

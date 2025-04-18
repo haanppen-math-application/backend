@@ -5,7 +5,8 @@ import com.hpmath.hpmathcoreapi.board.controller.Responses.QuestionDetails;
 import com.hpmath.hpmathcoreapi.board.controller.Responses.QuestionPreview;
 import com.hpmath.hpmathcoreapi.board.service.question.QuestionQueryService;
 import com.hpmath.hpmathcoreapi.paging.PagedResponse;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -13,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +58,7 @@ public class QuestionQueryController {
     @GetMapping("/my")
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<PagedResponse<QuestionPreview>> getMyQuestions(
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal,
+            @LoginInfo final MemberPrincipal memberPrincipal,
             @ParameterObject final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
             @RequestParam(required = false) final String title
     ) {

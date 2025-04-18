@@ -1,6 +1,7 @@
 package com.hpmath.hpmathcoreapi.online.dto;
 
-import com.hpmath.hpmathcoreapi.security.Role;
+
+import com.hpmath.hpmathcore.Role;
 
 public record OnlineCourseInfoUpdateRequest(
         String courseName,

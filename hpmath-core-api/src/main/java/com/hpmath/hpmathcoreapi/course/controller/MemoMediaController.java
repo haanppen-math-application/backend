@@ -10,7 +10,8 @@ import com.hpmath.hpmathcoreapi.course.application.port.in.DeleteMemoMediaUseCas
 import com.hpmath.hpmathcoreapi.course.application.port.in.RegisterAttachmentUseCase;
 import com.hpmath.hpmathcoreapi.course.application.port.in.RegisterMemoMediaUseCase;
 import com.hpmath.hpmathcoreapi.course.application.port.in.UpdateMemoMediaUseCase;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
@@ -18,7 +19,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,9 +39,9 @@ public class MemoMediaController {
     @DeleteMapping("/api/courses/memos/media/attachment/{targetAttachmentId}")
     public ResponseEntity<?> deleteAttachment(
             @PathVariable final Long targetAttachmentId,
-            @AuthenticationPrincipal final MemberPrincipal memberPrincipal
+            @LoginInfo final MemberPrincipal loginId
     ) {
-        final DeleteAttachmentCommand command = DeleteAttachmentCommand.of(targetAttachmentId, memberPrincipal.memberId());
+        final DeleteAttachmentCommand command = DeleteAttachmentCommand.of(targetAttachmentId, loginId.memberId());
         deleteAttachmentUseCase.delete(command);
         return ResponseEntity.noContent().build();
     }
@@ -50,9 +50,9 @@ public class MemoMediaController {
     public ResponseEntity<?> deleteMemoMedia(
             @PathVariable Long memoMediaId,
             @PathVariable Long memoId,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal
+            @LoginInfo MemberPrincipal loginId
     ) {
-        final DeleteMemoMediaCommand command = DeleteMemoMediaCommand.of(memoMediaId, memoId, memberPrincipal.memberId());
+        final DeleteMemoMediaCommand command = DeleteMemoMediaCommand.of(memoMediaId, memoId, loginId.memberId());
         deleteMemoMediaUseCase.delete(command);
         return ResponseEntity.noContent().build();
     }
@@ -62,9 +62,9 @@ public class MemoMediaController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> registerAttachment(
             @ModelAttribute @Valid final Requests.RegisterAttachmentWithChunkRequest request,
-            @AuthenticationPrincipal @Nonnull final MemberPrincipal memberPrincipal
+            @LoginInfo @Nonnull final MemberPrincipal loginId
     ) {
-        final RegisterAttachmentCommand command = request.toCommand(memberPrincipal.memberId());
+        final RegisterAttachmentCommand command = request.toCommand(loginId.memberId());
         registerAttachmentUseCase.register(command);
 
         return ResponseEntity.ok().build();
@@ -73,9 +73,9 @@ public class MemoMediaController {
     @PostMapping("/api/course/memo/media")
     public ResponseEntity<?> addMemoMedia(
             @RequestBody @Valid final Requests.RegisterMemoMediaRequest request,
-            @AuthenticationPrincipal MemberPrincipal memberPrincipal
+            @LoginInfo MemberPrincipal loginId
     ) {
-        final RegisterMemoMediaCommand command = request.toCommand(memberPrincipal.memberId());
+        final RegisterMemoMediaCommand command = request.toCommand(loginId.memberId());
         registerMemoMediaUseCase.register(command);
         return ResponseEntity.created(null).build();
     }
@@ -85,9 +85,9 @@ public class MemoMediaController {
     @SecurityRequirement(name = "jwtAuth")
     public ResponseEntity<?> updateMemoMedia(
             @RequestBody @Valid Requests.UpdateMemoMediaRequest updateMemoMediaRequest,
-            @AuthenticationPrincipal @Nonnull final Long requestMemberId
+            @LoginInfo @Nonnull final MemberPrincipal memberPrincipal
     ) {
-        final UpdateMediaMemoCommand command = updateMemoMediaRequest.toCommand(requestMemberId);
+        final UpdateMediaMemoCommand command = updateMemoMediaRequest.toCommand(memberPrincipal.memberId());
         updateMemoMediaUseCase.updateMediaMemo(command);
         return ResponseEntity.ok().build();
     }

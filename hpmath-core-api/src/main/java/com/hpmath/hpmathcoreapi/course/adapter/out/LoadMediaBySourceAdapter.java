@@ -3,7 +3,7 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 import com.hpmath.hpmathcoreapi.course.application.exception.MemoMediaException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadMediaBySourcePort;
 import com.hpmath.hpmathcoreapi.course.domain.Media;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.repository.MediaRepository;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;

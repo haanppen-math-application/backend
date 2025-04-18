@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.application.exception.NoSuchCourseException;
@@ -7,8 +8,7 @@ import com.hpmath.hpmathcoreapi.course.application.exception.NoSuchMemberExcepti
 import com.hpmath.hpmathcoreapi.course.application.port.out.AddCourseStudentPort;
 import com.hpmath.hpmathcoreapi.course.entity.Course;
 import com.hpmath.hpmathcoreapi.course.entity.CourseStudent;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
-import com.hpmath.hpmathcoreapi.security.Role;
+import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

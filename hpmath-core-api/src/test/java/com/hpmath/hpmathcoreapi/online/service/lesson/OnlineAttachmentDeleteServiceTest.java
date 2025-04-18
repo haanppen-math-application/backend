@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.service.lesson;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.media.entity.Media;
@@ -11,7 +12,6 @@ import com.hpmath.hpmathcoreapi.online.dao.OnlineVideoAttachment;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideoAttachmentRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideoRepository;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineVideoAttachmentCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

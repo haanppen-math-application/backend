@@ -1,8 +1,8 @@
 package com.hpmath.hpmathcoreapi.online.service.lesson.update;
 
+import com.hpmath.hpmathcore.BusinessException;
 import com.hpmath.hpmathcoreapi.board.service.comment.CommentService;
-import com.hpmath.hpmathcoreapi.exception.BusinessException;
-import com.hpmath.hpmathcoreapi.exception.ErrorCode;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.media.entity.Image;
 import com.hpmath.hpmathcoreapi.media.repository.ImageRepository;
 import com.hpmath.hpmathcoreapi.media.service.ImageService;

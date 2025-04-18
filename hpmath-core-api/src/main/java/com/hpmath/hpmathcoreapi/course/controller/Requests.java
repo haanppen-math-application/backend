@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.course.application.dto.CourseRegisterCommand;
 import com.hpmath.hpmathcoreapi.course.application.dto.CourseUpdateCommand;
 import com.hpmath.hpmathcoreapi.course.application.dto.DeleteCourseCommand;
@@ -12,8 +13,6 @@ import com.hpmath.hpmathcoreapi.course.application.dto.RegisterMemoMediaCommand;
 import com.hpmath.hpmathcoreapi.course.application.dto.RegisterStudentCommand;
 import com.hpmath.hpmathcoreapi.course.application.dto.UpdateCourseStudentsCommand;
 import com.hpmath.hpmathcoreapi.course.application.dto.UpdateMediaMemoCommand;
-import com.hpmath.hpmathcoreapi.security.Role;
-import com.hpmath.hpmathcoreapi.security.authentication.MemberPrincipal;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,8 +35,8 @@ class Requests {
     record DeleteCourseRequest(
             Long courseId
     ) {
-        DeleteCourseCommand toCommand(final MemberPrincipal memberPrincipal) {
-            return new DeleteCourseCommand(courseId, memberPrincipal.role(), memberPrincipal.memberId());
+        DeleteCourseCommand toCommand(final Role role, final Long loginId) {
+            return new DeleteCourseCommand(courseId, role, loginId);
         }
     }
 
