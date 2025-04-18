@@ -13,26 +13,58 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("login preHandle start");
         final MemberPrincipal userPrincipal = (MemberPrincipal) request.getUserPrincipal();
         final HandlerMethod handlerMethod = (HandlerMethod) handler;
 
         final Authorization annotation = handlerMethod.getMethodAnnotation(Authorization.class);
+        if (canPassWithoutAuthorization(annotation)) {
+            return true;
+        }
+
+        if (!isAuthenticated(userPrincipal)) {
+            setResponseToUnAuthorized(response);
+            return false;
+        }
+
+        final Role[] roles = annotation.values();
+        if (checkPermission(userPrincipal, roles)) {
+            return true;
+        }
+
+        log.debug("not authorized");
+        setResponseToForbidden(response);
+        return false;
+    }
+
+    private boolean checkPermission(MemberPrincipal userPrincipal, Role[] roles) {
+        if (userPrincipal.hasAnyAuthorization(roles)) {
+            log.debug("has permission");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean canPassWithoutAuthorization(Authorization annotation) {
         if (annotation == null || annotation.opened()) {
+            log.debug("authorization is not required");
             return true;
         }
+        return false;
+    }
 
+    private boolean isAuthenticated(MemberPrincipal userPrincipal) {
         if (userPrincipal == null) {
-            //
-            throw new IllegalArgumentException("required Login");
+            log.debug("not authorized");
+            return false;
         }
+        return true;
+    }
 
-        final Role[] accessableRoles = annotation.values();
+    private void setResponseToForbidden(HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+    }
 
-        if (userPrincipal.hasAnyAuthorization(accessableRoles)) {
-            return true;
-        }
-
-        throw new IllegalArgumentException("cannot access with this auth");
+    private void setResponseToUnAuthorized(HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 }

@@ -84,20 +84,11 @@ public class JwtUtils {
     }
 
     public Optional<String> getMemberName(final Claims claims) {
-        try {
-            return Optional.ofNullable(claims.get(MEMBER_NAME, String.class));
-        } catch (RequiredTypeException exception) {
-            return Optional.empty();
-        } catch (NullPointerException exception) {
-            return Optional.empty();
-        }
+        return Optional.ofNullable(claims.get(MEMBER_NAME, String.class));
     }
 
     public Optional<Role> getMemberRole(final Claims claims) {
-        try {
-            return Optional.ofNullable(Role.valueOf(claims.get(MEMBER_ROLE, String.class)));
-        } catch (NullPointerException exception) {
-            return Optional.empty();
-        }
+        return Optional.ofNullable(Role.valueOf(claims.get(MEMBER_ROLE, String.class)));
+
     }
 }

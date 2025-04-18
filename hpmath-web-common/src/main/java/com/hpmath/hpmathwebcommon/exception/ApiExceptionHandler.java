@@ -52,9 +52,7 @@ public class ApiExceptionHandler {
     public ResponseEntity<ExceptionResponseBody> businessExceptionHandler(final BusinessException businessException) {
         ErrorCode errorCode = businessException.getErrorCode();
         String details = businessException.getMessage();
-//
-//        logger.debug("[ EXCEPTION WITH ] -> {} : {}", errorCode, details);
-//        logger.debug("[ STACK TRACE ] -> {} ", Arrays.toString(businessException.getStackTrace()));
+
         return createExceptionResponse(errorCode, ExceptionResponseBody.of(errorCode, details));
     }
 
