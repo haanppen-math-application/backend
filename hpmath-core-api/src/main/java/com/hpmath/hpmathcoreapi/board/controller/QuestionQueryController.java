@@ -6,6 +6,7 @@ import com.hpmath.hpmathcoreapi.board.controller.Responses.QuestionPreview;
 import com.hpmath.hpmathcoreapi.board.service.question.QuestionQueryService;
 import com.hpmath.hpmathcoreapi.paging.PagedResponse;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,6 +31,7 @@ public class QuestionQueryController {
     @Operation(summary = "질문 상세보기 API", description = "질문의 등록 날짜, 댓글 내용, 조회 수 등 상세 정보를 알 수 있는 API 입니다.")
     @GetMapping("/{questionId}")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(opened = true)
     public ResponseEntity<QuestionDetails> getSingleQuestionDetails(
             @PathVariable final Long questionId
     ) {
@@ -43,6 +45,7 @@ public class QuestionQueryController {
                     "?sort=date 로 날짜 오름차순 \n")
     @GetMapping
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(opened = true)
     public ResponseEntity<PagedResponse<QuestionPreview>> getQuestionsWithPagination(
             @ParameterObject @Parameter(description = "date : 날짜 순, solve : 풀어진 문제 순", example = "date") final EntityFieldMappedPageRequest entityFieldMappedPageRequest,
             @RequestParam(required = false) final String title
@@ -57,6 +60,7 @@ public class QuestionQueryController {
     @Operation(summary = "나의 질문 조회")
     @GetMapping("/my")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(opened = true)
     public ResponseEntity<PagedResponse<QuestionPreview>> getMyQuestions(
             @LoginInfo final MemberPrincipal memberPrincipal,
             @ParameterObject final EntityFieldMappedPageRequest entityFieldMappedPageRequest,

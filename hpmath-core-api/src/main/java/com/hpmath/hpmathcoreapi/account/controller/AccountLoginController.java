@@ -6,6 +6,7 @@ import com.hpmath.hpmathcoreapi.account.dto.JwtDto;
 import com.hpmath.hpmathcoreapi.account.exceptions.ReLoginRequiredException;
 import com.hpmath.hpmathcoreapi.account.service.AccountLoginService;
 import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -59,6 +60,7 @@ public class AccountLoginController {
 
     @PostMapping("/logout")
     @Operation(summary = "로그아웃 ( 로그인 된 상태에서 사용 가능)")
+    @Authorization(opened = true)
     public ResponseEntity<?> removeCookie(
             final HttpServletResponse httpServletResponse
     ) {

@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.course.application.dto.CourseRegisterCommand;
 import com.hpmath.hpmathcoreapi.course.application.dto.CourseUpdateCommand;
 import com.hpmath.hpmathcoreapi.course.application.dto.DeleteCourseCommand;
@@ -13,6 +14,7 @@ import com.hpmath.hpmathcoreapi.course.application.port.in.UpdateCourseUseCase;
 import com.hpmath.hpmathcoreapi.course.controller.Requests.CourseUpdateRequest;
 import com.hpmath.hpmathcoreapi.course.controller.Requests.DeleteCourseRequest;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -43,12 +45,13 @@ public class CourseController {
     @PostMapping(value = "/api/manage/courses/students", consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "반에 학생 추가 API", description = "존재하는 반에 학생들을 등록하는 기능입니다. 중복되는 학생들은 중복되어 등록되지 않습니다.")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> addStudent(
             @Valid @RequestBody final Requests.RegisterStudentRequest registerStudentRequest,
-            @LoginInfo final Long loginId) {
+            @LoginInfo final MemberPrincipal memberPrincipal) {
 
         final RegisterStudentCommand registerStudentDto = registerStudentRequest.toCommand(
-                loginId
+                memberPrincipal.memberId()
         );
         addStudentToCourseUseCase.addStudentToCourse(registerStudentDto);
         return ResponseEntity.ok(null);
@@ -57,6 +60,7 @@ public class CourseController {
     @DeleteMapping("/api/manage/courses/{courseId}")
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "반을 삭제하는 API 입니다", description = "반을 삭제하는 기능은 원장님 권한 이상 필요")
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<?> delete(
             @ModelAttribute final DeleteCourseRequest deleteCourseRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -69,6 +73,7 @@ public class CourseController {
     @PostMapping(value = "/api/manage/courses", consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
     @Operation(summary = "반 등록 API", description = "반을 등록하기 위한 API 입니다, 반 등록은 학생은 허용되지 않습니다.")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> registerCourse(
             @Valid @RequestBody final Requests.CourseRegisterRequest courseRegisterRequestDto,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -85,6 +90,7 @@ public class CourseController {
     @Operation(summary = "반 이름, 담당 선생님을 수정 API", description = "반 이름, 담당 선생님을 수정하는 API 입니다. 바꾸자 하는 담당자가 선생님이 아니라면, 에러가 발생합니다")
     @SecurityRequirement(name = "jwtAuth")
     @PutMapping(value = "/api/manage/courses/{courseId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateCourseName(
             final @PathVariable Long courseId,
             final @RequestBody CourseUpdateRequest courseUpdateRequest,
@@ -98,6 +104,7 @@ public class CourseController {
 
     @PutMapping("/api/course/{courseId}/students")
     @Operation(summary = "반 학생 업데이트를 위한 API")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> deleteStudents(@LoginInfo MemberPrincipal memberPrincipal,
                                             @PathVariable Long courseId,
                                             @RequestBody Requests.UpdateCourseStudentsRequest updateCourseStudentsRequest

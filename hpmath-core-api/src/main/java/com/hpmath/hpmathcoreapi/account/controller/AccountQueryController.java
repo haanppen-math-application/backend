@@ -9,6 +9,7 @@ import com.hpmath.hpmathcoreapi.account.dto.TeacherQuery;
 import com.hpmath.hpmathcoreapi.account.service.AccountQueryService;
 import com.hpmath.hpmathcoreapi.paging.CursorResponse;
 import com.hpmath.hpmathcoreapi.paging.PagedResponse;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
@@ -34,6 +35,7 @@ public class AccountQueryController {
             "?size={페이지 크기 지정}. 기본 값 5 로 설정 \n" +
             "?name={찾고자 하는 이름} 시 검색, name이 없을시, 전체 조회\n")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(opened = true)
     public ResponseEntity<CursorResponse<PreviewTeacherResponse>> queryTeachers(
             @RequestParam(required = false, defaultValue = "0") Long cursorIndex,
             @RequestParam(required = false, defaultValue = "5") Integer size,
@@ -47,6 +49,7 @@ public class AccountQueryController {
     @GetMapping("/teachers/paging")
     @Operation(summary = "페이징 선생 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(opened = true)
     public ResponseEntity<PagedResponse<PreviewTeacherResponse>> queryTeachers(
             @PageableDefault(size = 5) final Pageable pageable,
             @RequestParam(required = false) String name
@@ -59,6 +62,7 @@ public class AccountQueryController {
     @GetMapping("/students/paging")
     @Operation(summary = "페이징 학생 조회 API", description = "인증 필요, 이름 기준 오름차순 조회")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(opened = true)
     public ResponseEntity<PagedResponse<PreviewStudentResponse>> queryStudents(
             @PageableDefault(size = 5) final Pageable pageable,
             @RequestParam(required = false) String name,
@@ -78,6 +82,7 @@ public class AccountQueryController {
             "?startRange : 기본값 0, include\n" +
             "?endRange : 기본값 11, include")
     @SecurityRequirement(name = "jwtAuth")
+    @Authorization(opened = true)
     public ResponseEntity<CursorResponse<PreviewStudentResponse>> queryStudents(
             @RequestParam(required = false, defaultValue = "0") Long cursorIndex,
             @RequestParam(required = false, defaultValue = "5") Integer size,
@@ -92,6 +97,7 @@ public class AccountQueryController {
 
     @GetMapping("/students/all")
     @Operation(summary = "전체 학생 조회 API")
+    @Authorization(opened = true)
     public ResponseEntity<List<PreviewStudentResponse>> getAllStudents() {
         final List<PreviewStudentResponse> students = queryService.loadAllStudents();
         return ResponseEntity.ok(students);
@@ -99,6 +105,7 @@ public class AccountQueryController {
 
     @GetMapping("/teachers/all")
     @Operation(summary = "전체 선생 조회 API")
+    @Authorization(opened = true)
     public ResponseEntity<List<PreviewTeacherResponse>> getAllTeachers() {
         final List<PreviewTeacherResponse> teachers = queryService.loadALlTeachers();
         return ResponseEntity.ok(teachers);

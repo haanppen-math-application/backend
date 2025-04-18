@@ -3,6 +3,7 @@ package com.hpmath.hpmathcoreapi.media.controller;
 import com.hpmath.hpmathcoreapi.media.dto.ImageUrlDto;
 import com.hpmath.hpmathcoreapi.media.dto.MediaDto;
 import com.hpmath.hpmathcoreapi.media.service.ImageService;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,7 @@ public class ImageController {
     }
 
     @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Authorization(opened = true)
     public ResponseEntity<ImageUrlDto> postImage(
             @RequestPart(value = "image", required = true) final MultipartFile image
     ) {

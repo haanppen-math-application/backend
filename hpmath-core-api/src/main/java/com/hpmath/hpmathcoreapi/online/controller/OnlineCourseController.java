@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineCourseCommand;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineCourseRequest;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineCourseCommand;
@@ -10,6 +11,7 @@ import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseStudentsUpdateRequest;
 import com.hpmath.hpmathcoreapi.online.service.course.OnlineCourseRegisterService;
 import com.hpmath.hpmathcoreapi.online.service.course.OnlineCourseUpdateService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -36,6 +38,7 @@ class OnlineCourseController {
 
     @PostMapping
     @Operation(summary = "새로운 온라인 강의 등록")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> addNewOnlineCourse(
             @RequestBody @Validated final AddOnlineCourseRequest addOnlineCourseRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
@@ -48,6 +51,7 @@ class OnlineCourseController {
 
     @PutMapping("/{courseId}/info")
     @Operation(summary = "온라인 수업의 반 이름 / 담당 선생님 수정")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateOnlineCourseInfo(
             @PathVariable(required = true) final Long courseId,
             @RequestBody @Validated final OnlineCourseInfoUpdateRequest onlineCourseInfoUpdateRequest,
@@ -61,6 +65,7 @@ class OnlineCourseController {
 
     @PutMapping("/{courseId}/students")
     @Operation(summary = "온라인 강의의 학생 수정")
+    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateOnlineCourseStudents(
             @PathVariable(required = true) final Long courseId,
             @RequestBody @Validated final OnlineCourseStudentsUpdateRequest onlineCourseStudentsUpdateRequest,
@@ -74,6 +79,7 @@ class OnlineCourseController {
 
     @DeleteMapping("/{courseId}")
     @Operation(summary = "온라인 강의 삭제")
+    @Authorization(values = {Role.ADMIN})
     public ResponseEntity<?> deleteCourse(
             @PathVariable(required = true) Long courseId,
             @LoginInfo final MemberPrincipal memberPrincipal

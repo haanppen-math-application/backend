@@ -1,10 +1,12 @@
 package com.hpmath.hpmathcoreapi.banner.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.banner.BannerService;
 import com.hpmath.hpmathcoreapi.banner.dto.AddBannerCommand;
 import com.hpmath.hpmathcoreapi.banner.dto.BannerResponse;
 import com.hpmath.hpmathcoreapi.banner.dto.ChangeBannerCommand;
 import com.hpmath.hpmathcoreapi.banner.dto.DeleteBannerCommand;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,13 @@ class BannerController {
     private final BannerService bannerService;
 
     @GetMapping("/api/banners")
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<List<BannerResponse>> queryAllBanners() {
         return ResponseEntity.ok(bannerService.queryAllBanners());
     }
 
     @PostMapping("/api/banners")
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<?> addBanner(
             @RequestBody AddBannerRequest addBannerRequest
     ) {
@@ -36,6 +40,7 @@ class BannerController {
     }
 
     @PutMapping("/api/banners")
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<?> modifyBanner(
             @RequestBody ChangeBannerRequest changeBannerRequest
     ) {
@@ -48,6 +53,7 @@ class BannerController {
     }
 
     @DeleteMapping("/api/banners/{bannerId}")
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<?> deleteBanner(
             @PathVariable(required = true) final Long bannerId
     ) {

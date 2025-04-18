@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseDetails;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCoursePreview;
 import com.hpmath.hpmathcoreapi.online.dto.QueryMyOnlineCourseCommand;
@@ -8,6 +9,7 @@ import com.hpmath.hpmathcoreapi.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hpmath.hpmathcoreapi.online.dto.QueryOnlineCourseDetailsCommand;
 import com.hpmath.hpmathcoreapi.online.service.course.OnlineCourseQueryService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -30,12 +32,14 @@ public class OnlineCourseQueryController {
 
     @GetMapping
     @Operation(summary = "모든 온라인 강의를 조회")
+    @Authorization(opened = true)
     public ResponseEntity<List<OnlineCoursePreview>> queryAllCourses() {
         return ResponseEntity.ok(queryOnlineCourseService.queryAll());
     }
 
     @GetMapping("/teachers/{teacherId}")
     @Operation(summary = "선생님 ID 를 통해 온라인 강의를 조회")
+    @Authorization(opened = true)
     public ResponseEntity<List<OnlineCoursePreview>> queryOnlineCoursesByTeacherId(
             @PathVariable final Long teacherId
     ) {
@@ -47,6 +51,7 @@ public class OnlineCourseQueryController {
 
     @GetMapping("/students/{studentId}")
     @Operation(summary = "학생 ID를 통해 온라인 강의 조회")
+    @Authorization(opened = true)
     public ResponseEntity<List<OnlineCoursePreview>> queryOnlineCoursesByStudentId(
             @PathVariable final Long studentId
     ) {
@@ -58,6 +63,7 @@ public class OnlineCourseQueryController {
 
     @GetMapping("/my")
     @Operation(summary = "자신이 속한, 혹은 만든 반 조회")
+    @Authorization(opened = true)
     public ResponseEntity<List<OnlineCoursePreview>> queryOnlineCoursesByStudentId(
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
@@ -69,6 +75,7 @@ public class OnlineCourseQueryController {
 
     @GetMapping("/{onlineCourseId}")
     @Operation(summary = "특정 반의 세부정보 조회")
+    @Authorization(opened = true)
     public ResponseEntity<OnlineCourseDetails> queryOnlineCourseDetails(
             @PathVariable(required = true) final Long onlineCourseId
     ) {
@@ -78,6 +85,7 @@ public class OnlineCourseQueryController {
 
     @GetMapping("/categories/{categoryId}")
     @Operation(summary = "카테고리 ID를 통한 반 조회")
+    @Authorization(opened = true)
     public ResponseEntity<List<OnlineCoursePreview>> queryOnlineCoursesByCategoryId(
             @PathVariable(required = true) final Long categoryId
     ) {

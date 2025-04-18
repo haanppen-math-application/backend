@@ -1,11 +1,13 @@
 package com.hpmath.hpmathcoreapi.online.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCategoryAddCommand;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCategoryAddRequest;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCategoryInfo;
 import com.hpmath.hpmathcoreapi.online.service.category.OnlineCategoryAddService;
 import com.hpmath.hpmathcoreapi.online.service.category.OnlineCategoryDeleteService;
 import com.hpmath.hpmathcoreapi.online.service.category.OnlineCategoryQueryService;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -30,7 +32,8 @@ public class OnlineCategoryController {
     private final OnlineCategoryDeleteService onlineCategoryDeleteService;
 
     @PostMapping
-    @Operation(summary = "온라인 강의 카테고리 등록 API", description = "매니저, 어드민 권한만 사용 가능")
+    @Operation(summary = "온라인 강의 카테고리 등록 API", description = "어드민 권한만 사용 가능")
+    @Authorization(values = {Role.ADMIN})
     public ResponseEntity<?> addCategory(
             @RequestBody @Valid final OnlineCategoryAddRequest onlineCategoryAddRequest
     ) {
@@ -41,6 +44,7 @@ public class OnlineCategoryController {
 
     @GetMapping("/{categoryId}")
     @Operation(summary = "온라인 강의 자식 카테고리 서비스")
+    @Authorization(opened = true)
     public ResponseEntity<List<OnlineCategoryInfo>> queryChildCategories(
             @PathVariable(required = true) final Long categoryId
     ) {
@@ -49,11 +53,13 @@ public class OnlineCategoryController {
 
     @GetMapping("/root")
     @Operation(summary = "온라인 강의 카테고리 조회 서비스")
+    @Authorization(opened = true)
     public ResponseEntity<List<OnlineCategoryInfo>> queryRootCategories() {
         return ResponseEntity.ok(onlineCategoryQueryService.queryRootCategories());
     }
 
     @DeleteMapping("/{categoryId}")
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<?> deleteOnlineCategory(
             @PathVariable(required = true) final Long categoryId
     ) {

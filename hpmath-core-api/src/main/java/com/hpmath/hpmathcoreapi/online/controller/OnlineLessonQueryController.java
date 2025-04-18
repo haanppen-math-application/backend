@@ -1,9 +1,11 @@
 package com.hpmath.hpmathcoreapi.online.controller;
 
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonDetail;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonQueryCommand;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineLessonQueryService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
+import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -23,6 +25,7 @@ public class OnlineLessonQueryController {
 
     @GetMapping("/api/online-courses/lesson/{lessonId}")
     @Operation(summary = "온라인 수업 상세 정보 조회 API")
+    @Authorization(opened = true)
     public ResponseEntity<OnlineLessonDetail> queryDetails(
             @PathVariable(required = true) final Long lessonId,
             @LoginInfo final MemberPrincipal memberPrincipal
