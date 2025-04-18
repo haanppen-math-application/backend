@@ -26,6 +26,10 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             return false;
         }
 
+        if (annotation.opened()) {
+            return true;
+        }
+
         final Role[] roles = annotation.values();
         if (checkPermission(userPrincipal, roles)) {
             return true;
@@ -45,7 +49,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     }
 
     private boolean canPassWithoutAuthorization(Authorization annotation) {
-        if (annotation == null || annotation.opened()) {
+        if (annotation == null) {
             log.debug("authorization is not required");
             return true;
         }
