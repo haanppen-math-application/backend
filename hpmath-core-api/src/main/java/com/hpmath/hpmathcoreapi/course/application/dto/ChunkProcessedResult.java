@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.application.dto;
 
-import com.hpmath.hpmathcoreapi.media.dto.ChunkStoreResult;
+import com.hpmath.hpmathmediadomain.media.dto.ChunkStoreResult;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

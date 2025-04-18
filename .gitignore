@@ -39,3 +39,4 @@ out/
 .DS_Store
 
 hpmath-core-api/src/main/resources/application.properties
+hpmath-media-api/src/main/resources/application.properties

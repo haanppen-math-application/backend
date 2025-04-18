@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.dir.dao;
 
 import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.media.entity.Media;
+import com.hpmath.hpmathmediadomain.media.entity.Media;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;

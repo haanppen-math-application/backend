@@ -2,13 +2,13 @@ package com.hpmath.hpmathcoreapi.online.service.lesson;
 
 import com.hpmath.hpmathcore.BusinessException;
 import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathcoreapi.media.entity.Media;
-import com.hpmath.hpmathcoreapi.media.repository.MediaRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourse;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourseRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideo;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideoRepository;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineVideoCommand;
+import com.hpmath.hpmathmediadomain.media.entity.Media;
+import com.hpmath.hpmathmediadomain.media.repository.MediaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
