@@ -1,14 +1,18 @@
 package com.hpmath.hpmathcoreapi.online.dao;
 
+import com.hpmath.HpmathCoreApiApplication;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-@DataJpaTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
+@ActiveProfiles("test")
 class OnlineStudentRepositoryTest {
 
     @Autowired
@@ -34,7 +38,7 @@ class OnlineStudentRepositoryTest {
         entityManager.clear();
 
         Assertions.assertEquals(onlineStudentRepository.count(), 3);
-        onlineStudentRepository.removeAllByOnlineCourseId(1L);
+        onlineStudentRepository.removeAllByOnlineCourseId(onlineCourse.getId());
         Assertions.assertEquals(onlineStudentRepository.count(), 0);
         Assertions.assertEquals(onlineCourseRepository.count(), 1);
     }

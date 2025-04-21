@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(title = "한편의 수학학원 API 문서"),
+
         servers = {
         @Server(description = "개발용 서버", url = "https://hanapi.hopto.org"),
         @Server(description = "로컬 서버", url = "http://localhost:8081"),

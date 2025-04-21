@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.service.lesson.update;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCategory;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCategoryRepository;
 import jakarta.persistence.EntityManager;
@@ -7,10 +8,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
-@DataJpaTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
 @ActiveProfiles("test")
+@Transactional
 class LessonCategoryUpdateHandlerTest {
     @Autowired
     private EntityManager entityManager;

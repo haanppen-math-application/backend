@@ -2,29 +2,27 @@ package com.hpmath.hpmathcoreapi.board.service.question;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.board.dao.QuestionRepository;
 import com.hpmath.hpmathcoreapi.board.dto.QuestionDeleteCommand;
 import com.hpmath.hpmathcoreapi.board.dto.QuestionRegisterCommand;
 import com.hpmath.hpmathcoreapi.board.dto.QuestionUpdateCommand;
+import jakarta.persistence.EntityManager;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import java.util.Collections;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@ExtendWith(MockitoExtension.class)
-@DataJpaTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
 class QuestionServiceTest {
     @Mock
     QuestionUpdateService questionUpdateManager;
@@ -38,7 +36,7 @@ class QuestionServiceTest {
     QuestionRepository questionRepository;
 
     @Autowired
-    TestEntityManager testEntityManager;
+    EntityManager testEntityManager;
 
     Validator validator;
 
@@ -59,21 +57,6 @@ class QuestionServiceTest {
     void 질문추가_DTO_검증_성공_테스트(final QuestionRegisterCommand questionRegisterDto) {
         assertThat(validator.validate(questionRegisterDto).isEmpty())
                 .isTrue();
-    }
-
-    @Test
-    void 질문추가_레포지토리_전달_성공_테스트() {
-//        final QuestionRegisterDto questionRegisterDto = Mockito.mock(QuestionRegisterDto.class);
-//        final Question question = Question.builder().build();
-//
-//        Mockito.when(questionRegisterManger.register(questionRegisterDto))
-//                        .thenReturn(question);
-//        Mockito.when(questionRepository.save(question))
-//                        .thenReturn(question);
-//
-//        questionService.addQuestion(questionRegisterDto);
-//
-
     }
 
     @ParameterizedTest

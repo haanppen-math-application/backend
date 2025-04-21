@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.account.service;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest(properties = {"login.lock.minutes=5", "login.lock.maxTryCount=3"})
+@SpringBootTest(properties = {"login.lock.minutes=5", "login.lock.maxTryCount=3"}, classes = HpmathCoreApiApplication.class)
 class AccountLockServiceTest {
     @Autowired
     private MemberRepository memberRepository;

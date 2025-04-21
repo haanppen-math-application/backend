@@ -2,6 +2,7 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
@@ -16,12 +17,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@DataJpaTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
 @ActiveProfiles("test")
 @Import({CourseMapper.class, LoadCourseAdapter.class, DeleteCourseAdapter.class, DeleteCourseStudentAdapter.class, DeleteCourseService.class})
 class DeleteCourseServiceTest {
@@ -35,7 +37,6 @@ class DeleteCourseServiceTest {
     @Autowired
     CourseRepository courseRepository;
 
-    @BeforeEach
     void init() {
         // 학생 초기화
         memberRepository.save(Member.builder()
@@ -78,6 +79,7 @@ class DeleteCourseServiceTest {
     @Test
     @Transactional
     void test() {
+        init();
         List<Course> courses = courseRepository.findAll();
         deleteCourseUseCase.delete(new DeleteCourseCommand(courses.get(0).getId(), Role.ADMIN, 1L));
         assertThat(courseStudentRepository.count())

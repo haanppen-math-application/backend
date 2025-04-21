@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.service.course;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
@@ -18,8 +19,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
 @ActiveProfiles("test")
+@Transactional
 class OnlineCourseQueryServiceTest {
 
     @Autowired
@@ -33,7 +35,6 @@ class OnlineCourseQueryServiceTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Transactional
     @Test
     void queryTest() {
         final Member teacher = Member.builder().role(Role.TEACHER)

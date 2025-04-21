@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.domain.MemoMedia;
 import com.hpmath.hpmathcoreapi.course.domain.MemoMediaContainer;
@@ -13,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
 @ActiveProfiles("test")
 class UpdateMemoMediaContainerAdapterTest {
 
