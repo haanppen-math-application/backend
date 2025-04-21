@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.account.service;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.dto.AccountRemoveCommand;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
@@ -12,12 +13,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
-@ExtendWith(MockitoExtension.class)
-@DataJpaTest
-@Transactional
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
 @Import(AccountRemoveService.class)
 class AccountRemoveServiceTest {
     @Autowired
@@ -26,6 +26,7 @@ class AccountRemoveServiceTest {
     AccountRemoveService accountRemoveService;
 
     @Test
+    @Transactional
     void testDelete() {
         initTestData();
         accountRemoveService.removeAccount(new AccountRemoveCommand(List.of(1L, 2L)));

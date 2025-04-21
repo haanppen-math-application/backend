@@ -1,5 +1,8 @@
 package com.hpmath.hpmathcoreapi.course.controller;
 
+import com.hpmath.HpmathCoreApiApplication;
+import com.hpmath.hpmathcoreapi.board.controller.QuestionController;
+import com.hpmath.hpmathcoreapi.board.controller.QuestionQueryController;
 import com.hpmath.hpmathcoreapi.course.application.LoadCoursesByStudentQueryService;
 import com.hpmath.hpmathcoreapi.course.application.port.in.LoadCourseDetailsQuery;
 import com.hpmath.hpmathcoreapi.course.application.port.in.QueryAllCourseUseCase;
@@ -11,13 +14,26 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@WebMvcTest(controllers = CourseQueryController.class)
+@WebMvcTest(
+        controllers = {CourseQueryController.class},
+        excludeFilters = {
+                @Filter(type = FilterType.ASSIGNABLE_TYPE, classes = OncePerRequestFilter.class),
+                @Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebMvcConfigurer.class)
+        }
+)
+@ContextConfiguration(classes = {HpmathCoreApiApplication.class})
+@ActiveProfiles("test")
 class CourseQueryControllerTest {
     @Autowired
     MockMvc mockMvc;

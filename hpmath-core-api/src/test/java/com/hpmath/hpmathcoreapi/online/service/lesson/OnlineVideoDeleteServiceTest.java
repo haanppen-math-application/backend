@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.service.lesson;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
@@ -18,8 +19,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
 @ActiveProfiles("test")
+@Transactional
 class OnlineVideoDeleteServiceTest {
     @Autowired
     private EntityManager entityManager;
@@ -31,8 +33,7 @@ class OnlineVideoDeleteServiceTest {
     private OnlineCourseRepository onlineCourseRepository;
     @Autowired
     private OnlineVideoRepository onlineVideoRepository;
-
-    @Transactional
+    
     @Test
     void 비디오_삭제_후_순서_업데이트_테스트() {
         final Member member = Member.builder()

@@ -4,12 +4,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hpmath.HpmathCoreApiApplication;
+import com.hpmath.HpmathMediaApiApplication;
 import com.hpmath.hpmathcoreapi.account.service.AccountPasswordRefreshService;
 import com.hpmath.hpmathcoreapi.account.service.AccountQueryService;
 import com.hpmath.hpmathcoreapi.account.service.AccountRegisterService;
 import com.hpmath.hpmathcoreapi.account.service.AccountRemoveService;
 import com.hpmath.hpmathcoreapi.account.service.AccountUpdateService;
+import com.hpmath.hpmathcoreapi.board.controller.QuestionController;
+import com.hpmath.hpmathcoreapi.board.controller.QuestionQueryController;
+import com.hpmath.hpmathwebcommon.JwtUtils;
 import com.hpmath.hpmathwebcommon.PasswordHandler;
+import com.hpmath.hpmathwebcommon.authenticationV2.AuthorizationInterceptor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -17,31 +23,48 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan.Filter;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@WebMvcTest(controllers = AccountController.class)
+@WebMvcTest(
+        controllers = {AccountController.class},
+        excludeFilters = {
+                @Filter(type = FilterType.ASSIGNABLE_TYPE, classes = OncePerRequestFilter.class),
+                @Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebMvcConfigurer.class)
+        }
+)
+@ContextConfiguration(classes = {HpmathCoreApiApplication.class})
+@ActiveProfiles("test")
 public class AccountControllerTest {
     private static final String BASE_URL = "/api/accounts";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
-    @MockBean
+    @MockitoBean
     AccountUpdateService accountUpdateService;
-    @MockBean
+    @MockitoBean
     AccountRemoveService accountRemoveService;
-    @MockBean
+    @MockitoBean
     AccountRegisterService accountRegisterService;
-    @MockBean
+    @MockitoBean
     AccountPasswordRefreshService accountPasswordRefreshService;
-    @MockBean
+    @MockitoBean
     PasswordHandler passwordHandler;
-    @MockBean
+    @MockitoBean
     AccountQueryService queryService;
+    @MockitoBean
+    JwtUtils jwtUtils;
 
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")

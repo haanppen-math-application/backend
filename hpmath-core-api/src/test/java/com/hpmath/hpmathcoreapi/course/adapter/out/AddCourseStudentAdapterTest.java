@@ -2,6 +2,7 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
@@ -15,9 +16,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
-@DataJpaTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
+@ActiveProfiles("test")
 @Import({AddCourseStudentAdapter.class, RegisterCourseAdapter.class, LoadCourseAdapter.class, CourseMapper.class})
 class AddCourseStudentAdapterTest {
 
@@ -35,7 +40,6 @@ class AddCourseStudentAdapterTest {
     @Autowired
     LoadCoursePort loadCoursePort;
 
-    @BeforeEach
     void init() {
         memberRepository.save(Member.builder()
                 .name("student")
@@ -65,7 +69,9 @@ class AddCourseStudentAdapterTest {
     }
 
     @Test
+    @Transactional
     void Course_Student_추가_테스트() {
+        init();
         final List<Student> students = memberRepository.findMembersByIdIsInAndRoleAndRemovedIsFalse(List.of(1l, 2l), Role.STUDENT)
                 .stream()
                 .map(member -> new Student(member.getId(), member.getName(), member.getGrade()))

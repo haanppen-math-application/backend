@@ -1,5 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
@@ -13,9 +14,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
-@DataJpaTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
 @ActiveProfiles("test")
 class MemoRepositoryTest {
     @Autowired
@@ -66,6 +69,7 @@ class MemoRepositoryTest {
     }
 
     @Test
+    @Transactional
     void 선생님_번호를_통한_수업_조회_테스트() {
         init();
 

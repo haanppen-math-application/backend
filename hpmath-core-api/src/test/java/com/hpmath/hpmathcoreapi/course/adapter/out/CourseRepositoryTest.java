@@ -2,6 +2,7 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
@@ -12,8 +13,9 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@DataJpaTest
+@SpringBootTest(classes = HpmathCoreApiApplication.class)
 class CourseRepositoryTest {
     @Autowired
     EntityManager entityManager;
