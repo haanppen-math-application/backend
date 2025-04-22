@@ -15,7 +15,6 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
 public class JwtUtils {
     public static final String HEADER = "Authorization";
     public static String TOKEN_TYPE = "Bearer";
