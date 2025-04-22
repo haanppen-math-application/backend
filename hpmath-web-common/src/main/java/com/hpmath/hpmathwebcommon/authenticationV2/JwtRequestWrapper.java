@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import java.security.Principal;
 
-class JwtRequestWrapper extends HttpServletRequestWrapper {
+public class JwtRequestWrapper extends HttpServletRequestWrapper {
     private final MemberPrincipal userPrincipal;
     /**
      * Constructs a request object wrapping the given request.

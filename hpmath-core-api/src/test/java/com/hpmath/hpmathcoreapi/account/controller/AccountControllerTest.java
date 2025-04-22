@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hpmath.HpmathCoreApiApplication;
+import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.account.service.AccountPasswordRefreshService;
 import com.hpmath.hpmathcoreapi.account.service.AccountQueryService;
 import com.hpmath.hpmathcoreapi.account.service.AccountRegisterService;
@@ -12,7 +13,7 @@ import com.hpmath.hpmathcoreapi.account.service.AccountRemoveService;
 import com.hpmath.hpmathcoreapi.account.service.AccountUpdateService;
 import com.hpmath.hpmathwebcommon.JwtUtils;
 import com.hpmath.hpmathwebcommon.PasswordHandler;
-import com.hpmath.hpmathwebcommon.WebAuthorizationConfiguration;
+import com.hpmath.hpmathwebcommon.TestAuthorization;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -21,8 +22,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,11 +30,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 @WebMvcTest(
-        controllers = {AccountController.class},
-        excludeFilters = {
-                @Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebAuthorizationConfiguration.class)
-        }
+        controllers = {AccountController.class}
 )
+@TestAuthorization
 @ContextConfiguration(classes = {HpmathCoreApiApplication.class})
 @ActiveProfiles("test")
 public class AccountControllerTest {
@@ -62,19 +59,21 @@ public class AccountControllerTest {
     @ParameterizedTest
     @MethodSource("provideIllegalArguments")
     void 잘못된_요청_테스트(Map<String, Object> requestDto) throws Exception {
-        request(status().isBadRequest(), requestDto);
+        postRequestWithAdminRole(status().isBadRequest(), requestDto);
     }
 
     @ParameterizedTest
     @MethodSource("provideLegalArguments")
     void 옳은_요청_테스트(Map<String, Object> requestDto) throws Exception {
-        request(status().isCreated(), requestDto);
+        postRequestWithAdminRole(status().isCreated(), requestDto);
     }
 
-    private void request(ResultMatcher resultMatcher, Map<String, Object> requestDto) throws Exception {
+    private void postRequestWithAdminRole(ResultMatcher resultMatcher, Map<String, Object> requestDto)
+            throws Exception {
         mockMvc.perform(post(BASE_URL)
                 .content(objectMapper.writeValueAsString(requestDto))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .requestAttr("role", Role.ADMIN)
         ).andExpect(resultMatcher);
     }
 
