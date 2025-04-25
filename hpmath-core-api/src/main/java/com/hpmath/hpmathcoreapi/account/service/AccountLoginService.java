@@ -10,7 +10,7 @@ import com.hpmath.hpmathcoreapi.account.exceptions.InvalidPasswordException;
 import com.hpmath.hpmathcoreapi.account.exceptions.NoSuchMemberException;
 import com.hpmath.hpmathcoreapi.account.exceptions.ReLoginRequiredException;
 import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
-import com.hpmath.hpmathcoreapi.aspect.log.WarnLoggable;
+import com.hpmath.hpmathwebcommon.log.WarnLoggable;
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathwebcommon.JwtUtils;
 import com.hpmath.hpmathwebcommon.PasswordHandler;

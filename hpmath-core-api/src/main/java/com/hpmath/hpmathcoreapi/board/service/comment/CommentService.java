@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.board.service.comment;
 
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.aspect.log.WarnLoggable;
+import com.hpmath.hpmathwebcommon.log.WarnLoggable;
 import com.hpmath.hpmathcoreapi.board.dao.CommentRepository;
 import com.hpmath.hpmathcoreapi.board.dto.CommentDeleteCommand;
 import com.hpmath.hpmathcoreapi.board.dto.CommentUpdateCommand;

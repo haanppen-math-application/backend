@@ -1,4 +1,4 @@
-package com.hpmath.hpmathcoreapi.aspect.log;
+package com.hpmath.hpmathwebcommon.log;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class LoggingAspect {
+class LoggingAspect {
 
     @Around("within(@org.springframework.web.bind.annotation.RestController *)")
     public Object logController(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
@@ -36,13 +36,13 @@ public class LoggingAspect {
             throw throwable;
         }
     }
-    @AfterThrowing(value = "within(@com.hpmath.hpmathcoreapi.aspect.log.WarnLoggable *)", throwing = "exception")
+    @AfterThrowing(value = "within(@com.hpmath.hpmathwebcommon.log.WarnLoggable *)", throwing = "exception")
     public void warningLog(JoinPoint joinPoint, Exception exception) {
         Logger logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
         logger.warn("[ EXCEPTION ] -> " + exception.getClass().getSimpleName() + ", -> " + exception.getMessage());
     }
 
-    @AfterThrowing(value = "within(@com.hpmath.hpmathcoreapi.aspect.log.ErrorLoggable *)", throwing = "exception")
+    @AfterThrowing(value = "within(@com.hpmath.hpmathwebcommon.log.ErrorLoggable *)", throwing = "exception")
     public void errorLog(JoinPoint joinPoint, Exception exception) {
         Logger logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
         logger.warn("[ EXCEPTION ] -> " + exception.getClass().getSimpleName() + " -> " + exception.getMessage());

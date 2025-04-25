@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.service.question;
 
-import com.hpmath.hpmathcoreapi.aspect.log.WarnLoggable;
+import com.hpmath.hpmathwebcommon.log.WarnLoggable;
 import com.hpmath.hpmathcoreapi.board.controller.Responses.QuestionDetails;
 import com.hpmath.hpmathcoreapi.board.controller.Responses.QuestionPreview;
 import com.hpmath.hpmathcoreapi.board.dao.QuestionRepository;

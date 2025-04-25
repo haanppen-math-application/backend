@@ -1,4 +1,4 @@
-package com.hpmath.hpmathcoreapi.aspect.log;
+package com.hpmath.hpmathwebcommon.log;
 
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
-public class LogInterceptor implements HandlerInterceptor {
+class LogInterceptor implements HandlerInterceptor {
     static final String userIdentifier = "memberId";
     static final String requestIdentifier = "requestId";
     static final String clientIp = "clientIp";
