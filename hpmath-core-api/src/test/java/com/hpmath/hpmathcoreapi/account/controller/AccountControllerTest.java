@@ -32,9 +32,9 @@ import org.springframework.test.web.servlet.ResultMatcher;
 @WebMvcTest(
         controllers = {AccountController.class}
 )
-@TestAuthorization
 @ContextConfiguration(classes = {HpmathCoreApiApplication.class})
 @ActiveProfiles("test")
+@TestAuthorization
 public class AccountControllerTest {
     private static final String BASE_URL = "/api/accounts";
     @Autowired

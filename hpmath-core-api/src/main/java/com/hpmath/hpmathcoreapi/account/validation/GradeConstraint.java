@@ -18,7 +18,6 @@ import org.hibernate.validator.constraints.Range;
 @ReportAsSingleViolation
 
 @Range(min = 0, max = 11)
-@NotNull
 public @interface GradeConstraint {
     String message() default "0 이상 11 이하";
 
