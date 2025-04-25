@@ -3,8 +3,10 @@ package com.hpmath.hpmathwebcommon;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 class PasswordEncoder {
     private final MessageDigest digest;
