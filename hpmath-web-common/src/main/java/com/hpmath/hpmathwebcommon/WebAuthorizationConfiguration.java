@@ -6,8 +6,12 @@ import com.hpmath.hpmathwebcommon.authenticationV2.LoginIdMethodArgumentResolver
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,6 +26,7 @@ public class WebAuthorizationConfiguration {
     public OncePerRequestFilter jwtAuthenticationFilter(final JwtUtils jwtUtils) {
         return new JwtAuthenticationFilter(jwtUtils);
     }
+
 
     @Bean
     public WebMvcConfigurer authenticationWebMvcConfigurer() {

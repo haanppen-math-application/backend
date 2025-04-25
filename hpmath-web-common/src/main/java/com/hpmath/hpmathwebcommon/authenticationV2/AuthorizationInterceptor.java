@@ -5,6 +5,7 @@ import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.cors.PreFlightRequestHandler;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -12,7 +13,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (handler instanceof PreFlightRequestHandler) {
+            return true;
+        }
+
         final MemberPrincipal userPrincipal = (MemberPrincipal) request.getUserPrincipal();
         final HandlerMethod handlerMethod = (HandlerMethod) handler;
 
