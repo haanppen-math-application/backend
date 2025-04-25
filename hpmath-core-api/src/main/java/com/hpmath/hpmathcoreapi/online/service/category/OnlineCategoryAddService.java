@@ -5,6 +5,7 @@ import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCategory;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCategoryRepository;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCategoryAddCommand;
+import jakarta.validation.Valid;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class OnlineCategoryAddService {
     private static final Long MAX_LEVEL = 2L;
@@ -19,7 +21,7 @@ public class OnlineCategoryAddService {
     private final OnlineCategoryRepository onlineCategoryRepository;
 
     @Transactional
-    public void addOnlineCategory(@Validated final OnlineCategoryAddCommand command) {
+    public void addOnlineCategory(@Valid final OnlineCategoryAddCommand command) {
         final OnlineCategory newCategory = new OnlineCategory(command.categoryName());
         if (Objects.nonNull(command.beforeLevelId())) {
             final OnlineCategory parentCategory = getParentCategory(command);

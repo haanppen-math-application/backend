@@ -24,7 +24,7 @@ public class DirectoryCreateService {
     private final DirectoryCreationValidateManager directoryCreationValidateManager;
 
     @Transactional
-    public void addNewDirectory(@Validated final CreateDirectoryCommand createDirectoryDto) {
+    public void addNewDirectory(final CreateDirectoryCommand createDirectoryDto) {
         final String absoluteDirPath = getAbsoluteDirPath(createDirectoryDto);
         final Member member = findMember(createDirectoryDto.ownerId());
 

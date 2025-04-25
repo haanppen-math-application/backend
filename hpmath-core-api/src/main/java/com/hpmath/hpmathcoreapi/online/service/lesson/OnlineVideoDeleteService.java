@@ -21,7 +21,7 @@ public class OnlineVideoDeleteService {
     private final OnlineCourseOwnerValidator onlineCourseOwnerValidator;
 
     @Transactional
-    public void deleteOnlineVideo(@Validated final DeleteOnlineCourseVideoCommand deleteOnlineCourseVideoCommand) {
+    public void deleteOnlineVideo(final DeleteOnlineCourseVideoCommand deleteOnlineCourseVideoCommand) {
         final OnlineCourse onlineCourse = loadOnlineCourseWithVideos(deleteOnlineCourseVideoCommand.onlineCourseId());
         onlineCourseOwnerValidator.validate(deleteOnlineCourseVideoCommand.requestMemberRole(), deleteOnlineCourseVideoCommand.requestMemberId(), onlineCourse.getTeacher().getId());
         final OnlineVideo targetVideo = loadTargetVideo(deleteOnlineCourseVideoCommand.onlineVideoId(), onlineCourse.getVideos());

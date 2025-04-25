@@ -14,7 +14,6 @@ import com.hpmath.hpmathcoreapi.online.service.course.update.OnlineCourseUpdateM
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
@@ -25,19 +24,19 @@ public class OnlineCourseUpdateService {
     private final OnlineStudentRepository onlineStudentRepository;
 
     @Transactional
-    public void changeOnlineCourseInfo(@Validated final OnlineCourseInfoUpdateCommand onlineCourseUpdateCommand) {
+    public void changeOnlineCourseInfo(final OnlineCourseInfoUpdateCommand onlineCourseUpdateCommand) {
         final OnlineCourse onlineCourse = findOnlineCourse(onlineCourseUpdateCommand.courseId());
         onlineCourseUpdateManager.update(onlineCourse, onlineCourseUpdateCommand);
     }
 
     @Transactional
-    public void changeOnlineCourseStudents(@Validated final OnlineCourseStudentUpdateCommand onlineCourseStudentUpdateCommand) {
+    public void changeOnlineCourseStudents(final OnlineCourseStudentUpdateCommand onlineCourseStudentUpdateCommand) {
         final OnlineCourse onlineCourse = findOnlineCourse(onlineCourseStudentUpdateCommand.courseId());
         onlineCourseStudentsUpdateHandler.update(onlineCourse, onlineCourseStudentUpdateCommand);
     }
 
     @Transactional
-    public void deleteOnlineCourse(@Validated final DeleteOnlineCourseCommand deleteOnlineCourseCommand) {
+    public void deleteOnlineCourse(final DeleteOnlineCourseCommand deleteOnlineCourseCommand) {
         final OnlineCourse onlineCourse = findOnlineCourse(deleteOnlineCourseCommand.courseId());
         if (isOwner(onlineCourse, deleteOnlineCourseCommand.requestMemberId(), deleteOnlineCourseCommand.requestMemberRole())) {
             onlineStudentRepository.removeAllByOnlineCourseId(onlineCourse.getId());

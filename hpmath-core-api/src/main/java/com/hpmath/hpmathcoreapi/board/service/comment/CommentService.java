@@ -27,7 +27,7 @@ public class CommentService {
     private final ImageService imageService;
 
     @Transactional
-    public void updateComment(@Validated final CommentUpdateCommand commentUpdateDto) {
+    public void updateComment(final CommentUpdateCommand commentUpdateDto) {
         final Comment comment = findComment(commentUpdateDto.commentId());
         validateOwnedMember(comment, commentUpdateDto.requestMemberId(), commentUpdateDto.role());
 
@@ -39,7 +39,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteComment(@Validated final CommentDeleteCommand commentDeleteDto) {
+    public void deleteComment(final CommentDeleteCommand commentDeleteDto) {
         final Comment comment = findComment(commentDeleteDto.commentId());
         validateOwnedMember(comment, commentDeleteDto.requestMemberId(), commentDeleteDto.role());
 

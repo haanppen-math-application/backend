@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class OnlineCourseRegisterService {
     private final MemberLoader memberLoader;
 
     @Transactional
-    public void addOnlineCourse(@Validated final AddOnlineCourseCommand addOnlineCourseCommand) {
+    public void addOnlineCourse(final AddOnlineCourseCommand addOnlineCourseCommand) {
         final OnlineCourseDomain onlineCourseDomain = onlineCourseMapper.toCourseDomain(addOnlineCourseCommand);
         final OnlineCourse onlineCourse = onlineCourseMapper.toCourse(onlineCourseDomain);
 

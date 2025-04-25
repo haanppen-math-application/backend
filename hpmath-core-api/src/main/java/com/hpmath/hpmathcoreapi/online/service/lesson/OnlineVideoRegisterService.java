@@ -29,7 +29,7 @@ public class OnlineVideoRegisterService {
      * @param addVideoToOnlineCourseCommand 해당 온라인 강의와 관련된 데이터를 모두 삭제 후, 업데이트 실시
      */
     @Transactional
-    public void addOnlineVideo(@Validated final AddOnlineVideoCommand addVideoToOnlineCourseCommand) {
+    public void addOnlineVideo(final AddOnlineVideoCommand addVideoToOnlineCourseCommand) {
         final OnlineCourse onlineCourse = loadOnlineCourseWithVideos(addVideoToOnlineCourseCommand.onlineCourseId());
         onlineCourseOwnerValidator.validate(addVideoToOnlineCourseCommand.requestMemberRole(), addVideoToOnlineCourseCommand.requestMemberId(), onlineCourse.getTeacher().getId());
 

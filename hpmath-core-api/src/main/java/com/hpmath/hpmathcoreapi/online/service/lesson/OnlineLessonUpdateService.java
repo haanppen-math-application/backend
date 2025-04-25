@@ -26,7 +26,7 @@ public class OnlineLessonUpdateService {
     private final OnlineCourseOwnerValidator onlineCourseOwnerValidator;
 
     @Transactional
-    public void updateLessonInfo(@Validated final UpdateOnlineLessonInfoCommand updateOnlineLessonInfoCommand) {
+    public void updateLessonInfo(final UpdateOnlineLessonInfoCommand updateOnlineLessonInfoCommand) {
         final OnlineCourse onlineCourse = loadCourseAndCategoryByCourseId(updateOnlineLessonInfoCommand.targetCourseId());
         onlineCourseOwnerValidator.validate(updateOnlineLessonInfoCommand.requestMemberRole(), updateOnlineLessonInfoCommand.requestMemberId(), onlineCourse.getTeacher().getId());
 
@@ -34,7 +34,7 @@ public class OnlineLessonUpdateService {
     }
 
     @Transactional
-    public void updatePreviewStauts(@Validated final OnlineVideoPreviewUpdateCommand command) {
+    public void updatePreviewStauts(final OnlineVideoPreviewUpdateCommand command) {
         final OnlineVideo onlineVideo = loadVideoAndVideosByCourseId(command.onlineVideoId());
         onlineCourseOwnerValidator.validate(command.requetMemberRole(), command.requestMemerId(), onlineVideo.getOnlineCourse().getTeacher().getId());
 
@@ -42,7 +42,7 @@ public class OnlineLessonUpdateService {
     }
 
     @Transactional
-    public void initializeCourse(@Validated final OnlineLessonInitializeCommand command) {
+    public void initializeCourse(final OnlineLessonInitializeCommand command) {
         final OnlineCourse onlineCourse = loadCourseAndVideos(command.onlineCourseId());
         onlineCourseOwnerValidator.validate(command.requetMemberROle(), command.requetMemberId(), onlineCourse.getTeacher().getId());
 

@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +27,7 @@ import org.springframework.validation.annotation.Validated;
 public class OnlineLessonQueryService {
     private final OnlineCourseRepository onlineCourseRepository;
 
-    public OnlineLessonDetail loadDetails(@Validated final OnlineLessonQueryCommand command) {
+    public OnlineLessonDetail loadDetails(final OnlineLessonQueryCommand command) {
         final OnlineCourse onlineCourses = onlineCourseRepository.loadOnlineCourseAndVideosAndCategoryById(
                         command.courseId())
                 .orElseThrow(() -> new BusinessException(command.courseId() + "를 찾을 수 없음",

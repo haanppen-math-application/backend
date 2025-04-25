@@ -12,7 +12,7 @@ public class DirectoryUpdateService {
     private final DirectoryUpdateManager directoryUpdateManager;
     private final UpdateCommandCreator updateCommandCreator;
 
-    public void updateDirectory(@Validated final UpdateDirectoryDto updateDirectoryDto) {
+    public void updateDirectory(final UpdateDirectoryDto updateDirectoryDto) {
         final UpdateDirectoryCommand updateDirectoryCommand = updateCommandCreator.getUpdateCommand(updateDirectoryDto);
         directoryUpdateManager.update(updateDirectoryCommand);
     }

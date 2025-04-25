@@ -19,7 +19,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +33,7 @@ public class OnlineCourseQueryService {
     }
 
     public List<OnlineCoursePreview> queryOnlineCourseByTeacherId(
-            @Validated final QueryOnlineCourseByTeacherIdCommand queryOnlineCourseByTeacherIdCommand
+            final QueryOnlineCourseByTeacherIdCommand queryOnlineCourseByTeacherIdCommand
     ) {
         return onlineCourseRepository.findAllByTeacherId(queryOnlineCourseByTeacherIdCommand.teacherId()).stream()
                 .map(this::mapToCoursePreview)
@@ -42,14 +41,14 @@ public class OnlineCourseQueryService {
     }
 
     public List<OnlineCoursePreview> queryOnlineCourseByStudentId(
-            @Validated final QueryOnlineCourseByStudentIdCommand queryOnlineCourseByStudentIdCommand) {
+            final QueryOnlineCourseByStudentIdCommand queryOnlineCourseByStudentIdCommand) {
         return onlineCourseRepository.findAllByStudentId(queryOnlineCourseByStudentIdCommand.studentId()).stream()
                 .map(this::mapToCoursePreview)
                 .toList();
     }
 
     public List<OnlineCoursePreview> queryMyOnlineCourses(
-            @Validated final QueryMyOnlineCourseCommand queryMyOnlineCourseCommand
+            final QueryMyOnlineCourseCommand queryMyOnlineCourseCommand
     ) {
         if (queryMyOnlineCourseCommand.requestMemberRole().equals(Role.STUDENT)) {
             return this.queryOnlineCourseByStudentId(
@@ -60,7 +59,7 @@ public class OnlineCourseQueryService {
     }
 
     public OnlineCourseDetails queryOnlineCourseDetails(
-            @Validated final QueryOnlineCourseDetailsCommand queryOnlineCourseDetailsCommand
+            final QueryOnlineCourseDetailsCommand queryOnlineCourseDetailsCommand
     ) {
         final OnlineCourse onlineCourse = onlineCourseRepository.findOnlineCourse(queryOnlineCourseDetailsCommand.onlineCourseId());
         final OnlineTeacherPreview onlineTeacherPreview = new OnlineTeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId());

@@ -22,7 +22,7 @@ public class OnlineVideoSequenceUpdateService {
     private final OnlineCourseOwnerValidator onlineCourseOwnerValidator;
 
     @Transactional
-    public void updateSequence(@Validated final UpdateOnlineVideoSequenceCommand command) {
+    public void updateSequence(final UpdateOnlineVideoSequenceCommand command) {
         final OnlineCourse onlineCourse = loadOnlineCourse(command.targetCourseId());
         onlineCourseOwnerValidator.validate(command.requetMemberRole(), command.requestMemberId(), onlineCourse.getTeacher().getId());
 
