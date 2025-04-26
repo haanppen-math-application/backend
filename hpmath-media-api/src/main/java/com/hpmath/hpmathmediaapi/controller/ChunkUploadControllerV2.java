@@ -58,7 +58,7 @@ public class ChunkUploadControllerV2 {
         return ResponseEntity.ok(RequiredChunkPartsResponse.of(info));
     }
 
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "청크 파일을 저장하는 API", description = "초기화 시 받은 uniqueId, 현재 파일이 몇번째인지를 보내면 됩니다.")
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<Void> uploadPart(
@@ -67,7 +67,7 @@ public class ChunkUploadControllerV2 {
         final ChunkUploadCommand command = chunkUploadRequest.toCommand();
         multiPartUploadService.upload(command);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.accepted().build();
     }
 
     @PutMapping
@@ -77,10 +77,10 @@ public class ChunkUploadControllerV2 {
             @RequestBody final ChunkMergeRequestV2 chunkMergeRequestV2,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
-        final ChunkMergeCommandV2 command = chunkMergeRequestV2.toCommand(1L);
+        final ChunkMergeCommandV2 command = chunkMergeRequestV2.toCommand(memberPrincipal.memberId());
         multiPartUploadService.mergeAll(command);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.created(null).build();
     }
 
     @DeleteMapping
@@ -91,6 +91,6 @@ public class ChunkUploadControllerV2 {
     ) {
         multiPartUploadService.remove(uniqueId);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
