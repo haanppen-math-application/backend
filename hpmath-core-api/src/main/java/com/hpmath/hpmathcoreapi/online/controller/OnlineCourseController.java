@@ -2,12 +2,12 @@ package com.hpmath.hpmathcoreapi.online.controller;
 
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineCourseCommand;
-import com.hpmath.hpmathcoreapi.online.dto.AddOnlineCourseRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.AddOnlineCourseRequest;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineCourseCommand;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseInfoUpdateCommand;
-import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseInfoUpdateRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineCourseInfoUpdateRequest;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseStudentUpdateCommand;
-import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseStudentsUpdateRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineCourseStudentsUpdateRequest;
 import com.hpmath.hpmathcoreapi.online.service.course.OnlineCourseRegisterService;
 import com.hpmath.hpmathcoreapi.online.service.course.OnlineCourseUpdateService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;

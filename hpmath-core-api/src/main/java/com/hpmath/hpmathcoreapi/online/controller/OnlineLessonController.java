@@ -1,19 +1,19 @@
 package com.hpmath.hpmathcoreapi.online.controller;
 
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.online.dto.AddOnlineCourseVideoRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.AddOnlineCourseVideoRequest;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineVideoCommand;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineCourseVideoCommand;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineVideoAttachmentCommand;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonInitializeCommand;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineVideoPreviewUpdateCommand;
-import com.hpmath.hpmathcoreapi.online.dto.OnlineVideoPreviewUpdateRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineVideoPreviewUpdateRequest;
 import com.hpmath.hpmathcoreapi.online.dto.RegisterOnlineVideoAttachmentCommand;
-import com.hpmath.hpmathcoreapi.online.dto.RegisterOnlineVideoAttachmentRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.RegisterOnlineVideoAttachmentRequest;
 import com.hpmath.hpmathcoreapi.online.dto.UpdateOnlineLessonInfoCommand;
-import com.hpmath.hpmathcoreapi.online.dto.UpdateOnlineLessonInfoRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.UpdateOnlineLessonInfoRequest;
 import com.hpmath.hpmathcoreapi.online.dto.UpdateOnlineVideoSequenceCommand;
-import com.hpmath.hpmathcoreapi.online.dto.UpdateOnlineVideoSequenceRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.UpdateOnlineVideoSequenceRequest;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineAttachmentDeleteService;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineAttachmentRegisterService;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineLessonUpdateService;
