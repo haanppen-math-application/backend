@@ -2,18 +2,18 @@ package com.hpmath.hpmathcoreapi.online.controller;
 
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.controller.Request.AddOnlineCourseVideoRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineVideoPreviewUpdateRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.RegisterOnlineVideoAttachmentRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.UpdateOnlineLessonInfoRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.UpdateOnlineVideoSequenceRequest;
 import com.hpmath.hpmathcoreapi.online.dto.AddOnlineVideoCommand;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineCourseVideoCommand;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineVideoAttachmentCommand;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonInitializeCommand;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineVideoPreviewUpdateCommand;
-import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineVideoPreviewUpdateRequest;
 import com.hpmath.hpmathcoreapi.online.dto.RegisterOnlineVideoAttachmentCommand;
-import com.hpmath.hpmathcoreapi.online.controller.Request.RegisterOnlineVideoAttachmentRequest;
 import com.hpmath.hpmathcoreapi.online.dto.UpdateOnlineLessonInfoCommand;
-import com.hpmath.hpmathcoreapi.online.controller.Request.UpdateOnlineLessonInfoRequest;
 import com.hpmath.hpmathcoreapi.online.dto.UpdateOnlineVideoSequenceCommand;
-import com.hpmath.hpmathcoreapi.online.controller.Request.UpdateOnlineVideoSequenceRequest;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineAttachmentDeleteService;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineAttachmentRegisterService;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineLessonUpdateService;
@@ -29,7 +29,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +54,7 @@ class OnlineLessonController {
     @Operation(summary = "온라인 수업의 대표 정보를 수정하는 API 입니다", description = "필드를 null로 보내면, 해당 필드는 수정하지 않습니다.")
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateOnlineLessonInfo(
-            @Validated @RequestBody final UpdateOnlineLessonInfoRequest updateOnlineLessonInfoRequest,
+            @Valid @RequestBody final UpdateOnlineLessonInfoRequest updateOnlineLessonInfoRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final UpdateOnlineLessonInfoCommand updateOnlineLessonInfoCommand = updateOnlineLessonInfoRequest.toCommand(
@@ -82,7 +81,7 @@ class OnlineLessonController {
     @Operation(summary = "온라인 수업 영상 순서 수정 API")
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> changeSequence(
-            @Validated @RequestBody final UpdateOnlineVideoSequenceRequest request,
+            @Valid @RequestBody final UpdateOnlineVideoSequenceRequest request,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final UpdateOnlineVideoSequenceCommand command = request.toCommand(memberPrincipal.memberId(), memberPrincipal.role());
@@ -94,7 +93,7 @@ class OnlineLessonController {
     @Operation(summary = "온라인 수업에 영상 등록 API")
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateOnlineCourseVideos(
-            @Validated @RequestBody final AddOnlineCourseVideoRequest addOnlineCourseVideosRequest,
+            @Valid @RequestBody final AddOnlineCourseVideoRequest addOnlineCourseVideosRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final AddOnlineVideoCommand addOnlineVideoCommand = addOnlineCourseVideosRequest.toCommand(
@@ -137,7 +136,7 @@ class OnlineLessonController {
     public ResponseEntity<?> registerAttachment(
             @PathVariable(required = true) final Long onlineCourseId,
             @PathVariable(required = true) final Long onlineVideoId,
-            @Validated @RequestBody final RegisterOnlineVideoAttachmentRequest registerOnlineVideoAttachmentRequest,
+            @Valid @RequestBody final RegisterOnlineVideoAttachmentRequest registerOnlineVideoAttachmentRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final RegisterOnlineVideoAttachmentCommand command = registerOnlineVideoAttachmentRequest.toCommand(onlineCourseId, onlineVideoId,

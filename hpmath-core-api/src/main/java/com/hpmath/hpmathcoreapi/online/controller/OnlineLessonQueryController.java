@@ -1,6 +1,5 @@
 package com.hpmath.hpmathcoreapi.online.controller;
 
-import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonDetail;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineLessonQueryCommand;
 import com.hpmath.hpmathcoreapi.online.service.lesson.OnlineLessonQueryService;

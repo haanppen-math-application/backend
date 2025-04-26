@@ -1,13 +1,13 @@
 package com.hpmath.hpmathcoreapi.online.controller;
 
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.online.dto.AddOnlineCourseCommand;
 import com.hpmath.hpmathcoreapi.online.controller.Request.AddOnlineCourseRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineCourseInfoUpdateRequest;
+import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineCourseStudentsUpdateRequest;
+import com.hpmath.hpmathcoreapi.online.dto.AddOnlineCourseCommand;
 import com.hpmath.hpmathcoreapi.online.dto.DeleteOnlineCourseCommand;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseInfoUpdateCommand;
-import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineCourseInfoUpdateRequest;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCourseStudentUpdateCommand;
-import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineCourseStudentsUpdateRequest;
 import com.hpmath.hpmathcoreapi.online.service.course.OnlineCourseRegisterService;
 import com.hpmath.hpmathcoreapi.online.service.course.OnlineCourseUpdateService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
@@ -16,9 +16,9 @@ import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +40,7 @@ class OnlineCourseController {
     @Operation(summary = "새로운 온라인 강의 등록")
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> addNewOnlineCourse(
-            @RequestBody @Validated final AddOnlineCourseRequest addOnlineCourseRequest,
+            @RequestBody @Valid final AddOnlineCourseRequest addOnlineCourseRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final AddOnlineCourseCommand addOnlineCourseCommand = addOnlineCourseRequest.toCommand(memberPrincipal.memberId(), memberPrincipal.role());
@@ -54,7 +54,7 @@ class OnlineCourseController {
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateOnlineCourseInfo(
             @PathVariable(required = true) final Long courseId,
-            @RequestBody @Validated final OnlineCourseInfoUpdateRequest onlineCourseInfoUpdateRequest,
+            @RequestBody @Valid final OnlineCourseInfoUpdateRequest onlineCourseInfoUpdateRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final OnlineCourseInfoUpdateCommand onlineCourseUpdateCommand = onlineCourseInfoUpdateRequest.toCommand(courseId,
@@ -68,7 +68,7 @@ class OnlineCourseController {
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<?> updateOnlineCourseStudents(
             @PathVariable(required = true) final Long courseId,
-            @RequestBody @Validated final OnlineCourseStudentsUpdateRequest onlineCourseStudentsUpdateRequest,
+            @RequestBody @Valid final OnlineCourseStudentsUpdateRequest onlineCourseStudentsUpdateRequest,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final OnlineCourseStudentUpdateCommand onlineCourseStudentUpdateCommand = onlineCourseStudentsUpdateRequest.toCommand(

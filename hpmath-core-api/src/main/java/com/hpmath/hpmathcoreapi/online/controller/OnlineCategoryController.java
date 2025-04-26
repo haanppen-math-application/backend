@@ -1,8 +1,8 @@
 package com.hpmath.hpmathcoreapi.online.controller;
 
 import com.hpmath.hpmathcore.Role;
+import com.hpmath.hpmathcoreapi.online.controller.Request.OnlineCategoryAddRequest;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCategoryAddCommand;
-import com.hpmath.hpmathcoreapi.online.dao.OnlineCategoryAddRequest;
 import com.hpmath.hpmathcoreapi.online.dto.OnlineCategoryInfo;
 import com.hpmath.hpmathcoreapi.online.service.category.OnlineCategoryAddService;
 import com.hpmath.hpmathcoreapi.online.service.category.OnlineCategoryDeleteService;
