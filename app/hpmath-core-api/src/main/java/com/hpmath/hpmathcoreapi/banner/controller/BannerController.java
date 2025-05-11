@@ -2,6 +2,8 @@ package com.hpmath.hpmathcoreapi.banner.controller;
 
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.banner.BannerService;
+import com.hpmath.hpmathcoreapi.banner.controller.Requests.AddBannerRequest;
+import com.hpmath.hpmathcoreapi.banner.controller.Requests.ChangeBannerRequest;
 import com.hpmath.hpmathcoreapi.banner.dto.AddBannerCommand;
 import com.hpmath.hpmathcoreapi.banner.dto.BannerResponse;
 import com.hpmath.hpmathcoreapi.banner.dto.ChangeBannerCommand;
@@ -24,24 +26,23 @@ class BannerController {
     private final BannerService bannerService;
 
     @GetMapping("/api/banners")
-    @Authorization(values = Role.ADMIN)
     public ResponseEntity<List<BannerResponse>> queryAllBanners() {
         return ResponseEntity.ok(bannerService.queryAllBanners());
     }
 
     @PostMapping("/api/banners")
     @Authorization(values = Role.ADMIN)
-    public ResponseEntity<?> addBanner(
+    public ResponseEntity<Void> addBanner(
             @RequestBody AddBannerRequest addBannerRequest
     ) {
-        final AddBannerCommand addBannerCommand = new AddBannerCommand(addBannerRequest.content);
+        final AddBannerCommand addBannerCommand = new AddBannerCommand(addBannerRequest.content());
         bannerService.addBanner(addBannerCommand);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/api/banners")
     @Authorization(values = Role.ADMIN)
-    public ResponseEntity<?> modifyBanner(
+    public ResponseEntity<Void> modifyBanner(
             @RequestBody ChangeBannerRequest changeBannerRequest
     ) {
         final ChangeBannerCommand changeBannerCommand = new ChangeBannerCommand(
@@ -54,21 +55,11 @@ class BannerController {
 
     @DeleteMapping("/api/banners/{bannerId}")
     @Authorization(values = Role.ADMIN)
-    public ResponseEntity<?> deleteBanner(
+    public ResponseEntity<Void> deleteBanner(
             @PathVariable(required = true) final Long bannerId
     ) {
         final DeleteBannerCommand deleteBannerCommand = new DeleteBannerCommand(bannerId);
         bannerService.deleteBanner(deleteBannerCommand);
         return ResponseEntity.noContent().build();
-    }
-
-    record AddBannerRequest(
-            String content
-    ) {
-    }
-    record ChangeBannerRequest(
-            Long bannerId,
-            String content
-    ) {
     }
 }
