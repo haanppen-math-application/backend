@@ -1,4 +1,4 @@
-package com.hpmath.hpmathcoreapi.banner.dto;
+package com.hpmath.domain.banner.dto;
 
 public record AddBannerCommand(
         String content

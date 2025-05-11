@@ -1,4 +1,4 @@
-package com.hpmath.hpmathcoreapi.banner;
+package com.hpmath.domain.banner;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

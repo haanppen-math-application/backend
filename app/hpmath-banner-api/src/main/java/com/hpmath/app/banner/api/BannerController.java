@@ -1,13 +1,13 @@
-package com.hpmath.hpmathcoreapi.banner.controller;
+package com.hpmath.app.banner.api;
 
+import com.hpmath.app.banner.api.Requests.AddBannerRequest;
+import com.hpmath.app.banner.api.Requests.ChangeBannerRequest;
+import com.hpmath.domain.banner.BannerService;
+import com.hpmath.domain.banner.dto.AddBannerCommand;
+import com.hpmath.domain.banner.dto.BannerResponse;
+import com.hpmath.domain.banner.dto.ChangeBannerCommand;
+import com.hpmath.domain.banner.dto.DeleteBannerCommand;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.banner.BannerService;
-import com.hpmath.hpmathcoreapi.banner.controller.Requests.AddBannerRequest;
-import com.hpmath.hpmathcoreapi.banner.controller.Requests.ChangeBannerRequest;
-import com.hpmath.hpmathcoreapi.banner.dto.AddBannerCommand;
-import com.hpmath.hpmathcoreapi.banner.dto.BannerResponse;
-import com.hpmath.hpmathcoreapi.banner.dto.ChangeBannerCommand;
-import com.hpmath.hpmathcoreapi.banner.dto.DeleteBannerCommand;
 import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ class BannerController {
     }
 
     @PostMapping("/api/banners")
-    @Authorization(values = Role.ADMIN)
+//    @Authorization(values = Role.ADMIN)
     public ResponseEntity<Void> addBanner(
             @RequestBody AddBannerRequest addBannerRequest
     ) {
@@ -41,7 +41,7 @@ class BannerController {
     }
 
     @PutMapping("/api/banners")
-    @Authorization(values = Role.ADMIN)
+//    @Authorization(values = Role.ADMIN)
     public ResponseEntity<Void> modifyBanner(
             @RequestBody ChangeBannerRequest changeBannerRequest
     ) {

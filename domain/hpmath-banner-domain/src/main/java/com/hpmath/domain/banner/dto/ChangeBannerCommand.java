@@ -1,4 +1,4 @@
-package com.hpmath.hpmathcoreapi.banner.dto;
+package com.hpmath.domain.banner.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

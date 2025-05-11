@@ -1,6 +1,6 @@
-package com.hpmath.hpmathcoreapi.banner.controller;
+package com.hpmath.app.banner.api;
 
-public class Requests {
+class Requests {
     record AddBannerRequest(
             String content
     ) {
