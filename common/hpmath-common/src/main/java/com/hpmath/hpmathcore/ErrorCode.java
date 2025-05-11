@@ -86,7 +86,9 @@ public enum ErrorCode {
 
     BANNER_EXCEPTION(HttpStatus.BAD_REQUEST, "-900", "배너 오류"),
 
-    ONLINE_COURSE_EXCEPTION(HttpStatus.BAD_REQUEST, "-701", "온라인 수업 접근 오류");
+    ONLINE_COURSE_EXCEPTION(HttpStatus.BAD_REQUEST, "-701", "온라인 수업 접근 오류"),
+
+    CONSTRAINT_VIOLATION_EXCEPTION(HttpStatus.BAD_REQUEST, "-100", "입력 오류");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

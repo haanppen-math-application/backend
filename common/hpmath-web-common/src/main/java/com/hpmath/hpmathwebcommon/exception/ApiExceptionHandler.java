@@ -2,6 +2,8 @@ package com.hpmath.hpmathwebcommon.exception;
 
 import com.hpmath.hpmathcore.BusinessException;
 import com.hpmath.hpmathcore.ErrorCode;
+import jakarta.validation.ConstraintDeclarationException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.slf4j.Logger;
@@ -54,6 +56,11 @@ public class ApiExceptionHandler {
         String details = businessException.getMessage();
 
         return createExceptionResponse(errorCode, ExceptionResponseBody.of(errorCode, details));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ExceptionResponseBody> constraintDeclarationExceptionHandler(final ConstraintViolationException exception) {
+        return createExceptionResponse(ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION, ExceptionResponseBody.of(ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION, exception.getMessage()));
     }
 
     private ResponseEntity<ExceptionResponseBody> createExceptionResponse(ErrorCode errorCode, ExceptionResponseBody exceptionResponseBody) {
