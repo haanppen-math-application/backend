@@ -4,6 +4,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
     implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
@@ -11,13 +15,9 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     testImplementation 'com.h2database:h2'
 
-    implementation project(":hpmath-sms-client")
-    implementation project(":hpmath-core")
-    implementation project(":hpmath-web-common")
-    implementation project(":hpmath-media-domain")
-    implementation project(":hpmath-media-api")
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
+    implementation project(":client:hpmath-sms-client")
+    implementation project(":common:hpmath-common")
+    implementation project(":common:hpmath-web-common")
+    implementation project(":domain:hpmath-media-domain")
+    implementation project(":api:hpmath-media-api")
 }

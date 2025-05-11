@@ -1,10 +1,14 @@
 rootProject.name = 'academyapi'
 
 include(
-        'hpmath-core-api',
-        'hpmath-sms-client',
-        'hpmath-web-common',
-        'hpmath-core',
-        'hpmath-media-api',
-        'hpmath-media-domain'
+        'api',
+        'api:hpmath-media-api',
+        'api:hpmath-core-api',
+        'common',
+        'common:hpmath-common',
+        'common:hpmath-web-common',
+        'domain',
+        'domain:hpmath-media-domain',
+        'client',
+        'client:hpmath-sms-client'
 )

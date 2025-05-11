@@ -38,5 +38,5 @@ out/
 .vscode/
 .DS_Store
 
-hpmath-core-api/src/main/resources/application.properties
-hpmath-media-api/src/main/resources/application.properties
+api/hpmath-core-api/src/main/resources/application.properties
+api/hpmath-media-api/src/main/resources/application.properties

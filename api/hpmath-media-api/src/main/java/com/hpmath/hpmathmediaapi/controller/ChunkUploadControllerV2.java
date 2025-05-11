@@ -37,7 +37,7 @@ public class ChunkUploadControllerV2 {
 
     @PostMapping("/init")
     @Operation(summary = "파일을 보내기 전, 초기화 API", description = "현재 파일을 몇개의 파트( Part )로 잘라서 보낼지 결정하면 됩니다. ")
-    @Authorization(values = {Role.ADMIN, Role.TEACHER})
+//    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<ChunkUploadStartResponse> initializeMultiPartsUpload(
             @RequestBody ChunkUploadStartRequestV2 request
     ) {
@@ -49,7 +49,7 @@ public class ChunkUploadControllerV2 {
 
     @GetMapping
     @Operation(summary = "보내야 하는 목록 조회", description = "현재 파트 중, 몇번째가 안보내졌는지 조회")
-    @Authorization(values = {Role.ADMIN, Role.TEACHER})
+//    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<RequiredChunkPartsResponse> getRequiredParts(
             @RequestParam(required = true) final String uniqueId
     ) {
@@ -60,7 +60,7 @@ public class ChunkUploadControllerV2 {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "청크 파일을 저장하는 API", description = "초기화 시 받은 uniqueId, 현재 파일이 몇번째인지를 보내면 됩니다.")
-    @Authorization(values = {Role.ADMIN, Role.TEACHER})
+//    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<Void> uploadPart(
             @ModelAttribute final ChunkUploadRequestV2 chunkUploadRequest
     ) {
@@ -72,12 +72,12 @@ public class ChunkUploadControllerV2 {
 
     @PutMapping
     @Operation(summary = "청크 파일을 모두 합치기", description = "안보내진 부분이 있다면, error ( Test 용이라 로그인 필요 없는 상태 )")
-    @Authorization(values = {Role.ADMIN, Role.TEACHER})
+//    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<Void> mergeChunks(
             @RequestBody final ChunkMergeRequestV2 chunkMergeRequestV2,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
-        final ChunkMergeCommandV2 command = chunkMergeRequestV2.toCommand(memberPrincipal.memberId());
+        final ChunkMergeCommandV2 command = chunkMergeRequestV2.toCommand(1L);
         multiPartUploadService.mergeAll(command);
 
         return ResponseEntity.created(null).build();
@@ -85,7 +85,7 @@ public class ChunkUploadControllerV2 {
 
     @DeleteMapping
     @Operation(summary = "해당 파일에 대한 정보 모두 삭제", description = "파일 전송을 중단하고 싶을떄, 삭제 하는 API")
-    @Authorization(values = {Role.ADMIN, Role.TEACHER})
+//    @Authorization(values = {Role.ADMIN, Role.TEACHER})
     public ResponseEntity<Void> remove(
             @RequestParam(required = true) final String uniqueId
     ) {
