@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
-import com.hpmath.hpmathcoreapi.account.entity.Member;
+import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcoreapi.course.application.exception.MemoMediaException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadAttachmentOwnedMemberIdPort;
 import com.hpmath.hpmathcore.ErrorCode;

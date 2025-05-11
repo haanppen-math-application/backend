@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.board.mapper;
 
-import com.hpmath.hpmathcoreapi.account.entity.Member;
+import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcoreapi.board.controller.Responses.CommentDetails;
 import com.hpmath.hpmathcoreapi.board.controller.Responses.MemberDetails;
 import com.hpmath.hpmathcoreapi.board.controller.Responses.QuestionDetails;

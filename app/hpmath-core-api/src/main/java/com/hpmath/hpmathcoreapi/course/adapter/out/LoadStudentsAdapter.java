@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadStudentsPort;
 import com.hpmath.hpmathcoreapi.course.domain.Student;
 import java.util.List;

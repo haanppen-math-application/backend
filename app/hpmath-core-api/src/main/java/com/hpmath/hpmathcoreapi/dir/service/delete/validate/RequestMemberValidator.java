@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.dir.service.delete.validate;
 
+import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.dir.exception.DirectoryException;
 import com.hpmath.hpmathcoreapi.dir.service.delete.DirectoryDeleteCommand;
 import com.hpmath.hpmathcore.ErrorCode;

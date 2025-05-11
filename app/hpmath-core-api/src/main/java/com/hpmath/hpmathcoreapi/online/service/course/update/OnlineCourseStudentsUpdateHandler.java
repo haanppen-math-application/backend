@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.online.service.course.update;
 
-import com.hpmath.hpmathcoreapi.account.entity.Member;
+import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourse;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineStudent;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineStudentRepository;

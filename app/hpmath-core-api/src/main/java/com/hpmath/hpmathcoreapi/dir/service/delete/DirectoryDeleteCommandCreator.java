@@ -1,13 +1,13 @@
 package com.hpmath.hpmathcoreapi.dir.service.delete;
 
-import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
+import com.hpmath.domain.member.Member;
+import com.hpmath.domain.member.MemberRepository;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcoreapi.dir.dao.Directory;
 import com.hpmath.hpmathcoreapi.dir.dao.DirectoryRepository;
 import com.hpmath.hpmathcoreapi.dir.dto.DeleteDirectoryDto;
 import com.hpmath.hpmathcoreapi.dir.exception.DirectoryException;
 import com.hpmath.hpmathcoreapi.dir.service.form.resolver.DirectoryPathFormResolver;
-import com.hpmath.hpmathcore.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

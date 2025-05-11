@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.dir.service.create;
 
-import com.hpmath.hpmathcoreapi.account.entity.Member;
+import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcoreapi.dir.dao.Directory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

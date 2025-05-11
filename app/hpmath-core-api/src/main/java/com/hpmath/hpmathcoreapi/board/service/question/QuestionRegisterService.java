@@ -1,7 +1,7 @@
 package com.hpmath.hpmathcoreapi.board.service.question;
 
+import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.entity.Member;
 import com.hpmath.hpmathcoreapi.board.dao.MemberManager;
 import com.hpmath.hpmathcoreapi.board.dto.QuestionRegisterCommand;
 import com.hpmath.hpmathcoreapi.board.entity.Question;

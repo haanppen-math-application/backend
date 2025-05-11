@@ -2,16 +2,21 @@ rootProject.name = 'academyapi'
 
 include(
         'app',
+        'app:hpmath-monolith-api',
+        'app:hpmath-member-api',
         'app:hpmath-media-api',
         'app:hpmath-core-api',
+        'app:hpmath-member-batch',
 
         'common',
         'common:hpmath-serializer-common',
         'common:hpmath-event-common',
         'common:hpmath-common',
         'common:hpmath-web-common',
+        'common:hpmath-jwt-common',
 
         'domain',
+        'domain:hpmath-member-domain',
         'domain:hpmath-media-domain',
 
         'client',

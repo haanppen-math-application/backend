@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
-import com.hpmath.hpmathcoreapi.account.entity.Member;
+import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcoreapi.course.entity.MemoMediaAttachment;
 import com.hpmath.hpmathmediadomain.media.entity.Media;
 import java.util.List;

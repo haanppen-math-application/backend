@@ -1,9 +1,9 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.domain.member.Member;
+import com.hpmath.domain.member.MemberRepository;
+import com.hpmath.domain.member.exceptions.NoSuchMemberException;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.account.exceptions.NoSuchMemberException;
-import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.application.exception.CourseException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.ValidateSuperUserPort;
 import com.hpmath.hpmathcore.ErrorCode;

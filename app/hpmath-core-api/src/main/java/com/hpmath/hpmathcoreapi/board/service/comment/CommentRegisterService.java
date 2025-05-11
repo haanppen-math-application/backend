@@ -1,8 +1,8 @@
 package com.hpmath.hpmathcoreapi.board.service.comment;
 
+import com.hpmath.domain.member.Member;
+import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.board.dao.CommentRepository;
 import com.hpmath.hpmathcoreapi.board.dao.QuestionRepository;
 import com.hpmath.hpmathcoreapi.board.dto.CommentRegisterCommand;

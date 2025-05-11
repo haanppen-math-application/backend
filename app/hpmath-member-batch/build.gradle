@@ -1,0 +1,7 @@
+dependencies {
+    implementation 'org.springframework.data:spring-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    implementation project(":common:hpmath-common")
+    implementation project(":domain:hpmath-member-domain")
+}

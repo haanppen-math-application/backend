@@ -1,8 +1,8 @@
 package com.hpmath.hpmathcoreapi.board.dao;
 
+import com.hpmath.domain.member.Member;
+import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.board.exception.NoSuchMemberException;
 import com.hpmath.hpmathcore.ErrorCode;
 import java.util.Arrays;
