@@ -4,11 +4,16 @@ include(
         'app',
         'app:hpmath-media-api',
         'app:hpmath-core-api',
+
         'common',
+        'common:hpmath-serializer-common',
+        'common:hpmath-event-common',
         'common:hpmath-common',
         'common:hpmath-web-common',
+
         'domain',
         'domain:hpmath-media-domain',
+
         'client',
         'client:hpmath-sms-client'
 )
