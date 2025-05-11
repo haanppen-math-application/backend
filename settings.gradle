@@ -1,9 +1,9 @@
 rootProject.name = 'academyapi'
 
 include(
-        'api',
-        'api:hpmath-media-api',
-        'api:hpmath-core-api',
+        'app',
+        'app:hpmath-media-api',
+        'app:hpmath-core-api',
         'common',
         'common:hpmath-common',
         'common:hpmath-web-common',

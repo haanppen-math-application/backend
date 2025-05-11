@@ -19,5 +19,5 @@ dependencies {
     implementation project(":common:hpmath-common")
     implementation project(":common:hpmath-web-common")
     implementation project(":domain:hpmath-media-domain")
-    implementation project(":api:hpmath-media-api")
+    implementation project(":app:hpmath-media-api")
 }
