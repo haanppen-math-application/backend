@@ -2,8 +2,8 @@ package com.hpmath.hpmathcoreapi.online.service.lesson;
 
 import com.hpmath.HpmathCoreApiApplication;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
+import com.hpmath.domain.member.Member;
+import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourse;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineCourseRepository;
 import com.hpmath.hpmathcoreapi.online.dao.OnlineVideo;

@@ -3,7 +3,7 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 import com.hpmath.domain.member.Member;
 import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.board.exception.NoSuchMemberException;
+import com.hpmath.hpmathcoreapi.course.application.exception.NoSuchMemberException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadTeacherPort;
 import com.hpmath.hpmathcoreapi.course.domain.Teacher;
 import com.hpmath.hpmathcore.ErrorCode;

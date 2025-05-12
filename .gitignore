@@ -43,3 +43,4 @@ app/hpmath-media-api/src/main/resources/application.properties
 app/hpmath-member-api/src/main/resources/application.properties
 app/hpmath-member-batch/src/main/resources/application.properties
 app/hpmath-banner-api/src/main/resources/application.properties
+app/hpmath-board-api/src/main/resources/application.properties

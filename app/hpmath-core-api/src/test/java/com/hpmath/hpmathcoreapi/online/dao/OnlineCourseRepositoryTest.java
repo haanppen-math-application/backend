@@ -1,9 +1,9 @@
 package com.hpmath.hpmathcoreapi.online.dao;
 
 import com.hpmath.HpmathCoreApiApplication;
+import com.hpmath.domain.member.Member;
+import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;

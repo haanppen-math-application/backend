@@ -1,19 +1,14 @@
 package com.hpmath.hpmathcoreapi.course.controller;
 
 import com.hpmath.HpmathCoreApiApplication;
-import com.hpmath.hpmathcoreapi.board.controller.QuestionController;
-import com.hpmath.hpmathcoreapi.board.controller.QuestionQueryController;
 import com.hpmath.hpmathcoreapi.course.application.LoadCoursesByStudentQueryService;
 import com.hpmath.hpmathcoreapi.course.application.port.in.LoadCourseDetailsQuery;
 import com.hpmath.hpmathcoreapi.course.application.port.in.QueryAllCourseUseCase;
 import com.hpmath.hpmathcoreapi.course.application.port.in.QueryCourseByMemberIdUseCase;
-import org.apache.catalina.security.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ActiveProfiles;

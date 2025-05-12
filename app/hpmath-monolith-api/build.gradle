@@ -8,4 +8,5 @@ dependencies {
     implementation project(":app:hpmath-member-batch")
     implementation project(":app:hpmath-core-api")
     implementation project(":app:hpmath-banner-api")
+    implementation project(":app:hpmath-board-api")
 }

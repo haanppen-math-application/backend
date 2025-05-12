@@ -3,9 +3,9 @@ package com.hpmath.hpmathcoreapi.course.adapter.out;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.hpmath.HpmathCoreApiApplication;
+import com.hpmath.domain.member.Member;
+import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.application.DeleteCourseService;
 import com.hpmath.hpmathcoreapi.course.application.dto.DeleteCourseCommand;
 import com.hpmath.hpmathcoreapi.course.application.port.in.DeleteCourseUseCase;

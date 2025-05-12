@@ -1,9 +1,9 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
 import com.hpmath.HpmathCoreApiApplication;
+import com.hpmath.domain.member.Member;
+import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathcoreapi.account.entity.Member;
-import com.hpmath.hpmathcoreapi.account.repository.MemberRepository;
 import com.hpmath.hpmathcoreapi.course.entity.Course;
 import com.hpmath.hpmathcoreapi.course.entity.CourseStudent;
 import com.hpmath.hpmathcoreapi.course.entity.Memo;
@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
