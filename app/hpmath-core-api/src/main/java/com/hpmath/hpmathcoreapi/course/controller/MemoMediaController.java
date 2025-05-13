@@ -61,7 +61,7 @@ public class MemoMediaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = "/api/courses/memos/media/attachment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/api/courses/memos/media/attachment")
     @Operation
     @SecurityRequirement(name = "jwtAuth")
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
