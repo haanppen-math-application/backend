@@ -2,6 +2,7 @@ rootProject.name = 'academyapi'
 
 include(
         'app',
+        'app:hpmath-online-api',
         'app:hpmath-directory-api',
         'app:hpmath-board-api',
         'app:hpmath-banner-api',
@@ -19,6 +20,7 @@ include(
         'common:hpmath-jwt-common',
 
         'domain',
+        'domain:hpmath-online-domain',
         'domain:hpmath-directory-domain',
         'domain:hpmath-banner-domain',
         'domain:hpmath-member-domain',
