@@ -10,6 +10,7 @@ import com.hpmath.hpmathmediadomain.media.dto.ChunkMergeCommandV2;
 import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadCommand;
 import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadInitializeCommand;
 import com.hpmath.hpmathmediadomain.media.dto.RequiredChunkInfo;
+import com.hpmath.hpmathmediadomain.media.dto.StoredFileResult;
 import com.hpmath.hpmathmediadomain.media.dto.UploadInitializeResult;
 import com.hpmath.hpmathmediadomain.media.service.uploadV2.MultiPartUploadService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
@@ -73,14 +74,14 @@ public class ChunkUploadControllerV2 {
     @PutMapping
     @Operation(summary = "청크 파일을 모두 합치기", description = "안보내진 부분이 있다면, error ( Test 용이라 로그인 필요 없는 상태 )")
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
-    public ResponseEntity<Void> mergeChunks(
+    public ResponseEntity<StoredFileResult> mergeChunks(
             @RequestBody final ChunkMergeRequestV2 chunkMergeRequestV2,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final ChunkMergeCommandV2 command = chunkMergeRequestV2.toCommand(1L);
-        multiPartUploadService.mergeAll(command);
+        final StoredFileResult result = multiPartUploadService.mergeAll(command);
 
-        return ResponseEntity.created(null).build();
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping

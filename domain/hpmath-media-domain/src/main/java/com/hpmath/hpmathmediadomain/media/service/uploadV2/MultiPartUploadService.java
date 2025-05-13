@@ -4,6 +4,7 @@ import com.hpmath.hpmathmediadomain.media.dto.ChunkMergeCommandV2;
 import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadCommand;
 import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadInitializeCommand;
 import com.hpmath.hpmathmediadomain.media.dto.RequiredChunkInfo;
+import com.hpmath.hpmathmediadomain.media.dto.StoredFileResult;
 import com.hpmath.hpmathmediadomain.media.dto.UploadInitializeResult;
 import com.hpmath.hpmathmediadomain.media.entity.Media;
 import com.hpmath.hpmathmediadomain.media.repository.MediaRepository;
@@ -54,7 +55,7 @@ public class MultiPartUploadService {
         chunkStorage.removeRelated(uniqueId);
     }
 
-    public void mergeAll(final ChunkMergeCommandV2 mergeCommand) {
+    public StoredFileResult mergeAll(final ChunkMergeCommandV2 mergeCommand) {
         // 1. uniqueID 로 파일 모두 조회
         // 2. partNumber가 모두 있는지 ( 순서대로 있는지 )
         // 3. Merge Start
@@ -71,7 +72,7 @@ public class MultiPartUploadService {
 
             mediaRepository.save(new Media(mergeCommand.userDefinedFileName(), mergedUploadFile.getUniqueFileName(),
                     mergeCommand.requestMemberId(), mergeCommand.duration(), mergeCommand.fileSize()));
-            return;
+            return new StoredFileResult(mergedUploadFile.getUniqueFileName());
         }
         throw new IllegalArgumentException(targets.size() + " 개의 파일이 도착하지 않았습니다.");
     }
