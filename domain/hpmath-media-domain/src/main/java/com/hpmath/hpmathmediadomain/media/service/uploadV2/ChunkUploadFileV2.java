@@ -3,8 +3,10 @@ package com.hpmath.hpmathmediadomain.media.service.uploadV2;
 import com.hpmath.hpmathmediadomain.media.storage.uploadfile.UploadFile;
 import java.io.IOException;
 import java.io.InputStream;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+@ToString
 public class ChunkUploadFileV2 implements UploadFile {
     private final String uniqueId;
     private final InputStream inputStream;
