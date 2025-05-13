@@ -70,7 +70,7 @@ public class MultiPartUploadService {
             mediaStorage.store(mergedUploadFile);
             remove(mergeCommand.uniqueId());
 
-            mediaRepository.save(new Media(mergeCommand.userDefinedFileName(), mergedUploadFile.getUniqueFileName(),
+            mediaRepository.save(new Media(mergeCommand.userDefinedFileName() + mergeCommand.extension(), mergedUploadFile.getUniqueFileName(),
                     mergeCommand.requestMemberId(), mergeCommand.duration(), mergeCommand.fileSize()));
             return new StoredFileResult(mergedUploadFile.getUniqueFileName());
         }
