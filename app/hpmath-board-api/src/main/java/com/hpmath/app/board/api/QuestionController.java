@@ -1,11 +1,11 @@
 package com.hpmath.app.board.api;
 
-import com.hpmath.domain.board.dto.QuestionDeleteCommand;
-import com.hpmath.domain.board.dto.QuestionRegisterCommand;
-import com.hpmath.domain.board.dto.QuestionUpdateCommand;
-import com.hpmath.domain.board.service.question.QuestionDeleteService;
-import com.hpmath.domain.board.service.question.QuestionRegisterService;
-import com.hpmath.domain.board.service.question.QuestionUpdateService;
+import com.hpmath.domain.directory.dto.QuestionDeleteCommand;
+import com.hpmath.domain.directory.dto.QuestionRegisterCommand;
+import com.hpmath.domain.directory.dto.QuestionUpdateCommand;
+import com.hpmath.domain.directory.service.question.QuestionDeleteService;
+import com.hpmath.domain.directory.service.question.QuestionRegisterService;
+import com.hpmath.domain.directory.service.question.QuestionUpdateService;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
 import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;

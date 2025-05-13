@@ -1,14 +1,14 @@
 package com.hpmath.app.directory.api;
 
-import com.hpmath.domain.board.dto.CreateDirectoryCommand;
-import com.hpmath.domain.board.dto.DeleteDirectoryDto;
-import com.hpmath.domain.board.dto.FileView;
-import com.hpmath.domain.board.dto.QueryDirectory;
-import com.hpmath.domain.board.dto.UpdateDirectoryDto;
-import com.hpmath.domain.board.service.create.DirectoryCreateService;
-import com.hpmath.domain.board.service.delete.DirectoryDeleteService;
-import com.hpmath.domain.board.service.query.DirectoryQueryService;
-import com.hpmath.domain.board.service.update.DirectoryUpdateService;
+import com.hpmath.domain.directory.dto.CreateDirectoryCommand;
+import com.hpmath.domain.directory.dto.DeleteDirectoryDto;
+import com.hpmath.domain.directory.dto.FileView;
+import com.hpmath.domain.directory.dto.QueryDirectory;
+import com.hpmath.domain.directory.dto.UpdateDirectoryDto;
+import com.hpmath.domain.directory.service.create.DirectoryCreateService;
+import com.hpmath.domain.directory.service.delete.DirectoryDeleteService;
+import com.hpmath.domain.directory.service.query.DirectoryQueryService;
+import com.hpmath.domain.directory.service.update.DirectoryUpdateService;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
 import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;

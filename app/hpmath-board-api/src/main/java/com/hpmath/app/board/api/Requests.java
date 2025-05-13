@@ -1,15 +1,15 @@
 package com.hpmath.app.board.api;
 
-import com.hpmath.domain.board.dto.CommentRegisterCommand;
-import com.hpmath.domain.board.dto.CommentUpdateCommand;
-import com.hpmath.domain.board.dto.QuestionDeleteCommand;
-import com.hpmath.domain.board.dto.QuestionRegisterCommand;
-import com.hpmath.domain.board.dto.QuestionUpdateCommand;
-import com.hpmath.domain.board.service.comment.validate.CommentContentConstraint;
-import com.hpmath.domain.board.service.comment.validate.CommentImageConstraint;
-import com.hpmath.domain.board.service.question.validate.QuestionContentConstraint;
-import com.hpmath.domain.board.service.question.validate.QuestionImageConstraint;
-import com.hpmath.domain.board.service.question.validate.QuestionTitleConstraint;
+import com.hpmath.domain.directory.dto.CommentRegisterCommand;
+import com.hpmath.domain.directory.dto.CommentUpdateCommand;
+import com.hpmath.domain.directory.dto.QuestionDeleteCommand;
+import com.hpmath.domain.directory.dto.QuestionRegisterCommand;
+import com.hpmath.domain.directory.dto.QuestionUpdateCommand;
+import com.hpmath.domain.directory.service.comment.validate.CommentContentConstraint;
+import com.hpmath.domain.directory.service.comment.validate.CommentImageConstraint;
+import com.hpmath.domain.directory.service.question.validate.QuestionContentConstraint;
+import com.hpmath.domain.directory.service.question.validate.QuestionImageConstraint;
+import com.hpmath.domain.directory.service.question.validate.QuestionTitleConstraint;
 import com.hpmath.hpmathcore.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

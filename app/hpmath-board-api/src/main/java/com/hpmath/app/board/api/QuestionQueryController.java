@@ -1,9 +1,9 @@
 package com.hpmath.app.board.api;
 
 import com.hpmath.app.board.api.config.EntityFieldMappedPageRequest;
-import com.hpmath.domain.board.dto.QuestionDetailResult;
-import com.hpmath.domain.board.dto.QuestionPreviewResult;
-import com.hpmath.domain.board.service.question.QuestionQueryService;
+import com.hpmath.domain.directory.dto.QuestionDetailResult;
+import com.hpmath.domain.directory.dto.QuestionPreviewResult;
+import com.hpmath.domain.directory.service.question.QuestionQueryService;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
 import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
