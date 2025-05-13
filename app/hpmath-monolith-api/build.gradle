@@ -9,4 +9,5 @@ dependencies {
     implementation project(":app:hpmath-core-api")
     implementation project(":app:hpmath-banner-api")
     implementation project(":app:hpmath-board-api")
+    implementation project(":app:hpmath-directory-api")
 }
