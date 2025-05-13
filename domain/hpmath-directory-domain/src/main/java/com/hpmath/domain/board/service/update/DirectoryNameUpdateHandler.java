@@ -1,5 +1,9 @@
 package com.hpmath.domain.board.service.update;
 
+import com.hpmath.domain.board.dao.Directory;
+import com.hpmath.domain.board.dao.DirectoryRepository;
+import com.hpmath.domain.board.dto.UpdateDirectoryCommand;
+import com.hpmath.domain.board.exception.DirectoryException;
 import com.hpmath.hpmathcore.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;

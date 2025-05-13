@@ -2,6 +2,8 @@ package com.hpmath.domain.board.service.query;
 
 import com.hpmath.domain.board.dao.Directory;
 import com.hpmath.domain.board.dto.FileView;
+import com.hpmath.domain.board.dto.VideoView;
+import com.hpmath.hpmathmediadomain.media.entity.Media;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

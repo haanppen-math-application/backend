@@ -1,6 +1,7 @@
 package com.hpmath.domain.board.service.query;
 
 import com.hpmath.domain.board.dao.Directory;
+import com.hpmath.domain.board.dao.DirectoryMedia;
 import com.hpmath.domain.board.dao.DirectoryRepository;
 import com.hpmath.domain.board.dto.FileView;
 import com.hpmath.domain.board.dto.QueryDirectory;
@@ -37,7 +38,11 @@ public class DirectoryQueryService {
 
         // 미디어 파일 매핑
         final Directory directory = getDirectory(resolvedPath, queryDirectoryDto.requestMemberId());
-        fileViews.addAll(directory.getMedias().stream().map(fileViewMapper::create).toList());
+        fileViews.addAll(directory.getMedias().stream()
+                .map(DirectoryMedia::getMedia)
+                .map(fileViewMapper::create)
+                .toList()
+        );
 
         // 포함된 디렉토리들 불러오기
         fileViews.addAll(loadDirectories(resolvedPath).stream().map(fileViewMapper::create).toList());

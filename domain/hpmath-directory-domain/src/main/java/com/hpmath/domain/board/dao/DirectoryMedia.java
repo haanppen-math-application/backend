@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
@@ -34,6 +35,7 @@ public class DirectoryMedia {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "media_src")
+    @BatchSize(size = 100)
     private Media media;
 
     public DirectoryMedia(Directory directory, Media media) {
