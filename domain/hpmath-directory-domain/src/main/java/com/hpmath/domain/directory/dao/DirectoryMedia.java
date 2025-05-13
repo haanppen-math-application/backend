@@ -32,7 +32,7 @@ public class DirectoryMedia {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "direcotry_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "directory_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Directory directory;
 
     @ManyToOne(fetch = FetchType.LAZY)
