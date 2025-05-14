@@ -1,4 +1,4 @@
-package com.hpmath.hpmathmediaapi.controller;
+package com.hpmath.app.media.api.controller;
 
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathmediadomain.media.dto.HttpStreamingCommand;

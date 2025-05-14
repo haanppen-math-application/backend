@@ -1,11 +1,11 @@
-package com.hpmath.hpmathmediaapi.controller;
+package com.hpmath.app.media.api.controller;
 
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathmediaapi.controller.Requests.ChunkMergeRequestV2;
-import com.hpmath.hpmathmediaapi.controller.Requests.ChunkUploadRequestV2;
-import com.hpmath.hpmathmediaapi.controller.Requests.ChunkUploadStartRequestV2;
-import com.hpmath.hpmathmediaapi.controller.Responses.ChunkUploadStartResponse;
-import com.hpmath.hpmathmediaapi.controller.Responses.RequiredChunkPartsResponse;
+import com.hpmath.app.media.api.controller.Requests.ChunkMergeRequestV2;
+import com.hpmath.app.media.api.controller.Requests.ChunkUploadRequestV2;
+import com.hpmath.app.media.api.controller.Requests.ChunkUploadStartRequestV2;
+import com.hpmath.app.media.api.controller.Responses.ChunkUploadStartResponse;
+import com.hpmath.app.media.api.controller.Responses.RequiredChunkPartsResponse;
 import com.hpmath.hpmathmediadomain.media.dto.ChunkMergeCommandV2;
 import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadCommand;
 import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadInitializeCommand;

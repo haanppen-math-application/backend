@@ -1,7 +1,7 @@
-package com.hpmath.app.memberapi.api;
+package com.hpmath.app.member.api.controller;
 
-import com.hpmath.app.memberapi.api.Responses.PreviewStudentResponse;
-import com.hpmath.app.memberapi.api.Responses.PreviewTeacherResponse;
+import com.hpmath.app.member.api.controller.Responses.PreviewStudentResponse;
+import com.hpmath.app.member.api.controller.Responses.PreviewTeacherResponse;
 import com.hpmath.domain.member.dto.MemberInfoResult;
 import com.hpmath.domain.member.dto.StudentPageQuery;
 import com.hpmath.domain.member.dto.StudentQuery;

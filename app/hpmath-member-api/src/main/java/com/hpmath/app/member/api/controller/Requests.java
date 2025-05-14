@@ -1,4 +1,4 @@
-package com.hpmath.app.memberapi.api;
+package com.hpmath.app.member.api.controller;
 
 import com.hpmath.domain.member.dto.AccountRemoveCommand;
 import com.hpmath.domain.member.dto.AccountUpdateCommand;

@@ -1,4 +1,4 @@
-package com.hpmath.hpmathmediaapi.inner;
+package com.hpmath.app.media.api.inner;
 
 import com.hpmath.hpmathmediadomain.media.dto.MediaInfo;
 import com.hpmath.hpmathmediadomain.media.service.MediaQueryService;

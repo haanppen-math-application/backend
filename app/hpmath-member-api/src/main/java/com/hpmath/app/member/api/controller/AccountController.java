@@ -1,7 +1,7 @@
-package com.hpmath.app.memberapi.api;
+package com.hpmath.app.member.api.controller;
 
-import com.hpmath.app.memberapi.api.Responses.ChangedPasswordResponse;
-import com.hpmath.app.memberapi.api.Responses.MyAccountInfoResponse;
+import com.hpmath.app.member.api.controller.Responses.ChangedPasswordResponse;
+import com.hpmath.app.member.api.controller.Responses.MyAccountInfoResponse;
 import com.hpmath.domain.member.dto.AccountRemoveCommand;
 import com.hpmath.domain.member.dto.AccountUpdateCommand;
 import com.hpmath.domain.member.dto.ChangedPassword;

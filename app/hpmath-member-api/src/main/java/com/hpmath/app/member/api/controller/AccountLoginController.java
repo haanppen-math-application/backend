@@ -1,6 +1,6 @@
-package com.hpmath.app.memberapi.api;
+package com.hpmath.app.member.api.controller;
 
-import com.hpmath.app.memberapi.api.Responses.JwtResponse;
+import com.hpmath.app.member.api.controller.Responses.JwtResponse;
 import com.hpmath.domain.member.dto.JwtDto;
 import com.hpmath.domain.member.exceptions.ReLoginRequiredException;
 import com.hpmath.domain.member.service.AccountLoginService;

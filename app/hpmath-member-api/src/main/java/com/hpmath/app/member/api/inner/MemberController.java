@@ -1,4 +1,4 @@
-package com.hpmath.app.memberapi.inner;
+package com.hpmath.app.member.api.inner;
 
 import com.hpmath.domain.member.dto.MemberInfoResult;
 import com.hpmath.domain.member.service.AccountQueryService;
