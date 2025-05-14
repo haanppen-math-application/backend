@@ -1,12 +1,14 @@
 package com.hpmath.hpmathmediaapi.controller;
 
-import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathmediadomain.media.dto.DownloadCommand;
 import com.hpmath.hpmathmediadomain.media.dto.DownloadResult;
 import com.hpmath.hpmathmediadomain.media.service.DownloadService;
 import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,7 @@ public class FileDownloadController {
 
     @GetMapping("/api/file/download")
     @Authorization(opened = true)
-    public ResponseEntity<?> downloadFile(
+    public ResponseEntity<Resource> downloadFile(
             @RequestParam final String fileSrc
     ) {
         final DownloadResult downloadResult = downloadService.getResource(new DownloadCommand(fileSrc));
@@ -32,7 +34,7 @@ public class FileDownloadController {
 
     private HttpHeaders setDownloadAttachmentFileName(final String fileName) {
         final HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; " + "filename=" +"\"" + fileName + "\"");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; " + "filename*=UTF-8''" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
         return headers;
     }
 }
