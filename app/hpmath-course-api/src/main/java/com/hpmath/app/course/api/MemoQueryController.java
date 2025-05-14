@@ -4,15 +4,15 @@ import static com.hpmath.app.course.api.Requests.QueryMemoByCourseIdAndDateReque
 
 import com.hpmath.domain.course.application.dto.MemoQueryByCourseIdAndDateCommand;
 import com.hpmath.domain.course.application.dto.MemoQueryCommand;
+import com.hpmath.domain.course.application.dto.Responses.MemoAppliedDayResponse;
+import com.hpmath.domain.course.application.dto.Responses.MemoViewResponse;
 import com.hpmath.domain.course.application.port.in.LoadMemoQuery;
 import com.hpmath.domain.course.application.port.in.QueryCourseByMonthUseCase;
 import com.hpmath.domain.course.application.port.in.QueryMemoByCourseIdAndDateUseCase;
-import com.hpmath.domain.course.application.dto.Responses.MemoAppliedDayResponse;
-import com.hpmath.domain.course.application.dto.Responses.MemoViewResponse;
-import com.hpmath.hpmathcoreapi.paging.PagedResponse;
 import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
 import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
 import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
+import com.hpmath.hpmathwebcommon.paging.PagedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
@@ -70,7 +70,12 @@ public class MemoQueryController {
     ) {
         final MemoQueryCommand command = new MemoQueryCommand(pageable, courseId);
         final Page<MemoViewResponse> memoViews = loadMemoQuery.loadMemos(command);
-        return ResponseEntity.ok(PagedResponse.of(memoViews));
+        return ResponseEntity.ok(
+                PagedResponse.of(
+                        memoViews.getContent(),
+                        memoViews.getTotalElements(),
+                        memoViews.getNumber(),
+                        memoViews.getSize()));
     }
 
     @GetMapping("/api/courses/memos/month")
