@@ -6,7 +6,7 @@ dependencies {
     implementation project(":app:hpmath-media-api")
     implementation project(":app:hpmath-member-api")
     implementation project(":app:hpmath-member-batch")
-    implementation project(":app:hpmath-core-api")
+    implementation project(":app:hpmath-course-api")
     implementation project(":app:hpmath-banner-api")
     implementation project(":app:hpmath-board-api")
     implementation project(":app:hpmath-directory-api")

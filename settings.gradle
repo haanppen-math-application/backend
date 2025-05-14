@@ -9,7 +9,7 @@ include(
         'app:hpmath-monolith-api',
         'app:hpmath-member-api',
         'app:hpmath-media-api',
-        'app:hpmath-core-api',
+        'app:hpmath-course-api',
         'app:hpmath-member-batch',
 
         'common',
@@ -20,6 +20,7 @@ include(
         'common:hpmath-jwt-common',
 
         'domain',
+        'domain:hpmath-course-domain',
         'domain:hpmath-online-domain',
         'domain:hpmath-directory-domain',
         'domain:hpmath-banner-domain',

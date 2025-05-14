@@ -38,7 +38,6 @@ out/
 .vscode/
 .DS_Store
 
-app/hpmath-core-api/src/main/resources/application.properties
 app/hpmath-media-api/src/main/resources/application.properties
 app/hpmath-member-api/src/main/resources/application.properties
 app/hpmath-member-batch/src/main/resources/application.properties
@@ -46,3 +45,4 @@ app/hpmath-banner-api/src/main/resources/application.properties
 app/hpmath-board-api/src/main/resources/application.properties
 app/hpmath-directory-api/src/main/resources/application.properties
 app/hpmath-online-api/src/main/resources/application.properties
+app/hpmath-course-api/src/main/resources/application.properties
