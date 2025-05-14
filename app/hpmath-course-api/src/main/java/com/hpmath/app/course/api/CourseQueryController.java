@@ -7,9 +7,9 @@ import com.hpmath.domain.course.application.port.in.QueryCourseByMemberIdUseCase
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.domain.course.application.dto.Responses.CourseDetailResponse;
 import com.hpmath.domain.course.application.dto.Responses.CoursePreviewResponse;
-import com.hpmath.hpmathwebcommon.authentication.MemberPrincipal;
-import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
-import com.hpmath.hpmathwebcommon.authenticationV2.LoginInfo;
+import com.hpmath.common.web.authentication.MemberPrincipal;
+import com.hpmath.common.web.authenticationV2.Authorization;
+import com.hpmath.common.web.authenticationV2.LoginInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;

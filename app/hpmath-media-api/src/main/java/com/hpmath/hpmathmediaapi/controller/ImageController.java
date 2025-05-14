@@ -3,7 +3,7 @@ package com.hpmath.hpmathmediaapi.controller;
 import com.hpmath.hpmathmediadomain.media.dto.ImageUrlDto;
 import com.hpmath.hpmathmediadomain.media.dto.MediaDto;
 import com.hpmath.hpmathmediadomain.media.service.ImageService;
-import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
+import com.hpmath.common.web.authenticationV2.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
 import lombok.AllArgsConstructor;

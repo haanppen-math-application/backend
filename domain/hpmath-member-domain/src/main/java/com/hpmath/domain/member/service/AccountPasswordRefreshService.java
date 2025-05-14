@@ -9,7 +9,7 @@ import com.hpmath.domain.member.exceptions.AccountException;
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathsmsclient.Message;
 import com.hpmath.hpmathsmsclient.MessageSender;
-import com.hpmath.hpmathwebcommon.PasswordHandler;
+import com.hpmath.common.web.PasswordHandler;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Random;

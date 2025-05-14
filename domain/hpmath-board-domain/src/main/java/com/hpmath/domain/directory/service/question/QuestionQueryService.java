@@ -7,7 +7,7 @@ import com.hpmath.domain.directory.dto.QuestionPreviewResult;
 import com.hpmath.domain.directory.entity.Question;
 import com.hpmath.domain.directory.exception.NoSuchQuestionException;
 import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathwebcommon.paging.PagedResponse;
+import com.hpmath.common.web.paging.PagedResponse;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

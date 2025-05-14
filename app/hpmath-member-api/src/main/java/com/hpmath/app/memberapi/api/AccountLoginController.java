@@ -5,7 +5,7 @@ import com.hpmath.domain.member.dto.JwtDto;
 import com.hpmath.domain.member.exceptions.ReLoginRequiredException;
 import com.hpmath.domain.member.service.AccountLoginService;
 import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
+import com.hpmath.common.web.authenticationV2.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

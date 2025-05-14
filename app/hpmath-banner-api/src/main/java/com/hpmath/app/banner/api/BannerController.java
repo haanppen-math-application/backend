@@ -8,7 +8,7 @@ import com.hpmath.domain.banner.dto.BannerResponse;
 import com.hpmath.domain.banner.dto.ChangeBannerCommand;
 import com.hpmath.domain.banner.dto.DeleteBannerCommand;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
+import com.hpmath.common.web.authenticationV2.Authorization;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

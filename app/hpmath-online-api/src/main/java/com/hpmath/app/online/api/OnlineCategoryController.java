@@ -6,7 +6,7 @@ import com.hpmath.domain.online.service.category.OnlineCategoryAddService;
 import com.hpmath.domain.online.service.category.OnlineCategoryDeleteService;
 import com.hpmath.domain.online.service.category.OnlineCategoryQueryService;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
+import com.hpmath.common.web.authenticationV2.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hpmath.domain.member.dto.Password.PasswordDeserializer;
 import com.hpmath.domain.member.dto.Password.PasswordSerializer;
 import com.hpmath.domain.member.validation.PasswordConstraint;
-import com.hpmath.hpmathwebcommon.PasswordHandler;
+import com.hpmath.common.web.PasswordHandler;
 import java.io.IOException;
 
 @JsonDeserialize(using = PasswordDeserializer.class)

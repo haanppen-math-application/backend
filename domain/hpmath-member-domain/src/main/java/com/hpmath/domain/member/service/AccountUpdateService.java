@@ -10,7 +10,7 @@ import com.hpmath.domain.member.exceptions.AccountException;
 import com.hpmath.domain.member.exceptions.NoSuchMemberException;
 import com.hpmath.domain.member.service.policy.AccountPolicyManager;
 import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathwebcommon.PasswordHandler;
+import com.hpmath.common.web.PasswordHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;

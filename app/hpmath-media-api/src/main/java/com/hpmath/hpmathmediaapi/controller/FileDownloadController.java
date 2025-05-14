@@ -3,7 +3,7 @@ package com.hpmath.hpmathmediaapi.controller;
 import com.hpmath.hpmathmediadomain.media.dto.DownloadCommand;
 import com.hpmath.hpmathmediadomain.media.dto.DownloadResult;
 import com.hpmath.hpmathmediadomain.media.service.DownloadService;
-import com.hpmath.hpmathwebcommon.authenticationV2.Authorization;
+import com.hpmath.common.web.authenticationV2.Authorization;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import lombok.RequiredArgsConstructor;

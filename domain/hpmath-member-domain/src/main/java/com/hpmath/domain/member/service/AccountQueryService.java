@@ -1,6 +1,5 @@
 package com.hpmath.domain.member.service;
 
-import com.hpmath.domain.member.Member;
 import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.domain.member.dto.MemberInfoResult;
 import com.hpmath.domain.member.dto.StudentPageQuery;
@@ -10,7 +9,7 @@ import com.hpmath.domain.member.dto.TeacherQuery;
 import com.hpmath.domain.member.exceptions.NoSuchMemberException;
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathwebcommon.paging.CursorResponse;
+import com.hpmath.common.web.paging.CursorResponse;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
