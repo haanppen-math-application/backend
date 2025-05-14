@@ -22,7 +22,7 @@ import lombok.ToString;
 @ToString
 public class MemoMedia {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMO_MEDIA_ID")
     private Long id;
 

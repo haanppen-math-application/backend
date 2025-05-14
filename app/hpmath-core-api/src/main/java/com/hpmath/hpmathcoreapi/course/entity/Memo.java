@@ -23,7 +23,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 public class Memo {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMO_ID")
     private Long id;
     @CreationTimestamp
