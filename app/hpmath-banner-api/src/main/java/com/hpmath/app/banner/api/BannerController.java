@@ -31,7 +31,7 @@ class BannerController {
     }
 
     @PostMapping("/api/banners")
-//    @Authorization(values = Role.ADMIN)
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<Void> addBanner(
             @RequestBody AddBannerRequest addBannerRequest
     ) {
@@ -41,7 +41,7 @@ class BannerController {
     }
 
     @PutMapping("/api/banners")
-//    @Authorization(values = Role.ADMIN)
+    @Authorization(values = Role.ADMIN)
     public ResponseEntity<Void> modifyBanner(
             @RequestBody ChangeBannerRequest changeBannerRequest
     ) {
