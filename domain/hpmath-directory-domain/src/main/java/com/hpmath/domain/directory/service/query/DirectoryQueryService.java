@@ -33,7 +33,7 @@ public class DirectoryQueryService {
         // 미디어 파일 매핑
         final Directory directory = getDirectory(resolvedPath, queryDirectoryDto.requestMemberId(), queryDirectoryDto.role());
         fileViews.addAll(directory.getMedias().stream()
-                .map(DirectoryMedia::getMedia)
+                .map(DirectoryMedia::getMediaSrc)
                 .map(fileViewMapper::create)
                 .toList()
         );

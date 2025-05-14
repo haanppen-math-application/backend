@@ -1,6 +1,5 @@
 package com.hpmath.domain.directory.dao;
 
-import com.hpmath.hpmathmediadomain.media.entity.Media;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,8 +30,6 @@ public class Directory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "directory_owner", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @Column(name = "owner")
     private Long ownerId;
 
@@ -59,7 +56,7 @@ public class Directory {
         this.canViewByEveryone = canViewByEveryone;
     }
 
-    public void addMedia(final Media media) {
+    public void addMedia(final String media) {
         this.medias.add(new DirectoryMedia(this, media));
     }
 

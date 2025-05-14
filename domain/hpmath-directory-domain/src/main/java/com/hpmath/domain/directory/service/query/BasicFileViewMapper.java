@@ -1,15 +1,17 @@
 package com.hpmath.domain.directory.service.query;
 
+import com.hpmath.client.media.MediaClient;
+import com.hpmath.client.media.MediaClient.MediaInfo;
 import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dto.FileView;
 import com.hpmath.domain.directory.dto.VideoView;
-import com.hpmath.hpmathmediadomain.media.entity.Media;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class BasicFileViewMapper implements FileViewMapper {
+    private final MediaClient mediaClient;
 
     @Override
     public FileView create(Directory directory) {
@@ -18,9 +20,9 @@ public class BasicFileViewMapper implements FileViewMapper {
     }
 
     @Override
-    public FileView create(Media media) {
-        return new VideoView(media.getMediaName(), false, media.getSrc(), media.getCreatedTime(), true, false,
-                media.getDuration(), media.getSize());
+    public FileView create(String mediaSrc) {
+        final MediaInfo mediaInfo = mediaClient.getFileInfo(mediaSrc);
+        return VideoView.from(mediaInfo);
     }
 
     private String parseDirName(final String dirAbsolutePath) {

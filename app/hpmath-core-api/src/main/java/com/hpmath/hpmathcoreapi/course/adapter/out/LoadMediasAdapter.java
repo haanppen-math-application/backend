@@ -1,10 +1,11 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.client.media.MediaClient;
+import com.hpmath.client.media.MediaClient.MediaInfo;
+import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.hpmathcoreapi.course.application.exception.CourseException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadMediasPort;
 import com.hpmath.hpmathcoreapi.course.domain.Media;
-import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathmediadomain.media.exception.NoSuchMediaException;
-import com.hpmath.hpmathmediadomain.media.repository.MediaRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,21 +15,23 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class LoadMediasAdapter implements LoadMediasPort {
-
-    private final MediaRepository mediaRepository;
+    private final MediaClient mediaClient;
 
     @Override
     public List<Media> loadMedias(List<String> mediaSources) {
-        final List<com.hpmath.hpmathmediadomain.media.entity.Media> medias = loadRelatedMedias(mediaSources);
-        return medias.stream().map(media -> Media.createByEntity(media.getMediaName(), media.getSrc(), null))
+        final List<MediaInfo> medias = loadRelatedMedias(mediaSources);
+        return medias.stream().map(Media::from)
                 .collect(Collectors.toList());
     }
 
-    private List<com.hpmath.hpmathmediadomain.media.entity.Media> loadRelatedMedias(final List<String> medias) {
-        final List<com.hpmath.hpmathmediadomain.media.entity.Media> mediaEntities = mediaRepository.findAllBySrcIn(medias);
-        if (medias.size() != mediaEntities.size()) {
-            throw new NoSuchMediaException("미디어를 찾을 수 없거나, 중복된 파일이 존재합니다", ErrorCode.NO_SUCH_MEDIA);
+    private List<MediaInfo> loadRelatedMedias(final List<String> mediaSrcs) {
+        final List<MediaInfo> mediaEntities = mediaSrcs.stream()
+                .parallel()
+                .map(mediaClient::getFileInfo)
+                .toList();
+        if (mediaSrcs.size() != mediaEntities.size()) {
+            throw new CourseException("미디어를 찾을 수 없거나, 중복된 파일이 존재합니다", ErrorCode.NO_SUCH_MEDIA);
         }
-        return Collections.unmodifiableList(mediaEntities);
+        return mediaEntities;
     }
 }

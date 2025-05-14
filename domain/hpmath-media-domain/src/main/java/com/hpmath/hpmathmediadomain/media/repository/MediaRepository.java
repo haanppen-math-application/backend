@@ -1,5 +1,6 @@
 package com.hpmath.hpmathmediadomain.media.repository;
 
+import com.hpmath.hpmathmediadomain.media.dto.MediaInfo;
 import com.hpmath.hpmathmediadomain.media.entity.Media;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,9 @@ public interface MediaRepository extends JpaRepository<Media, Long> {
 
     @Query("SELECT new java.lang.Long(media.memberId) FROM Media media WHERE media.src = :src")
     Optional<Long> findOwnerId(@Param("src") final String src);
+
+    @Query("SELECT new com.hpmath.hpmathmediadomain.media.dto.MediaInfo(m.mediaName, m.src, m.createdTime, m.duration, m.size) FROM Media m WHERE m.src = :mediaSrc")
+    Optional<MediaInfo> findMediaInfo(@Param("mediaSrc") final String mediaSrc);
 
     Boolean existsBySrc(final String src);
 }

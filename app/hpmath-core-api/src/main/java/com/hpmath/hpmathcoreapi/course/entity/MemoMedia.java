@@ -1,6 +1,5 @@
 package com.hpmath.hpmathcoreapi.course.entity;
 
-import com.hpmath.hpmathmediadomain.media.entity.Media;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -26,19 +25,22 @@ public class MemoMedia {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MEMO_MEDIA_ID")
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "MEDIA", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Media media;
+
+    @Column(name = "media")
+    private String mediaSrc;
+
     @ManyToOne
     @JoinColumn(name = "MEMO_MEMO_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Memo memo;
+
     private Integer sequence;
+
     @OneToMany(mappedBy = "memoMedia")
     private List<MemoMediaAttachment> memoMediaAttachments = new ArrayList<>();
 
-    private MemoMedia(final Memo memo, final Media media, final Integer sequence) {
+    private MemoMedia(final Memo memo, final String mediaSrc, final Integer sequence) {
         this.memo = memo;
-        this.media = media;
+        this.mediaSrc = mediaSrc;
         this.sequence = sequence;
     }
 
@@ -47,13 +49,13 @@ public class MemoMedia {
     }
 
     public void setNull() {
-        this.media = null;
+        this.mediaSrc = null;
         this.memo = null;
         this.memoMediaAttachments.stream()
                 .forEach(memoMediaAttachment -> memoMediaAttachment.setNull());
     }
 
-    public static MemoMedia of(final Memo memo, final Media media, final Integer sequence) {
-        return new MemoMedia(memo, media, sequence);
+    public static MemoMedia of(final Memo memo, final String mediaSrc, final Integer sequence) {
+        return new MemoMedia(memo, mediaSrc, sequence);
     }
 }

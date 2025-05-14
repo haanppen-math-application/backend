@@ -86,7 +86,7 @@ public class OnlineCourseQueryService {
                 onlineCourse.getOnlineStudents().size(),
                 OnlineTeacherPreview.from(teacherInfo),
                 mapToCategoryInfo(onlineCourse.getOnlineCategory()),
-                onlineCourse.getImage() == null ? null : onlineCourse.getImage().getSrc()
+                onlineCourse.getImageSrc() == null ? null : onlineCourse.getImageSrc()
         );
     }
 

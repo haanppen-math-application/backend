@@ -5,9 +5,6 @@ import com.hpmath.hpmathcoreapi.course.application.port.out.UpdateMemoMediaPort;
 import com.hpmath.hpmathcoreapi.course.domain.Memo;
 import com.hpmath.hpmathcoreapi.course.entity.MemoMedia;
 import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathmediadomain.media.entity.Media;
-import com.hpmath.hpmathmediadomain.media.exception.NoSuchMediaException;
-import com.hpmath.hpmathmediadomain.media.repository.MediaRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UpdateMemoMediaAdapter implements UpdateMemoMediaPort {
-
     private final MemoMediaRepository memoMediaRepository;
     private final MemoRepository memoRepository;
-    private final MediaRepository mediaRepository;
 
     @Override
     public void update(Memo memo) {
@@ -37,8 +32,6 @@ public class UpdateMemoMediaAdapter implements UpdateMemoMediaPort {
     }
 
     private MemoMedia getSequenceMappedMediaEntity(final com.hpmath.hpmathcoreapi.course.entity.Memo targetMemo, final String src, final Integer sequence) {
-        final Media media = mediaRepository.findBySrc(src)
-                .orElseThrow(() -> new NoSuchMediaException("해당 미디어를 찾을 수 없습니다.",ErrorCode.NO_SUCH_MEDIA));
-        return MemoMedia.of(targetMemo, media, sequence);
+        return MemoMedia.of(targetMemo, src, sequence);
     }
 }

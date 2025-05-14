@@ -1,6 +1,5 @@
 package com.hpmath.domain.directory.dao;
 
-import com.hpmath.hpmathmediadomain.media.entity.Media;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -16,7 +15,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
@@ -35,12 +33,11 @@ public class DirectoryMedia {
     @JoinColumn(name = "directory_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Directory directory;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "media_src", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Media media;
+    @Column(name = "media_src")
+    private String mediaSrc;
 
-    public DirectoryMedia(Directory directory, Media media) {
+    public DirectoryMedia(Directory directory, String mediaSrc) {
         this.directory = directory;
-        this.media = media;
+        this.mediaSrc = mediaSrc;
     }
 }

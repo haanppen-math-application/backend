@@ -1,6 +1,5 @@
 package com.hpmath.domain.online.dao;
 
-import com.hpmath.hpmathmediadomain.media.entity.Media;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -29,9 +28,8 @@ public class OnlineVideo {
     @JoinColumn(name = "course", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OnlineCourse onlineCourse;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "media", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Media media;
+    @Column(name = "media")
+    private String mediaSrc;
 
     @Column(name = "video_name", nullable = false)
     private String videoName;
@@ -46,9 +44,10 @@ public class OnlineVideo {
     @BatchSize(size = 10)
     private List<OnlineVideoAttachment> videoAttachments;
 
-    public OnlineVideo(OnlineCourse onlineCourse, Media media, String videoName, Boolean preview, Integer videoSequence) {
+    public OnlineVideo(OnlineCourse onlineCourse, String mediaSrc, String videoName, Boolean preview,
+                       Integer videoSequence) {
         this.onlineCourse = onlineCourse;
-        this.media = media;
+        this.mediaSrc = mediaSrc;
         this.videoName = videoName;
         this.preview = preview;
         this.videoSequence = videoSequence;

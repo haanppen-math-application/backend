@@ -1,5 +1,6 @@
 package com.hpmath.domain.online.service.lesson;
 
+import com.hpmath.client.media.MediaClient;
 import com.hpmath.domain.online.dao.OnlineCategory;
 import com.hpmath.domain.online.dao.OnlineCourse;
 import com.hpmath.domain.online.dao.OnlineCourseRepository;
@@ -26,13 +27,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class OnlineLessonQueryService {
     private final OnlineCourseRepository onlineCourseRepository;
+    private final MediaClient mediaClient;
 
     public OnlineLessonDetail loadDetails(final OnlineLessonQueryCommand command) {
-        final OnlineCourse onlineCourses = onlineCourseRepository.loadOnlineCourseAndVideosAndCategoryById(
-                        command.courseId())
+        final OnlineCourse onlineCourses = findOnlineCourse(command);
+        return mapToDetail(onlineCourses, command.requestMemberId(), command.requestMemberRole());
+    }
+
+    private OnlineCourse findOnlineCourse(OnlineLessonQueryCommand command) {
+        return onlineCourseRepository.loadOnlineCourseAndVideosAndCategoryById(command.courseId())
                 .orElseThrow(() -> new BusinessException(command.courseId() + "를 찾을 수 없음",
                         ErrorCode.ONLINE_COURSE_EXCEPTION));
-        return mapToDetail(onlineCourses, command.requestMemberId(), command.requestMemberRole());
     }
 
     private OnlineLessonDetail mapToDetail(final OnlineCourse onlineCourse, final Long requestMemberId, final Role role) {
@@ -43,10 +48,11 @@ public class OnlineLessonQueryService {
                 onlineCourse.getCourseRange(),
                 onlineCourse.getCourseContent(),
                 onlineCourse.getVideos().stream()
-                        .map(onlineVideo -> this.mapToDetail(onlineVideo, isIncludedStudent))
+                        .map(onlineVideo -> this.mapToDetail(onlineVideo, isIncludedStudent,
+                                mediaClient.getFileInfo(onlineVideo.getMediaSrc()).runtimeDuration()))
                         .collect(Collectors.toList()),
                 toCategory(onlineCourse.getOnlineCategory()),
-                onlineCourse.getImage() == null ? null : onlineCourse.getImage().getSrc()
+                onlineCourse.getImageSrc() == null ? null : onlineCourse.getImageSrc()
         );
     }
 
@@ -68,15 +74,16 @@ public class OnlineLessonQueryService {
                 onlineCategory.getCategoryName());
     }
 
-    private OnlineVideoDetail mapToDetail(final OnlineVideo onlineVideo, final boolean isIncludedMember) {
+    private OnlineVideoDetail mapToDetail(final OnlineVideo onlineVideo, final boolean isIncludedMember,
+                                          final Long duration) {
         if (onlineVideo.getPreview() || isIncludedMember) {
             return new OnlineVideoDetail(
                     onlineVideo.getId(),
                     onlineVideo.getVideoSequence(),
                     onlineVideo.getVideoName(),
                     onlineVideo.getPreview(),
-                    onlineVideo.getMedia().getSrc(),
-                    onlineVideo.getMedia().getDuration(),
+                    onlineVideo.getMediaSrc(),
+                    duration,
                     onlineVideo.getVideoAttachments().stream()
                             .map(this::mapToDetail)
                             .toList()

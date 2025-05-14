@@ -1,5 +1,6 @@
 package com.hpmath.domain.directory.dto;
 
+import com.hpmath.client.media.MediaClient.MediaInfo;
 import java.time.LocalDateTime;
 import lombok.Getter;
 
@@ -21,5 +22,17 @@ public class VideoView extends FileView {
         super(fileName, isDir, path, createdTime, canViewByEveryone, canModifyByEveryone);
         this.runtimeDuration = runtimeDuration;
         this.fileSize = fileSize;
+    }
+
+    public static VideoView from(final MediaInfo mediaInfo) {
+        return new VideoView(
+                mediaInfo.mediaName(),
+                false,
+                mediaInfo.mediaSrc(),
+                mediaInfo.createdTime(),
+                true,
+                false,
+                mediaInfo.runtimeDuration(),
+                mediaInfo.fileSize());
     }
 }

@@ -1,6 +1,5 @@
 package com.hpmath.domain.online.dao;
 
-import com.hpmath.hpmathmediadomain.media.entity.Image;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
@@ -62,9 +61,8 @@ public class OnlineCourse {
     @CreationTimestamp
     private LocalDateTime createdTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "image", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Image image;
+    @Column(name = "image")
+    private String imageSrc;
 
     public OnlineCourse(final Long teacher, final String courseName) {
         this.teacherId = teacher;
@@ -110,8 +108,8 @@ public class OnlineCourse {
         this.courseName = courseName;
     }
 
-    public void setImage(final Image image) {
-        this.image = image;
+    public void setImageSrc(final String image) {
+        this.imageSrc = image;
     }
 
     public void clearContents() {

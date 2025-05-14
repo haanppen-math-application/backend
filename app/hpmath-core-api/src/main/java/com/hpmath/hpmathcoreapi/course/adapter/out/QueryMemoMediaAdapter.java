@@ -1,11 +1,12 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
+import com.hpmath.client.media.MediaClient;
+import com.hpmath.client.media.MediaClient.MediaInfo;
 import com.hpmath.hpmathcoreapi.course.controller.Responses.MediaViewResponse;
 import com.hpmath.hpmathcoreapi.course.application.exception.CourseException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.QueryMemoMediaPort;
 import com.hpmath.hpmathcoreapi.course.entity.MemoMedia;
 import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathmediadomain.media.entity.Media;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class QueryMemoMediaAdapter implements QueryMemoMediaPort {
     private final MemoMediaRepository memoMediaRepository;
     private final QueryMemoMediaAttachmentAdapter queryMemoMediaAttachmentAdapter;
+    private final MediaClient mediaClient;
 
     @Override
     public List<MediaViewResponse> queryMedias(Long memoId) {
@@ -28,8 +30,8 @@ public class QueryMemoMediaAdapter implements QueryMemoMediaPort {
         final List<MemoMedia> memoMedias = memoMediaRepository.findAllByMemo_Id(memoId);
         return memoMedias.stream()
                 .map(memoMedia -> {
-                    final Media media = memoMedia.getMedia();
-                    final MediaViewResponse view = new MediaViewResponse(memoMedia.getId(), media.getMediaName(), media.getSrc(), memoMedia.getSequence(), queryMemoMediaAttachmentAdapter.query(memoMedia.getId()));
+                    final MediaInfo mediaInfo = mediaClient.getFileInfo(memoMedia.getMediaSrc());
+                    final MediaViewResponse view = new MediaViewResponse(memoMedia.getId(), mediaInfo.mediaName(), mediaInfo.mediaSrc(), memoMedia.getSequence(), queryMemoMediaAttachmentAdapter.query(memoMedia.getId()));
                     log.debug(view.toString());
                     return view;
                 })

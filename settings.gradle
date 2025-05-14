@@ -28,6 +28,7 @@ include(
         'domain:hpmath-board-domain',
 
         'client',
+        'client:hpmath-media-client',
         'client:hpmath-member-client',
         'client:hpmath-sms-client'
 )

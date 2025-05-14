@@ -1,6 +1,5 @@
 package com.hpmath.hpmathcoreapi.course.controller;
 
-import com.hpmath.hpmathcoreapi.course.application.dto.AttachmentChunkResult;
 import com.hpmath.hpmathcoreapi.course.domain.Course;
 import com.hpmath.hpmathcoreapi.course.domain.Student;
 import com.hpmath.hpmathcoreapi.course.domain.Teacher;
@@ -53,24 +52,6 @@ public class Responses {
         public static CoursePreviewResponse of(final Course course) {
             return new CoursePreviewResponse(course.getCourseName(), course.getCourseId(), course.getStudents().size(),
                     TeacherPreviewResponse.of(course.getTeacher()));
-        }
-    }
-
-    public record RegisterAttachmentChunkResponse(
-            Long nextChunkIndex,
-            Long remainSize,
-            Boolean needMore,
-            Boolean isWrongChunk,
-            String errorMessage
-    ) {
-        public static RegisterAttachmentChunkResponse of(final AttachmentChunkResult result) {
-            return new RegisterAttachmentChunkResponse(
-                    result.getNextRequireChunkIndex(),
-                    result.getRemainSize(),
-                    result.getNeedMore(),
-                    result.getIsWrongChunk(),
-                    result.getErrorMessage()
-            );
         }
     }
 

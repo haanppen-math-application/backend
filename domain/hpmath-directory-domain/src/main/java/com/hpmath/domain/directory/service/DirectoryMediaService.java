@@ -6,8 +6,6 @@ import com.hpmath.domain.directory.dto.SaveMediaToDirectoryCommand;
 import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathmediadomain.media.entity.Media;
-import com.hpmath.hpmathmediadomain.media.repository.MediaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,15 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class DirectoryMediaService {
-    private final MediaRepository mediaRepository;
     private final DirectoryRepository directoryRepository;
 
     public void saveToDirectory(final SaveMediaToDirectoryCommand command) {
         final Directory directory = getDirectory(command.directoryPath());
-        final Media media = loadMedia(command.mediaSrc());
 
         validate(directory, command.requestMemberId(), command.requestMemberRole());
-        directory.addMedia(media);
+        directory.addMedia(command.mediaSrc());
     }
 
     public void validate(final Directory directory, final Long requestMemberId, final Role role) {
@@ -56,11 +52,6 @@ public class DirectoryMediaService {
 
     private Directory getDirectory(final String directoryPath) {
         return directoryRepository.findDirectoryByPath(directoryPath)
-                .orElseThrow();
-    }
-
-    private Media loadMedia(final String mediaSrc) {
-        return mediaRepository.findBySrc(mediaSrc)
                 .orElseThrow();
     }
 }

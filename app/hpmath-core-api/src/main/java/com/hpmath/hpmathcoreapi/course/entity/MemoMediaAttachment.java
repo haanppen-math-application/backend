@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.entity;
 
-import com.hpmath.hpmathmediadomain.media.entity.Media;
+import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -23,21 +23,21 @@ public class MemoMediaAttachment {
     @ManyToOne
     @JoinColumn(name = "MEMO_MEDIA_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private MemoMedia memoMedia;
-    @ManyToOne
-    @JoinColumn(name = "MEDIA_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Media media;
 
-    private MemoMediaAttachment(MemoMedia memoMedia, Media media) {
+    @Column(name = "media_id")
+    private String mediaSrc;
+
+    private MemoMediaAttachment(MemoMedia memoMedia, String mediaSrc) {
         this.memoMedia = memoMedia;
-        this.media = media;
+        this.mediaSrc = mediaSrc;
     }
 
-    public static MemoMediaAttachment of(final MemoMedia memoMedia, final Media media) {
-        return new MemoMediaAttachment(memoMedia, media);
+    public static MemoMediaAttachment of(final MemoMedia memoMedia, final String mediaSrc) {
+        return new MemoMediaAttachment(memoMedia, mediaSrc);
     }
 
     public void setNull() {
         this.memoMedia = null;
-        this.media = null;
+        this.mediaSrc = null;
     }
 }
