@@ -14,7 +14,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Optional<Question> findQuestionById(Long id);
     Slice<Question> findBy(Pageable pageable);
     List<Question> findQuestionsByIdIsGreaterThanEqual(final Long id, final Pageable pageable);
-    List<Question> findQuestionsByIdIsGreaterThanEqualAndAndOwnerMemberId(final Long id, final Long memberId, final Pageable pageable);
+    List<Question> findQuestionsByIdIsGreaterThanEqualAndOwnerMemberId(final Long id, final Long memberId, final Pageable pageable);
     Page<Question> findQuestionsByOwnerMemberId(final Long memberId, final Pageable pageable);
     Page<Question> findQuestionsByOwnerMemberIdAndTitleContaining(final Long memberId, final String title, final Pageable pageable);
     Page<Question> findAllByTitleContaining(final String title, final Pageable pageable);

@@ -14,9 +14,9 @@ public class DeleteDirectoryProcessor {
 
     public Integer delete(DirectoryDeleteCommand directoryDeleteCommand) {
         return deleteDirectoryHandlers.stream()
-                .filter(deleteDirectoryExecutor -> deleteDirectoryExecutor.applicable(directoryDeleteCommand.getRequestMember().getRole()))
+                .filter(deleteDirectoryExecutor -> deleteDirectoryExecutor.applicable(directoryDeleteCommand.getRequestMemberRole()))
                 .findFirst()
-                .orElseThrow(() -> new DirectoryException(directoryDeleteCommand.getRequestMember().getRole() + "사용자는 디렉토리를 삭제할 수 없습니다.", ErrorCode.DIRECTORY_CANNOT_DELETE))
+                .orElseThrow(() -> new DirectoryException(directoryDeleteCommand.getRequestMemberRole() + "사용자는 디렉토리를 삭제할 수 없습니다.", ErrorCode.DIRECTORY_CANNOT_DELETE))
                 .process(directoryDeleteCommand);
     }
 }

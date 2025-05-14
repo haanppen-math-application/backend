@@ -65,8 +65,8 @@ class Requests {
             @QuestionImageConstraint
             List<String> images
     ) {
-        QuestionRegisterCommand toCommand(final Long requestMemberId) {
-            return new QuestionRegisterCommand(requestMemberId, targetMemberId(), title(), content(), images());
+        QuestionRegisterCommand toCommand(final Long requestMemberId, final Role role) {
+            return new QuestionRegisterCommand(requestMemberId, targetMemberId(), role, title(), content(), images());
         }
     }
 

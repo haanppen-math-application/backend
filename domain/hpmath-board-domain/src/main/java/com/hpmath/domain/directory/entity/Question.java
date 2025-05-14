@@ -1,17 +1,11 @@
 package com.hpmath.domain.directory.entity;
 
-import com.hpmath.domain.member.Member;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -44,13 +38,15 @@ public class Question {
     @Column(nullable = false)
     private Long viewCount = 0l;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ownerMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member ownerMember;
+    //    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ownerMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @Column(name = "owner_member")
+    private Long ownerMemberId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "targetMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member targetMember;
+    //    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "targetMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @Column(name = "target_member")
+    private Long targetMemberId;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<QuestionImage> images = new ArrayList<>();
@@ -58,14 +54,15 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    private Question(String title, String content, Member ownerMember, Member targetMember) {
+    private Question(String title, String content, Long ownerMember, Long targetMember) {
         this.title = title;
         this.content = content;
-        this.ownerMember = ownerMember;
-        this.targetMember = targetMember;
+        this.ownerMemberId = ownerMember;
+        this.targetMemberId = targetMember;
     }
 
-    public static Question of(@NotNull final List<String> images, final String title, final String content, final Member ownerMember, final Member targetMember) {
+    public static Question of(@NotNull final List<String> images, final String title, final String content,
+                              final Long ownerMember, final Long targetMember) {
         final Question question = new Question(title, content, ownerMember, targetMember);
         question.changeImages(images);
         return question;
@@ -85,8 +82,8 @@ public class Question {
         return comments.size();
     }
 
-    public void changeTargetMember(final Member targetMember) {
-        this.targetMember = targetMember;
+    public void changeTargetMember(final Long targetMember) {
+        this.targetMemberId = targetMember;
     }
 
     public void changeImages(final List<String> imageSrcs) {

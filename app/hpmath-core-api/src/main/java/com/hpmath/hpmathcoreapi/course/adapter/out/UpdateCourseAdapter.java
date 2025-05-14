@@ -1,14 +1,13 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
-import com.hpmath.domain.member.Member;
-import com.hpmath.domain.member.MemberRepository;
+import com.hpmath.client.member.MemberClient;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcore.Role;
 import com.hpmath.hpmathcoreapi.course.application.exception.NoSuchCourseException;
 import com.hpmath.hpmathcoreapi.course.application.exception.NoSuchMemberException;
 import com.hpmath.hpmathcoreapi.course.application.port.out.UpdateCoursePort;
 import com.hpmath.hpmathcoreapi.course.domain.Course;
-import com.hpmath.hpmathcoreapi.course.entity.CourseStudent;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.hpmathcoreapi.course.domain.Student;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,24 +19,45 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UpdateCourseAdapter implements UpdateCoursePort {
     private final CourseRepository courseRepository;
-    private final MemberRepository memberRepository;
-    private final CourseStudentRepository courseStudentRepository;
+    private final MemberClient memberClient;
 
     @Override
     @Transactional
     public void updateCourse(final Course updatedCourseDomain) {
-        final com.hpmath.hpmathcoreapi.course.entity.Course course = courseRepository.findById(updatedCourseDomain.getCourseId())
-                .orElseThrow(() -> new NoSuchCourseException("반 찾을 수 없음", ErrorCode.NO_SUCH_COURSE_MEMBER));
-        course.changeCourseName(updatedCourseDomain.getCourseName());
-        final Member newTeacher = memberRepository.findMemberByIdAndRoleAndRemovedIsFalse(updatedCourseDomain.getTeacher().id(), Role.TEACHER)
-                .orElseThrow(() -> new NoSuchMemberException("선생 찾을 수 없음", ErrorCode.NO_SUCH_COURSE_MEMBER));
-        course.changeTeacher(newTeacher);
-
+        final com.hpmath.hpmathcoreapi.course.entity.Course course = findCourse(updatedCourseDomain);
         final List<Long> studentIds = updatedCourseDomain.getStudents().stream()
-                .map(student -> student.id())
+                .mapToLong(Student::id)
+                .boxed()
                 .toList();
-        final List<Member> students = memberRepository.findMembersByIdIsInAndRoleAndRemovedIsFalse(studentIds, Role.STUDENT);
-        courseStudentRepository.deleteAll(course.getCourseStudents());
-        courseStudentRepository.saveAll(students.stream().map(student -> CourseStudent.addToCourse(student, course)).toList());
+
+        validateTeacher(updatedCourseDomain.getTeacher().id());
+        validateStudents(studentIds);
+
+        course.changeCourseName(updatedCourseDomain.getCourseName());
+        course.changeTeacher(updatedCourseDomain.getTeacher().id());
+        course.setStudents(studentIds);
+    }
+
+    private void validateStudents(final List<Long> studentIds) {
+        if (studentIds.stream()
+                .parallel()
+                .allMatch(id -> memberClient.isMatch(id, Role.STUDENT))) {
+            return;
+        }
+        log.warn("studentIds is contain wrong value : {}", studentIds);
+        throw new NoSuchMemberException(ErrorCode.NO_SUCH_COURSE_MEMBER);
+    }
+
+    private void validateTeacher(final Long teacherId) {
+        if (memberClient.isMatch(teacherId, Role.TEACHER)) {
+            return;
+        }
+        log.warn("Invalid teacher id: {}", teacherId);
+        throw new NoSuchMemberException("선생 찾을 수 없음", ErrorCode.NO_SUCH_COURSE_MEMBER);
+    }
+
+    private com.hpmath.hpmathcoreapi.course.entity.Course findCourse(Course updatedCourseDomain) {
+        return courseRepository.findById(updatedCourseDomain.getCourseId())
+                .orElseThrow(() -> new NoSuchCourseException("반 찾을 수 없음", ErrorCode.NO_SUCH_COURSE_MEMBER));
     }
 }

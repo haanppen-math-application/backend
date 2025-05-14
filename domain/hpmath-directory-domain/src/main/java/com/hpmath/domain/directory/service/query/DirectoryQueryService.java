@@ -7,9 +7,6 @@ import com.hpmath.domain.directory.dto.FileView;
 import com.hpmath.domain.directory.dto.QueryDirectory;
 import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.domain.directory.service.form.resolver.DirectoryPathFormResolver;
-import com.hpmath.domain.member.Member;
-import com.hpmath.domain.member.MemberRepository;
-import com.hpmath.domain.member.exceptions.NoSuchMemberException;
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcore.Role;
 import java.util.ArrayList;
@@ -20,12 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class DirectoryQueryService {
-
-    private final MemberRepository memberRepository;
     private final DirectoryPathFormResolver directoryPathFormResolver;
     private final DirectoryRepository directoryRepository;
     private final FileViewMapper fileViewMapper;
-
 
     /**
      * @param queryDirectoryDto
@@ -37,7 +31,7 @@ public class DirectoryQueryService {
         final String resolvedPath = directoryPathFormResolver.resolveToAbsolutePath(queryDirectoryDto.path());
 
         // 미디어 파일 매핑
-        final Directory directory = getDirectory(resolvedPath, queryDirectoryDto.requestMemberId());
+        final Directory directory = getDirectory(resolvedPath, queryDirectoryDto.requestMemberId(), queryDirectoryDto.role());
         fileViews.addAll(directory.getMedias().stream()
                 .map(DirectoryMedia::getMedia)
                 .map(fileViewMapper::create)
@@ -50,22 +44,19 @@ public class DirectoryQueryService {
         return fileViews;
     }
 
-    private Directory getDirectory(final String absolutePath, final Long requestMemberId) {
+    private Directory getDirectory(final String absolutePath, final Long requestMemberId, final Role role) {
         final Directory directory = directoryRepository.findDirectoryByPath(absolutePath)
                 .orElseThrow(() -> new DirectoryException(ErrorCode.NOT_EXIST_DIRECTORY));
         if (directory.getCanViewByEveryone()) {
             return directory;
         }
-        if (!directory.getOwner().getId().equals(requestMemberId) && !isSuperUser(requestMemberId)) {
+        if (!directory.getOwnerId().equals(requestMemberId) && !isSuperUser(role)) {
             throw new DirectoryException(ErrorCode.ITS_NOT_YOUR_DIRECTORY);
         }
         return directory;
     }
 
-    private boolean isSuperUser(final Long memberId) {
-        final Member member = memberRepository.findMemberByIdAndRemovedIsFalse(memberId)
-                .orElseThrow(() -> new NoSuchMemberException("멤버 찾을 수 없음", ErrorCode.CANNOT_FIND_USER));
-        final Role role = member.getRole();
+    private boolean isSuperUser(final Role role) {
         if (role.equals(Role.MANAGER) || role.equals(Role.ADMIN)) {
             return true;
         }

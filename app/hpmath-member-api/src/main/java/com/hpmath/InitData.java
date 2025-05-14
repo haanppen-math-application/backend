@@ -37,14 +37,14 @@ public class InitData {
                         new Password("0000")
                 )
         );
-//        accountRegisterService.register(
-//                new RegisterMemberCommand(
-//                        "test",
-//                        null,
-//                        "01023232323",
-//                        Role.STUDENT,
-//                        new Password("0000")
-//                )
-//        );
+        accountRegisterService.register(
+                new RegisterMemberCommand(
+                        "test",
+                        null,
+                        "01023232323",
+                        Role.STUDENT,
+                        new Password("0000")
+                )
+        );
     }
 }

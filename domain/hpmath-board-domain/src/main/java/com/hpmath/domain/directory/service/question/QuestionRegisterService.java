@@ -1,11 +1,12 @@
 package com.hpmath.domain.directory.service.question;
 
-import com.hpmath.domain.directory.dao.MemberManager;
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.directory.dao.QuestionRepository;
 import com.hpmath.domain.directory.dto.QuestionRegisterCommand;
 import com.hpmath.domain.directory.entity.Question;
+import com.hpmath.domain.directory.exception.BoardException;
 import com.hpmath.domain.directory.service.question.validate.QuestionValidateManager;
-import com.hpmath.domain.member.Member;
+import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcore.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @AllArgsConstructor
 public class QuestionRegisterService {
+    private final MemberClient memberRoleClient;
     private final QuestionRepository questionRepository;
     private final QuestionValidateManager questionValidateManager;
-    private final MemberManager memberManager;
 
     @Transactional
     public Long addQuestion(final QuestionRegisterCommand questionRegisterDto) {
@@ -27,16 +28,23 @@ public class QuestionRegisterService {
     }
 
     private Question create(final QuestionRegisterCommand questionRegisterDto) {
-        final Member requestMember = memberManager.getMemberWithRoleValidated(questionRegisterDto.requestMemberId(),
-                Role.STUDENT);
-        Member targetMember;
-        if (questionRegisterDto.targetMemberId() == null) {
-            targetMember = null;
-        } else {
-            targetMember = memberManager.getMemberWithRoleValidated(questionRegisterDto.targetMemberId(), Role.TEACHER,
-                    Role.MANAGER);
-        }
+        validateRequestMembersRole(questionRegisterDto.role());
+        validateTargetMembersRole(questionRegisterDto.targetMemberId());
+
         return Question.of(questionRegisterDto.images(), questionRegisterDto.title(), questionRegisterDto.content(),
-                requestMember, targetMember);
+                questionRegisterDto.requestMemberId(), questionRegisterDto.targetMemberId());
+    }
+
+    private void validateRequestMembersRole(final Role requestMemberRole) {
+        if (requestMemberRole == Role.STUDENT) {
+            return;
+        }
+        throw new BoardException(ErrorCode.BOARD_EXCEPTION);
+    }
+
+    private void validateTargetMembersRole(final Long requestMemberId) {
+        if (!memberRoleClient.isMatch(requestMemberId, Role.TEACHER, Role.MANAGER)) {
+            throw new BoardException(ErrorCode.BOARD_EXCEPTION);
+        }
     }
 }

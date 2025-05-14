@@ -27,7 +27,7 @@ public class OnlineLessonUpdateService {
     @Transactional
     public void updateLessonInfo(final UpdateOnlineLessonInfoCommand updateOnlineLessonInfoCommand) {
         final OnlineCourse onlineCourse = loadCourseAndCategoryByCourseId(updateOnlineLessonInfoCommand.targetCourseId());
-        onlineCourseOwnerValidator.validate(updateOnlineLessonInfoCommand.requestMemberRole(), updateOnlineLessonInfoCommand.requestMemberId(), onlineCourse.getTeacher().getId());
+        onlineCourseOwnerValidator.validate(updateOnlineLessonInfoCommand.requestMemberRole(), updateOnlineLessonInfoCommand.requestMemberId(), onlineCourse.getTeacherId());
 
         onlineLessonInfoUpdateManager.update(onlineCourse, updateOnlineLessonInfoCommand);
     }
@@ -35,7 +35,7 @@ public class OnlineLessonUpdateService {
     @Transactional
     public void updatePreviewStauts(final OnlineVideoPreviewUpdateCommand command) {
         final OnlineVideo onlineVideo = loadVideoAndVideosByCourseId(command.onlineVideoId());
-        onlineCourseOwnerValidator.validate(command.requetMemberRole(), command.requestMemerId(), onlineVideo.getOnlineCourse().getTeacher().getId());
+        onlineCourseOwnerValidator.validate(command.requetMemberRole(), command.requestMemerId(), onlineVideo.getOnlineCourse().getTeacherId());
 
         onlineVideo.setPreviewStatus(command.previewStatus());
     }
@@ -43,7 +43,7 @@ public class OnlineLessonUpdateService {
     @Transactional
     public void initializeCourse(final OnlineLessonInitializeCommand command) {
         final OnlineCourse onlineCourse = loadCourseAndVideos(command.onlineCourseId());
-        onlineCourseOwnerValidator.validate(command.requetMemberROle(), command.requetMemberId(), onlineCourse.getTeacher().getId());
+        onlineCourseOwnerValidator.validate(command.requetMemberROle(), command.requetMemberId(), onlineCourse.getTeacherId());
 
         onlineCourse.clearContents();
         onlineCourseRepository.removeAllOnlineVideoAttachmentsIn(onlineCourse.getVideos().stream()

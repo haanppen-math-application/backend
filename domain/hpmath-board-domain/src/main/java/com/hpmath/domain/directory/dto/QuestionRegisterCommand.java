@@ -1,5 +1,6 @@
 package com.hpmath.domain.directory.dto;
 
+import com.hpmath.hpmathcore.Role;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
@@ -8,6 +9,7 @@ public record QuestionRegisterCommand(
         Long requestMemberId,
         @NotNull
         Long targetMemberId,
+        Role role,
         String title,
         String content,
         List<String> images

@@ -1,6 +1,5 @@
 package com.hpmath.domain.directory.entity;
 
-import com.hpmath.domain.member.Member;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
@@ -41,9 +40,10 @@ public class Comment {
     @CreationTimestamp
     private LocalDateTime registeredDateTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "registeredMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member registeredMember;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "registeredMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @Column(name = "registered_member")
+    private Long registeredMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -53,13 +53,13 @@ public class Comment {
     private List<CommentImage> images = new ArrayList<>();
 
     @Builder
-    public Comment(String content, Member registeredMember, Question question) {
+    public Comment(String content, Long registeredMemberId, Question question) {
         this.content = content;
-        this.registeredMember = registeredMember;
+        this.registeredMember = registeredMemberId;
         this.question = question;
     }
 
-    public static Comment createComment(final String content, final Member registeredMember, final Question question, final List<String> imageSrcs) {
+    public static Comment createComment(final String content, final Long registeredMember, final Question question, final List<String> imageSrcs) {
         final Comment comment = new Comment(
                 content,
                 registeredMember,

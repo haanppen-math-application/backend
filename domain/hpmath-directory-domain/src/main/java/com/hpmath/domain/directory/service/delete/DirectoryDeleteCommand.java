@@ -1,7 +1,7 @@
 package com.hpmath.domain.directory.service.delete;
 
 import com.hpmath.domain.directory.dao.Directory;
-import com.hpmath.domain.member.Member;
+import com.hpmath.hpmathcore.Role;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class DirectoryDeleteCommand {
     private final List<Directory> directories;
-    private final Member requestMember;
+    private final Directory targetDirectory;
+    private final Long requestMemberId;
     private final Boolean deleteChildes;
+    private final Role requestMemberRole;
 }

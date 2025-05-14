@@ -24,7 +24,7 @@ public class OnlineAttachmentRegisterService {
     @Transactional
     public void register(final RegisterOnlineVideoAttachmentCommand command) {
         final OnlineVideo onlineVideo = loadOnlineVideoById(command.onlineVideoId());
-        onlineCourseOwnerValidator.validate(command.requestMemberRole(), command.requestMemberId(), onlineVideo.getOnlineCourse().getTeacher().getId());
+        onlineCourseOwnerValidator.validate(command.requestMemberRole(), command.requestMemberId(), onlineVideo.getOnlineCourse().getTeacherId());
         
         final OnlineVideoAttachment onlineVideoAttachment = new OnlineVideoAttachment(onlineVideo, command.attachmentTitle(), command.attachmentContent());
         onlineVideoAttachmentRepository.save(onlineVideoAttachment);

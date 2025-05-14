@@ -1,5 +1,6 @@
 package com.hpmath.domain.directory.dto;
 
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.directory.entity.Question;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +19,7 @@ public record QuestionDetailResult(
         List<CommentDetailResult> comments,
         List<ImageUrlResult> imageUrls
 ) {
-    public static QuestionDetailResult from(Question question) {
+    public static QuestionDetailResult from(Question question, MemberClient memberClient) {
         return new QuestionDetailResult(
                 question.getId(),
                 question.getTitle(),
@@ -26,10 +27,10 @@ public record QuestionDetailResult(
                 question.getSolved(),
                 question.getViewCount(),
                 question.getRegisteredDateTime(),
-                MemberDetailResult.from(question.getOwnerMember()),
-                MemberDetailResult.from(question.getTargetMember()),
+                MemberDetailResult.from(memberClient.getMemberDetail(question.getOwnerMemberId())),
+                MemberDetailResult.from(memberClient.getMemberDetail(question.getTargetMemberId())),
                 question.getComments().stream()
-                        .map(CommentDetailResult::from)
+                        .map(comment -> CommentDetailResult.from(comment, memberClient))
                         .toList(),
                 question.getImages().stream()
                         .map(ImageUrlResult::from)

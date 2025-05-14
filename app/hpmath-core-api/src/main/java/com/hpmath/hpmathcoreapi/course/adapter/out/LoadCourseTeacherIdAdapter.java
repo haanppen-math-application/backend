@@ -15,7 +15,8 @@ class LoadCourseTeacherIdAdapter implements LoadCourseTeacherIdPort {
 
     @Override
     public Long loadTeacherId(Long courseId) {
-        final Course course = courseRepository.findById(courseId).orElseThrow(() -> new NoSuchCourseException("반을 찾을 수 없음", ErrorCode.NO_SUCH_COURSE));
-        return course.getTeacher().getId();
+        final Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new NoSuchCourseException("반을 찾을 수 없음", ErrorCode.NO_SUCH_COURSE));
+        return course.getTeacherId();
     }
 }

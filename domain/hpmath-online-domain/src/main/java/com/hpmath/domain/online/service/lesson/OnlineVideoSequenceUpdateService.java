@@ -23,7 +23,7 @@ public class OnlineVideoSequenceUpdateService {
     @Transactional
     public void updateSequence(final UpdateOnlineVideoSequenceCommand command) {
         final OnlineCourse onlineCourse = loadOnlineCourse(command.targetCourseId());
-        onlineCourseOwnerValidator.validate(command.requetMemberRole(), command.requestMemberId(), onlineCourse.getTeacher().getId());
+        onlineCourseOwnerValidator.validate(command.requetMemberRole(), command.requestMemberId(), onlineCourse.getTeacherId());
 
         final OnlineVideo baseVideo = findById(onlineCourse.getVideos(), command.targetVideoId());
         final OnlineVideo targetVideo = findSequenceVideo(onlineCourse.getVideos(), command.updatedSequence());

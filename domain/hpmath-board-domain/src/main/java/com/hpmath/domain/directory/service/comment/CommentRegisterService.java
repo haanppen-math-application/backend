@@ -1,16 +1,14 @@
 package com.hpmath.domain.directory.service.comment;
 
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.directory.dao.CommentRepository;
 import com.hpmath.domain.directory.dao.QuestionRepository;
 import com.hpmath.domain.directory.dto.CommentRegisterCommand;
 import com.hpmath.domain.directory.entity.Comment;
 import com.hpmath.domain.directory.entity.Question;
-import com.hpmath.domain.directory.exception.NoSuchMemberException;
 import com.hpmath.domain.directory.exception.NoSuchQuestionException;
 import com.hpmath.domain.directory.exception.NotAllowedCommentException;
 import com.hpmath.domain.directory.exception.RequestDeniedException;
-import com.hpmath.domain.member.Member;
-import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcore.Role;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentRegisterService {
     private final QuestionRepository questionRepository;
     private final CommentRepository commentRepository;
-    private final MemberRepository memberRepository;
+    private final MemberClient memberRoleClient;
 
     public Long register(final CommentRegisterCommand commentRegisterDto) {
+        checkRequestMemberIsStudent(commentRegisterDto.memberId());
+
         final Question question = findQuestion(commentRegisterDto.questionId());
-        final Member member = findMember(commentRegisterDto.memberId());
         final Comment comment = Comment.createComment(
                 commentRegisterDto.content(),
-                member,
+                commentRegisterDto.memberId(),
                 question,
                 commentRegisterDto.images()
         );
@@ -49,15 +48,8 @@ public class CommentRegisterService {
         return question;
     }
 
-    private Member findMember(final Long memberId) {
-        Member member = memberRepository.findMemberByIdAndRemovedIsFalse(memberId)
-                .orElseThrow(() -> new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER));
-        verifyMember(member);
-        return member;
-    }
-
-    private void verifyMember(Member member) {
-        if (member.getRole().equals(Role.STUDENT)) {
+    private void checkRequestMemberIsStudent(final Long memberId) {
+        if (memberRoleClient.isMatch(memberId, Role.STUDENT)) {
             throw new RequestDeniedException("학생은 질문에 대한 댓글을 달 수 없습니다", ErrorCode.DENIED_EXCEPTION);
         }
     }

@@ -1,6 +1,5 @@
 package com.hpmath.domain.online.dao;
 
-import com.hpmath.domain.member.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -28,17 +27,16 @@ public class OnlineStudent {
     @JoinColumn(name = "online_course", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private OnlineCourse course;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "online_course_student", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member member;
+    @Column(name = "online_course_student")
+    private Long memberId;
 
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime registeredDateTIme;
 
-    public OnlineStudent(final OnlineCourse course, final Member member) {
+    public OnlineStudent(final OnlineCourse course, final Long memberId) {
         course.getOnlineStudents().add(this);
         this.course = course;
-        this.member = member;
+        this.memberId = memberId;
     }
 }

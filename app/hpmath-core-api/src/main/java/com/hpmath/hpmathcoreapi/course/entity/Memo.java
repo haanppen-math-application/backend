@@ -41,13 +41,6 @@ public class Memo {
     @OneToMany(mappedBy = "memo")
     private List<MemoMedia> memoMedias;
 
-/*
-    // 영상 로직
-    @OneToMany(mappedBy = "")
-    private List<Image> conceptMedia;
-    @OneToMany(mappedBy = "")
-    private List<Image> courseMedia;
-*/
     public void setTitle(final String title) {
         this.title = title;
     }

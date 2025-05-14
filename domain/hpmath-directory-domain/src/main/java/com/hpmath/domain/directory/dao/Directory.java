@@ -1,19 +1,13 @@
 package com.hpmath.domain.directory.dao;
 
-import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathmediadomain.media.entity.Media;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
@@ -37,9 +31,10 @@ public class Directory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "directory_owner", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member owner;
+    //    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "directory_owner", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @Column(name = "owner")
+    private Long ownerId;
 
     @Column(name = "directory_path", nullable = false, unique = true)
     private String path;
@@ -57,8 +52,8 @@ public class Directory {
     @BatchSize(size = 100)
     private List<DirectoryMedia> medias = new ArrayList<>();
 
-    public Directory(Member owner, String path, Boolean canModifyByEveryone, Boolean canViewByEveryone) {
-        this.owner = owner;
+    public Directory(Long owner, String path, Boolean canModifyByEveryone, Boolean canViewByEveryone) {
+        this.ownerId = owner;
         this.path = path;
         this.canAddByEveryone = canModifyByEveryone;
         this.canViewByEveryone = canViewByEveryone;

@@ -16,9 +16,6 @@ class DeleteDirectoryContentExecutorImpl implements DeleteDirectoryContentExecut
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
     public void delete(final Collection<Directory> directories) {
-        directories.stream()
-                .forEach(directory -> directory.getMedias().clear());
-//        mediaService.delete(mediaInfos);
         directoryRepository.deleteAll(directories);
     }
 }

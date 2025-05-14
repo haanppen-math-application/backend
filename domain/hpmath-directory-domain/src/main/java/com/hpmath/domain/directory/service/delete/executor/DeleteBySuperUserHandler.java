@@ -1,5 +1,6 @@
 package com.hpmath.domain.directory.service.delete.executor;
 
+import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.domain.directory.service.delete.DirectoryDeleteCommand;
 import com.hpmath.hpmathcore.Role;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +10,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class DeleteBySuperUserHandler implements DeleteDirectoryHandler {
     private final DeleteDirectoryContentExecutor deleteDirectoryContentExecutor;
+    private final DirectoryRepository directoryRepository;
     @Override
     public Integer process(DirectoryDeleteCommand directoryDeleteCommand) {
-        deleteDirectoryContentExecutor.delete(directoryDeleteCommand.getDirectories());
+        directoryRepository.deleteAll(directoryDeleteCommand.getDirectories());
         return directoryDeleteCommand.getDirectories().size();
     }
 

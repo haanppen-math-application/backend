@@ -12,6 +12,6 @@ public interface OnlineStudentRepository extends JpaRepository<OnlineStudent, Lo
     @Query("DELETE FROM OnlineStudent o WHERE o.course.id = :onlineCourseId")
     void removeAllByOnlineCourseId(@Param("onlineCourseId") Long onlineCourseId);
 
-    @Query("SELECT os FROM OnlineStudent os JOIN FETCH OnlineCourse oc ON os.course.id = oc.id WHERE os.member.id = :onlineStudentId")
+    @Query("SELECT os FROM OnlineStudent os JOIN FETCH OnlineCourse oc ON os.course.id = oc.id WHERE os.memberId = :onlineStudentId")
     OnlineStudent findOnlineStudent(@Param("onlineStudentId") final Long onlineStudentId);
 }

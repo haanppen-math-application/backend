@@ -1,6 +1,6 @@
 package com.hpmath.domain.directory.dto;
 
-import com.hpmath.domain.member.Member;
+import com.hpmath.client.member.MemberClient.MemberInfo;
 
 public record MemberDetailResult(
         Long memberId,
@@ -8,12 +8,12 @@ public record MemberDetailResult(
         Integer memberGrade,
         String role
 ) {
-    public static MemberDetailResult from(Member member) {
+    public static MemberDetailResult from(final MemberInfo memberInfo) {
         return new MemberDetailResult(
-                member.getId(),
-                member.getName(),
-                member.getGrade(),
-                member.getRole().getIdentifier()
+                memberInfo.memberId(),
+                memberInfo.memberName(),
+                memberInfo.memberGrade(),
+                memberInfo.role()
         );
     }
 }

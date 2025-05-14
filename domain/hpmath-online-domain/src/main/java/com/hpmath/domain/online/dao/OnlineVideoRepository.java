@@ -13,6 +13,6 @@ public interface OnlineVideoRepository extends JpaRepository<OnlineVideo, Long> 
     @Query("UPDATE OnlineVideo ov SET ov.videoSequence = ov.videoSequence - 1 WHERE ov.videoSequence > :videoSequence AND ov.onlineCourse.id = :onlineCourseId")
     void updateUpperVideosSequence(@Param("videoSequence") final Integer videoSequence, @Param("onlineCourseId") final Long onlineCourseId);
 
-    @Query("SELECT ov FROM OnlineVideo ov JOIN FETCH ov.onlineCourse JOIN FETCH ov.onlineCourse.teacher WHERE ov.id = :onlineVideoId")
+    @Query("SELECT ov FROM OnlineVideo ov JOIN FETCH ov.onlineCourse JOIN FETCH ov.onlineCourse.teacherId WHERE ov.id = :onlineVideoId")
     Optional<OnlineVideo> loadSingleOnlineVideoWithCourseWithTeacherByVideoId(@Param("onlineVideoId") final Long onlineVideoId);
 }

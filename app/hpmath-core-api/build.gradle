@@ -17,5 +17,6 @@ dependencies {
     implementation project(":common:hpmath-web-common")
 
     implementation project(":domain:hpmath-media-domain")
-    implementation project(":domain:hpmath-member-domain")
+
+    implementation project(":client:hpmath-member-client")
 }

@@ -25,7 +25,7 @@ public enum ErrorCode {
     ILLEGAL_MEMBER_REGISTER_FORMAT(HttpStatus.BAD_REQUEST, "-202", "해당 유형 사용자 등록 필수값 부재"),
     NOT_SUPPORTED_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "-203", "등록 할 수 없는 사용자 유형"),
 
-
+    BOARD_EXCEPTION(HttpStatus.BAD_REQUEST, "-300", "질문 게시판 오류"),
     INVALID_MEMBER_TARGET(HttpStatus.BAD_REQUEST, "-301", "잘못된 대상입니다."),
     NO_SUCH_MEMBER(HttpStatus.BAD_REQUEST, "-302", "존재하지 않는 사용자"),
     NO_SUCH_QUESTION(HttpStatus.BAD_REQUEST, "-303", "존재하지 않는 질문 게시글"),

@@ -43,7 +43,7 @@ public class QuestionController {
             @Valid @RequestBody final Requests.QuestionRegisterRequest questionRegisterRequestDto,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
-        final QuestionRegisterCommand questionRegisterCommand = questionRegisterRequestDto.toCommand(memberPrincipal.memberId());
+        final QuestionRegisterCommand questionRegisterCommand = questionRegisterRequestDto.toCommand(memberPrincipal.memberId(), memberPrincipal.role());
         final Long createdQuestionId = questionRegisterService.addQuestion(questionRegisterCommand);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()

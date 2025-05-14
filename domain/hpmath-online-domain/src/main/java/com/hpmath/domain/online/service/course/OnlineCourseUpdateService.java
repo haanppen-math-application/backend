@@ -47,7 +47,7 @@ public class OnlineCourseUpdateService {
     }
 
     private boolean isOwner(final OnlineCourse onlineCourse, final Long requestMemberId, final Role requestMemberRole) {
-        return onlineCourse.getTeacher().getId().equals(requestMemberId)
+        return onlineCourse.getTeacherId().equals(requestMemberId)
                 || requestMemberRole.equals(Role.ADMIN)
                 || requestMemberRole.equals(Role.MANAGER);
     }

@@ -1,7 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.adapter.out;
 
-import com.hpmath.domain.member.MemberRepository;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.hpmathcoreapi.course.application.port.out.LoadStudentsPort;
 import com.hpmath.hpmathcoreapi.course.domain.Student;
 import java.util.List;
@@ -11,24 +10,14 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 class LoadStudentsAdapter implements LoadStudentsPort {
-
-    private final MemberRepository memberRepository;
-    private final CourseMapper courseMapper;
+    private final MemberClient memberClient;
 
     @Override
     public List<Student> loadStudents(final List<Long> memberIds) {
-        int requestMemberCount = memberIds.size();
-
-        List<Student> students = loadAllStudent(memberIds);
-//        if (students.size() != requestMemberCount) {
-//            throw new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER);
-//        }
-        return students;
-    }
-
-    public List<Student> loadAllStudent(final List<Long> memberIds) {
-        return memberRepository.findMembersByIdIsInAndRoleAndRemovedIsFalse(memberIds, Role.STUDENT).stream()
-                .map(courseMapper::mapToStudent)
+        return memberIds.stream()
+                .parallel()
+                .map(memberClient::getMemberDetail)
+                .map(Student::from)
                 .toList();
     }
 }

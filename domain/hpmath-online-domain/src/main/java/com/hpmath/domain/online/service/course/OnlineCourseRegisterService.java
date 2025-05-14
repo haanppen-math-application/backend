@@ -1,11 +1,12 @@
 package com.hpmath.domain.online.service.course;
 
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.online.dao.OnlineCourse;
 import com.hpmath.domain.online.dao.OnlineCourseRepository;
-import com.hpmath.domain.online.dao.OnlineStudent;
 import com.hpmath.domain.online.dao.OnlineStudentRepository;
-import com.hpmath.domain.online.domain.OnlineCourseDomain;
 import com.hpmath.domain.online.dto.AddOnlineCourseCommand;
+import com.hpmath.domain.online.exception.OnlineCourseException;
+import com.hpmath.hpmathcore.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,30 +18,39 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class OnlineCourseRegisterService {
     private final OnlineCourseRepository onlineCourseRepository;
-    private final OnlineStudentRepository onlineStudentRepository;
-    private final OnlineCourseMapper onlineCourseMapper;
-    private final MemberLoader memberLoader;
+    private final MemberClient memberClient;
 
-    @Transactional
-    public void addOnlineCourse(final AddOnlineCourseCommand addOnlineCourseCommand) {
-        final OnlineCourseDomain onlineCourseDomain = onlineCourseMapper.toCourseDomain(addOnlineCourseCommand);
-        final OnlineCourse onlineCourse = onlineCourseMapper.toCourse(onlineCourseDomain);
+    public void addOnlineCourse(final AddOnlineCourseCommand command) {
+        validateTeacher(command.teacherId());
+        validateOnlineStudents(command.students());
 
+        final OnlineCourse onlineCourse = OnlineCourse.of(
+                command.teacherId(),
+                command.onlineCourseName(),
+                command.students()
+        );
         onlineCourseRepository.save(onlineCourse);
-        saveOnlineCourseStudents(onlineCourseDomain.getStudentIds(), onlineCourse);
-
-        log.info("online Course Created : " + addOnlineCourseCommand);
+        log.info("online Course Created : " + command);
     }
 
-    private void saveOnlineCourseStudents(final List<Long> studentIds, final OnlineCourse onlineCourse) {
-        if (studentIds.isEmpty()) {
+    private void validateTeacher(final Long teacherId) {
+        if (memberClient.isMatch(teacherId, Role.TEACHER)) {
             return;
         }
-        final List<OnlineStudent> onlineStudents = onlineCourseMapper
-                .toOnlineStudents(
-                        onlineCourse,
-                        memberLoader.findStudents(studentIds)
-                );
-        onlineStudentRepository.saveAll(onlineStudents);
+        log.warn("teacher ");
+        throw new OnlineCourseException();
+    }
+
+    private void validateOnlineStudents(final List<Long> onlineStudents) {
+        if (isRealStudents(onlineStudents)) {
+            return;
+        }
+        throw new OnlineCourseException();
+    }
+
+    private boolean isRealStudents(List<Long> onlineStudents) {
+        return onlineStudents.stream()
+                .parallel()
+                .allMatch(memberId -> memberClient.isMatch(memberId, Role.STUDENT));
     }
 }

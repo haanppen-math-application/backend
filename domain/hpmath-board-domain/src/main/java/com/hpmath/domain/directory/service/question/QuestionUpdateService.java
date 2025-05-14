@@ -1,13 +1,11 @@
 package com.hpmath.domain.directory.service.question;
 
-import com.hpmath.domain.directory.dao.MemberManager;
 import com.hpmath.domain.directory.dao.QuestionRepository;
 import com.hpmath.domain.directory.dto.QuestionUpdateCommand;
 import com.hpmath.domain.directory.entity.Question;
 import com.hpmath.domain.directory.exception.NoSuchQuestionException;
 import com.hpmath.domain.directory.exception.RequestDeniedException;
 import com.hpmath.domain.directory.service.question.validate.QuestionValidateManager;
-import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcore.Role;
 import jakarta.validation.Valid;
@@ -22,13 +20,12 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class QuestionUpdateService {
     private final QuestionRepository questionRepository;
-    private final MemberManager memberManager;
     private final QuestionValidateManager questionValidateManager;
 
     @Transactional
     public Long updateQuestion(@Valid final QuestionUpdateCommand questionUpdateDto) {
         final Question targetQuestion = findQuestion(questionUpdateDto.questionId());
-        verifyAccess(targetQuestion.getOwnerMember().getId(), questionUpdateDto.requestMemberId(), questionUpdateDto.memberRole());
+        verifyAccess(targetQuestion.getOwnerMemberId(), questionUpdateDto.requestMemberId(), questionUpdateDto.memberRole());
 
         updateTitle(targetQuestion, questionUpdateDto.title());
         updateContent(targetQuestion, questionUpdateDto.content());
@@ -52,8 +49,7 @@ public class QuestionUpdateService {
     }
 
     private void updateTarget(final Question question, final Long newTargetId) {
-        Member member = memberManager.getMemberWithRoleValidated(newTargetId, Role.TEACHER, Role.MANAGER);
-        question.changeTargetMember(member);
+        question.changeTargetMember(newTargetId);
     }
 
     private void verifyAccess(final Long ownedMemberId, final Long requestMemberId, final Role role) {

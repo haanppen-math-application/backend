@@ -41,7 +41,7 @@ public class DirectoryMediaService {
     }
 
     private boolean isOwner(final Long requestMemberId, final Directory targetDirectory) {
-        if (requestMemberId.equals(targetDirectory.getOwner().getId())) {
+        if (requestMemberId.equals(targetDirectory.getOwnerId())) {
             return true;
         }
         return false;

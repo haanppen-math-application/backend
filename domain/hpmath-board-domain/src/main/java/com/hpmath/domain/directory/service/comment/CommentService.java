@@ -49,7 +49,7 @@ public class CommentService {
 
     private void validateOwnedMember(final Comment targetComment, final Long requestMemberId, final Role requestMemberRole) {
         if (requestMemberRole.equals(Role.TEACHER)) {
-            if (!targetComment.getRegisteredMember().getId().equals(requestMemberId)) {
+            if (!targetComment.getRegisteredMember().equals(requestMemberId)) {
                 throw new BoardException("선생님은 본인 댓글만 접근 가능", ErrorCode.COMMENT_EXCEPTION);
             }
         }

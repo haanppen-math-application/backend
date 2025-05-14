@@ -1,9 +1,9 @@
 package com.hpmath.domain.directory.service.create.validate;
 
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.domain.directory.exception.DirectoryException;
-import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcore.Role;
 import lombok.RequiredArgsConstructor;
@@ -14,18 +14,19 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 class DirectoryOwnerValidator implements DirectoryCreateValidator {
+    private final MemberClient memberClient;
     private final DirectoryRepository directoryRepository;
 
     @Override
     public void validate(final Directory directory) {
         final Directory parentDirectory = getParentDirectory(directory);
-        if (isOverManager(directory.getOwner())) {
+        if (isOverManager(directory.getOwnerId())) {
             return;
         }
         if (canAddByEveryOne(parentDirectory)) {
             return;
         }
-        if (isRequestMemberIsOwner(parentDirectory, directory.getOwner())) {
+        if (isRequestMemberIsOwner(parentDirectory, directory.getOwnerId())) {
             return;
         }
         throw new DirectoryException("디렉토리 ACCESS 권한 부재", ErrorCode.ITS_NOT_YOUR_DIRECTORY);
@@ -36,8 +37,8 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
                 .orElseThrow(() -> new DirectoryException(ErrorCode.NOT_EXIST_DIRECTORY));
     }
 
-    private boolean isRequestMemberIsOwner(final Directory targetDirectory, final Member requestMember) {
-        if (targetDirectory.getOwner().getId().equals(requestMember.getId())) {
+    private boolean isRequestMemberIsOwner(final Directory targetDirectory, final Long requestMemberId) {
+        if (targetDirectory.getOwnerId().equals(requestMemberId)) {
             return true;
         }
         return false;
@@ -50,12 +51,8 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
         return false;
     }
 
-    private boolean isOverManager(final Member requestMember) {
-        final Role memberRole = requestMember.getRole();
-        if (memberRole.equals(Role.MANAGER) || memberRole.equals(Role.ADMIN)) {
-            return true;
-        }
-        return false;
+    private boolean isOverManager(final Long requestMember) {
+        return memberClient.isMatch(requestMember, Role.MANAGER, Role.ADMIN);
     }
 
     private String getParentPath(final String path) {

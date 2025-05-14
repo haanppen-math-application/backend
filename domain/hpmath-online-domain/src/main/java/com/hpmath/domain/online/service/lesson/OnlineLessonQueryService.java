@@ -53,7 +53,7 @@ public class OnlineLessonQueryService {
     private boolean checkViewable(final Role role, final Long requestMemberId, final List<OnlineStudent> studentIds) {
         if (role.equals(Role.STUDENT)) {
             return studentIds.stream()
-                    .map(onlineStudent -> onlineStudent.getMember().getId())
+                    .map(OnlineStudent::getMemberId)
                     .anyMatch(studentId -> studentId.equals(requestMemberId));
         }
         // 학생이 아닌 조회에선 모두 true

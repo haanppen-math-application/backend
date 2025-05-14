@@ -1,5 +1,6 @@
 package com.hpmath.domain.directory.dto;
 
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.directory.entity.Comment;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,7 +15,7 @@ public record CommentDetailResult(
         LocalDateTime registeredDateTime,
         MemberDetailResult registeredMemberDetails
 ) {
-    public static CommentDetailResult from(Comment comment) {
+    public static CommentDetailResult from(Comment comment, MemberClient memberClient) {
         return new CommentDetailResult(
                 comment.getId(),
                 comment.getContent(),
@@ -23,7 +24,7 @@ public record CommentDetailResult(
                         .map(ImageUrlResult::from)
                         .toList(),
                 comment.getRegisteredDateTime(),
-                MemberDetailResult.from(comment.getRegisteredMember())
+                MemberDetailResult.from(memberClient.getMemberDetail(comment.getRegisteredMember()))
         );
     }
 }

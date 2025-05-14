@@ -59,7 +59,7 @@ public class DirectoryController {
             @RequestParam(defaultValue = "/") final String dirPath,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
-        return ResponseEntity.ok(directoryQueryService.queryDirectory(new QueryDirectory(dirPath, memberPrincipal.memberId())));
+        return ResponseEntity.ok(directoryQueryService.queryDirectory(new QueryDirectory(dirPath, memberPrincipal.memberId(), memberPrincipal.role())));
     }
 
     @PutMapping
@@ -83,7 +83,7 @@ public class DirectoryController {
             @ModelAttribute @Valid Requests.DeleteDirectoryRequest deleteDirectoryRequest,
             @LoginInfo MemberPrincipal memberPrincipal
     ) {
-        final DeleteDirectoryDto deleteDirectoryDto = new DeleteDirectoryDto(deleteDirectoryRequest.targetDirectory(), memberPrincipal.memberId(), deleteDirectoryRequest.deleteChildes());
+        final DeleteDirectoryDto deleteDirectoryDto = new DeleteDirectoryDto(deleteDirectoryRequest.targetDirectory(), memberPrincipal.memberId(), memberPrincipal.role(), deleteDirectoryRequest.deleteChildes());
         directoryDeleteService.delete(deleteDirectoryDto);
         return ResponseEntity.ok(null);
     }

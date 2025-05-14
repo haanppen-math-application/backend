@@ -1,8 +1,8 @@
 package com.hpmath.domain.directory.service.delete.executor;
 
 import com.hpmath.domain.directory.dao.Directory;
+import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.domain.directory.service.delete.DirectoryDeleteCommand;
-import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathcore.Role;
 import java.util.Collection;
 import java.util.HashSet;
@@ -18,27 +18,27 @@ import org.springframework.stereotype.Service;
 @Slf4j
 class DeleteByTeacherHandler implements DeleteDirectoryHandler {
     private final DescendingSoryByDepthResolver descendingSoryByDepthResolver;
-    private final DeleteDirectoryContentExecutor deleteDirectoryContentManager;
+    private final DirectoryRepository directoryRepository;
 
     @Override
     public Integer process(DirectoryDeleteCommand directoryDeleteCommand) {
         final Collection<Directory> deletableDirectories = getRemovableDirectories(directoryDeleteCommand);
-        deleteDirectoryContentManager.delete(deletableDirectories);
+        directoryRepository.deleteAll(deletableDirectories);
         return deletableDirectories.size();
     }
 
     private Collection<Directory> getRemovableDirectories(DirectoryDeleteCommand directoryDeleteCommand) {
         final List<Directory> descendingSortedDirectories = descendingSoryByDepthResolver.getDecsendingList(directoryDeleteCommand.getDirectories());
-        final Set<Directory> unDeletableDirectories = getUnDeletableDirectories(descendingSortedDirectories, directoryDeleteCommand.getRequestMember());
+        final Set<Directory> unDeletableDirectories = getUnDeletableDirectories(descendingSortedDirectories, directoryDeleteCommand.getRequestMemberId());
 
         return descendingSortedDirectories.stream().filter(directory -> !unDeletableDirectories.contains(directory))
                 .collect(Collectors.toList());
     }
 
-    private Set<Directory> getUnDeletableDirectories(final List<Directory> descendingSortedDirectories, final Member requestMember) {
+    private Set<Directory> getUnDeletableDirectories(final List<Directory> descendingSortedDirectories, final Long requestmemberId) {
         final Set<Directory> unDeletableDirectories = new HashSet<>();
         for (final Directory directory : descendingSortedDirectories) {
-            if (!isOwner(directory.getOwner(), requestMember)) {
+            if (!isOwner(directory.getOwnerId(), requestmemberId)) {
                 unDeletableDirectories.add(directory);
                 log.info(directory.toString());
                 continue;
@@ -51,8 +51,8 @@ class DeleteByTeacherHandler implements DeleteDirectoryHandler {
         return unDeletableDirectories;
     }
 
-    private boolean isOwner(final Member ownerMember, final Member requestMember) {
-        return ownerMember.equals(requestMember);
+    private boolean isOwner(final Long ownerId, final Long requestMemberId) {
+        return ownerId.equals(requestMemberId);
     }
 
     private boolean doesChildRemain(final Set<Directory> undeletedDirectories, final String currPath) {

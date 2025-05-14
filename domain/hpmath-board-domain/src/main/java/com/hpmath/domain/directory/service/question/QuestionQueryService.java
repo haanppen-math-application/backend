@@ -1,5 +1,6 @@
 package com.hpmath.domain.directory.service.question;
 
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.directory.dao.QuestionRepository;
 import com.hpmath.domain.directory.dto.QuestionDetailResult;
 import com.hpmath.domain.directory.dto.QuestionPreviewResult;
@@ -19,12 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class QuestionQueryService {
     private final QuestionRepository questionRepository;
+    private final MemberClient memberClient;
 
-    @Transactional(readOnly = false)
+    @Transactional
     public QuestionDetailResult getSingleQuestionDetails(final Long questionId) {
         final Question question = findQuestion(questionId);
         question.addViewCount();
-        return QuestionDetailResult.from(question);
+        return QuestionDetailResult.from(question, memberClient);
     }
 
     public PagedResponse<QuestionPreviewResult> loadQuestionsByOffset(final Pageable pageable, final String title) {
@@ -35,7 +37,7 @@ public class QuestionQueryService {
             questions = questionRepository.findAllByTitleContaining(title, pageable);
         }
         return PagedResponse.of(
-                questions.map(QuestionPreviewResult::from).toList(),
+                questions.map(question -> QuestionPreviewResult.from(question, memberClient)).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),
                 questions.getSize()
@@ -54,7 +56,7 @@ public class QuestionQueryService {
             questions = questionRepository.findQuestionsByOwnerMemberIdAndTitleContaining(memberId, title, pageable);
         }
         return PagedResponse.of(
-                questions.map(QuestionPreviewResult::from).toList(),
+                questions.map(question -> QuestionPreviewResult.from(question, memberClient)).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),
                 questions.getSize()

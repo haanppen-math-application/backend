@@ -1,7 +1,7 @@
 package com.hpmath.domain.online.dao;
 
-import com.hpmath.domain.member.Member;
 import com.hpmath.hpmathmediadomain.media.entity.Image;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -16,7 +16,6 @@ import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -28,15 +27,13 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @ToString
 public class OnlineCourse {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ONLINE_COURSE_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teacher", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member teacher;
+    @Column(name = "teacher")
+    private Long teacherId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -45,7 +42,7 @@ public class OnlineCourse {
     @OneToMany(mappedBy = "onlineCourse")
     private List<OnlineVideo> videos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST, orphanRemoval = true)
     @BatchSize(size = 10)
     private List<OnlineStudent> onlineStudents = new ArrayList<>();
 
@@ -69,9 +66,24 @@ public class OnlineCourse {
     @JoinColumn(name = "image", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Image image;
 
-    public OnlineCourse(final Member teacher, final String courseName) {
-        this.teacher = teacher;
+    public OnlineCourse(final Long teacher, final String courseName) {
+        this.teacherId = teacher;
         this.courseName = courseName;
+    }
+
+    public static OnlineCourse of(final Long teacherId, final String courseName, final List<Long> studentIds) {
+        final OnlineCourse onlineCourse = new OnlineCourse(teacherId, courseName);
+        onlineCourse.onlineStudents.addAll(studentIds.stream()
+                .map(id -> new OnlineStudent(onlineCourse, id))
+                .toList());
+        return onlineCourse;
+    }
+
+    public void changeStudentsTo(final List<Long> studentIds) {
+        this.onlineStudents.clear();
+        onlineStudents.addAll(studentIds.stream()
+                .map(id -> new OnlineStudent(this, id))
+                .toList());
     }
 
     public void setOnlineCategory(final OnlineCategory onlineCategory) {
@@ -82,8 +94,8 @@ public class OnlineCourse {
         this.courseTitle = title;
     }
 
-    public void setTeacher(final Member teacher) {
-        this.teacher = teacher;
+    public void setTeacherId(final Long teacher) {
+        this.teacherId = teacher;
     }
 
     public void setCourseRange(final String courseRange) {
@@ -107,14 +119,4 @@ public class OnlineCourse {
         this.courseContent = null;
         this.courseRange = null;
     }
-
-    public List<OnlineStudent> getOnlineStudents() {
-        return onlineStudents.stream()
-                .filter(onlineStudent -> !onlineStudent.getMember().getRemoved())
-                .collect(Collectors.toList());
-    }
-
-//    public void setOnlineStudents(final List<OnlineStudent> onlineStudents) {
-//        onlin
-//    }
 }

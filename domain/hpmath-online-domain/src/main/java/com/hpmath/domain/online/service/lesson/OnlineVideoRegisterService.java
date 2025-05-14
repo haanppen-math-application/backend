@@ -30,7 +30,7 @@ public class OnlineVideoRegisterService {
     @Transactional
     public void addOnlineVideo(final AddOnlineVideoCommand addVideoToOnlineCourseCommand) {
         final OnlineCourse onlineCourse = loadOnlineCourseWithVideos(addVideoToOnlineCourseCommand.onlineCourseId());
-        onlineCourseOwnerValidator.validate(addVideoToOnlineCourseCommand.requestMemberRole(), addVideoToOnlineCourseCommand.requestMemberId(), onlineCourse.getTeacher().getId());
+        onlineCourseOwnerValidator.validate(addVideoToOnlineCourseCommand.requestMemberRole(), addVideoToOnlineCourseCommand.requestMemberId(), onlineCourse.getTeacherId());
 
         final Media media = loadMedia(addVideoToOnlineCourseCommand.onlineVideoCommand().videoSrc());
         final Integer matchSequence = getMatchSequence(onlineCourse);

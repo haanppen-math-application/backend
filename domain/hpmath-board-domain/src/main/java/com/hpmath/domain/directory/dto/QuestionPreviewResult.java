@@ -1,5 +1,6 @@
 package com.hpmath.domain.directory.dto;
 
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.directory.entity.Question;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -15,7 +16,7 @@ public record QuestionPreviewResult(
         MemberDetailResult owner,
         MemberDetailResult target
 ) {
-    public static QuestionPreviewResult from(Question question) {
+    public static QuestionPreviewResult from(Question question, MemberClient memberClient) {
         return new QuestionPreviewResult(
                 question.getId(),
                 question.getTitle(),
@@ -23,8 +24,8 @@ public record QuestionPreviewResult(
                 question.getSolved(),
                 question.getComments().size(),
                 question.getViewCount(),
-                MemberDetailResult.from(question.getOwnerMember()),
-                MemberDetailResult.from(question.getTargetMember())
+                MemberDetailResult.from(memberClient.getMemberDetail(question.getOwnerMemberId())),
+                MemberDetailResult.from(memberClient.getMemberDetail(question.getTargetMemberId()))
         );
     }
 }

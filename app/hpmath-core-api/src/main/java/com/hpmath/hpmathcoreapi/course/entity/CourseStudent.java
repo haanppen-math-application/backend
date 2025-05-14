@@ -1,6 +1,6 @@
 package com.hpmath.hpmathcoreapi.course.entity;
 
-import com.hpmath.domain.member.Member;
+import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @NoArgsConstructor
 @Getter
-@ToString(exclude = "courseEntity")
+@ToString
 public class CourseStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,23 +32,20 @@ public class CourseStudent {
     @JoinColumn(name = "course_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Course courseEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member member;
+    @Column(name = "student_id")
+    private Long studentId;
 
-    private CourseStudent(final Member student, final Course courseEntity) {
-        this.member = student;
+    private CourseStudent(final Long studentId, final Course courseEntity) {
+        this.studentId = studentId;
         this.courseEntity = courseEntity;
     }
 
-    public static CourseStudent addToCourse(final Member student, final Course courseEntity) {
-        final CourseStudent courseStudent = new CourseStudent(student, courseEntity);
-        courseEntity.addCourseStudent(courseStudent);
-        return new CourseStudent(student, courseEntity);
+    public static CourseStudent of(final Long studentId, final Course courseEntity) {
+        return new CourseStudent(studentId, courseEntity);
     }
 
     public void delete() {
-        this.member = null;
+        this.studentId = null;
         this.courseEntity = null;
     }
 }

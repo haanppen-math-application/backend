@@ -95,7 +95,7 @@ class OnlineCourseRepositoryTest {
 
         final OnlineCourse targetCourse = onlineCourseRepository.findOnlineCourse(courseId);
         targetCourse.getOnlineStudents().stream()
-                .map(onlineStudent -> onlineStudent.getMember())
+                .map(onlineStudent -> onlineStudent.getMemberId())
                 .collect(Collectors.toList());
     }
 
