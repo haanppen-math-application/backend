@@ -15,7 +15,7 @@ public class MemberClient {
     private final RestClient restClient;
 
     public MemberClient(
-            @Value("${client.member.url:http://localhost}") String baseUrl
+            @Value("${client.member.url:http://localhost:80}") String baseUrl
     ) {
         log.info("baseUrl initialized with  = {}", baseUrl);
         restClient = RestClient.builder().baseUrl(baseUrl).build();

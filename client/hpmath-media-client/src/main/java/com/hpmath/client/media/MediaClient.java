@@ -12,7 +12,7 @@ import org.springframework.web.client.RestClient;
 public class MediaClient {
     private final RestClient restClient;
 
-    public MediaClient(@Value("${client.media.url:http://localhost}") String baseUrl) {
+    public MediaClient(@Value("${client.media.url:http://localhost:80}") String baseUrl) {
         log.info("baseUrl initialized with  = {}", baseUrl);
         this.restClient = RestClient.builder().baseUrl(baseUrl).build();
     }
