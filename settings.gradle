@@ -18,6 +18,7 @@ include(
         'common:hpmath-common',
         'common:hpmath-web-common',
         'common:hpmath-jwt-common',
+        'common:hpmath-page-common',
 
         'domain',
         'domain:hpmath-course-domain',

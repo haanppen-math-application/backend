@@ -1,13 +1,13 @@
 package com.hpmath.app.board.api;
 
 import com.hpmath.app.board.api.config.EntityFieldMappedPageRequest;
-import com.hpmath.domain.directory.dto.QuestionDetailResult;
-import com.hpmath.domain.directory.dto.QuestionPreviewResult;
-import com.hpmath.domain.directory.service.question.QuestionQueryService;
+import com.hpmath.common.page.PagedResponse;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
-import com.hpmath.common.web.paging.PagedResponse;
+import com.hpmath.domain.directory.dto.QuestionDetailResult;
+import com.hpmath.domain.directory.dto.QuestionPreviewResult;
+import com.hpmath.domain.directory.service.question.QuestionQueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

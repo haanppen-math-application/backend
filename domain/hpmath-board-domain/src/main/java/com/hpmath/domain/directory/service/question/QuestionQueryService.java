@@ -1,13 +1,13 @@
 package com.hpmath.domain.directory.service.question;
 
 import com.hpmath.client.member.MemberClient;
+import com.hpmath.common.page.PagedResponse;
 import com.hpmath.domain.directory.dao.QuestionRepository;
 import com.hpmath.domain.directory.dto.QuestionDetailResult;
 import com.hpmath.domain.directory.dto.QuestionPreviewResult;
 import com.hpmath.domain.directory.entity.Question;
 import com.hpmath.domain.directory.exception.NoSuchQuestionException;
 import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.common.web.paging.PagedResponse;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

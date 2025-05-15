@@ -12,7 +12,7 @@ import com.hpmath.domain.course.application.port.in.QueryMemoByCourseIdAndDateUs
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
-import com.hpmath.common.web.paging.PagedResponse;
+import com.hpmath.common.page.PagedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;

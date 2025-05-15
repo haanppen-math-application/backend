@@ -10,5 +10,6 @@ dependencies {
     implementation project(":common:hpmath-common")
     implementation project(":common:hpmath-jwt-common")
     implementation project(":common:hpmath-web-common")
+    implementation project(":common:hpmath-page-common")
     implementation project(":client:hpmath-sms-client")
 }

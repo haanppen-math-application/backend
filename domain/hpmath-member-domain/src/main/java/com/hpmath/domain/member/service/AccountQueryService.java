@@ -9,7 +9,7 @@ import com.hpmath.domain.member.dto.TeacherQuery;
 import com.hpmath.domain.member.exceptions.NoSuchMemberException;
 import com.hpmath.hpmathcore.ErrorCode;
 import com.hpmath.hpmathcore.Role;
-import com.hpmath.common.web.paging.CursorResponse;
+import com.hpmath.common.page.CursorResponse;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;

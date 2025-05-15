@@ -6,18 +6,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "question", indexes = @Index(name = "idx_ownerId_title", columnList = "owner_member, title"))
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,32 +31,30 @@ public class Question {
     @CreationTimestamp
     private LocalDateTime registeredDateTime;
 
-    @Column(nullable = true)
+    @Column(name = "title")
     private String title;
 
-    @Column(nullable = true)
+    @Column(name = "content")
     private String content;
 
-    @Column(nullable = false)
+    @Column(name = "solved", nullable = false)
     private Boolean solved = false;
 
-    @Column(nullable = false)
+    @Column(name = "view_count", nullable = false)
     private Long viewCount = 0l;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ownerMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @Column(name = "owner_member")
     private Long ownerMemberId;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "targetMember", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @Column(name = "target_member")
     private Long targetMemberId;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @BatchSize(size = 100)
     private List<QuestionImage> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 100)
     private List<Comment> comments = new ArrayList<>();
 
     private Question(String title, String content, Long ownerMember, Long targetMember) {

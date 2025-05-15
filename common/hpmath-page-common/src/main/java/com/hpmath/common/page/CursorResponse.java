@@ -1,4 +1,4 @@
-package com.hpmath.common.web.paging;
+package com.hpmath.common.page;
 
 import java.util.List;
 
