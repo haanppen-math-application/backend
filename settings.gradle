@@ -33,6 +33,7 @@ include(
         'domain:hpmath-board-view-domain',
 
         'client',
+        'client:hpmath-board-view-client',
         'client:hpmath-media-client',
         'client:hpmath-member-client',
         'client:hpmath-sms-client'

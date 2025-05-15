@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/board/view-count")
+@RequestMapping("/api/inner/v1/board/view-count")
 public class BoardViewController {
     private final ViewCountService viewCountService;
 
     @GetMapping
-    @Authorization(opened = true)
     public ResponseEntity<BoardViewCount> getBoardViewCount(
             @RequestParam final Long boardId
     ) {
@@ -29,12 +28,11 @@ public class BoardViewController {
     }
 
     @PostMapping
-    @Authorization(opened = true)
     public ResponseEntity<BoardViewCount> addBoardViewCount(
             @RequestParam final Long boardId,
-            @LoginInfo final MemberPrincipal memberPrincipal
+            @RequestParam final Long memberId
     ) {
-        final Long viewCount = viewCountService.increaseViewCount(boardId, memberPrincipal.memberId());
+        final Long viewCount = viewCountService.increaseViewCount(boardId, memberId);
         return ResponseEntity.ok(new BoardViewCount(viewCount));
     }
 }
