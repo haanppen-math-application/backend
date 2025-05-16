@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,10 +19,11 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+@Slf4j
 @Configuration
 @EnableAsync
 class OutboxConfig {
-    @Value("${spring.kafka.bootstrap-servers}")
+    @Value("${spring.kafka.bootstrap-servers:http://localhost:9092}")
     private String bootstrapServers;
 
     @Bean
@@ -34,6 +38,7 @@ class OutboxConfig {
 
     @Bean
     public Executor outboxEventExecutor(OutboxEventExecutorProperties properties) {
+        log.info("initialize outbox event executor: {}", properties);
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(properties.getCorePoolSize());
         executor.setMaxPoolSize(properties.getMaxPoolSize());
@@ -48,6 +53,8 @@ class OutboxConfig {
     @ConfigurationProperties("outbox.thread-pool")
     @Getter
     @Setter
+    @NoArgsConstructor
+    @ToString
     private static class OutboxEventExecutorProperties {
         private Integer corePoolSize = 20;
         private Integer maxPoolSize = 30;

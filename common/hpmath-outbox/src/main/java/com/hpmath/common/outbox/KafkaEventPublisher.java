@@ -22,7 +22,8 @@ class KafkaEventPublisher {
             eventOutboxRepository.delete(outbox);
             log.info("Published outbox event {}", outbox);
         } catch (Exception e) {
-            log.warn("Error publishing outbox {}", outbox, e);
+            log.error("Error publishing outbox {}", outbox, e);
+            throw new RuntimeException(e);
         }
     }
 }
