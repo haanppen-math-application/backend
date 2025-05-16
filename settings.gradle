@@ -10,6 +10,7 @@ include(
         'app:hpmath-monolith',
 
         'app:consumer:hpmath-course',
+        'app:consumer:hpmath-board',
 
         'app:api:hpmath-board-view',
         'app:api:hpmath-online',

@@ -1,13 +1,14 @@
 package com.hpmath.domain.board.service.comment;
 
+import com.hpmath.common.ErrorCode;
+import com.hpmath.common.Role;
 import com.hpmath.domain.board.dao.CommentRepository;
 import com.hpmath.domain.board.dto.CommentDeleteCommand;
 import com.hpmath.domain.board.dto.CommentUpdateCommand;
 import com.hpmath.domain.board.entity.Comment;
 import com.hpmath.domain.board.exception.BoardException;
 import com.hpmath.domain.board.exception.NoSuchCommentException;
-import com.hpmath.common.ErrorCode;
-import com.hpmath.common.Role;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -40,6 +41,11 @@ public class CommentService {
 
         comment.delete();
         commentRepository.delete(comment);
+    }
+
+    @Transactional
+    public void deleteMemberInfo(final List<Long> memberInfos) {
+        commentRepository.deleteAllByOwnerMemberIdIn(memberInfos);
     }
 
     private Comment findComment(final Long commentId) {

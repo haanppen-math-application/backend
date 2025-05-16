@@ -9,6 +9,7 @@ import com.hpmath.domain.board.exception.NoSuchQuestionException;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,12 @@ public class QuestionDeleteService {
         final Question question = findQuestion(questionDeleteDto.questionId());
         hasPermission(questionDeleteDto.requestMemberId(), question.getOwnerMemberId());
         questionRepository.delete(question);
+    }
+
+    @Transactional
+    public void deleteMemberInfos(final List<Long> memberIds) {
+        questionRepository.updateToNullOwnerMemberInfos(memberIds);
+        questionRepository.updateToNullTargetMemberInfos(memberIds);
     }
 
     private void hasPermission(final Long requestMemberId, final Long questionOwnerId) {

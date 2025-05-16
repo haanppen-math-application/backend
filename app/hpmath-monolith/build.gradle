@@ -18,4 +18,5 @@ dependencies {
     implementation project(":app:hpmath-redis-app")
 
     implementation project(":app:consumer:hpmath-course")
+    implementation project(":app:consumer:hpmath-board")
 }
