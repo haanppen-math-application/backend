@@ -15,6 +15,8 @@ include(
         'app:hpmath-member-batch',
 
         'common',
+        'common:hpmath-snowflake',
+        'common:hpmath-outbox',
         'common:hpmath-serializer-common',
         'common:hpmath-event-common',
         'common:hpmath-common',

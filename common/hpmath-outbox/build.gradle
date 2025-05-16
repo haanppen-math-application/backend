@@ -1,0 +1,15 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    implementation 'com.github.beyondfengyu:SnowFlake:1.0.0'
+
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    implementation project(":common:hpmath-common")
+    implementation project(":common:hpmath-event-common")
+
+    implementation project(":common:hpmath-snowflake")
+}
