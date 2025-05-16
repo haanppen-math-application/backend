@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
+import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy;
+import org.testcontainers.containers.wait.strategy.WaitAllStrategy;
 
 @Slf4j
 @Configuration
@@ -19,6 +21,7 @@ public class RedisDevEnvironmentConfig {
         redisContainer = new FixedHostPortGenericContainer("redis:7.4");
         redisContainer.withFixedExposedPort(6379, 6379);
         redisContainer.start();
+        redisContainer.waitingFor(new HostPortWaitStrategy().forPorts(6379));
 
         log.info("Started Redis container...");
     }
