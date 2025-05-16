@@ -17,6 +17,7 @@ include(
         'app:hpmath-member-batch',
 
         'common',
+        'common:hpmath-cache-redis-common',
         'common:hpmath-snowflake',
         'common:hpmath-event-outbox-common',
         'common:hpmath-serializer-common',

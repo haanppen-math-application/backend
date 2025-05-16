@@ -22,7 +22,7 @@ import org.springframework.validation.annotation.Validated;
 @RequiredArgsConstructor
 @Transactional
 @Validated
-@CacheConfig(cacheNames = "banners")
+@CacheConfig(cacheNames = "banner::cache")
 public class BannerService {
     private final BannerRepository bannerRepository;
 

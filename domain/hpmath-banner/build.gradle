@@ -6,4 +6,6 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     implementation project(":common:hpmath-common")
+
+    implementation project(":common:hpmath-cache-redis-common")
 }
