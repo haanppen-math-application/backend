@@ -2,8 +2,10 @@ package com.hpmath.common.event;
 
 import com.hpmath.common.serializer.DataSerializer;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class Event<T extends EventPayload> {
     private Long eventId;
     private EventType type;
