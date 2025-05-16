@@ -16,7 +16,7 @@ include(
 
         'common',
         'common:hpmath-snowflake',
-        'common:hpmath-outbox',
+        'common:hpmath-event-outbox-common',
         'common:hpmath-serializer-common',
         'common:hpmath-event-common',
         'common:hpmath-common',
