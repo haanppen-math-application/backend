@@ -45,7 +45,7 @@ public class CommentService {
 
     @Transactional
     public void deleteMemberInfo(final List<Long> memberInfos) {
-        commentRepository.deleteAllByOwnerMemberIdIn(memberInfos);
+        commentRepository.updateOwnerToNullIdsIn(memberInfos);
     }
 
     private Comment findComment(final Long commentId) {
