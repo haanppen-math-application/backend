@@ -2,7 +2,7 @@ package com.hpmath.common.web.authenticationV2;
 
 import com.hpmath.common.jwt.AuthInfo;
 import com.hpmath.common.jwt.JwtUtils;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

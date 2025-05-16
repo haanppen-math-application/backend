@@ -1,6 +1,6 @@
 package com.hpmath.domain.member.dto;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

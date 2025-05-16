@@ -4,7 +4,7 @@ import com.hpmath.domain.course.application.port.in.LoadCourseDetailsQuery;
 import com.hpmath.domain.course.application.port.in.LoadCoursesByStudentQuery;
 import com.hpmath.domain.course.application.port.in.QueryAllCourseUseCase;
 import com.hpmath.domain.course.application.port.in.QueryCourseByMemberIdUseCase;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.domain.course.application.dto.Responses.CourseDetailResponse;
 import com.hpmath.domain.course.application.dto.Responses.CoursePreviewResponse;
 import com.hpmath.common.web.authentication.MemberPrincipal;

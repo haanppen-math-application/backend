@@ -4,7 +4,7 @@ import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.online.dao.OnlineCourse;
 import com.hpmath.domain.online.dto.OnlineCourseInfoUpdateCommand;
 import com.hpmath.domain.online.exception.OnlineCourseException;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

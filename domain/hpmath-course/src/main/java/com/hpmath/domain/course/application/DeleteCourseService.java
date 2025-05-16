@@ -1,14 +1,14 @@
 package com.hpmath.domain.course.application;
 
 import com.hpmath.domain.course.domain.Course;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.domain.course.application.dto.DeleteCourseCommand;
 import com.hpmath.domain.course.application.exception.CourseException;
 import com.hpmath.domain.course.application.port.in.DeleteCourseUseCase;
 import com.hpmath.domain.course.application.port.out.DeleteCoursePort;
 import com.hpmath.domain.course.application.port.out.DeleteCourseStudentPort;
 import com.hpmath.domain.course.application.port.out.LoadCoursePort;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,7 +2,7 @@ package com.hpmath.app.member.api.controller;
 
 import com.hpmath.domain.member.dto.MemberInfoResult;
 import com.hpmath.domain.member.dto.Password;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.time.LocalDateTime;
 
 public class Responses {

@@ -3,7 +3,7 @@ package com.hpmath.domain.directory.service.delete.validate;
 import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.domain.directory.service.delete.DirectoryDeleteCommand;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

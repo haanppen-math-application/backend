@@ -1,6 +1,6 @@
 package com.hpmath.client.member;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.time.Duration;
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;

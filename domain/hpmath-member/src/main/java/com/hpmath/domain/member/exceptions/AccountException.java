@@ -1,7 +1,7 @@
 package com.hpmath.domain.member.exceptions;
 
-import com.hpmath.hpmathcore.BusinessException;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.BusinessException;
+import com.hpmath.common.ErrorCode;
 
 public class AccountException extends BusinessException {
     public AccountException(ErrorCode errorCode) {

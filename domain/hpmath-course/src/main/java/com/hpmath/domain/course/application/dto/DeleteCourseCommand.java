@@ -1,6 +1,6 @@
 package com.hpmath.domain.course.application.dto;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import lombok.NonNull;
 
 public record DeleteCourseCommand(

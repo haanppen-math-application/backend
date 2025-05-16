@@ -6,7 +6,7 @@ import com.hpmath.domain.course.application.port.in.DeleteAttachmentUseCase;
 import com.hpmath.domain.course.application.port.out.DeleteAttachmentPort;
 import com.hpmath.domain.course.application.port.out.LoadAttachmentOwnedMemberIdPort;
 import com.hpmath.domain.course.application.port.out.ValidateSuperUserPort;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

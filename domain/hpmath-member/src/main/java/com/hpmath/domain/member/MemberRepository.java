@@ -1,7 +1,7 @@
 package com.hpmath.domain.member;
 
 import com.hpmath.domain.member.dto.MemberInfoResult;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

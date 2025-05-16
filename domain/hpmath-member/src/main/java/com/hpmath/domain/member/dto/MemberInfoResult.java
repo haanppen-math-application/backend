@@ -1,6 +1,6 @@
 package com.hpmath.domain.member.dto;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.time.LocalDateTime;
 
 public record MemberInfoResult(

@@ -1,8 +1,8 @@
 package com.hpmath.domain.course.adapter.out;
 
 import com.hpmath.client.member.MemberClient;
-import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.ErrorCode;
+import com.hpmath.common.Role;
 import com.hpmath.domain.course.application.exception.CourseException;
 import com.hpmath.domain.course.application.port.out.ValidateSuperUserPort;
 import java.util.Objects;

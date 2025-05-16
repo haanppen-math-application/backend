@@ -1,6 +1,6 @@
 package com.hpmath.domain.online.dto;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import jakarta.validation.constraints.NotNull;
 
 public record OnlineLessonInitializeCommand(

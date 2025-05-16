@@ -2,7 +2,7 @@ package com.hpmath.domain.course.adapter.out;
 
 import com.hpmath.domain.course.application.exception.MemoMediaException;
 import com.hpmath.domain.course.application.port.out.DeleteAttachmentPort;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

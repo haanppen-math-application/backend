@@ -4,7 +4,7 @@ import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.domain.directory.dto.UpdateDirectoryCommand;
 import com.hpmath.domain.directory.exception.DirectoryException;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

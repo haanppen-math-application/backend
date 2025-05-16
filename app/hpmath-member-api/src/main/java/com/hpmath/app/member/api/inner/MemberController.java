@@ -2,7 +2,7 @@ package com.hpmath.app.member.api.inner;
 
 import com.hpmath.domain.member.dto.MemberInfoResult;
 import com.hpmath.domain.member.service.AccountQueryService;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -2,7 +2,7 @@ package com.hpmath.app.directory.api;
 
 import com.hpmath.domain.directory.dto.CreateDirectoryCommand;
 import com.hpmath.domain.directory.dto.SaveMediaToDirectoryCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

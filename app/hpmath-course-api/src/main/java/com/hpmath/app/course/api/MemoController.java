@@ -5,7 +5,7 @@ import com.hpmath.domain.course.application.dto.ModifyMemoTextCommand;
 import com.hpmath.domain.course.application.port.in.DeleteMemoUseCase;
 import com.hpmath.domain.course.application.port.in.MemoRegisterUseCase;
 import com.hpmath.domain.course.application.port.in.ModifyMemoTextUseCase;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;

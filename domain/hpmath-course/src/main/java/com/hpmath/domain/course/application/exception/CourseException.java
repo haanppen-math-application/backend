@@ -1,7 +1,7 @@
 package com.hpmath.domain.course.application.exception;
 
-import com.hpmath.hpmathcore.BusinessException;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.BusinessException;
+import com.hpmath.common.ErrorCode;
 
 public class CourseException extends BusinessException {
     public CourseException(ErrorCode errorCode) {

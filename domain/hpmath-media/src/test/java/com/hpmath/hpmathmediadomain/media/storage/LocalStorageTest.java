@@ -1,6 +1,7 @@
 package com.hpmath.hpmathmediadomain.media.storage;
 
-import com.hpmath.hpmathmediadomain.media.storage.uploadfile.ImageUploadFile;
+import com.hpmath.domain.media.storage.LocalStorage;
+import com.hpmath.domain.media.storage.uploadfile.ImageUploadFile;
 import jakarta.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;

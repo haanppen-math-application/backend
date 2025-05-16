@@ -1,9 +1,9 @@
 package com.hpmath.app.media.api.controller;
 
-import com.hpmath.hpmathmediadomain.media.dto.ChunkFileUploadCommand;
-import com.hpmath.hpmathmediadomain.media.dto.ChunkMergeCommandV2;
-import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadCommand;
-import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadInitializeCommand;
+import com.hpmath.domain.media.dto.ChunkFileUploadCommand;
+import com.hpmath.domain.media.dto.ChunkMergeCommandV2;
+import com.hpmath.domain.media.dto.ChunkUploadCommand;
+import com.hpmath.domain.media.dto.ChunkUploadInitializeCommand;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotBlank;
 import lombok.NonNull;

@@ -1,7 +1,7 @@
 package com.hpmath.domain.online.domain;
 
-import com.hpmath.hpmathcore.BusinessException;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.BusinessException;
+import com.hpmath.common.ErrorCode;
 
 public record OnlineLessonDescription(String description) {
     private static final int DESCRIPTION_MAX_LENGTH = 500;

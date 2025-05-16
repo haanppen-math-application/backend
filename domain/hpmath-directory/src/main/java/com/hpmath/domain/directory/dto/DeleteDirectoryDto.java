@@ -1,6 +1,6 @@
 package com.hpmath.domain.directory.dto;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

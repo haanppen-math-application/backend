@@ -7,7 +7,7 @@ import com.hpmath.domain.online.dao.OnlineCategoryRepository;
 import com.hpmath.domain.online.dao.OnlineCourse;
 import com.hpmath.domain.online.dao.OnlineCourseRepository;
 import com.hpmath.domain.online.dto.UpdateOnlineLessonInfoCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;

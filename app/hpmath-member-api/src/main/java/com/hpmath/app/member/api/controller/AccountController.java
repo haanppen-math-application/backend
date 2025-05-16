@@ -14,7 +14,7 @@ import com.hpmath.domain.member.service.AccountQueryService;
 import com.hpmath.domain.member.service.AccountRegisterService;
 import com.hpmath.domain.member.service.AccountRemoveService;
 import com.hpmath.domain.member.service.AccountUpdateService;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;

@@ -3,7 +3,7 @@ package com.hpmath.domain.course.adapter.out;
 import com.hpmath.client.media.MediaClient;
 import com.hpmath.client.media.MediaClient.MediaInfo;
 import com.hpmath.domain.course.domain.Media;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import com.hpmath.domain.course.application.exception.CourseException;
 import com.hpmath.domain.course.application.port.out.LoadMediasPort;
 import java.util.List;

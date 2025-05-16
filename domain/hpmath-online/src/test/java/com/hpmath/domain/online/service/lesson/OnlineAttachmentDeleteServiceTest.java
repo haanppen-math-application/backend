@@ -9,7 +9,7 @@ import com.hpmath.domain.online.dao.OnlineVideoAttachment;
 import com.hpmath.domain.online.dao.OnlineVideoAttachmentRepository;
 import com.hpmath.domain.online.dao.OnlineVideoRepository;
 import com.hpmath.domain.online.dto.DeleteOnlineVideoAttachmentCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.hpmathmediadomain.media.entity.Media;
 import com.hpmath.hpmathmediadomain.media.repository.MediaRepository;
 import jakarta.persistence.EntityManager;

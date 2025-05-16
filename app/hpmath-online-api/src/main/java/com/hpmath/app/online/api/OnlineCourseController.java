@@ -6,7 +6,7 @@ import com.hpmath.domain.online.dto.OnlineCourseInfoUpdateCommand;
 import com.hpmath.domain.online.dto.OnlineCourseStudentUpdateCommand;
 import com.hpmath.domain.online.service.course.OnlineCourseRegisterService;
 import com.hpmath.domain.online.service.course.OnlineCourseUpdateService;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;

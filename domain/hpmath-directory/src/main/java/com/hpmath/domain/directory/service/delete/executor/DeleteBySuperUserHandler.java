@@ -2,7 +2,7 @@ package com.hpmath.domain.directory.service.delete.executor;
 
 import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.domain.directory.service.delete.DirectoryDeleteCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -14,7 +14,7 @@ import com.hpmath.domain.online.service.lesson.OnlineLessonUpdateService;
 import com.hpmath.domain.online.service.lesson.OnlineVideoDeleteService;
 import com.hpmath.domain.online.service.lesson.OnlineVideoRegisterService;
 import com.hpmath.domain.online.service.lesson.OnlineVideoSequenceUpdateService;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;

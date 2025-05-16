@@ -1,7 +1,7 @@
 package com.hpmath.domain.directory.service.delete;
 
 import com.hpmath.domain.directory.dao.Directory;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

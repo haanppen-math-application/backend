@@ -7,7 +7,7 @@ import com.hpmath.domain.online.dao.OnlineCourseRepository;
 import com.hpmath.domain.online.dao.OnlineVideo;
 import com.hpmath.domain.online.dao.OnlineVideoRepository;
 import com.hpmath.domain.online.dto.DeleteOnlineCourseVideoCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;

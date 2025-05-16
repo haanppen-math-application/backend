@@ -3,15 +3,13 @@ package com.hpmath.domain.online.service.course;
 import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.online.dao.OnlineCourse;
 import com.hpmath.domain.online.dao.OnlineCourseRepository;
-import com.hpmath.domain.online.dao.OnlineStudentRepository;
 import com.hpmath.domain.online.dto.AddOnlineCourseCommand;
 import com.hpmath.domain.online.exception.OnlineCourseException;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

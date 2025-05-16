@@ -1,18 +1,18 @@
 package com.hpmath.app.media.api.controller;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.app.media.api.controller.Requests.ChunkMergeRequestV2;
 import com.hpmath.app.media.api.controller.Requests.ChunkUploadRequestV2;
 import com.hpmath.app.media.api.controller.Requests.ChunkUploadStartRequestV2;
 import com.hpmath.app.media.api.controller.Responses.ChunkUploadStartResponse;
 import com.hpmath.app.media.api.controller.Responses.RequiredChunkPartsResponse;
-import com.hpmath.hpmathmediadomain.media.dto.ChunkMergeCommandV2;
-import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadCommand;
-import com.hpmath.hpmathmediadomain.media.dto.ChunkUploadInitializeCommand;
-import com.hpmath.hpmathmediadomain.media.dto.RequiredChunkInfo;
-import com.hpmath.hpmathmediadomain.media.dto.StoredFileResult;
-import com.hpmath.hpmathmediadomain.media.dto.UploadInitializeResult;
-import com.hpmath.hpmathmediadomain.media.service.uploadV2.MultiPartUploadService;
+import com.hpmath.domain.media.dto.ChunkMergeCommandV2;
+import com.hpmath.domain.media.dto.ChunkUploadCommand;
+import com.hpmath.domain.media.dto.ChunkUploadInitializeCommand;
+import com.hpmath.domain.media.dto.RequiredChunkInfo;
+import com.hpmath.domain.media.dto.StoredFileResult;
+import com.hpmath.domain.media.dto.UploadInitializeResult;
+import com.hpmath.domain.media.service.uploadV2.MultiPartUploadService;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;

@@ -5,7 +5,7 @@ import com.hpmath.domain.course.application.dto.Responses.MemoViewResponse;
 import com.hpmath.domain.course.application.exception.CourseException;
 import com.hpmath.domain.course.application.port.out.QueryMemoByCourseIdAndDatePort;
 import com.hpmath.domain.course.entity.Memo;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

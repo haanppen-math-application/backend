@@ -6,7 +6,7 @@ import com.hpmath.domain.course.application.dto.Responses.MediaViewResponse;
 import com.hpmath.domain.course.application.exception.CourseException;
 import com.hpmath.domain.course.application.port.out.QueryMemoMediaPort;
 import com.hpmath.domain.course.entity.MemoMedia;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

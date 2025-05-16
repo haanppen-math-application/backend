@@ -1,6 +1,6 @@
 package com.hpmath.common.web.authentication;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.security.Principal;
 import java.util.Arrays;
 

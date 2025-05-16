@@ -3,7 +3,7 @@ package com.hpmath.domain.member.service.policy;
 import com.hpmath.domain.member.Member;
 import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.domain.member.exceptions.AccountException;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

@@ -5,7 +5,7 @@ import com.hpmath.client.media.MediaClient.MediaInfo;
 import com.hpmath.domain.course.application.exception.MemoMediaException;
 import com.hpmath.domain.course.application.port.out.LoadMemoMediaByMemoMediaIdPort;
 import com.hpmath.domain.course.domain.MemoMedia;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

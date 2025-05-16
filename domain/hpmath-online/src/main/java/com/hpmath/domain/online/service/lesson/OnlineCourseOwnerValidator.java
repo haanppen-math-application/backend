@@ -1,8 +1,8 @@
 package com.hpmath.domain.online.service.lesson;
 
-import com.hpmath.hpmathcore.BusinessException;
-import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.BusinessException;
+import com.hpmath.common.ErrorCode;
+import com.hpmath.common.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

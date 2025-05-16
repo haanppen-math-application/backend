@@ -1,6 +1,6 @@
 package com.hpmath.domain.member;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

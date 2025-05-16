@@ -1,7 +1,7 @@
 package com.hpmath.domain.online.service.category;
 
-import com.hpmath.hpmathcore.BusinessException;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.BusinessException;
+import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import com.hpmath.domain.online.dao.OnlineCategory;
 import com.hpmath.domain.online.dao.OnlineCategoryRepository;

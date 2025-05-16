@@ -7,7 +7,7 @@ import com.hpmath.domain.online.dao.OnlineCourseRepository;
 import com.hpmath.domain.online.dao.OnlineStudent;
 import com.hpmath.domain.online.dao.OnlineStudentRepository;
 import com.hpmath.domain.online.dto.OnlineCourseStudentUpdateCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;

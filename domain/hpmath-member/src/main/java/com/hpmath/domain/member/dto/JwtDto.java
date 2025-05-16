@@ -1,6 +1,6 @@
 package com.hpmath.domain.member.dto;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 
 public record JwtDto(
         String name,

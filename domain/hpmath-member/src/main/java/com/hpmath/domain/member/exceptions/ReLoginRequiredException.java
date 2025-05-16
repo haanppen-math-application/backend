@@ -1,6 +1,6 @@
 package com.hpmath.domain.member.exceptions;
 
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 
 public class ReLoginRequiredException extends AccountException {
     public ReLoginRequiredException(ErrorCode errorCode) {

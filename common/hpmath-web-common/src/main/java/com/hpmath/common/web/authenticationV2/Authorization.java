@@ -1,6 +1,6 @@
 package com.hpmath.common.web.authenticationV2;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -3,7 +3,7 @@ package com.hpmath.domain.member.service;
 import com.hpmath.domain.member.Member;
 import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.domain.member.dto.AccountRemoveCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;

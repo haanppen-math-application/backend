@@ -1,8 +1,8 @@
 package com.hpmath.app.media.api.controller;
 
-import com.hpmath.hpmathmediadomain.media.dto.DownloadCommand;
-import com.hpmath.hpmathmediadomain.media.dto.DownloadResult;
-import com.hpmath.hpmathmediadomain.media.service.DownloadService;
+import com.hpmath.domain.media.dto.DownloadCommand;
+import com.hpmath.domain.media.dto.DownloadResult;
+import com.hpmath.domain.media.service.DownloadService;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

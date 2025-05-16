@@ -1,7 +1,7 @@
 package com.hpmath.common.web.exception;
 
-import com.hpmath.hpmathcore.BusinessException;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.BusinessException;
+import com.hpmath.common.ErrorCode;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;

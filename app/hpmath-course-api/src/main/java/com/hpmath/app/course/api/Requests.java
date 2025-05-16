@@ -12,7 +12,7 @@ import com.hpmath.domain.course.application.dto.RegisterMemoMediaCommand;
 import com.hpmath.domain.course.application.dto.RegisterStudentCommand;
 import com.hpmath.domain.course.application.dto.UpdateCourseStudentsCommand;
 import com.hpmath.domain.course.application.dto.UpdateMediaMemoCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

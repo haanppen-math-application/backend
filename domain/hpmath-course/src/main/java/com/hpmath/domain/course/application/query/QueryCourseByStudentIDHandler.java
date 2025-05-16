@@ -1,7 +1,7 @@
 package com.hpmath.domain.course.application.query;
 
 import com.hpmath.domain.course.domain.Course;
-import com.hpmath.hpmathcore.BusinessException;
+import com.hpmath.common.BusinessException;
 import com.hpmath.domain.course.application.port.out.LoadAllCoursesByStudentIdPort;
 import com.hpmath.domain.course.application.port.out.LoadStudentsPort;
 import java.util.List;

@@ -1,9 +1,9 @@
 package com.hpmath.app.media.api.controller;
 
 
-import com.hpmath.hpmathmediadomain.media.dto.ChunkStoreResult;
-import com.hpmath.hpmathmediadomain.media.dto.RequiredChunkInfo;
-import com.hpmath.hpmathmediadomain.media.dto.UploadInitializeResult;
+import com.hpmath.domain.media.dto.ChunkStoreResult;
+import com.hpmath.domain.media.dto.RequiredChunkInfo;
+import com.hpmath.domain.media.dto.UploadInitializeResult;
 import java.util.List;
 
 public class Responses {

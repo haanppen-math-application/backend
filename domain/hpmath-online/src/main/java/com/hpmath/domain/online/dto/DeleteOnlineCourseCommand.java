@@ -1,7 +1,7 @@
 package com.hpmath.domain.online.dto;
 
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 
 public record DeleteOnlineCourseCommand(
         Long courseId,

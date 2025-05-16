@@ -5,7 +5,7 @@ import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.domain.online.dao.OnlineCourseRepository;
 import com.hpmath.domain.online.dao.OnlineStudentRepository;
 import com.hpmath.domain.online.dto.AddOnlineCourseCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import org.assertj.core.api.Assertions;

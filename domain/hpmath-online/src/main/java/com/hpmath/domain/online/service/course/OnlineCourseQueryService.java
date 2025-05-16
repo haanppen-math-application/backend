@@ -15,7 +15,7 @@ import com.hpmath.domain.online.dto.QueryMyOnlineCourseCommand;
 import com.hpmath.domain.online.dto.QueryOnlineCourseByStudentIdCommand;
 import com.hpmath.domain.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hpmath.domain.online.dto.QueryOnlineCourseDetailsCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

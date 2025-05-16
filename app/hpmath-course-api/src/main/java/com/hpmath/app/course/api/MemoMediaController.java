@@ -10,7 +10,7 @@ import com.hpmath.domain.course.application.port.in.DeleteMemoMediaUseCase;
 import com.hpmath.domain.course.application.port.in.RegisterAttachmentUseCase;
 import com.hpmath.domain.course.application.port.in.RegisterMemoMediaUseCase;
 import com.hpmath.domain.course.application.port.in.UpdateMemoMediaUseCase;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;

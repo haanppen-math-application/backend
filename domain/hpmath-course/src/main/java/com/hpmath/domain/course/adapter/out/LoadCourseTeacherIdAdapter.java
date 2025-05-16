@@ -3,7 +3,7 @@ package com.hpmath.domain.course.adapter.out;
 import com.hpmath.domain.course.application.exception.NoSuchCourseException;
 import com.hpmath.domain.course.application.port.out.LoadCourseTeacherIdPort;
 import com.hpmath.domain.course.entity.Course;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

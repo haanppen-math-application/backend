@@ -7,7 +7,7 @@ import com.hpmath.domain.course.application.port.out.LoadMemoPort;
 import com.hpmath.domain.course.application.port.out.RegisterMemoMediaPort;
 import com.hpmath.domain.course.application.port.out.ValidateSuperUserPort;
 import com.hpmath.domain.course.domain.Memo;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

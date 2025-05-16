@@ -9,7 +9,7 @@ import com.hpmath.domain.directory.service.create.DirectoryCreateService;
 import com.hpmath.domain.directory.service.delete.DirectoryDeleteService;
 import com.hpmath.domain.directory.service.query.DirectoryQueryService;
 import com.hpmath.domain.directory.service.update.DirectoryUpdateService;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;

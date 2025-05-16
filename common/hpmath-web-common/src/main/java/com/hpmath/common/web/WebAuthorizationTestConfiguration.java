@@ -1,6 +1,6 @@
 package com.hpmath.common.web;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.AuthorizationInterceptor;
 import com.hpmath.common.web.authenticationV2.JwtRequestWrapper;

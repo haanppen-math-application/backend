@@ -1,7 +1,7 @@
 package com.hpmath.domain.directory.service.form.validate;
 
 import com.hpmath.domain.directory.exception.DirectoryException;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import org.springframework.stereotype.Service;
 
 @Service

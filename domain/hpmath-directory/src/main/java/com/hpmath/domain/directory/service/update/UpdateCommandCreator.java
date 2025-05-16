@@ -6,7 +6,7 @@ import com.hpmath.domain.directory.dto.UpdateDirectoryCommand;
 import com.hpmath.domain.directory.dto.UpdateDirectoryDto;
 import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.domain.directory.service.form.resolver.DirectoryPathFormResolver;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

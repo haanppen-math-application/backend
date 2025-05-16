@@ -10,7 +10,7 @@ import com.hpmath.domain.course.application.port.in.CourseRegisterUseCase;
 import com.hpmath.domain.course.application.port.in.DeleteCourseUseCase;
 import com.hpmath.domain.course.application.port.in.UpdateCourseStudentsUseCase;
 import com.hpmath.domain.course.application.port.in.UpdateCourseUseCase;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.app.course.api.Requests.CourseUpdateRequest;
 import com.hpmath.app.course.api.Requests.DeleteCourseRequest;
 import com.hpmath.common.web.authentication.MemberPrincipal;

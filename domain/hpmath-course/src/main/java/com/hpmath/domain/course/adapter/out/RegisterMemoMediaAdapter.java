@@ -4,7 +4,7 @@ import com.hpmath.client.media.MediaClient;
 import com.hpmath.client.media.MediaClient.MediaInfo;
 import com.hpmath.domain.course.entity.Memo;
 import com.hpmath.domain.course.entity.MemoMedia;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import com.hpmath.domain.course.application.exception.MemoMediaException;
 import com.hpmath.domain.course.application.port.out.RegisterMemoMediaPort;
 import java.util.List;

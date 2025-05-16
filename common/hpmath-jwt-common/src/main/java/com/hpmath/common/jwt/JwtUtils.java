@@ -1,6 +1,6 @@
 package com.hpmath.common.jwt;
 
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;

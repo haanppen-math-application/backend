@@ -4,7 +4,7 @@ import com.hpmath.domain.course.application.dto.Responses.CoursePreviewResponse;
 import com.hpmath.domain.course.application.exception.CourseException;
 
 import com.hpmath.domain.course.domain.Course;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

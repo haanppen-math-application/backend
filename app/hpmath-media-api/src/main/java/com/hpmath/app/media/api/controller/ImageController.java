@@ -1,8 +1,8 @@
 package com.hpmath.app.media.api.controller;
 
-import com.hpmath.hpmathmediadomain.media.dto.ImageUrlDto;
-import com.hpmath.hpmathmediadomain.media.dto.MediaDto;
-import com.hpmath.hpmathmediadomain.media.service.ImageService;
+import com.hpmath.domain.media.dto.ImageUrlDto;
+import com.hpmath.domain.media.dto.MediaDto;
+import com.hpmath.domain.media.service.ImageService;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;

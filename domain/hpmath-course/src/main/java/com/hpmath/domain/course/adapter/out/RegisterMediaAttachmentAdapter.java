@@ -6,7 +6,7 @@ import com.hpmath.domain.course.application.exception.MemoMediaException;
 import com.hpmath.domain.course.application.port.out.RegisterMediaAttachmentPort;
 import com.hpmath.domain.course.entity.MemoMedia;
 import com.hpmath.domain.course.entity.MemoMediaAttachment;
-import com.hpmath.hpmathcore.ErrorCode;
+import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

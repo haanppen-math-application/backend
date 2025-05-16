@@ -5,7 +5,7 @@ import com.hpmath.domain.online.dto.OnlineCategoryInfo;
 import com.hpmath.domain.online.service.category.OnlineCategoryAddService;
 import com.hpmath.domain.online.service.category.OnlineCategoryDeleteService;
 import com.hpmath.domain.online.service.category.OnlineCategoryQueryService;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

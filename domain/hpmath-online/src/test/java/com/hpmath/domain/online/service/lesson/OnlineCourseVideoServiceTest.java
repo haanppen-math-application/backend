@@ -7,7 +7,7 @@ import com.hpmath.domain.online.dao.OnlineCourseRepository;
 import com.hpmath.domain.online.dao.OnlineVideo;
 import com.hpmath.domain.online.dto.AddOnlineVideoCommand;
 import com.hpmath.domain.online.dto.AddOnlineVideoCommand.OnlineVideoCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.hpmathmediadomain.media.entity.Media;
 import com.hpmath.hpmathmediadomain.media.repository.MediaRepository;
 import jakarta.persistence.EntityManager;

@@ -10,7 +10,7 @@ import com.hpmath.domain.member.validation.GradeConstraint;
 import com.hpmath.domain.member.validation.NameConstraint;
 import com.hpmath.domain.member.validation.PhoneNumberConstraint;
 import com.hpmath.domain.member.validation.RoleConstraint;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

@@ -2,7 +2,7 @@ package com.hpmath.domain.member.service;
 
 import com.hpmath.domain.member.Member;
 import com.hpmath.domain.member.MemberRepository;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

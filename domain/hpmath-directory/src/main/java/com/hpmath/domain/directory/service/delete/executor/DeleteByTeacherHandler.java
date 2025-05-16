@@ -3,7 +3,7 @@ package com.hpmath.domain.directory.service.delete.executor;
 import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.domain.directory.service.delete.DirectoryDeleteCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;

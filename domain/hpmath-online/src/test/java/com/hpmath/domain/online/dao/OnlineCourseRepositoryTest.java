@@ -2,7 +2,7 @@ package com.hpmath.domain.online.dao;
 
 import com.hpmath.domain.member.Member;
 import com.hpmath.domain.member.MemberRepository;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;

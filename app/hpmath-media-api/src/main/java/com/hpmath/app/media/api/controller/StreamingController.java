@@ -1,11 +1,11 @@
 package com.hpmath.app.media.api.controller;
 
-import com.hpmath.hpmathcore.ErrorCode;
-import com.hpmath.hpmathmediadomain.media.dto.HttpStreamingCommand;
-import com.hpmath.hpmathmediadomain.media.dto.StreamingCommand;
-import com.hpmath.hpmathmediadomain.media.dto.StreamingResult;
-import com.hpmath.hpmathmediadomain.media.exception.MediaException;
-import com.hpmath.hpmathmediadomain.media.service.StreamingService;
+import com.hpmath.common.ErrorCode;
+import com.hpmath.domain.media.dto.HttpStreamingCommand;
+import com.hpmath.domain.media.dto.StreamingCommand;
+import com.hpmath.domain.media.dto.StreamingResult;
+import com.hpmath.domain.media.exception.MediaException;
+import com.hpmath.domain.media.service.StreamingService;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

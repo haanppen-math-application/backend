@@ -1,7 +1,7 @@
 package com.hpmath.domain.online.dto;
 
-import com.hpmath.hpmathcore.BusinessException;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.BusinessException;
+import com.hpmath.common.Role;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

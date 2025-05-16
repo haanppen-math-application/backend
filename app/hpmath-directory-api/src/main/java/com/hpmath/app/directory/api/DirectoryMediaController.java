@@ -3,7 +3,7 @@ package com.hpmath.app.directory.api;
 import com.hpmath.app.directory.api.Requests.SaveMediaToDirectoryRequest;
 import com.hpmath.domain.directory.dto.SaveMediaToDirectoryCommand;
 import com.hpmath.domain.directory.service.DirectoryMediaService;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;

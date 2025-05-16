@@ -1,6 +1,7 @@
 package com.hpmath.hpmathmediadomain.media.service.uploadV2;
 
-import com.hpmath.hpmathcore.TimeProvider;
+import com.hpmath.domain.media.service.uploadV2.UploadIdLifeCycleManager;
+import com.hpmath.common.TimeProvider;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Assertions;

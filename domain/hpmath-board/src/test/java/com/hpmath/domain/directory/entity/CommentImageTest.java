@@ -2,8 +2,9 @@ package com.hpmath.domain.directory.entity;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import com.hpmath.domain.directory.dao.CommentImageRepository;
-import com.hpmath.domain.directory.dao.CommentRepository;
+import com.hpmath.domain.board.dao.CommentImageRepository;
+import com.hpmath.domain.board.dao.CommentRepository;
+import com.hpmath.domain.board.entity.Comment;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;

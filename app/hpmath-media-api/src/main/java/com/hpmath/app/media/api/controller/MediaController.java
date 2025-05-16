@@ -1,8 +1,8 @@
 package com.hpmath.app.media.api.controller;
 
-import com.hpmath.hpmathcore.Role;
-import com.hpmath.hpmathmediadomain.media.dto.DeleteMediaCommand;
-import com.hpmath.hpmathmediadomain.media.service.MediaDeleteService;
+import com.hpmath.common.Role;
+import com.hpmath.domain.media.dto.DeleteMediaCommand;
+import com.hpmath.domain.media.service.MediaDeleteService;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;

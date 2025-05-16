@@ -1,7 +1,7 @@
 package com.hpmath.app.media.api.inner;
 
-import com.hpmath.hpmathmediadomain.media.dto.MediaInfo;
-import com.hpmath.hpmathmediadomain.media.service.MediaQueryService;
+import com.hpmath.domain.media.dto.MediaInfo;
+import com.hpmath.domain.media.service.MediaQueryService;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

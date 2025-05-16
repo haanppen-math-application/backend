@@ -11,7 +11,7 @@ import com.hpmath.domain.online.dto.OnlineVideoPreviewUpdateCommand;
 import com.hpmath.domain.online.dto.RegisterOnlineVideoAttachmentCommand;
 import com.hpmath.domain.online.dto.UpdateOnlineLessonInfoCommand;
 import com.hpmath.domain.online.dto.UpdateOnlineVideoSequenceCommand;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.common.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -2,12 +2,12 @@ package com.hpmath.app.board.api;
 
 import com.hpmath.app.board.api.Requests.CommentRegisterRequest;
 import com.hpmath.app.board.api.Requests.CommentUpdateRequest;
-import com.hpmath.domain.directory.dto.CommentDeleteCommand;
-import com.hpmath.domain.directory.dto.CommentRegisterCommand;
-import com.hpmath.domain.directory.dto.CommentUpdateCommand;
-import com.hpmath.domain.directory.service.comment.CommentRegisterService;
-import com.hpmath.domain.directory.service.comment.CommentService;
-import com.hpmath.hpmathcore.Role;
+import com.hpmath.domain.board.dto.CommentDeleteCommand;
+import com.hpmath.domain.board.dto.CommentRegisterCommand;
+import com.hpmath.domain.board.dto.CommentUpdateCommand;
+import com.hpmath.domain.board.service.comment.CommentRegisterService;
+import com.hpmath.domain.board.service.comment.CommentService;
+import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
