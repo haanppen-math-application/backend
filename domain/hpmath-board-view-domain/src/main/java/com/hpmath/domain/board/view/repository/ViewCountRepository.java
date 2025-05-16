@@ -58,14 +58,20 @@ public class ViewCountRepository {
         log.debug("Loading view count for board id {}", boardId);
         final String key = getKey(boardId);
 
-        long storedViewCount = getStoredViewCount(boardId);
+        Long backUpViewCount = getBackUpViewCount(boardId);
 
-        return stringRedisTemplate.opsForHash().increment(BASE_KEY, key, storedViewCount);
+        // 백업된게 없다면 레디스 저장 X
+        if (backUpViewCount == null) {
+            return 0L;
+        }
+
+        // 있으면 레디스 저장
+        return stringRedisTemplate.opsForHash().increment(BASE_KEY, key, backUpViewCount);
     }
 
-    private Long getStoredViewCount(final Long boardId) {
+    private Long getBackUpViewCount(final Long boardId) {
         final BoardViewCount viewCount = backupRepository.findByBoardId(boardId).orElse(null);
-        return viewCount == null ? 0L : viewCount.getViewCount();
+        return viewCount == null ? null : viewCount.getViewCount();
     }
 
 
