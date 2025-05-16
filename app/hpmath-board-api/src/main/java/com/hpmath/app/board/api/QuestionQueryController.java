@@ -34,9 +34,10 @@ public class QuestionQueryController {
     @SecurityRequirement(name = "jwtAuth")
     @Authorization(opened = true)
     public ResponseEntity<QuestionDetailResult> getSingleQuestionDetails(
-            @PathVariable final Long questionId
+            @PathVariable final Long questionId,
+            @LoginInfo final MemberPrincipal principal
     ) {
-        return ResponseEntity.ok(questionQueryService.getSingleQuestionDetails(questionId));
+        return ResponseEntity.ok(questionQueryService.getSingleQuestionDetails(questionId, principal.memberId()));
     }
 
     @Operation(summary = "질문 게시판 조회", description =

@@ -1,5 +1,6 @@
 package com.hpmath.domain.directory.service.question;
 
+import com.hpmath.client.board.view.BoardViewClient;
 import com.hpmath.client.member.MemberClient;
 import com.hpmath.common.page.PagedResponse;
 import com.hpmath.domain.directory.dao.QuestionRepository;
@@ -13,20 +14,19 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-@Transactional(readOnly = true)
 public class QuestionQueryService {
     private final QuestionRepository questionRepository;
+
+    private final BoardViewClient boardViewClient;
     private final MemberClient memberClient;
 
-    @Transactional
-    public QuestionDetailResult getSingleQuestionDetails(final Long questionId) {
+    public QuestionDetailResult getSingleQuestionDetails(final Long questionId, final Long requestMemberId) {
         final Question question = findQuestion(questionId);
-        question.addViewCount();
-        return QuestionDetailResult.from(question, memberClient);
+        final Long viewCount = boardViewClient.increaseViewCount(questionId, requestMemberId);
+        return QuestionDetailResult.from(question, memberClient, viewCount);
     }
 
     public PagedResponse<QuestionPreviewResult> loadQuestionsByOffset(final Pageable pageable, final String title) {
@@ -37,7 +37,8 @@ public class QuestionQueryService {
             questions = questionRepository.findAllByTitleContaining(title, pageable);
         }
         return PagedResponse.of(
-                questions.map(question -> QuestionPreviewResult.from(question, memberClient)).toList(),
+                questions.map(question ->
+                        QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()))).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),
                 questions.getSize()
@@ -56,7 +57,8 @@ public class QuestionQueryService {
             questions = questionRepository.findQuestionsByOwnerMemberIdAndTitleContaining(memberId, title, pageable);
         }
         return PagedResponse.of(
-                questions.map(question -> QuestionPreviewResult.from(question, memberClient)).toList(),
+                questions.map(question ->
+                        QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()))).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),
                 questions.getSize()

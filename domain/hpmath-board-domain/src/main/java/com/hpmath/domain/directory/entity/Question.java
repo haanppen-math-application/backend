@@ -40,9 +40,6 @@ public class Question {
     @Column(name = "solved", nullable = false)
     private Boolean solved = false;
 
-    @Column(name = "view_count", nullable = false)
-    private Long viewCount = 0l;
-
     @Column(name = "owner_member")
     private Long ownerMemberId;
 
@@ -94,10 +91,6 @@ public class Question {
         this.images.addAll(imageSrcs.stream()
                 .map(src -> QuestionImage.of(this, src))
                 .toList());
-    }
-
-    public void addViewCount() {
-        this.viewCount++;
     }
 
     public void clearSolved() {

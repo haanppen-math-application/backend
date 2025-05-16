@@ -19,13 +19,13 @@ public record QuestionDetailResult(
         List<CommentDetailResult> comments,
         List<ImageUrlResult> imageUrls
 ) {
-    public static QuestionDetailResult from(Question question, MemberClient memberClient) {
+    public static QuestionDetailResult from(Question question, MemberClient memberClient, final Long viewCount) {
         return new QuestionDetailResult(
                 question.getId(),
                 question.getTitle(),
                 question.getContent(),
                 question.getSolved(),
-                question.getViewCount(),
+                viewCount,
                 question.getRegisteredDateTime(),
                 MemberDetailResult.from(memberClient.getMemberDetail(question.getOwnerMemberId())),
                 MemberDetailResult.from(memberClient.getMemberDetail(question.getTargetMemberId())),
