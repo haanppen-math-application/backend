@@ -36,7 +36,7 @@ public class BoardViewBackUpProcessor {
 
     private void backUp(final Long boardId, final Long viewCount) {
         log.debug("backup started with boardId: {}, viewCount: {}", boardId, viewCount);
-        final Long count = boardViewCountRepository.updateBoardViewCount(boardId, viewCount);
+        final int count = boardViewCountRepository.updateBoardViewCount(boardId, viewCount);
         // when not applied
         if (count == 0) {
             boardViewCountRepository.findByBoardId(boardId).ifPresentOrElse(

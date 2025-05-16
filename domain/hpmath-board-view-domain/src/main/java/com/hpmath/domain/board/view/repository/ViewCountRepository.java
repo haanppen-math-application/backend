@@ -4,9 +4,11 @@ import com.hpmath.domain.board.view.entity.BoardViewCount;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class ViewCountRepository {
@@ -21,6 +23,7 @@ public class ViewCountRepository {
         final String key = getKey(boardId);
         final Long count = stringRedisTemplate.opsForHash().increment(BASE_KEY, key, 1L);
 
+        log.debug("Increasing view count for board id {}", boardId);
         // 레디스에 첫 적재 됐을 경우
         if (count == 1) {
             return loadToRedisIfExistInBackUpRepository(boardId);
@@ -30,14 +33,17 @@ public class ViewCountRepository {
 
     public Long readViewCount(Long boardId) {
         final String key = getKey(boardId);
-        final String count = String.valueOf(stringRedisTemplate.opsForHash().get(BASE_KEY, key));
-        return count == null ? loadToRedisIfExistInBackUpRepository(boardId) : Long.parseLong(count);
+        final Object count = stringRedisTemplate.opsForHash().get(BASE_KEY, key);
+        if (count == null) {
+            return loadToRedisIfExistInBackUpRepository(boardId);
+        }
+        return Long.parseLong(count.toString());
     }
 
     public Map<Long, Long> loadAllBoardViews() {
         return stringRedisTemplate.opsForHash().entries(BASE_KEY).entrySet().stream()
                 .collect(Collectors.toMap(
-                        entry -> Long.parseLong(entry.getKey().toString()),
+                        entry -> this.getBoardIdFromKey(entry.getKey().toString()),
                         entry -> Long.parseLong(entry.getValue().toString())
                 ));
     }
@@ -49,6 +55,7 @@ public class ViewCountRepository {
      * 백엡 레포에 있으면 레디스에 저장 후 응답
      */
     private Long loadToRedisIfExistInBackUpRepository(Long boardId) {
+        log.debug("Loading view count for board id {}", boardId);
         final String key = getKey(boardId);
 
         long storedViewCount = getStoredViewCount(boardId);
@@ -64,5 +71,9 @@ public class ViewCountRepository {
 
     private String getKey(Long boardId) {
         return String.format(ENTRY_HASH_KEY, boardId);
+    }
+
+    private Long getBoardIdFromKey(final String key) {
+        return Long.parseLong(key.split("::")[2]);
     }
 }

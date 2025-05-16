@@ -11,7 +11,7 @@ public interface BoardViewCountBackupRepository extends JpaRepository<BoardViewC
 
     @Modifying
     @Query("UPDATE BoardViewCount bvc SET bvc.viewCount = :viewCount WHERE bvc.boardId = :boardId AND bvc.viewCount < :viewCount")
-    Long updateBoardViewCount(@Param("boardId") final Long boardId, @Param("viewCount") final Long viewCount);
+    Integer updateBoardViewCount(@Param("boardId") final Long boardId, @Param("viewCount") final Long viewCount);
 
     Optional<BoardViewCount> findByBoardId(Long boardId);
 }
