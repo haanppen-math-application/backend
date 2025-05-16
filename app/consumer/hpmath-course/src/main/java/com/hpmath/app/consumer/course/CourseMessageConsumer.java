@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CourseMessageConsumer {
-    private final EventProcessor eventProcessor;
+    private final CourseEventProcessor eventProcessor;
 
     @KafkaListener(
             topics = {Topic.HPMATH_MEMBER},
