@@ -4,6 +4,6 @@ dependencies {
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 
-    implementation project(":domain:hpmath-board-view-domain")
+    implementation project(":domain:hpmath-board-view")
     implementation project(":common:hpmath-web-common")
 }

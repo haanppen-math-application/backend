@@ -7,5 +7,5 @@ dependencies {
 
     implementation project(":common:hpmath-web-common")
     implementation project(":common:hpmath-common")
-    implementation project(":domain:hpmath-board-domain")
+    implementation project(":domain:hpmath-board")
 }

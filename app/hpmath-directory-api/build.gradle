@@ -6,5 +6,6 @@ dependencies {
 
     implementation project(":common:hpmath-common")
     implementation project(":common:hpmath-web-common")
-    implementation project(":domain:hpmath-directory-domain")
+
+    implementation project(":domain:hpmath-directory")
 }

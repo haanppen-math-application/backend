@@ -1,5 +1,5 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 
-    implementation project(":domain:hpmath-board-view-domain")
+    implementation project(":domain:hpmath-board-view")
 }

@@ -3,5 +3,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 
     implementation project(":common:hpmath-common")
-    implementation project(":domain:hpmath-member-domain")
+
+    implementation project(":domain:hpmath-member")
 }
