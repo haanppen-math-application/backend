@@ -8,29 +8,40 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
+@Table(name = "member", indexes = @Index(name = "idx_phoneNumber_password", columnList = "phone_number, password"))
 @Getter
 @NoArgsConstructor
+@SQLDelete(
+        sql = "UPDATE member SET member.phone_number = NULL, member.removed = TRUE WHERE member.id = ?"
+)
+@ToString
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     private Integer grade;
@@ -57,9 +68,6 @@ public class Member {
 
     @Column(name = "verify_status", nullable = true)
     private Boolean isVerifying = false;
-
-//    @OneToMany(mappedBy = "member")
-//    private List<CourseStudent> courseStudent = new ArrayList<>();
 
     @Column(name = "login_try_count", nullable = false)
     private Integer loginTryCount = 0;
@@ -130,13 +138,6 @@ public class Member {
         this.isVerifying = false;
     }
 
-    public void remove() {
-        this.phoneNumber = null;
-        this.removed = true;
-//        this.courseStudent.stream()
-//                .forEach(courseStudent1 -> courseStudent1.delete());
-    }
-
     @Builder
     private Member(String phoneNumber, String name, String encryptedPassword, Integer grade, Role role,
                    LocalDateTime registeredDate) {
@@ -146,19 +147,6 @@ public class Member {
         this.grade = grade;
         this.role = role;
         this.registeredDate = registeredDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "memberId=" + id +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", memberName='" + name + '\'' +
-                ", password='" + "****" + '\'' +
-                ", grade=" + grade +
-                ", userRole=" + role +
-                ", localDateTime=" + registeredDate +
-                '}';
     }
 
     public static Member none() {

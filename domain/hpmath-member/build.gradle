@@ -12,4 +12,7 @@ dependencies {
     implementation project(":common:hpmath-web-common")
     implementation project(":common:hpmath-page-common")
     implementation project(":client:hpmath-sms-client")
+
+    implementation project(":common:hpmath-event-outbox-common")
+    implementation project(":common:hpmath-event-common")
 }

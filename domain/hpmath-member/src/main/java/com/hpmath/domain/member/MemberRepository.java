@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
-public interface MemberRepository extends Repository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member save(Member member);
 
@@ -59,5 +60,8 @@ public interface MemberRepository extends Repository<Member, Long> {
     @Query("SELECT new com.hpmath.domain.member.dto.MemberInfoResult(m.id, m.name, m.phoneNumber, m.grade, m.role, m.registeredDate) FROM Member m where m.role = :targetRole AND m.name LIKE %:targetName% AND m.removed = FALSE")
     Page<MemberInfoResult> findMembersByRoleAndNameContainingAndRemovedIsFalse(@Param("targetRole") final Role role, @Param("targetName") final String name, final Pageable pageable);
 
-    List<Member> findMembersByIdIsInAndRemovedIsFalse(List<Long> memberIds);
+    @Modifying
+    @Query(nativeQuery = true,
+            value = "DELETE FROM member WHERE member.id = :id")
+    Integer removeTarget(@Param("id") final Long id);
 }

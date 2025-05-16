@@ -1,6 +1,7 @@
 package com.hpmath.common.event;
 
 import com.hpmath.common.event.payload.ImageDeleteEventPayload;
+import com.hpmath.common.event.payload.MemberDeletedEvent;
 import com.hpmath.common.event.payload.NonePayload;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public enum EventType {
     NONE(NonePayload.class, Topic.HP_MATH_NONE),
-    IMAGE_DELETED_EVENT(ImageDeleteEventPayload.class, Topic.HP_MATH_IMAGE_DELETE);
+    IMAGE_DELETED_EVENT(ImageDeleteEventPayload.class, Topic.HP_MATH_IMAGE_DELETE),
+    MEMBER_DELETED_EVENT(MemberDeletedEvent.class, Topic.HPMATH_MEMBER);
 
 
     private final Class<? extends EventPayload> payloadClass;
@@ -29,5 +31,6 @@ public enum EventType {
     public static class Topic {
         public static final String HP_MATH_NONE = "hpmath-none";
         public static final String HP_MATH_IMAGE_DELETE = "hpmath-none";
+        public static final String HPMATH_MEMBER = "hpmath-member";
     }
 }
