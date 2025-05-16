@@ -38,14 +38,16 @@ out/
 .vscode/
 .DS_Store
 
-app/hpmath-media-api/src/main/resources/application.properties
-app/hpmath-member-api/src/main/resources/application.properties
-app/hpmath-member-batch/src/main/resources/application.properties
-app/hpmath-banner-api/src/main/resources/application.properties
-app/hpmath-board-api/src/main/resources/application.properties
-app/hpmath-directory-api/src/main/resources/application.properties
-app/hpmath-online-api/src/main/resources/application.properties
-app/hpmath-course-api/src/main/resources/application.properties
-app/hpmath-monolith-api/src/main/resources/application.properties
-app/hpmath-board-view-batch/src/main/resources/application.properties
-app/hpmath-board-view-api/src/main/resources/application.properties
+app/api/hpmath-media/src/main/resources/application.properties
+app/api/hpmath-member/src/main/resources/application.properties
+app/api/hpmath-banner/src/main/resources/application.properties
+app/api/hpmath-board/src/main/resources/application.properties
+app/api/hpmath-directory/src/main/resources/application.properties
+app/api/hpmath-online/src/main/resources/application.properties
+app/api/hpmath-course/src/main/resources/application.properties
+app/api/hpmath-board-view/src/main/resources/application.properties
+
+app/hpmath-monolith/src/main/resources/application.properties
+
+app/batch/hpmath-board-view/src/main/resources/application.properties
+app/batch/hpmath-member/src/main/resources/application.properties

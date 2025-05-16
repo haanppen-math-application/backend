@@ -1,0 +1,21 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+
+    implementation project(":app:api:hpmath-media")
+    implementation project(":app:api:hpmath-member")
+    implementation project(":app:api:hpmath-course")
+    implementation project(":app:api:hpmath-banner")
+    implementation project(":app:api:hpmath-board")
+    implementation project(":app:api:hpmath-board-view")
+    implementation project(":app:api:hpmath-directory")
+    implementation project(":app:api:hpmath-online")
+    implementation project(":app:batch:hpmath-board-view")
+    implementation project(":app:batch:hpmath-member")
+
+    implementation project(":app:hpmath-kafka-app")
+    implementation project(":app:hpmath-redis-app")
+
+    implementation project(":app:consumer:hpmath-course")
+}

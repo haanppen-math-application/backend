@@ -1,21 +1,27 @@
 rootProject.name = 'academyapi'
-
 include(
         'app',
-        'app:hpmath-course-consumer',
+        'app:batch',
+        'app:api',
+        'app:consumer',
+
         'app:hpmath-redis-app',
         'app:hpmath-kafka-app',
-        'app:hpmath-board-view-api',
-        'app:hpmath-board-view-batch',
-        'app:hpmath-online-api',
-        'app:hpmath-directory-api',
-        'app:hpmath-board-api',
-        'app:hpmath-banner-api',
-        'app:hpmath-monolith-api',
-        'app:hpmath-member-api',
-        'app:hpmath-media-api',
-        'app:hpmath-course-api',
-        'app:hpmath-member-batch',
+        'app:hpmath-monolith',
+
+        'app:consumer:hpmath-course',
+
+        'app:api:hpmath-board-view',
+        'app:api:hpmath-online',
+        'app:api:hpmath-directory',
+        'app:api:hpmath-board',
+        'app:api:hpmath-banner',
+        'app:api:hpmath-member',
+        'app:api:hpmath-media',
+        'app:api:hpmath-course',
+
+        'app:batch:hpmath-member',
+        'app:batch:hpmath-board-view',
 
         'common',
         'common:hpmath-cache-redis-common',
@@ -44,3 +50,4 @@ include(
         'client:hpmath-member-client',
         'client:hpmath-sms-client'
 )
+
