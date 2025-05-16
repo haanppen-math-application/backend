@@ -16,4 +16,6 @@ dependencies {
 
     implementation project(":app:hpmath-kafka-app")
     implementation project(":app:hpmath-redis-app")
+
+    implementation project(":app:hpmath-course-consumer")
 }
