@@ -26,7 +26,11 @@ public class ViewCountRepository {
         log.debug("Increasing view count for board id {}", boardId);
         // 레디스에 첫 적재 됐을 경우
         if (count == 1) {
-            return loadToRedisIfExistInBackUpRepository(boardId);
+            final Long backupedViewCount = loadToRedisIfExistInBackUpRepository(boardId);
+            if (backupedViewCount == null) {
+                return 1L;
+            }
+            return backupedViewCount;
         }
         return count;
     }
@@ -35,7 +39,11 @@ public class ViewCountRepository {
         final String key = getKey(boardId);
         final Object count = stringRedisTemplate.opsForHash().get(BASE_KEY, key);
         if (count == null) {
-            return loadToRedisIfExistInBackUpRepository(boardId);
+            final Long backupedViewCount = loadToRedisIfExistInBackUpRepository(boardId);
+            if (backupedViewCount == null) {
+                return 0L;
+            }
+            return backupedViewCount;
         }
         return Long.parseLong(count.toString());
     }
@@ -62,7 +70,7 @@ public class ViewCountRepository {
 
         // 백업된게 없다면 레디스 저장 X
         if (backUpViewCount == null) {
-            return 0L;
+            return null;
         }
 
         // 있으면 레디스 저장
