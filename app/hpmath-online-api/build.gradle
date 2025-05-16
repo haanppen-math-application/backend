@@ -7,4 +7,8 @@ dependencies {
     implementation project(":common:hpmath-common")
 
     implementation project(":domain:hpmath-online")
+
+    implementation project(":common:hpmath-event-common")
+    implementation project(":common:hpmath-event-outbox-common")
+    implementation 'org.springframework.kafka:spring-kafka'
 }

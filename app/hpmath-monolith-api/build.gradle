@@ -13,4 +13,7 @@ dependencies {
     implementation project(":app:hpmath-board-view-batch")
     implementation project(":app:hpmath-directory-api")
     implementation project(":app:hpmath-online-api")
+
+    implementation project(":app:hpmath-kafka-app")
+    implementation project(":app:hpmath-redis-app")
 }

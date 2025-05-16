@@ -10,4 +10,7 @@ dependencies {
 
     implementation project(":client:hpmath-member-client")
     implementation project(":client:hpmath-media-client")
+
+    implementation project(":common:hpmath-event-common")
+    implementation project(":common:hpmath-event-outbox-common")
 }

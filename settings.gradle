@@ -2,6 +2,8 @@ rootProject.name = 'academyapi'
 
 include(
         'app',
+        'app:hpmath-redis-app',
+        'app:hpmath-kafka-app',
         'app:hpmath-board-view-api',
         'app:hpmath-board-view-batch',
         'app:hpmath-online-api',
