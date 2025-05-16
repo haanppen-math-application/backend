@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public enum EventType {
     NONE(NonePayload.class, Topic.HP_MATH_NONE),
-    IMAGE_DELETED_EVENT(ImageDeleteEventPayload.class, Topic.HP_MATH_NONE);
+    IMAGE_DELETED_EVENT(ImageDeleteEventPayload.class, Topic.HP_MATH_IMAGE_DELETE);
 
 
     private final Class<? extends EventPayload> payloadClass;
