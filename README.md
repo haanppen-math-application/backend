@@ -11,7 +11,7 @@
 ./gradlew app:hpmath-monolith:bootRun
 
 ```
-### Commands to run each MSA
+### Commands to run each service
 ```
 ./gradlew app:api:hpmath-banner:bootRun
 ./gradlew app:api:hpmath-board:bootRun
