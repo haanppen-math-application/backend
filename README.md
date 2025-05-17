@@ -2,7 +2,7 @@
 이 프로젝트는 한편의 수학 학원에 다니는 학생, 선생님 그리고 원장님간에 교류를 원활하게 하고, 학습자료를 더 편리하게 제공하기 위한 서비스를 제공하는 데 목적이 있습니다.
 
 ## Service Architecture
-![hpmath-infra1](https://github.com/user-attachments/assets/98f32726-5d71-4ba0-a30d-802803c5d18b)
+![hpmath-infra1](https://github.com/user-attachments/assets/338750c5-de92-4178-91d2-478b1bcf450d)
 
 ## Commands
 
