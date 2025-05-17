@@ -36,7 +36,8 @@ Frontend: [coririri](https://github.com/coririri)
 Backend: [@huhdy32](https://github.com/huhdy32)
 
 ### 🛠 Tools and technologies
-- SpringBoot
+- Java 17
+- SpringBoot 3.4.4
 ----- 
 - Mysql 8
 - Redis
