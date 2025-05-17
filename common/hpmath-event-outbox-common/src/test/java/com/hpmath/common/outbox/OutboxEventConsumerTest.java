@@ -1,8 +1,7 @@
 package com.hpmath.common.outbox;
 
+import com.hpmath.common.event.EventPayload;
 import com.hpmath.common.event.EventType;
-import com.hpmath.common.event.payload.ImageDeleteEventPayload;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -34,6 +33,7 @@ class Producer {
 
     @Transactional
     public void publish() {
-        outboxEventPublisher.publishEvent(EventType.NONE, new ImageDeleteEventPayload(List.of("1")));
+        outboxEventPublisher.publishEvent(EventType.NONE, new EventPayload() {
+        });
     }
 }
