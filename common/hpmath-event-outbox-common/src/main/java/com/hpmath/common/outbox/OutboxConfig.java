@@ -3,6 +3,8 @@ package com.hpmath.common.outbox;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,11 +19,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Slf4j
 @Configuration
 @EnableAsync
+@EnableScheduling
 class OutboxConfig {
     @Value("${spring.kafka.bootstrap-servers:http://localhost:9092}")
     private String bootstrapServers;
@@ -47,6 +51,11 @@ class OutboxConfig {
         executor.initialize();
 
         return executor;
+    }
+
+    @Bean
+    public ScheduledExecutorService pendingEventPublisher() {
+        return Executors.newSingleThreadScheduledExecutor();
     }
 
     @Configuration
