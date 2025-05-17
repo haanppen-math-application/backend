@@ -47,7 +47,5 @@ app/api/hpmath-online/src/main/resources/application.properties
 app/api/hpmath-course/src/main/resources/application.properties
 app/api/hpmath-board-view/src/main/resources/application.properties
 
-app/hpmath-monolith/src/main/resources/application.properties
-
 app/batch/hpmath-board-view/src/main/resources/application.properties
 app/batch/hpmath-member/src/main/resources/application.properties
