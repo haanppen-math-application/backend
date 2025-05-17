@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class BoardEventProcessor {
     private final List<EventHandler> eventHandlers;
 
-    public void process(final Event<EventPayload> event) {
+    public void process(final Event<? extends EventPayload> event) {
         eventHandlers.stream()
                 .filter(eventHandler -> eventHandler.canHandle(event))
                 .findAny()
