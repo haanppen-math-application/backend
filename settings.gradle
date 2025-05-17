@@ -11,6 +11,7 @@ include(
 
         'app:consumer:hpmath-course',
         'app:consumer:hpmath-board',
+        'app:consumer:hpmath-directory',
 
         'app:api:hpmath-board-view',
         'app:api:hpmath-online',
