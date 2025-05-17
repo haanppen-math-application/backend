@@ -5,6 +5,7 @@ import com.hpmath.domain.media.entity.Media;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,8 @@ public interface MediaRepository extends JpaRepository<Media, Long> {
     Optional<MediaInfo> findMediaInfo(@Param("mediaSrc") final String mediaSrc);
 
     Boolean existsBySrc(final String src);
+
+    @Modifying
+    @Query("UPDATE Media m SET m.memberId = null WHERE m.memberId IN :memberIds")
+    Integer updateMemberIdsToNull(@Param("memberIds") final List<Long> memberIds);
 }

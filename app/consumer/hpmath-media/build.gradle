@@ -1,0 +1,7 @@
+dependencies {
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    implementation project(":common:hpmath-event-common")
+    implementation project(":domain:hpmath-media")
+}
