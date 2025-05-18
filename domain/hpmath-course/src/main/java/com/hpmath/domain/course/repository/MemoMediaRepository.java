@@ -18,7 +18,7 @@ public interface MemoMediaRepository extends JpaRepository<MemoMedia, Long> {
     @Query("SELECT mm from MemoMedia mm "
             + "JOIN FETCH mm.memo "
             + "JOIN FETCH mm.memoMediaAttachments "
-            + "JOIN FETCH mm.memo.course"
+            + "JOIN FETCH mm.memo.course "
             + "WHERE mm.id = :memoMediaId")
     Optional<MemoMedia> findMemoMedia(@Param(":memoMediaId") final Long memoMediaId);
     @Modifying
