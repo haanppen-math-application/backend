@@ -61,7 +61,7 @@ public class MemberClient {
             Long memberId,
             String memberName,
             Integer memberGrade,
-            String role
+            Role role
     ) {
     }
 
