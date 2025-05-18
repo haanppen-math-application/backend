@@ -1,19 +1,19 @@
 package com.hpmath.app.api.course.controller;
 
+import com.hpmath.common.Role;
+import com.hpmath.common.web.authentication.MemberPrincipal;
+import com.hpmath.common.web.authenticationV2.Authorization;
+import com.hpmath.common.web.authenticationV2.LoginInfo;
 import com.hpmath.domain.course.dto.DeleteAttachmentCommand;
 import com.hpmath.domain.course.dto.DeleteMemoMediaCommand;
 import com.hpmath.domain.course.dto.RegisterAttachmentCommand;
 import com.hpmath.domain.course.dto.RegisterMemoMediaCommand;
 import com.hpmath.domain.course.dto.UpdateMediaMemoCommand;
-import com.hpmath.domain.course.application.port.in.DeleteAttachmentUseCase;
-import com.hpmath.domain.course.application.port.in.DeleteMemoMediaUseCase;
-import com.hpmath.domain.course.application.port.in.RegisterAttachmentUseCase;
-import com.hpmath.domain.course.application.port.in.RegisterMemoMediaUseCase;
-import com.hpmath.domain.course.application.port.in.UpdateMemoMediaUseCase;
-import com.hpmath.common.Role;
-import com.hpmath.common.web.authentication.MemberPrincipal;
-import com.hpmath.common.web.authenticationV2.Authorization;
-import com.hpmath.common.web.authenticationV2.LoginInfo;
+import com.hpmath.domain.course.service.DeleteAttachmentService;
+import com.hpmath.domain.course.service.DeleteMemoMediaService;
+import com.hpmath.domain.course.service.RegisterAttachmentService;
+import com.hpmath.domain.course.service.RegisterMemoMediaService;
+import com.hpmath.domain.course.service.UpdateMemoMediaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
@@ -31,11 +31,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class MemoMediaController {
-    private final DeleteAttachmentUseCase deleteAttachmentUseCase;
-    private final DeleteMemoMediaUseCase deleteMemoMediaUseCase;
-    private final RegisterAttachmentUseCase registerAttachmentUseCase;
-    private final UpdateMemoMediaUseCase updateMemoMediaUseCase;
-    private final RegisterMemoMediaUseCase registerMemoMediaUseCase;
+    private final DeleteAttachmentService deleteAttachmentUseCase;
+    private final DeleteMemoMediaService deleteMemoMediaUseCase;
+    private final RegisterAttachmentService registerAttachmentUseCase;
+    private final UpdateMemoMediaService updateMemoMediaUseCase;
+    private final RegisterMemoMediaService registerMemoMediaUseCase;
 
     @DeleteMapping("/api/courses/memos/media/attachment/{targetAttachmentId}")
     @Authorization(values = {Role.ADMIN, Role.TEACHER})
@@ -43,7 +43,7 @@ public class MemoMediaController {
             @PathVariable final Long targetAttachmentId,
             @LoginInfo final MemberPrincipal loginId
     ) {
-        final DeleteAttachmentCommand command = DeleteAttachmentCommand.of(targetAttachmentId, loginId.memberId());
+        final DeleteAttachmentCommand command = DeleteAttachmentCommand.of(targetAttachmentId, loginId.memberId(), loginId.role());
         deleteAttachmentUseCase.delete(command);
         return ResponseEntity.noContent().build();
     }

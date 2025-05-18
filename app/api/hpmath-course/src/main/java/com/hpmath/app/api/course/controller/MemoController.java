@@ -1,14 +1,14 @@
 package com.hpmath.app.api.course.controller;
 
-import com.hpmath.domain.course.dto.DeleteMemoCommand;
-import com.hpmath.domain.course.dto.ModifyMemoTextCommand;
-import com.hpmath.domain.course.application.port.in.DeleteMemoUseCase;
-import com.hpmath.domain.course.application.port.in.MemoRegisterUseCase;
-import com.hpmath.domain.course.application.port.in.ModifyMemoTextUseCase;
 import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
+import com.hpmath.domain.course.dto.DeleteMemoCommand;
+import com.hpmath.domain.course.dto.ModifyMemoTextCommand;
+import com.hpmath.domain.course.service.DeleteMemoService;
+import com.hpmath.domain.course.service.MemoRegisterService;
+import com.hpmath.domain.course.service.ModifyMemoTextService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class MemoController {
-    private final DeleteMemoUseCase deleteMemoUseCase;
-    private final MemoRegisterUseCase memoRegisterUseCase;
-    private final ModifyMemoTextUseCase modifyMemoTextUseCase;
+    private final DeleteMemoService deleteMemoUseCase;
+    private final MemoRegisterService memoRegisterUseCase;
+    private final ModifyMemoTextService modifyMemoTextUseCase;
 
     @DeleteMapping("/api/courses/memos/{targetMemoId}")
     @Operation(summary = "메모 삭제 API")
@@ -38,7 +38,7 @@ public class MemoController {
             @Nonnull @PathVariable final Long targetMemoId,
             @Nonnull @LoginInfo final MemberPrincipal memberPrincipal
     ) {
-        final DeleteMemoCommand command = new DeleteMemoCommand(memberPrincipal.memberId(), targetMemoId);
+        final DeleteMemoCommand command = new DeleteMemoCommand(memberPrincipal.memberId(), targetMemoId, memberPrincipal.role());
         deleteMemoUseCase.delete(command);
         return ResponseEntity.noContent().build();
     }

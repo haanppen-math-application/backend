@@ -1,4 +1,4 @@
-package com.hpmath.domain.course.adapter.out;
+package com.hpmath.domain.course.repository;
 
 import com.hpmath.domain.course.entity.MemoMediaAttachment;
 import java.util.List;

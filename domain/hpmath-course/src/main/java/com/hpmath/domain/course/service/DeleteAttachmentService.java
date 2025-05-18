@@ -1,37 +1,39 @@
 package com.hpmath.domain.course.service;
 
+import com.hpmath.common.ErrorCode;
+import com.hpmath.common.Role;
+import com.hpmath.domain.course.repository.MediaAttachmentRepository;
 import com.hpmath.domain.course.dto.DeleteAttachmentCommand;
 import com.hpmath.domain.course.exception.CourseException;
-import com.hpmath.domain.course.application.port.in.DeleteAttachmentUseCase;
-import com.hpmath.domain.course.application.port.out.DeleteAttachmentPort;
-import com.hpmath.domain.course.application.port.out.LoadAttachmentOwnedMemberIdPort;
-import com.hpmath.domain.course.application.port.out.ValidateSuperUserPort;
-import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class DeleteAttachmentService implements DeleteAttachmentUseCase {
-    private final ValidateSuperUserPort validateSuperUserPort;
-    private final LoadAttachmentOwnedMemberIdPort loadAttachmentOwnedMemberIdPort;
-    private final DeleteAttachmentPort deleteAttachmentPort;
+public class DeleteAttachmentService {
+    private final MediaAttachmentRepository mediaAttachmentRepository;
 
-    @Override
     @Transactional
     public void delete(DeleteAttachmentCommand command) {
         validateAuthority(command);
-        deleteAttachmentPort.delete(command.getTargetAttachmentId());
+        mediaAttachmentRepository.deleteById(command.getTargetAttachmentId());
     }
 
     private void validateAuthority(final DeleteAttachmentCommand command) {
-        if (loadAttachmentOwnedMemberIdPort.findOwnerId(command.getTargetAttachmentId()).equals(command.getRequestMemberId())) {
+        if (validateAttachmentOwner(command.getTargetAttachmentId(), command.getRequestMemberId())) {
             return;
         }
-        if (validateSuperUserPort.isSuperUser(command.getRequestMemberId())) {
+        if (command.getRole().equals(Role.ADMIN) || command.getRole().equals(Role.MANAGER)) {
             return;
         }
         throw new CourseException("첨부파일을 지울 수 있는 권한이 없습니다.", ErrorCode.CANNOT_FIND_ATTACHMENT);
+    }
+
+    private boolean validateAttachmentOwner(final Long targetAttachmentId, final Long requestMemberId) {
+        final Long ownerId = mediaAttachmentRepository.findCourseOwnerMemberOnThisMemoAttachment(targetAttachmentId)
+                .orElse(null);
+
+        return ownerId.equals(requestMemberId);
     }
 }

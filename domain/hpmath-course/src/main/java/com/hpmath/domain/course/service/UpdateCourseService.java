@@ -1,37 +1,37 @@
 package com.hpmath.domain.course.service;
 
+import com.hpmath.common.ErrorCode;
+import com.hpmath.domain.course.repository.CourseRepository;
 import com.hpmath.domain.course.dto.CourseUpdateCommand;
-import com.hpmath.domain.course.application.port.in.UpdateCourseUseCase;
-import com.hpmath.domain.course.application.port.out.LoadCoursePort;
-import com.hpmath.domain.course.application.port.out.LoadTeacherPort;
-import com.hpmath.domain.course.application.port.out.UpdateCoursePort;
-import com.hpmath.domain.course.domain.Course;
-import com.hpmath.domain.course.domain.Teacher;
+import com.hpmath.domain.course.entity.Course;
+import com.hpmath.domain.course.exception.NoSuchCourseException;
 import jakarta.validation.Valid;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
-public class UpdateCourseService implements UpdateCourseUseCase {
-    private final LoadCoursePort loadCoursePort;
-    private final LoadTeacherPort loadTeacherPort;
-    private final UpdateCoursePort updateCoursePort;
-    @Override
+@Validated
+public class UpdateCourseService {
+    private final CourseRepository courseRepository;
+
     @Transactional
-    public void updateCourse(final @Valid CourseUpdateCommand courseUpdateDto) {
-        final Course course = loadCoursePort.loadCourse(courseUpdateDto.courseId());
+    public void updateCourse(@Valid final CourseUpdateCommand command) {
+        final Course course = loadCourse(command);
 
-        if (Objects.nonNull(courseUpdateDto.courseName())){
-            course.changeCourseName(courseUpdateDto.courseName());
+        if (Objects.nonNull(command.courseName())) {
+            course.changeCourseName(command.courseName());
         }
-        if (Objects.nonNull(courseUpdateDto.newTeacherId())) {
-            final Teacher newTeacher = loadTeacherPort.loadTeacher(courseUpdateDto.newTeacherId());
-            course.changeTeacher(newTeacher);
+        if (Objects.nonNull(command.newTeacherId())) {
+            course.changeTeacher(command.newTeacherId());
         }
+    }
 
-        updateCoursePort.updateCourse(course);
+    private Course loadCourse(CourseUpdateCommand command) {
+        return courseRepository.findById(command.courseId())
+                .orElseThrow(() -> new NoSuchCourseException(ErrorCode.NO_SUCH_COURSE));
     }
 }

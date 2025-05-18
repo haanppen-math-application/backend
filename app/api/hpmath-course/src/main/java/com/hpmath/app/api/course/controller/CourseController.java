@@ -1,21 +1,21 @@
 package com.hpmath.app.api.course.controller;
 
+import com.hpmath.app.api.course.controller.Requests.CourseUpdateRequest;
+import com.hpmath.app.api.course.controller.Requests.DeleteCourseRequest;
+import com.hpmath.common.Role;
+import com.hpmath.common.web.authentication.MemberPrincipal;
+import com.hpmath.common.web.authenticationV2.Authorization;
+import com.hpmath.common.web.authenticationV2.LoginInfo;
 import com.hpmath.domain.course.dto.CourseRegisterCommand;
 import com.hpmath.domain.course.dto.CourseUpdateCommand;
 import com.hpmath.domain.course.dto.DeleteCourseCommand;
 import com.hpmath.domain.course.dto.RegisterStudentCommand;
 import com.hpmath.domain.course.dto.UpdateCourseStudentsCommand;
-import com.hpmath.domain.course.application.port.in.AddStudentToCourseUseCase;
-import com.hpmath.domain.course.application.port.in.CourseRegisterUseCase;
-import com.hpmath.domain.course.application.port.in.DeleteCourseUseCase;
-import com.hpmath.domain.course.application.port.in.UpdateCourseStudentsUseCase;
-import com.hpmath.domain.course.application.port.in.UpdateCourseUseCase;
-import com.hpmath.common.Role;
-import com.hpmath.app.api.course.controller.Requests.CourseUpdateRequest;
-import com.hpmath.app.api.course.controller.Requests.DeleteCourseRequest;
-import com.hpmath.common.web.authentication.MemberPrincipal;
-import com.hpmath.common.web.authenticationV2.Authorization;
-import com.hpmath.common.web.authenticationV2.LoginInfo;
+import com.hpmath.domain.course.service.AddStudentToCourseService;
+import com.hpmath.domain.course.service.CourseRegisterService;
+import com.hpmath.domain.course.service.DeleteCourseService;
+import com.hpmath.domain.course.service.UpdateCourseService;
+import com.hpmath.domain.course.service.UpdateCourseStudentsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -36,11 +36,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping
 @RequiredArgsConstructor
 public class CourseController {
-    private final AddStudentToCourseUseCase addStudentToCourseUseCase;
-    private final DeleteCourseUseCase deleteCourseAdapter;
-    private final CourseRegisterUseCase courseRegisterUseCase;
-    private final UpdateCourseUseCase updateCourseNameUseCase;
-    private final UpdateCourseStudentsUseCase updateCourseStudentsUseCase;
+    private final AddStudentToCourseService addStudentToCourseUseCase;
+    private final DeleteCourseService deleteCourseAdapter;
+    private final CourseRegisterService courseRegisterUseCase;
+    private final UpdateCourseService updateCourseNameUseCase;
+    private final UpdateCourseStudentsService updateCourseStudentsUseCase;
 
     @PostMapping(value = "/api/manage/courses/students", consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")

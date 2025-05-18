@@ -1,15 +1,15 @@
 package com.hpmath.app.api.course.controller;
 
-import com.hpmath.domain.course.application.port.in.LoadCourseDetailsQuery;
-import com.hpmath.domain.course.application.port.in.LoadCoursesByStudentQuery;
-import com.hpmath.domain.course.application.port.in.QueryAllCourseUseCase;
-import com.hpmath.domain.course.application.port.in.QueryCourseByMemberIdUseCase;
 import com.hpmath.common.Role;
-import com.hpmath.domain.course.dto.Responses.CourseDetailResponse;
-import com.hpmath.domain.course.dto.Responses.CoursePreviewResponse;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
+import com.hpmath.domain.course.dto.Responses.CourseDetailResponse;
+import com.hpmath.domain.course.dto.Responses.CoursePreviewResponse;
+import com.hpmath.domain.course.service.LoadCourseDetailsQueryService;
+import com.hpmath.domain.course.service.LoadCoursesByStudentQueryService;
+import com.hpmath.domain.course.service.QueryAllCourseService;
+import com.hpmath.domain.course.service.QueryCourseByMemberIdService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class CourseQueryController {
-    private final QueryCourseByMemberIdUseCase queryCourseByMemberIdUseCase;
-    private final LoadCoursesByStudentQuery loadCoursesByStudentQuery;
-    private final LoadCourseDetailsQuery loadCourseDetailsQuery;
-    private final QueryAllCourseUseCase queryAllCourseUseCase;
+    private final QueryCourseByMemberIdService queryCourseByMemberIdUseCase;
+    private final LoadCoursesByStudentQueryService loadCoursesByStudentQuery;
+    private final LoadCourseDetailsQueryService loadCourseDetailsQuery;
+    private final QueryAllCourseService queryAllCourseUseCase;
 
     @GetMapping("/api/courses")
     @Operation(summary = "전체 반을 조회하는 api 입니다", description = "로그인된 모든 사용자가 사용 가능한 API 입니다.")

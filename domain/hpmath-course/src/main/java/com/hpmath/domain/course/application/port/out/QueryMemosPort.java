@@ -1,9 +1,0 @@
-package com.hpmath.domain.course.application.port.out;
-
-import com.hpmath.domain.course.dto.MemoQueryCommand;
-import com.hpmath.domain.course.dto.Responses.MemoViewResponse;
-import org.springframework.data.domain.Page;
-
-public interface QueryMemosPort {
-    Page<MemoViewResponse> loadMemos(final MemoQueryCommand memoQueryCommand);
-}

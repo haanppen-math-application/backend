@@ -1,14 +1,12 @@
 package com.hpmath.domain.course.service;
 
-import com.hpmath.domain.course.domain.Course;
+import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
 import com.hpmath.domain.course.dto.DeleteCourseCommand;
+import com.hpmath.domain.course.entity.Course;
 import com.hpmath.domain.course.exception.CourseException;
-import com.hpmath.domain.course.application.port.in.DeleteCourseUseCase;
-import com.hpmath.domain.course.application.port.out.DeleteCoursePort;
-import com.hpmath.domain.course.application.port.out.DeleteCourseStudentPort;
-import com.hpmath.domain.course.application.port.out.LoadCoursePort;
-import com.hpmath.common.ErrorCode;
+import com.hpmath.domain.course.repository.CourseRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,27 +15,29 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class DeleteCourseService implements DeleteCourseUseCase {
+@Validated
+public class DeleteCourseService {
+    private final CourseRepository courseRepository;
 
-    private final LoadCoursePort loadCoursePort;
-    private final DeleteCoursePort deleteCoursePort;
-    private final DeleteCourseStudentPort deleteCourseStudentPort;
-
-    @Override
     @Transactional
-    public void delete(@Validated final DeleteCourseCommand deleteCourseCommand) {
-        // 아우터 포트에서 에러처리 구현
-        final Course course = loadCoursePort.loadCourse(deleteCourseCommand.courseId());
+    public void delete(@Valid final DeleteCourseCommand deleteCourseCommand) {
+        final Course course = loadCourse(deleteCourseCommand.courseId());
+
         validateOwner(course, deleteCourseCommand.role(), deleteCourseCommand.requestMemberId());
-        deleteCourseStudentPort.deleteCourseStudents(course.getCourseId());
-        deleteCoursePort.delete(course.getCourseId());
+        courseRepository.delete(course);
     }
+
+    private Course loadCourse(final Long courseId) {
+        return courseRepository.findById(courseId)
+                .orElseThrow(() -> new CourseException(ErrorCode.NO_SUCH_COURSE));
+    }
+
     void validateOwner(final Course course, final Role role, final Long requestMemberId) {
         if (role.equals(Role.TEACHER)) {
-            if (course.getTeacher().id().equals(requestMemberId)) {
+            if (course.getTeacherId().equals(requestMemberId)) {
                 return;
             }
-            throw new CourseException("선생님은 본인 반만 수정 가능합니다.",ErrorCode.INVALID_COURSE_ACCESS);
+            throw new CourseException("선생님은 본인 반만 수정 가능합니다.", ErrorCode.INVALID_COURSE_ACCESS);
         }
     }
 

@@ -1,8 +1,6 @@
 package com.hpmath.domain.course.dto;
 
-import com.hpmath.domain.course.domain.Course;
-import com.hpmath.domain.course.domain.Student;
-import com.hpmath.domain.course.domain.Teacher;
+import com.hpmath.client.member.MemberClient.MemberInfo;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,8 +10,8 @@ public class Responses {
             String studentName,
             Integer grade
     ) {
-        public static StudentPreviewResponse of(final Student student) {
-            return new StudentPreviewResponse(student.id(), student.name(), student.grade());
+        public static StudentPreviewResponse of(final MemberInfo memberInfo) {
+            return new StudentPreviewResponse(memberInfo.memberId(), memberInfo.memberName(), memberInfo.memberGrade());
         }
     }
 
@@ -21,8 +19,8 @@ public class Responses {
             String teacherName,
             Long teacherId
     ) {
-        public static TeacherPreviewResponse of(final Teacher teacher) {
-            return new TeacherPreviewResponse(teacher.name(), teacher.id());
+        public static TeacherPreviewResponse of(final MemberInfo memberInfo) {
+            return new TeacherPreviewResponse(memberInfo.memberName(), memberInfo.memberId());
         }
     }
 
@@ -32,15 +30,6 @@ public class Responses {
             List<StudentPreviewResponse> studentPreviews,
             TeacherPreviewResponse teacherPreview
     ) {
-        public static CourseDetailResponse of(final Course course) {
-            return new CourseDetailResponse(
-                    course.getCourseId(),
-                    course.getCourseName(),
-                    course.getStudents().stream()
-                            .map(StudentPreviewResponse::of)
-                            .toList(),
-                    TeacherPreviewResponse.of(course.getTeacher()));
-        }
     }
 
     public record CoursePreviewResponse(
@@ -49,9 +38,9 @@ public class Responses {
             Integer studentSize,
             TeacherPreviewResponse teacherPreview
     ) {
-        public static CoursePreviewResponse of(final Course course) {
-            return new CoursePreviewResponse(course.getCourseName(), course.getCourseId(), course.getStudents().size(),
-                    TeacherPreviewResponse.of(course.getTeacher()));
+        public static CoursePreviewResponse of(final Long courseId, final String courseName, final Integer studentSize,
+                                               final TeacherPreviewResponse teacherPreview) {
+            return new CoursePreviewResponse(courseName, courseId, studentSize, teacherPreview);
         }
     }
 

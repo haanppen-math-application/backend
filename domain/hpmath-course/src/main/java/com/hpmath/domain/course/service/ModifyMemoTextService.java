@@ -1,12 +1,12 @@
 package com.hpmath.domain.course.service;
 
-import com.hpmath.domain.course.dto.ModifyMemoTextCommand;
-import com.hpmath.domain.course.exception.CourseException;
-import com.hpmath.domain.course.application.port.in.ModifyMemoTextUseCase;
-import com.hpmath.domain.course.application.port.out.LoadMemoPort;
-import com.hpmath.domain.course.application.port.out.UpdateMemoTextPort;
-import com.hpmath.domain.course.domain.Memo;
 import com.hpmath.common.ErrorCode;
+import com.hpmath.domain.course.repository.MemoRepository;
+import com.hpmath.domain.course.application.port.in.ModifyMemoTextUseCase;
+import com.hpmath.domain.course.dto.ModifyMemoTextCommand;
+import com.hpmath.domain.course.entity.Course;
+import com.hpmath.domain.course.entity.Memo;
+import com.hpmath.domain.course.exception.CourseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,24 +14,26 @@ import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
-public class ModifyMemoTextService implements ModifyMemoTextUseCase {
-    private final LoadMemoPort loadMemoPort;
-    private final UpdateMemoTextPort updateMemoTextPort;
+public class ModifyMemoTextService {
+    private final MemoRepository memoRepository;
 
-    @Override
     @Transactional
-    public void modify(@Validated ModifyMemoTextCommand command) {
-        final Memo targetMemo = loadMemoPort.loadMemo(command.memoId());
-        validateOwner(command.requestMemberId(), targetMemo.getCourse().getTeacher().id());
+    public void modify(@Validated final ModifyMemoTextCommand command) {
+        final Memo memo = loadMemo(command.memoId());
+        validateOwner(command.requestMemberId(), memo.getCourse());
 
-        targetMemo.setTitle(command.title());
-        targetMemo.setContent(command.content());
-        updateMemoTextPort.update(targetMemo);
+        memo.setTitle(command.title());
+        memo.setContent(command.content());
+    }
+
+    private Memo loadMemo(final Long memoId) {
+        return memoRepository.findWithCourseByMemoId(memoId)
+                .orElseThrow(() -> new CourseException("존재하지 않는 메모 : " + memoId, ErrorCode.MEMO_NOT_EXIST));
     }
 
 
-    private void validateOwner(final Long requestMemberId, final Long courseOwnerId) {
-        if (requestMemberId.equals(courseOwnerId)) {
+    private void validateOwner(final Long requestMemberId, final Course course) {
+        if (requestMemberId.equals(course.getTeacherId())) {
             return;
         }
         throw new CourseException("소유자만 수정할 수 있습니다.", ErrorCode.MEMO_CANNOT_MODIFY);

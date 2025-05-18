@@ -35,7 +35,7 @@ public class MemoMedia {
 
     private Integer sequence;
 
-    @OneToMany(mappedBy = "memoMedia")
+    @OneToMany(mappedBy = "memoMedia", orphanRemoval = true)
     private List<MemoMediaAttachment> memoMediaAttachments = new ArrayList<>();
 
     private MemoMedia(final Memo memo, final String mediaSrc, final Integer sequence) {

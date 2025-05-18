@@ -2,17 +2,17 @@ package com.hpmath.app.api.course.controller;
 
 import static com.hpmath.app.api.course.controller.Requests.QueryMemoByCourseIdAndDateRequest;
 
+import com.hpmath.common.page.PagedResponse;
+import com.hpmath.common.web.authentication.MemberPrincipal;
+import com.hpmath.common.web.authenticationV2.Authorization;
+import com.hpmath.common.web.authenticationV2.LoginInfo;
 import com.hpmath.domain.course.dto.MemoQueryByCourseIdAndDateCommand;
 import com.hpmath.domain.course.dto.MemoQueryCommand;
 import com.hpmath.domain.course.dto.Responses.MemoAppliedDayResponse;
 import com.hpmath.domain.course.dto.Responses.MemoViewResponse;
-import com.hpmath.domain.course.application.port.in.LoadMemoQuery;
-import com.hpmath.domain.course.application.port.in.QueryCourseByMonthUseCase;
-import com.hpmath.domain.course.application.port.in.QueryMemoByCourseIdAndDateUseCase;
-import com.hpmath.common.web.authentication.MemberPrincipal;
-import com.hpmath.common.web.authenticationV2.Authorization;
-import com.hpmath.common.web.authenticationV2.LoginInfo;
-import com.hpmath.common.page.PagedResponse;
+import com.hpmath.domain.course.service.LoadMemoQueryService;
+import com.hpmath.domain.course.service.QueryCourseByMonthService;
+import com.hpmath.domain.course.service.QueryMemoByCourseIdAndDateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
@@ -37,9 +37,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 @RequiredArgsConstructor
 public class MemoQueryController {
-    private final QueryMemoByCourseIdAndDateUseCase queryMemoByCourseIdAndDateUseCase;
-    private final QueryCourseByMonthUseCase queryCourseByMonthUseCase;
-    private final LoadMemoQuery loadMemoQuery;
+    private final QueryMemoByCourseIdAndDateService queryMemoByCourseIdAndDateUseCase;
+    private final QueryCourseByMonthService queryCourseByMonthUseCase;
+    private final LoadMemoQueryService loadMemoQuery;
 
     @GetMapping(value = "/api/courses/memos")
     @SecurityRequirement(name = "jwtAuth")

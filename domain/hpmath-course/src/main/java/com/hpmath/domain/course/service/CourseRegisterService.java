@@ -2,7 +2,7 @@ package com.hpmath.domain.course.service;
 
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
-import com.hpmath.domain.course.adapter.out.CourseRepository;
+import com.hpmath.domain.course.repository.CourseRepository;
 import com.hpmath.domain.course.dto.CourseRegisterCommand;
 import com.hpmath.domain.course.entity.Course;
 import com.hpmath.domain.course.exception.CourseException;

@@ -1,32 +1,30 @@
 package com.hpmath.domain.course.service;
 
+import com.hpmath.common.ErrorCode;
+import com.hpmath.domain.course.repository.MemoRepository;
 import com.hpmath.domain.course.dto.UpdateMediaMemoCommand;
-import com.hpmath.domain.course.media.validate.MemoMediaContainerValidateManager;
-import com.hpmath.domain.course.application.port.in.UpdateMemoMediaUseCase;
-import com.hpmath.domain.course.application.port.out.UpdateMemoMediaContainerPort;
-import com.hpmath.domain.course.domain.MemoMediaContainer;
+import com.hpmath.domain.course.entity.Memo;
+import com.hpmath.domain.course.exception.MemoMediaException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UpdateMemoMediaService implements UpdateMemoMediaUseCase {
-    private final MemoMediaContainerCreator containerCreator;
-    private final MemoMediaContainerValidateManager containerValidateManager;
-    private final UpdateMemoMediaContainerPort updateMemoMediaContainerPort;
+@Validated
+public class UpdateMemoMediaService {
+    private final MemoRepository memoRepository;
 
-    @Override
     @Transactional
-    public void updateMediaMemo(UpdateMediaMemoCommand updateMediaMemoCommand) {
-        final MemoMediaContainer container = containerCreator.createContainer(updateMediaMemoCommand);
+    public void updateMediaMemo(@Valid final UpdateMediaMemoCommand command) {
+        final Memo memo = memoRepository.findWithCourseAndMediasByMemoId(command.memoId())
+                .orElseThrow(() -> new MemoMediaException(ErrorCode.MEMO_NOT_EXIST));
 
-        log.debug(updateMediaMemoCommand.toString());
-        updateMediaMemoCommand.mediaSequences().stream()
-                        .forEach(mediaSequence -> container.updateMemoMediaSequence(mediaSequence));
-        containerValidateManager.validate(container);
-        updateMemoMediaContainerPort.save(container);
+        command.mediaSequences().forEach(sequence -> memo.changeSequence(
+                sequence.memoMediaId(), sequence.sequence()));
     }
 }

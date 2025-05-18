@@ -1,43 +1,43 @@
 package com.hpmath.domain.course.service;
 
-import com.hpmath.domain.course.dto.MemoQueryByCourseIdAndDateCommand;
+import com.hpmath.common.ErrorCode;
 import com.hpmath.domain.course.dto.MemoRegisterCommand;
-import com.hpmath.domain.course.dto.Responses.MemoViewResponse;
+import com.hpmath.domain.course.entity.Course;
+import com.hpmath.domain.course.entity.Memo;
 import com.hpmath.domain.course.exception.CourseException;
 import com.hpmath.domain.course.exception.InvalidCourseAccessException;
-import com.hpmath.domain.course.application.port.in.MemoRegisterUseCase;
-import com.hpmath.domain.course.application.port.out.LoadCourseTeacherIdPort;
-import com.hpmath.domain.course.application.port.out.QueryMemoByCourseIdAndDatePort;
-import com.hpmath.domain.course.application.port.out.RegisterMemoPort;
-import com.hpmath.domain.course.domain.Memo;
-import com.hpmath.common.ErrorCode;
+import com.hpmath.domain.course.exception.NoSuchCourseException;
+import com.hpmath.domain.course.repository.CourseRepository;
+import com.hpmath.domain.course.repository.MemoRepository;
+import jakarta.validation.Valid;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
-public class MemoRegisterService implements MemoRegisterUseCase {
+@Validated
+public class MemoRegisterService {
+    private final CourseRepository courseRepository;
+    private final MemoRepository memoRepository;
 
-    private final LoadCourseTeacherIdPort loadCourseTeacherIdPort;
-    private final QueryMemoByCourseIdAndDatePort queryMemoByCourseIdAndDatePort;
-    private final RegisterMemoPort registerMemoPort;
+    @Transactional
+    public Long register(@Valid final MemoRegisterCommand command) {
+        final Course course = courseRepository.findWithMemos(command.targetCourseId())
+                .orElseThrow(() -> new NoSuchCourseException("반을 찾을 수 없음", ErrorCode.NO_SUCH_COURSE));
 
-    @Override
-    public Long register(final MemoRegisterCommand memoRegisterCommand) {
-        final Long teacherId = loadCourseTeacherIdPort.loadTeacherId(memoRegisterCommand.targetCourseId());
-        isOwner(teacherId, memoRegisterCommand.requestMemberId());
-        isDuplicated(memoRegisterCommand.targetCourseId(), memoRegisterCommand.registerTargetDate());
+        isOwner(course.getTeacherId(), command.requestMemberId());
+        isDuplicated(course, command.registerTargetDate());
 
-        final Memo memo = Memo.createNewMemo(memoRegisterCommand.registerTargetDate(), memoRegisterCommand.title(), memoRegisterCommand.content());
-        return registerMemoPort.register(memo, memoRegisterCommand.targetCourseId());
+        final Memo memo = new Memo(course, command.registerTargetDate(), command.title(), command.content());
+        return memoRepository.save(memo).getId();
     }
 
-    private void isDuplicated(final Long courseId, final LocalDate localDate) {
-        final MemoViewResponse memoView = queryMemoByCourseIdAndDatePort.query(new MemoQueryByCourseIdAndDateCommand(courseId, localDate));
-        if (memoView == null) {
+    private void isDuplicated(final Course course, final LocalDate targetDate) {
+        if (course.getMemos().stream()
+                .noneMatch(memo -> memo.getTargetDate().equals(targetDate))) {
             return;
         }
         throw new CourseException("같은 날짜에 두개이상의 메모 등록 불가",ErrorCode.MEMO_DUPLICATED_EXCEPTION);

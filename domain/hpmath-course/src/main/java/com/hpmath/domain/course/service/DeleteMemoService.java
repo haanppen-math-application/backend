@@ -1,49 +1,39 @@
 package com.hpmath.domain.course.service;
 
-import com.hpmath.domain.course.dto.DeleteMemoCommand;
-import com.hpmath.domain.course.exception.CourseException;
-import com.hpmath.domain.course.application.port.in.DeleteMemoUseCase;
-import com.hpmath.domain.course.application.port.out.DeleteMemoMediaPort;
-import com.hpmath.domain.course.application.port.out.DeleteMemoPort;
-import com.hpmath.domain.course.application.port.out.LoadMemoPort;
-import com.hpmath.domain.course.application.port.out.ValidateSuperUserPort;
-import com.hpmath.domain.course.domain.Course;
-import com.hpmath.domain.course.domain.Memo;
 import com.hpmath.common.ErrorCode;
+import com.hpmath.common.Role;
+import com.hpmath.domain.course.repository.MemoRepository;
+import com.hpmath.domain.course.dto.DeleteMemoCommand;
+import com.hpmath.domain.course.entity.Course;
+import com.hpmath.domain.course.entity.Memo;
+import com.hpmath.domain.course.exception.CourseException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
-public class DeleteMemoService implements DeleteMemoUseCase {
+@Validated
+public class DeleteMemoService {
+    private final MemoRepository memoRepository;
 
-    private final LoadMemoPort loadMemoPort;
-    private final ValidateSuperUserPort validateSuperUserPort;
-    private final DeleteMemoMediaPort deleteMemoMediaPort;
-    private final DeleteMemoPort deleteMemoPort;
-
-    @Override
     @Transactional
-    public void delete(DeleteMemoCommand deleteMemoCommand) {
-        final Memo memo = loadMemoPort.loadMemo(deleteMemoCommand.targetMemoId());
-        final Course course = memo.getCourse();
+    public void delete(@Valid final DeleteMemoCommand command) {
+        final Memo memo = memoRepository.findWithCourseByMemoId(command.targetMemoId())
+                .orElseThrow(() -> new CourseException("존재하지 않는 메모: " + command.targetMemoId(), ErrorCode.MEMO_NOT_EXIST));
+        validate(command.requestMemberId(), command.role(), memo.getCourse());
 
-        isCourseOwner(deleteMemoCommand.requestMemberId(), course);
-        delete(memo.getMemoId());
+        memoRepository.delete(memo);
     }
 
-    private void delete(final Long memoId) {
-        deleteMemoMediaPort.deleteRelatedMedias(memoId);
-        deleteMemoPort.deleteMemo(memoId);
-    }
-
-    private void isCourseOwner(final Long requestMemberId, final Course course) {
-        final Long courseOwnerId = course.getTeacher().id();
+    private void validate(final Long requestMemberId, final Role requestRole, final Course course) {
+        final Long courseOwnerId = course.getTeacherId();
         if (requestMemberId.equals(courseOwnerId)) {
             return;
         }
-        if (validateSuperUserPort.isSuperUser(requestMemberId)) {
+        if (requestRole.equals(Role.ADMIN) || requestRole.equals(Role.MANAGER)) {
             return;
         }
         throw new CourseException("지울 수 있는 권한 부재",ErrorCode.MEMO_CANNOT_DELETE);
