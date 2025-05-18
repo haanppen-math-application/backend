@@ -13,7 +13,7 @@ public record DeleteMemoMediaCommand(
         @NotNull
         Role role
 ) {
-    public static DeleteMemoMediaCommand of(final Long memoMediaId, final Long memoId, final Long requestMemberId) {
-        return new DeleteMemoMediaCommand(memoMediaId, memoId, requestMemberId);
+    public static DeleteMemoMediaCommand of(final Long memoMediaId, final Long memoId, final Long requestMemberId, final Role role) {
+        return new DeleteMemoMediaCommand(memoMediaId, memoId, requestMemberId, role);
     }
 }

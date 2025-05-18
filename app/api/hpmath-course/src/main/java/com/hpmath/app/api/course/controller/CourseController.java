@@ -51,7 +51,8 @@ public class CourseController {
             @LoginInfo final MemberPrincipal memberPrincipal) {
 
         final RegisterStudentCommand registerStudentDto = registerStudentRequest.toCommand(
-                memberPrincipal.memberId()
+                memberPrincipal.memberId(),
+                memberPrincipal.role()
         );
         addStudentToCourseUseCase.addStudentToCourse(registerStudentDto);
         return ResponseEntity.ok(null);

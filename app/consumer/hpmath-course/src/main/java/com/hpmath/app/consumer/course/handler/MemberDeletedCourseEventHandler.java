@@ -3,25 +3,27 @@ package com.hpmath.app.consumer.course.handler;
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.MemberDeletedEventPayload;
-import com.hpmath.domain.course.application.port.out.DeleteStudentsPort;
-import com.hpmath.domain.course.application.port.out.DeleteTeachersPort;
+import com.hpmath.domain.course.repository.CourseRepository;
+import com.hpmath.domain.course.repository.CourseStudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberDeletedCourseEventHandler implements EventHandler<MemberDeletedEventPayload> {
-    private final DeleteStudentsPort deleteStudentsPort;
-    private final DeleteTeachersPort deleteTeachersPort;
+    private final CourseStudentRepository courseStudentRepository;
+    private final CourseRepository courseRepository;
 
     @Override
+    @Transactional
     public void handle(Event<MemberDeletedEventPayload> event) {
         final MemberDeletedEventPayload payload = event.getPayload();
 
-        deleteStudentsPort.delete(payload.memberIds());
-        deleteTeachersPort.deleteTeachers(payload.memberIds());
+        courseRepository.updateTeacherToNullIn(payload.memberIds());
+        courseStudentRepository.deleteCourseStudentsByStudentIdIn(payload.memberIds());
 
         log.debug("handled event: {}", event);
     }

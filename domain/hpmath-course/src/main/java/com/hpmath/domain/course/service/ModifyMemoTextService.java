@@ -1,12 +1,11 @@
 package com.hpmath.domain.course.service;
 
 import com.hpmath.common.ErrorCode;
-import com.hpmath.domain.course.repository.MemoRepository;
-import com.hpmath.domain.course.application.port.in.ModifyMemoTextUseCase;
 import com.hpmath.domain.course.dto.ModifyMemoTextCommand;
 import com.hpmath.domain.course.entity.Course;
 import com.hpmath.domain.course.entity.Memo;
 import com.hpmath.domain.course.exception.CourseException;
+import com.hpmath.domain.course.repository.MemoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -87,11 +87,13 @@ class Requests {
             List<Long> targetStudentIds
     ) {
         RegisterStudentCommand toCommand(
-                final Long requestMemberId
+                final Long requestMemberId,
+                final Role role
         ) {
             return new RegisterStudentCommand(
                     requestMemberId,
                     courseId(),
+                    role,
                     targetStudentIds()
             );
         }
@@ -149,8 +151,8 @@ class Requests {
             @Nonnull
             Long memoId
     ) {
-        RegisterMemoMediaCommand toCommand(final Long requestMemberId) {
-            return new RegisterMemoMediaCommand(mediaSource, memoId, requestMemberId);
+        RegisterMemoMediaCommand toCommand(final Long requestMemberId, final Role role) {
+            return new RegisterMemoMediaCommand(mediaSource, memoId, requestMemberId, role);
         }
     }
 

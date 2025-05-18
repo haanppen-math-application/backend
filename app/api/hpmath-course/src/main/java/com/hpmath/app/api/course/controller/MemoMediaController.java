@@ -55,7 +55,7 @@ public class MemoMediaController {
             @PathVariable Long memoId,
             @LoginInfo MemberPrincipal loginId
     ) {
-        final DeleteMemoMediaCommand command = DeleteMemoMediaCommand.of(memoMediaId, memoId, loginId.memberId());
+        final DeleteMemoMediaCommand command = DeleteMemoMediaCommand.of(memoMediaId, memoId, loginId.memberId(), loginId.role());
         deleteMemoMediaUseCase.delete(command);
         return ResponseEntity.noContent().build();
     }
@@ -80,7 +80,7 @@ public class MemoMediaController {
             @RequestBody @Valid final Requests.RegisterMemoMediaRequest request,
             @LoginInfo MemberPrincipal loginId
     ) {
-        final RegisterMemoMediaCommand command = request.toCommand(loginId.memberId());
+        final RegisterMemoMediaCommand command = request.toCommand(loginId.memberId(), loginId.role());
         registerMemoMediaUseCase.register(command);
         return ResponseEntity.created(null).build();
     }
