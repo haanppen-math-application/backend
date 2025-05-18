@@ -1,6 +1,6 @@
 package com.hpmath.domain.course.adapter.out;
 
-import com.hpmath.domain.course.application.exception.MemoMediaException;
+import com.hpmath.domain.course.exception.MemoMediaException;
 import com.hpmath.domain.course.application.port.out.LoadAttachmentOwnedMemberIdPort;
 import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;

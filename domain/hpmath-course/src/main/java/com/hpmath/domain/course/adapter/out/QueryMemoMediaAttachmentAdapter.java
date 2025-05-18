@@ -2,7 +2,7 @@ package com.hpmath.domain.course.adapter.out;
 
 import com.hpmath.client.media.MediaClient;
 import com.hpmath.client.media.MediaClient.MediaInfo;
-import com.hpmath.domain.course.application.dto.Responses.AttachmentViewResponse;
+import com.hpmath.domain.course.dto.Responses.AttachmentViewResponse;
 import com.hpmath.domain.course.application.port.out.QueryMemoMediaAttachmentPort;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

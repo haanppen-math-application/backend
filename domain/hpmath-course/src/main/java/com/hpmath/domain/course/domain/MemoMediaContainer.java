@@ -1,7 +1,7 @@
 package com.hpmath.domain.course.domain;
 
-import com.hpmath.domain.course.application.dto.MemoMediaUpdateSequenceCommand;
-import com.hpmath.domain.course.application.exception.MemoMediaException;
+import com.hpmath.domain.course.dto.MemoMediaUpdateSequenceCommand;
+import com.hpmath.domain.course.exception.MemoMediaException;
 import com.hpmath.common.ErrorCode;
 import java.util.Collections;
 import java.util.List;

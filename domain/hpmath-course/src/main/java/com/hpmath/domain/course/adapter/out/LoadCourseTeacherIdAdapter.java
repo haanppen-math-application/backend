@@ -1,6 +1,6 @@
 package com.hpmath.domain.course.adapter.out;
 
-import com.hpmath.domain.course.application.exception.NoSuchCourseException;
+import com.hpmath.domain.course.exception.NoSuchCourseException;
 import com.hpmath.domain.course.application.port.out.LoadCourseTeacherIdPort;
 import com.hpmath.domain.course.entity.Course;
 import com.hpmath.common.ErrorCode;

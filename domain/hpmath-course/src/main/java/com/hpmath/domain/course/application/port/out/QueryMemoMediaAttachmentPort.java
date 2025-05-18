@@ -1,6 +1,6 @@
 package com.hpmath.domain.course.application.port.out;
 
-import com.hpmath.domain.course.application.dto.Responses.AttachmentViewResponse;
+import com.hpmath.domain.course.dto.Responses.AttachmentViewResponse;
 import java.util.List;
 
 public interface QueryMemoMediaAttachmentPort {

@@ -1,6 +1,6 @@
 package com.hpmath.domain.course.adapter.out;
 
-import com.hpmath.domain.course.application.exception.CourseException;
+import com.hpmath.domain.course.exception.CourseException;
 import com.hpmath.domain.course.application.port.out.UpdateMemoTextPort;
 import com.hpmath.domain.course.domain.Memo;
 import com.hpmath.common.ErrorCode;

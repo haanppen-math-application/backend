@@ -1,6 +1,6 @@
 package com.hpmath.domain.course.adapter.out;
 
-import com.hpmath.domain.course.application.dto.Responses.MemoAppliedDayResponse;
+import com.hpmath.domain.course.dto.Responses.MemoAppliedDayResponse;
 import com.hpmath.domain.course.application.port.out.QueryMemosByMonthPort;
 import java.time.LocalDate;
 import java.util.List;

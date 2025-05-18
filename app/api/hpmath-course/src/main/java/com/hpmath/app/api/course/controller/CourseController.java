@@ -1,10 +1,10 @@
 package com.hpmath.app.api.course.controller;
 
-import com.hpmath.domain.course.application.dto.CourseRegisterCommand;
-import com.hpmath.domain.course.application.dto.CourseUpdateCommand;
-import com.hpmath.domain.course.application.dto.DeleteCourseCommand;
-import com.hpmath.domain.course.application.dto.RegisterStudentCommand;
-import com.hpmath.domain.course.application.dto.UpdateCourseStudentsCommand;
+import com.hpmath.domain.course.dto.CourseRegisterCommand;
+import com.hpmath.domain.course.dto.CourseUpdateCommand;
+import com.hpmath.domain.course.dto.DeleteCourseCommand;
+import com.hpmath.domain.course.dto.RegisterStudentCommand;
+import com.hpmath.domain.course.dto.UpdateCourseStudentsCommand;
 import com.hpmath.domain.course.application.port.in.AddStudentToCourseUseCase;
 import com.hpmath.domain.course.application.port.in.CourseRegisterUseCase;
 import com.hpmath.domain.course.application.port.in.DeleteCourseUseCase;

@@ -2,7 +2,7 @@ package com.hpmath.domain.course.adapter.out;
 
 import com.hpmath.client.media.MediaClient;
 import com.hpmath.client.media.MediaClient.MediaInfo;
-import com.hpmath.domain.course.application.exception.MemoMediaException;
+import com.hpmath.domain.course.exception.MemoMediaException;
 import com.hpmath.domain.course.application.port.out.LoadMemoMediaByMemoMediaIdPort;
 import com.hpmath.domain.course.domain.MemoMedia;
 import com.hpmath.common.ErrorCode;

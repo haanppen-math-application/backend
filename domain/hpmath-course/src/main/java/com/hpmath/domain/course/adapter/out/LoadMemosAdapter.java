@@ -1,8 +1,8 @@
 package com.hpmath.domain.course.adapter.out;
 
-import com.hpmath.domain.course.application.dto.MemoQueryCommand;
-import com.hpmath.domain.course.application.dto.Responses.MemoViewResponse;
-import com.hpmath.domain.course.application.exception.NoSuchCourseException;
+import com.hpmath.domain.course.dto.MemoQueryCommand;
+import com.hpmath.domain.course.dto.Responses.MemoViewResponse;
+import com.hpmath.domain.course.exception.NoSuchCourseException;
 import com.hpmath.domain.course.application.port.out.QueryMemoMediaPort;
 import com.hpmath.domain.course.application.port.out.QueryMemosPort;
 import com.hpmath.common.ErrorCode;

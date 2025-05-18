@@ -1,6 +1,6 @@
 package com.hpmath.domain.course.application.port.out;
 
-import com.hpmath.domain.course.application.dto.Responses.MediaViewResponse;
+import com.hpmath.domain.course.dto.Responses.MediaViewResponse;
 import java.util.List;
 
 public interface QueryMemoMediaPort {

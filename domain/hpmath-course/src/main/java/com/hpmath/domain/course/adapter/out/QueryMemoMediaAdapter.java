@@ -2,8 +2,8 @@ package com.hpmath.domain.course.adapter.out;
 
 import com.hpmath.client.media.MediaClient;
 import com.hpmath.client.media.MediaClient.MediaInfo;
-import com.hpmath.domain.course.application.dto.Responses.MediaViewResponse;
-import com.hpmath.domain.course.application.exception.CourseException;
+import com.hpmath.domain.course.dto.Responses.MediaViewResponse;
+import com.hpmath.domain.course.exception.CourseException;
 import com.hpmath.domain.course.application.port.out.QueryMemoMediaPort;
 import com.hpmath.domain.course.entity.MemoMedia;
 import com.hpmath.common.ErrorCode;

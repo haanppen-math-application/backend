@@ -1,7 +1,7 @@
 package com.hpmath.app.api.course.controller;
 
-import com.hpmath.domain.course.application.dto.DeleteMemoCommand;
-import com.hpmath.domain.course.application.dto.ModifyMemoTextCommand;
+import com.hpmath.domain.course.dto.DeleteMemoCommand;
+import com.hpmath.domain.course.dto.ModifyMemoTextCommand;
 import com.hpmath.domain.course.application.port.in.DeleteMemoUseCase;
 import com.hpmath.domain.course.application.port.in.MemoRegisterUseCase;
 import com.hpmath.domain.course.application.port.in.ModifyMemoTextUseCase;

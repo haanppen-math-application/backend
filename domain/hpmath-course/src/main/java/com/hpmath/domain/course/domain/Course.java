@@ -1,9 +1,9 @@
 package com.hpmath.domain.course.domain;
 
-import com.hpmath.domain.course.application.exception.IllegalCourseNameException;
-import com.hpmath.domain.course.application.exception.IllegalCourseStudentSizeException;
-import com.hpmath.domain.course.application.exception.IllegalCourseStudentStateException;
-import com.hpmath.domain.course.application.exception.NotFoundTeacherException;
+import com.hpmath.domain.course.exception.IllegalCourseNameException;
+import com.hpmath.domain.course.exception.IllegalCourseStudentSizeException;
+import com.hpmath.domain.course.exception.IllegalCourseStudentStateException;
+import com.hpmath.domain.course.exception.NotFoundTeacherException;
 import com.hpmath.common.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;

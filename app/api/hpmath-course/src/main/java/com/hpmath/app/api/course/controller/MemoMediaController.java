@@ -1,10 +1,10 @@
 package com.hpmath.app.api.course.controller;
 
-import com.hpmath.domain.course.application.dto.DeleteAttachmentCommand;
-import com.hpmath.domain.course.application.dto.DeleteMemoMediaCommand;
-import com.hpmath.domain.course.application.dto.RegisterAttachmentCommand;
-import com.hpmath.domain.course.application.dto.RegisterMemoMediaCommand;
-import com.hpmath.domain.course.application.dto.UpdateMediaMemoCommand;
+import com.hpmath.domain.course.dto.DeleteAttachmentCommand;
+import com.hpmath.domain.course.dto.DeleteMemoMediaCommand;
+import com.hpmath.domain.course.dto.RegisterAttachmentCommand;
+import com.hpmath.domain.course.dto.RegisterMemoMediaCommand;
+import com.hpmath.domain.course.dto.UpdateMediaMemoCommand;
 import com.hpmath.domain.course.application.port.in.DeleteAttachmentUseCase;
 import com.hpmath.domain.course.application.port.in.DeleteMemoMediaUseCase;
 import com.hpmath.domain.course.application.port.in.RegisterAttachmentUseCase;

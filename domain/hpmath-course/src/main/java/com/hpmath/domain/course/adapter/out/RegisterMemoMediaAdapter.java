@@ -5,7 +5,7 @@ import com.hpmath.client.media.MediaClient.MediaInfo;
 import com.hpmath.domain.course.entity.Memo;
 import com.hpmath.domain.course.entity.MemoMedia;
 import com.hpmath.common.ErrorCode;
-import com.hpmath.domain.course.application.exception.MemoMediaException;
+import com.hpmath.domain.course.exception.MemoMediaException;
 import com.hpmath.domain.course.application.port.out.RegisterMemoMediaPort;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

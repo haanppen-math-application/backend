@@ -1,7 +1,7 @@
 package com.hpmath.domain.course.application.query;
 
-import com.hpmath.domain.course.application.dto.Responses.CoursePreviewResponse;
-import com.hpmath.domain.course.application.exception.CourseException;
+import com.hpmath.domain.course.dto.Responses.CoursePreviewResponse;
+import com.hpmath.domain.course.exception.CourseException;
 
 import com.hpmath.domain.course.domain.Course;
 import com.hpmath.common.ErrorCode;
