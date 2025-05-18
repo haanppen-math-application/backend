@@ -11,8 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface MemoRepository extends JpaRepository<Memo, Long> {
-    Page<Memo> findByCourseId(Long courseId, Pageable pageable);
-
     Optional<Memo> findAllByCourseIdAndTargetDate(final Long courseId, final LocalDate targetDate);
 
     @Query("SELECT m FROM Memo m "

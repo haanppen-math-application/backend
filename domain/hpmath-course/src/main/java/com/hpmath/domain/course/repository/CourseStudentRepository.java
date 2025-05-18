@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface CourseStudentRepository extends JpaRepository<CourseStudent, Long> {
     List<CourseStudent> findCourseStudentByStudentId(final Long memberId);
-    void deleteCourseStudentByCourseEntityId(final Long courseId);
 
     @Query("DELETE FROM CourseStudent cs WHERE cs.studentId IN :studentIds")
     @Modifying
