@@ -1,14 +1,20 @@
 package com.hpmath.domain.directory.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import com.hpmath.domain.directory.service.validation.DirectoryNameConstraint;
+import com.hpmath.domain.directory.service.validation.DirectoryPathConstraint;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.lang.NonNull;
 
 public record CreateDirectoryCommand(
-        @NotBlank @Pattern(regexp = "^[가-힣a-zA-Z0-9 ]+$") String directoryName,
-        @NotBlank @Pattern(regexp = "^/+&") String parentDirPath,
-        @NonNull Long ownerId,
+        @DirectoryNameConstraint
+        String directoryName,
+        @DirectoryPathConstraint
+        String parentDirPath,
+        @NotNull
+        Long ownerId,
+        @NotNull
         Boolean canViewByEveryone,
+        @NotNull
         Boolean canModifyByEveryone
 ) {
 }

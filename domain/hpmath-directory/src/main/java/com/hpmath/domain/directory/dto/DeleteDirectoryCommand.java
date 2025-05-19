@@ -4,14 +4,14 @@ import com.hpmath.common.Role;
 import com.hpmath.domain.directory.service.validation.DirectoryPathConstraint;
 import jakarta.validation.constraints.NotNull;
 
-public record SaveMediaToDirectoryCommand(
+public record DeleteDirectoryCommand(
         @DirectoryPathConstraint
-        String directoryPath,
-        @NotNull
-        String mediaSrc,
+        String targetPath,
         @NotNull
         Long requestMemberId,
         @NotNull
-        Role requestMemberRole
+        Role requestMemberRole,
+        @NotNull
+        Boolean deleteChildes
 ) {
 }

@@ -1,7 +1,7 @@
 package com.hpmath.app.api.directory.controller;
 
 import com.hpmath.domain.directory.dto.CreateDirectoryCommand;
-import com.hpmath.domain.directory.dto.DeleteDirectoryDto;
+import com.hpmath.domain.directory.dto.DeleteDirectoryCommand;
 import com.hpmath.domain.directory.dto.FileView;
 import com.hpmath.domain.directory.dto.QueryDirectory;
 import com.hpmath.domain.directory.dto.UpdateDirectoryDto;
@@ -83,7 +83,7 @@ public class DirectoryController {
             @ModelAttribute @Valid Requests.DeleteDirectoryRequest deleteDirectoryRequest,
             @LoginInfo MemberPrincipal memberPrincipal
     ) {
-        final DeleteDirectoryDto deleteDirectoryDto = new DeleteDirectoryDto(deleteDirectoryRequest.targetDirectory(), memberPrincipal.memberId(), memberPrincipal.role(), deleteDirectoryRequest.deleteChildes());
+        final DeleteDirectoryCommand deleteDirectoryDto = new DeleteDirectoryCommand(deleteDirectoryRequest.targetDirectory(), memberPrincipal.memberId(), memberPrincipal.role(), deleteDirectoryRequest.deleteChildes());
         directoryDeleteService.delete(deleteDirectoryDto);
         return ResponseEntity.ok(null);
     }

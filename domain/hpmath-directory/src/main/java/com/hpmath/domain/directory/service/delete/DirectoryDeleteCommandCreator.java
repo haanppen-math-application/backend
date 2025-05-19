@@ -2,7 +2,7 @@ package com.hpmath.domain.directory.service.delete;
 
 import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dao.DirectoryRepository;
-import com.hpmath.domain.directory.dto.DeleteDirectoryDto;
+import com.hpmath.domain.directory.dto.DeleteDirectoryCommand;
 import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.domain.directory.service.form.resolver.DirectoryPathFormResolver;
 import com.hpmath.common.ErrorCode;
@@ -16,10 +16,10 @@ class DirectoryDeleteCommandCreator {
     private final DirectoryRepository directoryRepository;
     private final DirectoryPathFormResolver directoryPathFormResolver;
 
-    public DirectoryDeleteCommand create(final DeleteDirectoryDto deleteDirectoryDto) {
-        final Directory target = findTargetDirectory(deleteDirectoryDto.getTargetPath());
-        final List<Directory> childDirectories = getAssociatedDirectories(deleteDirectoryDto.getTargetPath());
-        return new DirectoryDeleteCommand(childDirectories, target, deleteDirectoryDto.getRequestMemberId(), deleteDirectoryDto.getDeleteChildes(), deleteDirectoryDto.getRequestMemberRole());
+    public DirectoryDeleteCommand create(final DeleteDirectoryCommand deleteDirectoryDto) {
+        final Directory target = findTargetDirectory(deleteDirectoryDto.targetPath());
+        final List<Directory> childDirectories = getAssociatedDirectories(deleteDirectoryDto.targetPath());
+        return new DirectoryDeleteCommand(childDirectories, target, deleteDirectoryDto.requestMemberId(), deleteDirectoryDto.deleteChildes(), deleteDirectoryDto.requestMemberRole());
     }
 
     private List<Directory> getAssociatedDirectories(final String targetPath) {

@@ -23,7 +23,7 @@ public class DirectoryMediaService {
         directory.addMedia(command.mediaSrc());
     }
 
-    public void validate(final Directory directory, final Long requestMemberId, final Role role) {
+    private void validate(final Directory directory, final Long requestMemberId, final Role role) {
         if (directory.getCanAddByEveryone()) {
             return;
         }
