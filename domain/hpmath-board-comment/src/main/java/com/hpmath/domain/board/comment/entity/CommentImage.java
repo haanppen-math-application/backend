@@ -1,4 +1,4 @@
-package com.hpmath.domain.board.entity;
+package com.hpmath.domain.board.comment.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;

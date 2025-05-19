@@ -49,10 +49,6 @@ public class Question {
     @BatchSize(size = 100)
     private List<QuestionImage> images = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    @BatchSize(size = 100)
-    private List<Comment> comments = new ArrayList<>();
-
     private Question(String title, String content, Long ownerMember, Long targetMember) {
         this.title = title;
         this.content = content;
@@ -75,12 +71,6 @@ public class Question {
         this.content = content;
     }
 
-    public int addComment(final Comment comment) {
-        this.comments.add(comment);
-        comment.setQuestion(this);
-        return comments.size();
-    }
-
     public void changeTargetMember(final Long targetMember) {
         this.targetMemberId = targetMember;
     }
@@ -92,17 +82,7 @@ public class Question {
                 .toList());
     }
 
-    public void clearSolved() {
-        this.solved = false;
-        clearCommentsAdoptedStatus();
-    }
-
     public void solved() {
         this.solved = true;
-    }
-
-    void clearCommentsAdoptedStatus() {
-        comments.parallelStream()
-                .forEach(comment -> comment.singleDeAdopt());
     }
 }

@@ -16,13 +16,13 @@ public record QuestionPreviewResult(
         MemberDetailResult owner,
         MemberDetailResult target
 ) {
-    public static QuestionPreviewResult from(Question question, MemberClient memberClient, Long viewCount) {
+    public static QuestionPreviewResult from(Question question, MemberClient memberClient, Long viewCount, Integer commentCount) {
         return new QuestionPreviewResult(
                 question.getId(),
                 question.getTitle(),
                 question.getRegisteredDateTime(),
                 question.getSolved(),
-                question.getComments().size(),
+                commentCount,
                 viewCount,
                 MemberDetailResult.from(memberClient.getMemberDetail(question.getOwnerMemberId())),
                 MemberDetailResult.from(memberClient.getMemberDetail(question.getTargetMemberId()))

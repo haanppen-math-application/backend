@@ -9,6 +9,8 @@ dependencies {
     implementation project(":common:hpmath-page-common")
     implementation project(":client:hpmath-member-client")
     implementation project(":client:hpmath-board-view-client")
-    implementation project(":client:hpmath-board-comment-client")
+
+    implementation project(":common:hpmath-event-outbox-common")
+    implementation project(":common:hpmath-event-common")
 }
 

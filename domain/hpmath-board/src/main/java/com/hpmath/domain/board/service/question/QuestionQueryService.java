@@ -1,5 +1,6 @@
 package com.hpmath.domain.board.service.question;
 
+import com.hpmath.client.board.comment.BoardCommentClient;
 import com.hpmath.client.board.view.BoardViewClient;
 import com.hpmath.client.member.MemberClient;
 import com.hpmath.common.page.PagedResponse;
@@ -22,11 +23,12 @@ public class QuestionQueryService {
 
     private final BoardViewClient boardViewClient;
     private final MemberClient memberClient;
+    private final BoardCommentClient boardCommentClient;
 
     public QuestionDetailResult getSingleQuestionDetails(final Long questionId, final Long requestMemberId) {
         final Question question = findQuestion(questionId);
         final Long viewCount = boardViewClient.increaseViewCount(questionId, requestMemberId);
-        return QuestionDetailResult.from(question, memberClient, viewCount);
+        return QuestionDetailResult.from(question, memberClient, viewCount, boardCommentClient.getCommentDetails(question.getId()));
     }
 
     public PagedResponse<QuestionPreviewResult> loadQuestionsByOffset(final Pageable pageable, final String title) {
@@ -38,7 +40,8 @@ public class QuestionQueryService {
         }
         return PagedResponse.of(
                 questions.map(question ->
-                        QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()))).toList(),
+                        QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()), boardCommentClient.getCommentDetails(
+                                question.getId()).commentDetails().size())).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),
                 questions.getSize()
@@ -58,7 +61,8 @@ public class QuestionQueryService {
         }
         return PagedResponse.of(
                 questions.map(question ->
-                        QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()))).toList(),
+                        QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()), boardCommentClient.getCommentDetails(
+                                question.getId()).commentDetails().size())).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),
                 questions.getSize()

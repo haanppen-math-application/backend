@@ -1,7 +1,9 @@
 package com.hpmath.domain.board.dto;
 
+import com.hpmath.client.board.comment.BoardCommentClient.CommentDetails;
 import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.board.entity.Question;
+import com.hpmath.domain.board.entity.QuestionImage;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
@@ -19,7 +21,8 @@ public record QuestionDetailResult(
         List<CommentDetailResult> comments,
         List<ImageUrlResult> imageUrls
 ) {
-    public static QuestionDetailResult from(Question question, MemberClient memberClient, final Long viewCount) {
+    public static QuestionDetailResult from(Question question, MemberClient memberClient, final Long viewCount, final
+                                            CommentDetails commentDetails) {
         return new QuestionDetailResult(
                 question.getId(),
                 question.getTitle(),
@@ -29,10 +32,11 @@ public record QuestionDetailResult(
                 question.getRegisteredDateTime(),
                 MemberDetailResult.from(memberClient.getMemberDetail(question.getOwnerMemberId())),
                 MemberDetailResult.from(memberClient.getMemberDetail(question.getTargetMemberId())),
-                question.getComments().stream()
+                commentDetails.commentDetails().stream()
                         .map(comment -> CommentDetailResult.from(comment, memberClient))
                         .toList(),
                 question.getImages().stream()
+                        .map(QuestionImage::getImageSrc)
                         .map(ImageUrlResult::from)
                         .toList()
         );
