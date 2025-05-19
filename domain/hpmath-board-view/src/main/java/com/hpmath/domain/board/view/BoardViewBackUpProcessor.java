@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class BoardViewBackUpProcessor {
-    private final BoardViewCountBackupRepository boardViewCountRepository;
+    private final BoardViewCountBackupRepository backupRepository;
     private final ViewCountRepository viewCountRepository;
 
     @Transactional
@@ -36,12 +36,12 @@ public class BoardViewBackUpProcessor {
 
     private void backUp(final Long boardId, final Long viewCount) {
         log.debug("backup started with boardId: {}, viewCount: {}", boardId, viewCount);
-        final int count = boardViewCountRepository.updateBoardViewCount(boardId, viewCount);
+        final int count = backupRepository.updateBoardViewCount(boardId, viewCount);
         // when not applied
         if (count == 0) {
-            boardViewCountRepository.findByBoardId(boardId).ifPresentOrElse(
+            backupRepository.findByBoardId(boardId).ifPresentOrElse(
                     boardViewCount -> {},
-                    () -> boardViewCountRepository.save(BoardViewCount.of(boardId, viewCount)));
+                    () -> backupRepository.save(BoardViewCount.of(boardId, viewCount)));
         }
     }
 }
