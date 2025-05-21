@@ -21,7 +21,12 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "question", indexes = @Index(name = "idx_ownerId_title", columnList = "owner_member, title"))
+@Table(
+        name = "question",
+        indexes = {
+                @Index(name = "idx_ownerId_title", columnList = "owner_member, title"),
+                @Index(name = "idx_dateTime", columnList = "registered_date_time desc")
+        })
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

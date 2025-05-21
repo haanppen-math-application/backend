@@ -6,11 +6,16 @@ import com.hpmath.client.member.MemberClient;
 import com.hpmath.common.page.PagedResponse;
 import com.hpmath.domain.board.dao.QuestionRepository;
 import com.hpmath.domain.board.dto.QuestionDetailResult;
+import com.hpmath.domain.board.dto.QuestionInfo;
+import com.hpmath.domain.board.dto.QuestionInfoResult;
 import com.hpmath.domain.board.dto.QuestionPreviewResult;
 import com.hpmath.domain.board.entity.Question;
 import com.hpmath.domain.board.exception.NoSuchQuestionException;
 import com.hpmath.common.ErrorCode;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +29,16 @@ public class QuestionQueryService {
     private final BoardViewClient boardViewClient;
     private final MemberClient memberClient;
     private final BoardCommentClient boardCommentClient;
+
+    public List<QuestionInfoResult> loadQuestionsSortByDate(final Long pageSize, final Long offset) {
+        final List<QuestionInfo> questionInfos = questionRepository.findQuestionsSortByDate(pageSize, offset);
+        final Map<Long, List<QuestionInfo>> map = questionInfos.stream()
+                .collect(Collectors.groupingBy(QuestionInfo::getQuestionId));
+
+        return map.values().stream()
+                .map(QuestionInfoResult::mapToInfo)
+                .toList();
+    }
 
     public QuestionDetailResult getSingleQuestionDetails(final Long questionId, final Long requestMemberId) {
         final Question question = findQuestion(questionId);

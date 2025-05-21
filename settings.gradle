@@ -50,6 +50,7 @@ include(
         'domain:hpmath-board-view',
 
         'client',
+        'client:hpmath-board-question-client',
         'client:hpmath-board-comment-client',
         'client:hpmath-board-view-client',
         'client:hpmath-media-client',
