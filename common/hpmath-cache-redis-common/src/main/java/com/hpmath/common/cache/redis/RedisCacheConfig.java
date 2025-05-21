@@ -41,7 +41,7 @@ public class RedisCacheConfig {
     @Bean
     RedisCacheConfiguration cacheConfiguration(RedisConfigurationProperties properties) {
         return RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofMinutes(10))  // 캐시 만료 시간 설정
+                .entryTtl(Duration.ofMinutes(properties.getCacheTTL()))  // 캐시 만료 시간 설정
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
     }
