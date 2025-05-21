@@ -18,15 +18,15 @@ public class ViewCountService {
     private static final Duration BOARD_PER_MEMBER_EXPIRE_TTL = Duration.ofDays(1);
 
     public Long getViewCount(final Long boardId) {
-        return viewCountRepository.readViewCount(boardId);
+        return viewCountRepository.read(boardId);
     }
 
     public Long increaseViewCount(final Long boardId, final Long memberId) {
         if (distributedLockRepository.lockWhenNewMember(boardId, memberId, BOARD_PER_MEMBER_EXPIRE_TTL)) {
-            final Long currentCount = viewCountRepository.increaseViewCount(boardId);
+            final Long currentCount = viewCountRepository.increase(boardId);
             boardViewBackUpProcessor.backUpForCount(boardId, currentCount);
             return currentCount;
         }
-        return viewCountRepository.readViewCount(boardId);
+        return viewCountRepository.read(boardId);
     }
 }

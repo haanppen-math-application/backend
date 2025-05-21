@@ -19,31 +19,23 @@ public class ViewCountRepository {
     // view::board::{boardId}::view_count
     private static final String ENTRY_HASH_KEY = "view::board::%s::view_count";
 
-    public Long increaseViewCount(Long boardId) {
+    public Long increase(Long boardId) {
         final String key = getKey(boardId);
         final Long count = stringRedisTemplate.opsForHash().increment(BASE_KEY, key, 1L);
 
         log.debug("Increasing view count for board id {}", boardId);
         // 레디스에 첫 적재 됐을 경우
         if (count == 1) {
-            final Long backupedViewCount = loadToRedisIfExistInBackUpRepository(boardId);
-            if (backupedViewCount == null) {
-                return 1L;
-            }
-            return backupedViewCount;
+            return updateRedis(boardId);
         }
         return count;
     }
 
-    public Long readViewCount(Long boardId) {
+    public Long read(final Long boardId) {
         final String key = getKey(boardId);
         final Object count = stringRedisTemplate.opsForHash().get(BASE_KEY, key);
         if (count == null) {
-            final Long backupedViewCount = loadToRedisIfExistInBackUpRepository(boardId);
-            if (backupedViewCount == null) {
-                return 0L;
-            }
-            return backupedViewCount;
+            return updateRedis(boardId);
         }
         return Long.parseLong(count.toString());
     }
@@ -61,27 +53,24 @@ public class ViewCountRepository {
      * @return
      *
      * 백엡 레포에 있으면 레디스에 저장 후 응답
+     * it never returns null.
      */
-    private Long loadToRedisIfExistInBackUpRepository(Long boardId) {
+    private Long updateRedis(final Long boardId) {
         log.debug("Loading view count for board id {}", boardId);
         final String key = getKey(boardId);
 
-        Long backUpViewCount = getBackUpViewCount(boardId);
+        final Long backUpViewCount = fetchViewCount(boardId);
 
-        // 백업된게 없다면 레디스 저장 X
         if (backUpViewCount == null) {
-            return null;
+            return stringRedisTemplate.opsForHash().increment(BASE_KEY, key, 0L);
         }
-
-        // 있으면 레디스 저장
         return stringRedisTemplate.opsForHash().increment(BASE_KEY, key, backUpViewCount);
     }
 
-    private Long getBackUpViewCount(final Long boardId) {
+    private Long fetchViewCount(final Long boardId) {
         final BoardViewCount viewCount = backupRepository.findByBoardId(boardId).orElse(null);
         return viewCount == null ? null : viewCount.getViewCount();
     }
-
 
     private String getKey(Long boardId) {
         return String.format(ENTRY_HASH_KEY, boardId);
