@@ -26,8 +26,10 @@ public class QuestionQueryModelRepository {
     }
 
     public Optional<QuestionQueryModel> get(final Long questionId) {
-        return Optional.ofNullable(DataSerializer.deserialize(stringRedisTemplate.opsForValue()
-                .get(getKey(questionId)), QuestionQueryModel.class));
+        final String model = stringRedisTemplate.opsForValue()
+                .get(getKey(questionId));
+
+        return model == null ? Optional.empty() : Optional.of(DataSerializer.deserialize(model, QuestionQueryModel.class));
     }
 
     private String getKey(final Long questionId) {

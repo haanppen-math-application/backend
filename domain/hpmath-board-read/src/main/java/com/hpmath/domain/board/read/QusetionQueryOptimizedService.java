@@ -1,7 +1,7 @@
 package com.hpmath.domain.board.read;
 
 import com.hpmath.client.board.comment.BoardCommentClient;
-import com.hpmath.client.board.comment.BoardCommentClient.CommentDetails;
+import com.hpmath.client.board.comment.BoardCommentClient.CommentDetail;
 import com.hpmath.client.board.question.BoardQuestionClient;
 import com.hpmath.client.board.question.BoardQuestionClient.QuestionDetailInfo;
 import com.hpmath.client.board.view.BoardViewClient;
@@ -15,6 +15,7 @@ import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
 import com.hpmath.domain.board.read.repository.RecentQuestionRepository;
 import com.hpmath.domain.board.read.repository.TotalQuestionCountRepository;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -38,25 +39,16 @@ public class QusetionQueryOptimizedService {
         List<QuestionPreviewResult> questionPreviewResults;
         if (questionIds.size() != pageSize) {
             questionPreviewResults = boardQuestionClient.getQuestionsSortByDate(pageNumber, pageSize).stream()
-                    .map(detail -> QuestionPreviewResult.from(
-                                detail,
-                                boardCommentClient.getCommentDetails(detail.questionId()).commentDetails().size(),
-                                boardViewClient.getViewCount(detail.questionId()),
-                                getMemberDetail(detail.ownerId()),
-                                getMemberDetail(detail.targetId())))
+                    .map(QuestionDetailInfo::questionId)
+                    .map(this::loadQuestionQueryModel)
+                    .map(this::loadQuestionPreview)
+                    .toList();
+        } else {
+            questionPreviewResults = questionIds.stream()
+                    .map(this::loadQuestionQueryModel)
+                    .map(this::loadQuestionPreview)
                     .toList();
         }
-        questionPreviewResults = questionIds.stream()
-                .map(id -> {
-                    final QuestionQueryModel model = loadQuestionQueryModel(id);
-
-                    return QuestionPreviewResult.from(
-                            model,
-                            boardCommentClient.getCommentDetails(model.questionId()).commentDetails().size(),
-                            boardViewClient.getViewCount(model.questionId()),
-                            getMemberDetail(model.ownerMemberId()),
-                            getMemberDetail(model.targetMemberId()));
-                }).toList();
 
         return PagedResult.of(
                 questionPreviewResults,
@@ -80,6 +72,15 @@ public class QusetionQueryOptimizedService {
                 getMemberDetail(question.targetMemberId()));
     }
 
+    private QuestionPreviewResult loadQuestionPreview(QuestionQueryModel model) {
+        return QuestionPreviewResult.from(
+                model,
+                model.comments().size(),
+                boardViewClient.getViewCount(model.questionId()),
+                getMemberDetail(model.ownerMemberId()),
+                getMemberDetail(model.targetMemberId()));
+    }
+
     private QuestionQueryModel loadQuestionQueryModel(Long questionId) {
         return questionQueryModelRepository.get(questionId)
                 .or(() -> fetchModel(questionId))
@@ -92,13 +93,18 @@ public class QusetionQueryOptimizedService {
 
     private Optional<QuestionQueryModel> fetchModel(final Long questionId) {
         final QuestionDetailInfo questionInfo = boardQuestionClient.get(questionId);
-        final CommentDetails commentDetails = boardCommentClient.getCommentDetails(questionId);
+        final List<CommentDetail> commentDetails = boardCommentClient.getCommentDetails(questionId);
 
-        return Optional.of(QuestionQueryModel.of(
+        return Optional.of(cacheQueryModel(QuestionQueryModel.of(
                 questionInfo,
-                commentDetails.commentDetails(),
+                commentDetails,
                 questionInfo.ownerId(),
                 questionInfo.targetId()
-        ));
+        )));
+    }
+
+    private QuestionQueryModel cacheQueryModel(QuestionQueryModel questionQueryModel) {
+        questionQueryModelRepository.update(questionQueryModel, Duration.ofDays(1L));
+        return questionQueryModel;
     }
 }
