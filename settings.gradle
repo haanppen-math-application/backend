@@ -39,6 +39,7 @@ include(
         'common:hpmath-page-common',
 
         'domain',
+        'domain:hpmath-board-read',
         'domain:hpmath-board-comment',
         'domain:hpmath-course',
         'domain:hpmath-online',
