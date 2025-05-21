@@ -1,7 +1,6 @@
 package com.hpmath.domain.board.service.question;
 
 import com.hpmath.client.board.comment.BoardCommentClient;
-import com.hpmath.client.board.comment.BoardCommentClient.CommentDetails;
 import com.hpmath.client.board.view.BoardViewClient;
 import com.hpmath.client.member.MemberClient;
 import com.hpmath.client.member.MemberClient.MemberInfo;
@@ -41,7 +40,7 @@ class QuestionQueryServiceTest {
     void test() {
         Mockito.when(boardViewClient.getViewCount(Mockito.any())).thenReturn(1L);
         Mockito.when(boardCommentClient.getCommentDetails(Mockito.any()))
-                .thenReturn(new CommentDetails(Collections.emptyList()));
+                .thenReturn(Collections.emptyList());
         Mockito.when(memberClient.getMemberDetail(Mockito.any()))
                 .thenReturn(new MemberInfo(1L, "test", 1, Role.STUDENT));
 

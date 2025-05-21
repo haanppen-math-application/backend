@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
@@ -30,27 +31,21 @@ public class BoardQuestionClient {
     }
 
     public List<QuestionDetailInfo> getQuestionsSortByDate(final int pageNumber, final int pageSize) {
-        final QuestionDetailInfos infos = restClient.get()
+        return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/questions/paged/date-desc")
                         .queryParam("pageSize", pageSize)
                         .queryParam("pageNumber", pageNumber)
                         .build())
                 .retrieve()
-                .body(QuestionDetailInfos.class);
-        return infos.questions() == null ? null : infos.questions();
+                .body(new ParameterizedTypeReference<List<QuestionDetailInfo>>() {});
     }
 
     public QuestionDetailInfo get(final Long questionId) {
-        return restClient.get().uri(uriBuilder -> uriBuilder.path("test")
+        return restClient.get().uri(uriBuilder -> uriBuilder.path("/api/inner/v1/questions/detail")
                         .queryParam("questionId", questionId)
                         .build())
                 .retrieve()
                 .body(QuestionDetailInfo.class);
-    }
-
-    private record QuestionDetailInfos(
-            List<QuestionDetailInfo> questions
-    ){
     }
 
     public record QuestionDetailInfo(

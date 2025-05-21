@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
@@ -42,18 +43,13 @@ public class BoardCommentClient {
                 .body(CommentDetail.class);
     }
 
-    public CommentDetails getCommentDetails(final Long questionId) {
+    public List<CommentDetail> getCommentDetails(final Long questionId) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/comments")
                         .queryParam("questionId", questionId)
                         .build())
                 .retrieve()
-                .body(CommentDetails.class);
-    }
-
-    public record CommentDetails(
-            List<CommentDetail> commentDetails
-    ) {
+                .body(new ParameterizedTypeReference<List<CommentDetail>>() {});
     }
 
     public record CommentDetail(

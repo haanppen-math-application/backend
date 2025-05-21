@@ -16,22 +16,22 @@ public class QuestionInnerController {
     private final QuestionQueryService questionQueryService;
 
     @GetMapping("/api/inner/v1/questions/paged/date-desc")
-    public ResponseEntity<QuestionInfoResponses> getPagedQuestions(
+    public ResponseEntity<List<QuestionInfoResponse>> getPagedQuestions(
             @RequestParam Long pageSize,
             @RequestParam Long pageNumber
     ) {
         final List<QuestionInfoResponse> responses = questionQueryService.loadQuestionsSortByDate(pageSize, pageNumber).stream()
                 .map(QuestionInfoResponse::from)
                 .toList();
-        return ResponseEntity.ok(QuestionInfoResponses.from(responses));
+        return ResponseEntity.ok(responses);
     }
 
-    record QuestionInfoResponses(
-            List<QuestionInfoResponse> questions
+    @GetMapping("/api/inner/v1/questions/detail")
+    public ResponseEntity<QuestionInfoResponse> getSingleDetail(
+            @RequestParam final Long questionId
     ) {
-        static QuestionInfoResponses from(List<QuestionInfoResponse> responses) {
-            return new QuestionInfoResponses(responses);
-        }
+        return ResponseEntity.ok(
+                QuestionInfoResponse.from(questionQueryService.getSingleDetail(questionId)));
     }
 
     record QuestionInfoResponse(

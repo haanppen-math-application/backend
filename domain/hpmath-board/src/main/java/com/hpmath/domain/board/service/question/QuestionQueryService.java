@@ -57,7 +57,7 @@ public class QuestionQueryService {
         return PagedResponse.of(
                 questions.map(question ->
                         QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()), boardCommentClient.getCommentDetails(
-                                question.getId()).commentDetails().size())).toList(),
+                                question.getId()).size())).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),
                 questions.getSize()
@@ -78,7 +78,7 @@ public class QuestionQueryService {
         return PagedResponse.of(
                 questions.map(question ->
                         QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()), boardCommentClient.getCommentDetails(
-                                question.getId()).commentDetails().size())).toList(),
+                                question.getId()).size())).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),
                 questions.getSize()
