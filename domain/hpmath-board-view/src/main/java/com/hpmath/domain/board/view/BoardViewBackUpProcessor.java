@@ -30,7 +30,8 @@ public class BoardViewBackUpProcessor {
         final Map<Long, Long> boardViews = viewCountRepository.loadAllBoardViews();
         log.debug("Board views count: {}", boardViews.size());
         log.debug("Board views: {}", boardViews);
-        boardViews.entrySet()
+        boardViews.entrySet().stream()
+                .filter(view -> view.getValue() > 0)
                 .forEach(entry -> backUp(entry.getKey(), entry.getValue()));
     }
 
