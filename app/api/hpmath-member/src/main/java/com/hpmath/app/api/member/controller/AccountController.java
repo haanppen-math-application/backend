@@ -98,7 +98,7 @@ public class AccountController {
             @LoginInfo final Long userId
     ) {
         return ResponseEntity.ok(
-                MyAccountInfoResponse.of(queryService.getMyInfo(userId))
+                MyAccountInfoResponse.of(queryService.getMemberInfo(userId))
         );
     }
 

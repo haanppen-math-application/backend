@@ -18,7 +18,7 @@ class MemberController {
     public ResponseEntity<MemberRoleResponse> getMemberRole(
             @RequestParam final Long memberId
     ) {
-        final MemberInfoResult memberInfo = accountQueryService.getMyInfo(memberId);
+        final MemberInfoResult memberInfo = accountQueryService.getMemberInfo(memberId);
         return ResponseEntity.ok(new MemberRoleResponse(memberInfo.role()));
     }
 
@@ -26,7 +26,7 @@ class MemberController {
     public ResponseEntity<MemberDetailResponse> getMemberInfo(
             @RequestParam final Long memberId
     ) {
-        final MemberInfoResult memberInfo = accountQueryService.getMyInfo(memberId);
+        final MemberInfoResult memberInfo = accountQueryService.getMemberInfo(memberId);
         return ResponseEntity.ok(new MemberDetailResponse(
                 memberInfo.id(),
                 memberInfo.name(),
