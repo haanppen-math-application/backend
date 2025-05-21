@@ -13,6 +13,10 @@ import com.hpmath.common.page.CursorResponse;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Cache;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,10 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@CacheConfig(cacheNames = "hpmath::member::info")
 public class AccountQueryService {
     private final MemberRepository memberRepository;
 
-    public MemberInfoResult getMyInfo(final Long requestMemberId) {
+    @Cacheable(key = "#requestMemberId", sync = true)
+    public MemberInfoResult getMemberInfo(final Long requestMemberId) {
         return memberRepository.findMemberInfoById(requestMemberId)
                 .orElseThrow(() -> new NoSuchMemberException("찾을 수 없습니다.", ErrorCode.NO_SUCH_MEMBER));
     }

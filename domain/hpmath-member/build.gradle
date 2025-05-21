@@ -15,4 +15,5 @@ dependencies {
 
     implementation project(":common:hpmath-event-outbox-common")
     implementation project(":common:hpmath-event-common")
+    implementation project(":common:hpmath-cache-redis-common")
 }

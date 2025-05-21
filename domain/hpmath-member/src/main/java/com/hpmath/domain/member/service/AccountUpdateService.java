@@ -12,6 +12,9 @@ import com.hpmath.domain.member.service.policy.AccountPolicyManager;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.web.PasswordHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,37 +22,41 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.REPEATABLE_READ)
+@CacheConfig(cacheNames = "hpmath::member::info")
 public class AccountUpdateService {
     private final MemberRepository memberRepository;
 
     private final AccountPolicyManager accountPolicyManager;
     private final PasswordHandler passwordHandler;
 
-    public void updateMember(final AccountUpdateCommand updateCommand) {
-        final Member member = loadMember(updateCommand.targetMemberId());
+    @CacheEvict(key = "#command.targetMemberId()")
+    public void updateMember(final AccountUpdateCommand command) {
+        final Member member = loadMember(command.targetMemberId());
 
-        updatePhoneNumber(updateCommand.phoneNumber(), member);
-        updateName(updateCommand.name(), member);
-        updatePassword(updateCommand.prevPassword(), updateCommand.newPassword(), member);
-
-        accountPolicyManager.checkPolicy(member);
-    }
-
-    public void updateMember(final StudentUpdateCommand updateCommand) {
-        final Member member = loadMember(updateCommand.memberId());
-
-        updatePhoneNumber(updateCommand.phoneNumber(), member);
-        updateGrade(updateCommand.grade(), member);
-        updateName(updateCommand.name(), member);
+        updatePhoneNumber(command.phoneNumber(), member);
+        updateName(command.name(), member);
+        updatePassword(command.prevPassword(), command.newPassword(), member);
 
         accountPolicyManager.checkPolicy(member);
     }
 
-    public void updateMember(final UpdateTeacherCommand updateCommand) {
-        final Member member = loadMember(updateCommand.memberId());
+    @CacheEvict(key = "#command.memberId()")
+    public void updateMember(final StudentUpdateCommand command) {
+        final Member member = loadMember(command.memberId());
 
-        updatePhoneNumber(updateCommand.phoneNumber(), member);
-        updateName(updateCommand.name(), member);
+        updatePhoneNumber(command.phoneNumber(), member);
+        updateGrade(command.grade(), member);
+        updateName(command.name(), member);
+
+        accountPolicyManager.checkPolicy(member);
+    }
+
+    @CacheEvict(key = "#command.memberId()")
+    public void updateMember(final UpdateTeacherCommand command) {
+        final Member member = loadMember(command.memberId());
+
+        updatePhoneNumber(command.phoneNumber(), member);
+        updateName(command.name(), member);
 
         accountPolicyManager.checkPolicy(member);
     }
