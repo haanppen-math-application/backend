@@ -30,13 +30,14 @@ public class QuestionQueryService {
     private final MemberClient memberClient;
     private final BoardCommentClient boardCommentClient;
 
-    public List<QuestionInfoResult> loadQuestionsSortByDate(final Long pageSize, final Long offset) {
-        final List<QuestionInfo> questionInfos = questionRepository.findQuestionsSortByDate(pageSize, offset);
+    public List<QuestionInfoResult> loadQuestionsSortByDate(final Long pageSize, final Long pageNumber) {
+        final List<QuestionInfo> questionInfos = questionRepository.findQuestionsSortByDate(pageSize, pageNumber * pageSize);
         final Map<Long, List<QuestionInfo>> map = questionInfos.stream()
                 .collect(Collectors.groupingBy(QuestionInfo::getQuestionId));
 
         return map.values().stream()
                 .map(QuestionInfoResult::mapToInfo)
+                .sorted((o1, o2) -> o1.registeredDateTime().isBefore(o2.registeredDateTime()) ? 1 : -1)
                 .toList();
     }
 
