@@ -15,6 +15,7 @@ include(
         'app:consumer:hpmath-media',
 
         'app:api:hpmath-board-view',
+        'app:api:hpmath-board-read',
         'app:api:hpmath-board-comment',
         'app:api:hpmath-online',
         'app:api:hpmath-directory',

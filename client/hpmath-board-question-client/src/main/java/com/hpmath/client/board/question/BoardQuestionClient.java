@@ -29,12 +29,11 @@ public class BoardQuestionClient {
         return clientHttpRequestFactory;
     }
 
-    public List<QuestionDetailInfo> getQuestionsSortByDate(final int offset, final int limit) {
+    public List<QuestionDetailInfo> getQuestionsSortByDate(final int pageNumber, final int pageSize) {
         final QuestionDetailInfos infos = restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/questions/paged/date-desc")
-                        .queryParam("sort", "date")
-                        .queryParam("pageSize", limit)
-                        .queryParam("offset", offset)
+                        .queryParam("pageSize", pageSize)
+                        .queryParam("pageNumber", pageNumber)
                         .build())
                 .retrieve()
                 .body(QuestionDetailInfos.class);

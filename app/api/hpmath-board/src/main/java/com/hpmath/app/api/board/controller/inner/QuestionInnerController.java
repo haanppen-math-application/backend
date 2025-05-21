@@ -18,9 +18,9 @@ public class QuestionInnerController {
     @GetMapping("/api/inner/v1/questions/paged/date-desc")
     public ResponseEntity<QuestionInfoResponses> getPagedQuestions(
             @RequestParam Long pageSize,
-            @RequestParam Long offset
+            @RequestParam Long pageNumber
     ) {
-        final List<QuestionInfoResponse> responses = questionQueryService.loadQuestionsSortByDate(pageSize, offset).stream()
+        final List<QuestionInfoResponse> responses = questionQueryService.loadQuestionsSortByDate(pageSize, pageNumber).stream()
                 .map(QuestionInfoResponse::from)
                 .toList();
         return ResponseEntity.ok(QuestionInfoResponses.from(responses));
