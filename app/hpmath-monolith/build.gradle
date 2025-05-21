@@ -9,6 +9,8 @@ dependencies {
     implementation project(":app:api:hpmath-banner")
     implementation project(":app:api:hpmath-board")
     implementation project(":app:api:hpmath-board-view")
+    implementation project(":app:api:hpmath-board-read")
+    implementation project(":app:api:hpmath-board-comment")
     implementation project(":app:api:hpmath-directory")
     implementation project(":app:api:hpmath-online")
     implementation project(":app:batch:hpmath-board-view")

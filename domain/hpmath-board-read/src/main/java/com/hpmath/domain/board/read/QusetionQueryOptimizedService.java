@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class QuestionQueryService {
+public class QusetionQueryOptimizedService {
     private final QuestionQueryModelRepository questionQueryModelRepository;
     private final RecentQuestionRepository recentQuestionRepository;
     private final TotalQuestionCountRepository totalQuestionCountRepository;

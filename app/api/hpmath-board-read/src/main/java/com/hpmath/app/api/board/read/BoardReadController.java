@@ -6,7 +6,7 @@ import com.hpmath.common.page.PagedResponse;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
-import com.hpmath.domain.board.read.QuestionQueryService;
+import com.hpmath.domain.board.read.QusetionQueryOptimizedService;
 import com.hpmath.domain.board.read.dto.PagedResult;
 import com.hpmath.domain.board.read.dto.QuestionDetailResult;
 import com.hpmath.domain.board.read.dto.QuestionPreviewResult;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class BoardReadController {
-    private final QuestionQueryService questionQueryService;
+    private final QusetionQueryOptimizedService questionQueryService;
 
     @GetMapping("/api/v2/board/questions/paged/date-desc")
     public ResponseEntity<PagedResponse<QuestionPreviewResponse>> readQuestionsSortedByDate(

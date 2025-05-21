@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/inner/v1/board/comment")
+@RequestMapping("/api/inner/v1/board/comments")
 @RequiredArgsConstructor
 public class BoardCommentQueryController {
     private final CommentQueryService commentQueryService;
@@ -24,12 +24,12 @@ public class BoardCommentQueryController {
     public ResponseEntity<List<CommentDetailResponse>> loadQuestionsComments(
             @RequestParam final Long questionId
     ) {
-        return ResponseEntity.ok(commentQueryService.commentDetailResults(new CommentQueryCommand(questionid)).stream()
+        return ResponseEntity.ok(commentQueryService.commentDetailResults(new CommentQueryCommand(questionId)).stream()
                 .map(CommentDetailResponse::from)
                 .toList());
     }
 
-    @GetMapping
+    @GetMapping("/detail")
     public ResponseEntity<CommentDetailResponse> loadSingleComment(
             @RequestParam final Long commentId
     ) {

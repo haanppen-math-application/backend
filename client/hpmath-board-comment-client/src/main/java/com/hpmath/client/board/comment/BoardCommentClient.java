@@ -35,7 +35,7 @@ public class BoardCommentClient {
 
     public CommentDetail getCommentDetail(final Long commentId) {
         return restClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/comment")
+                .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/comments/detail")
                         .queryParam("commentId", commentId)
                         .build())
                 .retrieve()
@@ -44,7 +44,7 @@ public class BoardCommentClient {
 
     public CommentDetails getCommentDetails(final Long questionId) {
         return restClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/comment")
+                .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/comments")
                         .queryParam("questionId", questionId)
                         .build())
                 .retrieve()
