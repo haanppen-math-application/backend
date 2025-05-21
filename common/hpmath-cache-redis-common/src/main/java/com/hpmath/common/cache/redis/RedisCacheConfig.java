@@ -1,5 +1,6 @@
 package com.hpmath.common.cache.redis;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.Duration;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Slf4j
@@ -25,8 +26,6 @@ public class RedisCacheConfig {
 
     @Bean
     CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory, RedisCacheConfiguration redisConfiguration) {
-        log.info("Create Redis CacheManager in banner domain");
-
         if (redisConnectionFactory.getConnection().isClosed()) {
             log.error("Redis connection is closed");
             throw new RuntimeException("Redis connection is closed");
@@ -42,8 +41,9 @@ public class RedisCacheConfig {
     RedisCacheConfiguration cacheConfiguration(RedisConfigurationProperties properties) {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofMinutes(properties.getCacheTTL()))  // 캐시 만료 시간 설정
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+                .serializeKeysWith(SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()
+                        .configure(objectMapper -> objectMapper.registerModule(new JavaTimeModule()))));
     }
 
     @Configuration
@@ -52,6 +52,6 @@ public class RedisCacheConfig {
     @Setter
     @NoArgsConstructor
     private static class RedisConfigurationProperties {
-        private int cacheTTL;
+        private int cacheTTL = 10;
     }
 }
