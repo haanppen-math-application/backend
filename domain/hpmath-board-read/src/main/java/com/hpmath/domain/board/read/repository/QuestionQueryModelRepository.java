@@ -1,0 +1,36 @@
+package com.hpmath.domain.board.read.repository;
+
+import com.hpmath.common.serializer.DataSerializer;
+import com.hpmath.domain.board.read.model.QuestionQueryModel;
+import java.time.Duration;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@RequiredArgsConstructor
+public class QuestionQueryModelRepository {
+    private final StringRedisTemplate stringRedisTemplate;
+
+    // board-read::question::{questionId}
+    private static final String KEY_FORMAT = "board-read::question::%s";
+
+    public void update(final QuestionQueryModel model, final Duration ttl) {
+        stringRedisTemplate.opsForValue()
+                .set(getKey(model.questionId()), DataSerializer.serialize(model), ttl);
+    }
+
+    public void delete(final QuestionQueryModel model) {
+        stringRedisTemplate.delete(getKey(model.questionId()));
+    }
+
+    public Optional<QuestionQueryModel> get(final Long questionId) {
+        return Optional.ofNullable(DataSerializer.deserialize(stringRedisTemplate.opsForValue()
+                .get(getKey(questionId)), QuestionQueryModel.class));
+    }
+
+    private String getKey(final Long questionId) {
+        return KEY_FORMAT.formatted(questionId);
+    }
+}

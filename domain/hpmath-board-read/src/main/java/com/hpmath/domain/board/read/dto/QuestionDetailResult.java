@@ -1,0 +1,39 @@
+package com.hpmath.domain.board.read.dto;
+
+import com.hpmath.domain.board.read.model.QuestionQueryModel;
+import java.time.LocalDateTime;
+import java.util.List;
+
+public record QuestionDetailResult(
+        Long questionId,
+        String title,
+        String content,
+        LocalDateTime registeredDateTime,
+        Boolean solved,
+        List<CommentDetailResult> comments,
+        List<String> imageUrls,
+        Long viewCount,
+        MemberDetailResult owner,
+        MemberDetailResult target
+) {
+    public static QuestionDetailResult from(
+            final QuestionQueryModel questionQueryModel,
+            final List<CommentDetailResult> comments,
+            final Long viewCount,
+            final MemberDetailResult owner,
+            final MemberDetailResult target
+    ) {
+        return new QuestionDetailResult(
+                questionQueryModel.questionId(),
+                questionQueryModel.title(),
+                questionQueryModel.content(),
+                questionQueryModel.registeredDateTime(),
+                questionQueryModel.solved(),
+                comments,
+                questionQueryModel.mediaSrcs(),
+                viewCount,
+                owner,
+                target
+        );
+    }
+}
