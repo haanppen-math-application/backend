@@ -41,6 +41,11 @@ public class QuestionQueryService {
                 .toList();
     }
 
+    public QuestionInfoResult getSingleDetail(final Long questionId) {
+        return QuestionInfoResult.from(questionRepository.findQuestionWithImagesByQuestionId(questionId)
+                .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION)));
+    }
+
     public QuestionDetailResult getSingleQuestionDetails(final Long questionId, final Long requestMemberId) {
         final Question question = findQuestion(questionId);
         final Long viewCount = boardViewClient.increaseViewCount(questionId, requestMemberId);

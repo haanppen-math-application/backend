@@ -4,6 +4,7 @@ import com.hpmath.domain.board.dto.QuestionInfo;
 import com.hpmath.domain.board.entity.Question;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Page<Question> findQuestionsByOwnerMemberIdAndTitleContaining(final Long memberId, final String title, final Pageable pageable);
     Page<Question> findAllByTitleContaining(final String title, final Pageable pageable);
     Page<Question> findAllBy(final Pageable pageable);
+
+    @Query("SELECT q FROM Question q LEFT JOIN FETCH q.images WHERE q.id = :questionId")
+    Optional<Question> findQuestionWithImagesByQuestionId(@Param("questionId") final Long questionId);
 
     @Modifying
     @Query("UPDATE Question q SET q.ownerMemberId = null WHERE q.ownerMemberId In :ownerIds")
@@ -31,7 +35,7 @@ value = """
 SELECT q.id, q.title, q.content, q.solved, q.registered_date_time, q.owner_member, q.target_member, qi.image_src 
 FROM (SELECT q1.id FROM question q1 ORDER BY q1.registered_date_time desc LIMIT :limit OFFSET :offset) l 
     JOIN question q ON l.id = q.id 
-    JOIN question_image qi ON q.id = qi.question_id
+    LEFT JOIN question_image qi ON q.id = qi.question_id
 """)
     List<QuestionInfo> findQuestionsSortByDate(
             @Param("limit") final Long limit,
