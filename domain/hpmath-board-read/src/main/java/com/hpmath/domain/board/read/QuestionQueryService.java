@@ -8,11 +8,13 @@ import com.hpmath.client.board.view.BoardViewClient;
 import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.board.read.dto.CommentDetailResult;
 import com.hpmath.domain.board.read.dto.MemberDetailResult;
+import com.hpmath.domain.board.read.dto.PagedResult;
 import com.hpmath.domain.board.read.dto.QuestionDetailResult;
 import com.hpmath.domain.board.read.dto.QuestionPreviewResult;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
 import com.hpmath.domain.board.read.repository.RecentQuestionRepository;
+import com.hpmath.domain.board.read.repository.TotalQuestionCountRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -23,16 +25,19 @@ import org.springframework.stereotype.Service;
 public class QuestionQueryService {
     private final QuestionQueryModelRepository questionQueryModelRepository;
     private final RecentQuestionRepository recentQuestionRepository;
+    private final TotalQuestionCountRepository totalQuestionCountRepository;
 
     private final MemberClient memberClient;
     private final BoardViewClient boardViewClient;
     private final BoardCommentClient boardCommentClient;
     private final BoardQuestionClient boardQuestionClient;
 
-    public List<QuestionPreviewResult> getPagedResultSortedByDate(final int offset, final int limit) {
-        final List<Long> questionIds = recentQuestionRepository.getRange(offset, limit);
-        if (questionIds.size() != limit) {
-            return boardQuestionClient.getQuestionsSortByDate(offset, limit).stream()
+    public PagedResult<QuestionPreviewResult> getPagedResultSortedByDate(final int pageNumber, final int pageSize) {
+        final List<Long> questionIds = recentQuestionRepository.getRange(pageNumber * pageSize, pageSize);
+
+        List<QuestionPreviewResult> questionPreviewResults;
+        if (questionIds.size() != pageSize) {
+            questionPreviewResults = boardQuestionClient.getQuestionsSortByDate(pageNumber, pageSize).stream()
                     .map(detail -> QuestionPreviewResult.from(
                                 detail,
                                 boardCommentClient.getCommentDetails(detail.questionId()).commentDetails().size(),
@@ -41,7 +46,7 @@ public class QuestionQueryService {
                                 getMemberDetail(detail.targetId())))
                     .toList();
         }
-        return questionIds.stream()
+        questionPreviewResults = questionIds.stream()
                 .map(id -> {
                     final QuestionQueryModel model = loadQuestionQueryModel(id);
 
@@ -52,6 +57,12 @@ public class QuestionQueryService {
                             getMemberDetail(model.ownerMemberId()),
                             getMemberDetail(model.targetMemberId()));
                 }).toList();
+
+        return PagedResult.of(
+                questionPreviewResults,
+                totalQuestionCountRepository.getTotalCount(),
+                pageNumber,
+                pageSize);
     }
 
     public QuestionDetailResult getDetail(final Long questionId, final Long requsetMemberId) {

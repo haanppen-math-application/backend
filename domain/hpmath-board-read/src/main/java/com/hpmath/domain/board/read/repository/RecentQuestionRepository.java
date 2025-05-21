@@ -2,7 +2,6 @@ package com.hpmath.domain.board.read.repository;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -28,7 +27,7 @@ public class RecentQuestionRepository {
                 .remove(KEY, String.valueOf(articleId));
     }
 
-    public List<Long> getRange(final long offset, final long limit) {
+    public List<Long> getRange(final int offset, final int limit) {
         return redisTemplate.opsForZSet()
                 .reverseRange(KEY, offset, offset + limit - 1).stream()
                 .map(Long::parseLong)
