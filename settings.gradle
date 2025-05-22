@@ -13,6 +13,7 @@ include(
         'app:consumer:hpmath-board',
         'app:consumer:hpmath-directory',
         'app:consumer:hpmath-media',
+        'app:consumer:hpmath-board-read',
 
         'app:api:hpmath-board-view',
         'app:api:hpmath-board-read',
