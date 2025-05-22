@@ -1,7 +1,7 @@
 package com.hpmath.domain.board.read.dto;
 
-import com.hpmath.client.member.MemberClient.MemberInfo;
 import com.hpmath.common.Role;
+import com.hpmath.domain.board.read.model.MemberQueryModel;
 
 public record MemberDetailResult(
         Long memberId,
@@ -9,12 +9,12 @@ public record MemberDetailResult(
         Integer memberGrade,
         Role role
 ) {
-    public static MemberDetailResult from(final MemberInfo memberInfo) {
+    public static MemberDetailResult from(final MemberQueryModel memberQueryModel) {
         return new MemberDetailResult(
-                memberInfo.memberId(),
-                memberInfo.memberName(),
-                memberInfo.memberGrade(),
-                memberInfo.role()
+                memberQueryModel.getMemberId(),
+                memberQueryModel.getMemberName(),
+                memberQueryModel.getMemberGrade(),
+                memberQueryModel.getRole()
         );
     }
 }

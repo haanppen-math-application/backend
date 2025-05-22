@@ -1,9 +1,7 @@
 package com.hpmath.domain.board.read;
 
 import com.hpmath.client.board.view.BoardViewClient;
-import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.board.read.dto.CommentDetailResult;
-import com.hpmath.domain.board.read.dto.MemberDetailResult;
 import com.hpmath.domain.board.read.dto.PagedResult;
 import com.hpmath.domain.board.read.dto.QuestionDetailResult;
 import com.hpmath.domain.board.read.dto.QuestionPreviewResult;
@@ -18,8 +16,8 @@ public class QusetionQueryOptimizedService {
     private final QuestionTotalCountManager questionTotalCountManager;
     private final QuestionRecentListManager questionRecentListManager;
     private final QuestionQueryModelManager questionQueryModelManager;
+    private final QusetionMemberManager qusetionMemberManager;
 
-    private final MemberClient memberClient;
     private final BoardViewClient boardViewClient;
 
     public PagedResult<QuestionPreviewResult> getPagedResultSortedByDate(final int pageNumber, final int pageSize) {
@@ -45,11 +43,11 @@ public class QusetionQueryOptimizedService {
                 question.comments().stream()
                         .map(comment -> CommentDetailResult.from(
                                 comment,
-                                getMemberDetail(comment.getOwnerId())))
+                                qusetionMemberManager.get(comment.getOwnerId())))
                         .toList(),
                 boardViewClient.increaseViewCount(questionId, requsetMemberId),
-                getMemberDetail(question.ownerMemberId()),
-                getMemberDetail(question.targetMemberId()));
+                qusetionMemberManager.get(question.ownerMemberId()),
+                qusetionMemberManager.get(question.targetMemberId()));
     }
 
     private QuestionPreviewResult loadQuestionPreview(QuestionQueryModel model) {
@@ -57,11 +55,7 @@ public class QusetionQueryOptimizedService {
                 model,
                 model.comments().size(),
                 boardViewClient.getViewCount(model.questionId()),
-                getMemberDetail(model.ownerMemberId()),
-                getMemberDetail(model.targetMemberId()));
-    }
-
-    private MemberDetailResult getMemberDetail(final Long memberId) {
-        return MemberDetailResult.from(memberClient.getMemberDetail(memberId));
+                qusetionMemberManager.get(model.ownerMemberId()),
+                qusetionMemberManager.get(model.targetMemberId()));
     }
 }
