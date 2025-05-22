@@ -24,12 +24,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class QusetionQueryOptimizedService {
-    private static final Long QUESTION_CACHE_SIZE = 1000L;
-
     private final QuestionQueryModelRepository questionQueryModelRepository;
-    private final RecentQuestionRepository recentQuestionRepository;
 
     private final CommentCountCacheManager commentCountCacheManager;
+    private final QuestionRecentListManager questionRecentListManager;
 
     private final MemberClient memberClient;
     private final BoardViewClient boardViewClient;
@@ -37,24 +35,12 @@ public class QusetionQueryOptimizedService {
     private final BoardQuestionClient boardQuestionClient;
 
     public PagedResult<QuestionPreviewResult> getPagedResultSortedByDate(final int pageNumber, final int pageSize) {
-        final List<Long> questionIds = recentQuestionRepository.getRange(pageNumber * pageSize, pageSize);
+        final List<Long> questionIds = questionRecentListManager.getPagedResultSortedByDate(pageNumber, pageSize);
 
-        List<QuestionPreviewResult> questionPreviewResults;
-        if (questionIds.size() != pageSize) {
-            questionPreviewResults = boardQuestionClient.getQuestionsSortByDate(pageNumber, pageSize).stream()
-                    .map(QuestionDetailInfo::questionId)
-                    .map(this::loadQuestionQueryModel)
-                    .map(this::loadQuestionPreview)
-                    .peek(questionPreviewResult -> {
-                        recentQuestionRepository.add(questionPreviewResult.questionId(), questionPreviewResult.registeredDateTime(), QUESTION_CACHE_SIZE);
-                    })
-                    .toList();
-        } else {
-            questionPreviewResults = questionIds.stream()
+        List<QuestionPreviewResult> questionPreviewResults = questionIds.stream()
                     .map(this::loadQuestionQueryModel)
                     .map(this::loadQuestionPreview)
                     .toList();
-        }
 
         return PagedResult.of(
                 questionPreviewResults,
