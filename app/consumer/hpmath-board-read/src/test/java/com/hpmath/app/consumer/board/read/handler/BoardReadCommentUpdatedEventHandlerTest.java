@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,12 +29,18 @@ class BoardReadCommentUpdatedEventHandlerTest {
     @Autowired
     private BoardReadCommentUpdatedEventHandler boardReadCommentUpdatedEventHandler;
 
-    static GenericContainer<?> container = new GenericContainer<>("redis:7.4").withExposedPorts(6379);
+    static GenericContainer<?> redisContainer = new GenericContainer<>("redis:7.4").withExposedPorts(6379);
 
     @DynamicPropertySource
     static void properties(DynamicPropertyRegistry registry) {
-        registry.add("spring.redis.host", container::getHost);
-        registry.add("spring.redis.port", () -> container.getMappedPort(6379));
+        registry.add("spring.data.redis.host", redisContainer::getHost);
+        registry.add("spring.data.redis.port", () -> redisContainer.getMappedPort(6379));
+        redisContainer.start();
+    }
+
+    @BeforeAll
+    static void init() {
+        redisContainer.start();
     }
 
     @Test

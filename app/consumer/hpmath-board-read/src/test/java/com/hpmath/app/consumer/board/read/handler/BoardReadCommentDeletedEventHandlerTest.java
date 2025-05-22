@@ -29,13 +29,15 @@ class BoardReadCommentDeletedEventHandlerTest {
     @Autowired
     private BoardReadCommentDeletedEventHandler commentDeletedEventHandler;
 
-    static GenericContainer<?> container = new GenericContainer<>("redis:7.4").withExposedPorts(6379);
+    static GenericContainer<?> redisContainer = new GenericContainer<>("redis:7.4").withExposedPorts(6379);
 
     @DynamicPropertySource
     static void properties(DynamicPropertyRegistry registry) {
-        registry.add("spring.redis.host", container::getHost);
-        registry.add("spring.redis.port", () -> container.getMappedPort(6379));
+        registry.add("spring.data.redis.host", redisContainer::getHost);
+        registry.add("spring.data.redis.port", () -> redisContainer.getMappedPort(6379));
+        redisContainer.start();
     }
+
 
     @Test
     void 댓글_삭제시_쿼리모델_업데이트() {
