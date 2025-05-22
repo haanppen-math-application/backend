@@ -15,8 +15,12 @@ public class QuestionQueryModelRepository {
 
     // board-read::question::{questionId}
     private static final String KEY_FORMAT = "board-read::question::%s";
+    private static final Duration DEFAULT_TTL = Duration.ofDays(1L);
 
-    public void update(final QuestionQueryModel model, final Duration ttl) {
+    public void update(final QuestionQueryModel model, Duration ttl) {
+        if (ttl == null) {
+            ttl = DEFAULT_TTL;
+        }
         stringRedisTemplate.opsForValue()
                 .set(getKey(model.questionId()), DataSerializer.serialize(model), ttl);
     }
