@@ -1,5 +1,6 @@
-package com.hpmath.app.consumer.board.read.handler;
+package com.hpmath.app.consumer.board.read;
 
+import com.hpmath.app.consumer.board.read.handler.EventHandler;
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventPayload;
 import java.util.List;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class BoardReadEventExecutor {
+class BoardReadEventProcessor {
     private final List<EventHandler> handlers;
 
     public void handle(final Event<? extends EventPayload> event) {
