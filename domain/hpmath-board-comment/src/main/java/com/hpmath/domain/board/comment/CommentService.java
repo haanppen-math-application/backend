@@ -48,6 +48,7 @@ public class CommentService {
                         comment.getId(),
                         comment.getContent(),
                         comment.getOwnerId(),
+                        comment.getRegisteredDateTime(),
                         comment.getImages().stream()
                                 .map(CommentImage::getImageSrc)
                                 .toList()));
