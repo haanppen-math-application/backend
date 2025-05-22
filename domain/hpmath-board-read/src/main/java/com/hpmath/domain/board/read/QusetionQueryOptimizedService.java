@@ -1,9 +1,5 @@
 package com.hpmath.domain.board.read;
 
-import com.hpmath.client.board.comment.BoardCommentClient;
-import com.hpmath.client.board.comment.BoardCommentClient.CommentDetail;
-import com.hpmath.client.board.question.BoardQuestionClient;
-import com.hpmath.client.board.question.BoardQuestionClient.QuestionDetailInfo;
 import com.hpmath.client.board.view.BoardViewClient;
 import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.board.read.dto.CommentDetailResult;
@@ -12,19 +8,14 @@ import com.hpmath.domain.board.read.dto.PagedResult;
 import com.hpmath.domain.board.read.dto.QuestionDetailResult;
 import com.hpmath.domain.board.read.dto.QuestionPreviewResult;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
-import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
-import com.hpmath.domain.board.read.repository.RecentQuestionRepository;
-import com.hpmath.domain.board.read.repository.TotalQuestionCountRepository;
-import java.time.Duration;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class QusetionQueryOptimizedService {
-    private final CommentCountCacheManager commentCountCacheManager;
+    private final QuestionTotalCountManager questionTotalCountManager;
     private final QuestionRecentListManager questionRecentListManager;
     private final QuestionQueryModelManager questionQueryModelManager;
 
@@ -41,7 +32,7 @@ public class QusetionQueryOptimizedService {
 
         return PagedResult.of(
                 questionPreviewResults,
-                commentCountCacheManager.getTotalCount(),
+                questionTotalCountManager.getTotalCount(),
                 pageNumber,
                 pageSize);
     }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-class CommentCountCacheManager {
+class QuestionTotalCountManager {
     private final BoardQuestionClient boardQuestionClient;
     private final TotalQuestionCountRepository totalQuestionCountRepository;
 
