@@ -8,6 +8,7 @@ public record CommentUpdatedEventPayload(
         Long commentId,
         String content,
         Long registeredMemberId,
-        List<String> deletedMediaSrcs
+        List<String> deletedMediaSrcs,
+        List<String> newMediaSrcs
 ) implements EventPayload {
 }
