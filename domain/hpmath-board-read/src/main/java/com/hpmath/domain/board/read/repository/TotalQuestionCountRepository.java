@@ -13,7 +13,7 @@ public class TotalQuestionCountRepository {
 
     public Long getTotalCount() {
         final String result = redisTemplate.opsForValue().get(KEY);
-        return result == null ? 0L : Long.parseLong(result);
+        return result == null ? null : Long.parseLong(result);
     }
 
     public void saveCount(final Long count) {

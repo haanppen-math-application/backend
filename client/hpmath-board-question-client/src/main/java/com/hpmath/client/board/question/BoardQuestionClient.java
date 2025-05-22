@@ -48,6 +48,13 @@ public class BoardQuestionClient {
                 .body(QuestionDetailInfo.class);
     }
 
+    public Long getCount() {
+        return restClient.get().uri(uriBuilder -> uriBuilder.path("/api/inner/v1/questions/count")
+                        .build())
+                .retrieve()
+                .body(Long.class);
+    }
+
     public record QuestionDetailInfo(
             Long questionId,
             String title,

@@ -46,6 +46,10 @@ public class QuestionQueryService {
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION)));
     }
 
+    public Long getCount() {
+        return questionRepository.count();
+    }
+
     public QuestionDetailResult getSingleQuestionDetails(final Long questionId, final Long requestMemberId) {
         final Question question = findQuestion(questionId);
         final Long viewCount = boardViewClient.increaseViewCount(questionId, requestMemberId);

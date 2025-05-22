@@ -12,14 +12,13 @@ import org.springframework.stereotype.Repository;
 public class RecentQuestionRepository {
     private final StringRedisTemplate redisTemplate;
 
-    private static final Long LIMIT = 1000L;
     private static final String KEY = "board-read::sorted::date";
 
-    public void add(final Long articleId, final LocalDateTime dateTime) {
+    public void add(final Long articleId, final LocalDateTime dateTime, final Long limit) {
         redisTemplate.opsForZSet()
                 .add(KEY, String.valueOf(articleId), toDouble(dateTime));
         redisTemplate.opsForZSet()
-                .removeRange(KEY, 0, - LIMIT - 1);
+                .removeRange(KEY, 0, - limit - 1);
     }
 
     public void remove(final Long articleId) {

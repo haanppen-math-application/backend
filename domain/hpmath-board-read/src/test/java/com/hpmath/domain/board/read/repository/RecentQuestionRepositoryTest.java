@@ -29,7 +29,7 @@ class RecentQuestionRepositoryTest {
     @Test
     void findByDate() {
         for (int i = 0; i < 1100; i++) {
-            repository.add(Long.valueOf(i), LocalDateTime.now());
+            repository.add(Long.valueOf(i), LocalDateTime.now(), 1000L);
         }
 
         Assertions.assertEquals(10, repository.getRange(0, 10).size());

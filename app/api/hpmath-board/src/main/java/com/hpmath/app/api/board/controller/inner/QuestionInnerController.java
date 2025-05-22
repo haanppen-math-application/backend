@@ -34,6 +34,11 @@ public class QuestionInnerController {
                 QuestionInfoResponse.from(questionQueryService.getSingleDetail(questionId)));
     }
 
+    @GetMapping("/api/inner/v1/questions/count")
+    public ResponseEntity<Long> getQuestionsCount() {
+        return ResponseEntity.ok(questionQueryService.getCount());
+    }
+
     record QuestionInfoResponse(
             Long questionId,
             String title,

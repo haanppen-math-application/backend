@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class QusetionQueryOptimizedService {
+    private static final Long QUESTION_CACHE_SIZE = 1000L;
+
     private final QuestionQueryModelRepository questionQueryModelRepository;
     private final RecentQuestionRepository recentQuestionRepository;
     private final TotalQuestionCountRepository totalQuestionCountRepository;
@@ -42,6 +44,9 @@ public class QusetionQueryOptimizedService {
                     .map(QuestionDetailInfo::questionId)
                     .map(this::loadQuestionQueryModel)
                     .map(this::loadQuestionPreview)
+                    .peek(questionPreviewResult -> {
+                        recentQuestionRepository.add(questionPreviewResult.questionId(), questionPreviewResult.registeredDateTime(), QUESTION_CACHE_SIZE);
+                    })
                     .toList();
         } else {
             questionPreviewResults = questionIds.stream()
@@ -52,7 +57,7 @@ public class QusetionQueryOptimizedService {
 
         return PagedResult.of(
                 questionPreviewResults,
-                totalQuestionCountRepository.getTotalCount(),
+                getTotalCount(),
                 pageNumber,
                 pageSize);
     }
@@ -70,6 +75,15 @@ public class QusetionQueryOptimizedService {
                 boardViewClient.increaseViewCount(questionId, requsetMemberId),
                 getMemberDetail(question.ownerMemberId()),
                 getMemberDetail(question.targetMemberId()));
+    }
+
+    private Long getTotalCount() {
+        Long totalCount = totalQuestionCountRepository.getTotalCount();
+        if (totalCount == null) {
+            totalCount = boardQuestionClient.getCount();
+            totalQuestionCountRepository.saveCount(totalCount);
+        }
+        return totalCount;
     }
 
     private QuestionPreviewResult loadQuestionPreview(QuestionQueryModel model) {
