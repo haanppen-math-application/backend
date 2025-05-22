@@ -65,7 +65,7 @@ public class QusetionQueryOptimizedService {
                 question.comments().stream()
                         .map(comment -> CommentDetailResult.from(
                                 comment,
-                                getMemberDetail(comment.ownerId())))
+                                getMemberDetail(comment.getOwnerId())))
                         .toList(),
                 boardViewClient.increaseViewCount(questionId, requsetMemberId),
                 getMemberDetail(question.ownerMemberId()),

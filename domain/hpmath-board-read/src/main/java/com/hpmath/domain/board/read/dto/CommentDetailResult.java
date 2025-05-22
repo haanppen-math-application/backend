@@ -14,11 +14,11 @@ public record CommentDetailResult(
 ) {
     public static CommentDetailResult from(final CommentQueryModel model, final MemberDetailResult owner) {
         return new CommentDetailResult(
-                model.commentId(),
-                model.content(),
-                model.selected(),
-                model.images(),
-                model.registeredDateTime(),
+                model.getCommentId(),
+                model.getContent(),
+                model.getSelected(),
+                model.getImages(),
+                model.getRegisteredDateTime(),
                 owner
         );
     }
