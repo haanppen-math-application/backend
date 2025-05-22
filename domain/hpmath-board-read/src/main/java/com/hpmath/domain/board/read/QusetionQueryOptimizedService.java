@@ -28,7 +28,8 @@ public class QusetionQueryOptimizedService {
 
     private final QuestionQueryModelRepository questionQueryModelRepository;
     private final RecentQuestionRepository recentQuestionRepository;
-    private final TotalQuestionCountRepository totalQuestionCountRepository;
+
+    private final CommentCountCacheManager commentCountCacheManager;
 
     private final MemberClient memberClient;
     private final BoardViewClient boardViewClient;
@@ -57,7 +58,7 @@ public class QusetionQueryOptimizedService {
 
         return PagedResult.of(
                 questionPreviewResults,
-                getTotalCount(),
+                commentCountCacheManager.getTotalCount(),
                 pageNumber,
                 pageSize);
     }
@@ -75,15 +76,6 @@ public class QusetionQueryOptimizedService {
                 boardViewClient.increaseViewCount(questionId, requsetMemberId),
                 getMemberDetail(question.ownerMemberId()),
                 getMemberDetail(question.targetMemberId()));
-    }
-
-    private Long getTotalCount() {
-        Long totalCount = totalQuestionCountRepository.getTotalCount();
-        if (totalCount == null) {
-            totalCount = boardQuestionClient.getCount();
-            totalQuestionCountRepository.saveCount(totalCount);
-        }
-        return totalCount;
     }
 
     private QuestionPreviewResult loadQuestionPreview(QuestionQueryModel model) {
