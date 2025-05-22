@@ -47,7 +47,10 @@ public class CommentService {
                         totalCommentCount,
                         comment.getId(),
                         comment.getContent(),
-                        comment.getOwnerId()));
+                        comment.getOwnerId(),
+                        comment.getImages().stream()
+                                .map(CommentImage::getImageSrc)
+                                .toList()));
 
         return comment.getId();
     }
@@ -74,7 +77,10 @@ public class CommentService {
                         comment.getId(),
                         comment.getContent(),
                         comment.getOwnerId(),
-                        deletedMedias));
+                        deletedMedias,
+                        comment.getImages().stream()
+                                .map(CommentImage::getImageSrc)
+                                .toList()));
     }
 
     @Transactional
