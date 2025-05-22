@@ -24,21 +24,18 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class QusetionQueryOptimizedService {
-    private final QuestionQueryModelRepository questionQueryModelRepository;
-
     private final CommentCountCacheManager commentCountCacheManager;
     private final QuestionRecentListManager questionRecentListManager;
+    private final QuestionQueryModelManager questionQueryModelManager;
 
     private final MemberClient memberClient;
     private final BoardViewClient boardViewClient;
-    private final BoardCommentClient boardCommentClient;
-    private final BoardQuestionClient boardQuestionClient;
 
     public PagedResult<QuestionPreviewResult> getPagedResultSortedByDate(final int pageNumber, final int pageSize) {
         final List<Long> questionIds = questionRecentListManager.getPagedResultSortedByDate(pageNumber, pageSize);
 
         List<QuestionPreviewResult> questionPreviewResults = questionIds.stream()
-                    .map(this::loadQuestionQueryModel)
+                    .map(questionQueryModelManager::loadQuestionQueryModel)
                     .map(this::loadQuestionPreview)
                     .toList();
 
@@ -50,7 +47,7 @@ public class QusetionQueryOptimizedService {
     }
 
     public QuestionDetailResult getDetail(final Long questionId, final Long requsetMemberId) {
-        final QuestionQueryModel question = loadQuestionQueryModel(questionId);
+        final QuestionQueryModel question = questionQueryModelManager.loadQuestionQueryModel(questionId);
 
         return QuestionDetailResult.from(
                 question,
@@ -73,30 +70,7 @@ public class QusetionQueryOptimizedService {
                 getMemberDetail(model.targetMemberId()));
     }
 
-    private QuestionQueryModel loadQuestionQueryModel(Long questionId) {
-        return questionQueryModelRepository.get(questionId)
-                .or(() -> fetchModel(questionId))
-                .orElseThrow();
-    }
-
     private MemberDetailResult getMemberDetail(final Long memberId) {
         return MemberDetailResult.from(memberClient.getMemberDetail(memberId));
-    }
-
-    private Optional<QuestionQueryModel> fetchModel(final Long questionId) {
-        final QuestionDetailInfo questionInfo = boardQuestionClient.get(questionId);
-        final List<CommentDetail> commentDetails = boardCommentClient.getCommentDetails(questionId);
-
-        return Optional.of(cacheQueryModel(QuestionQueryModel.of(
-                questionInfo,
-                commentDetails,
-                questionInfo.ownerId(),
-                questionInfo.targetId()
-        )));
-    }
-
-    private QuestionQueryModel cacheQueryModel(QuestionQueryModel questionQueryModel) {
-        questionQueryModelRepository.update(questionQueryModel, Duration.ofDays(1L));
-        return questionQueryModel;
     }
 }
