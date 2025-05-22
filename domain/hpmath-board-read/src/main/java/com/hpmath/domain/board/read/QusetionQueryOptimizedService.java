@@ -21,12 +21,7 @@ public class QusetionQueryOptimizedService {
     private final BoardViewClient boardViewClient;
 
     public PagedResult<QuestionPreviewResult> getPagedResultSortedByDate(final int pageNumber, final int pageSize) {
-        final List<Long> questionIds = questionRecentListManager.getPagedResultSortedByDate(pageNumber, pageSize);
-
-        List<QuestionPreviewResult> questionPreviewResults = questionIds.stream()
-                    .map(questionQueryModelManager::loadQuestionQueryModel)
-                    .map(this::loadQuestionPreview)
-                    .toList();
+        final List<QuestionPreviewResult> questionPreviewResults = getQuestionPreviews(pageNumber, pageSize);
 
         return PagedResult.of(
                 questionPreviewResults,
@@ -50,7 +45,14 @@ public class QusetionQueryOptimizedService {
                 qusetionMemberManager.get(question.targetMemberId()));
     }
 
-    private QuestionPreviewResult loadQuestionPreview(QuestionQueryModel model) {
+    private List<QuestionPreviewResult> getQuestionPreviews(int pageNumber, int pageSize) {
+        return questionRecentListManager.getPagedResultSortedByDate(pageNumber, pageSize).stream()
+                .map(questionQueryModelManager::loadQuestionQueryModel)
+                .map(this::mapToPreview)
+                .toList();
+    }
+
+    private QuestionPreviewResult mapToPreview(QuestionQueryModel model) {
         return QuestionPreviewResult.from(
                 model,
                 model.comments().size(),

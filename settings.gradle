@@ -30,6 +30,7 @@ include(
         'app:batch:hpmath-board-view',
 
         'common',
+        'common:hpmath-collapse-common',
         'common:hpmath-cache-redis-common',
         'common:hpmath-snowflake',
         'common:hpmath-event-outbox-common',
