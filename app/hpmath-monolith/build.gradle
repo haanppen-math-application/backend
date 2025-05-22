@@ -23,4 +23,5 @@ dependencies {
     implementation project(":app:consumer:hpmath-board")
     implementation project(":app:consumer:hpmath-directory")
     implementation project(":app:consumer:hpmath-media")
+    implementation project(":app:consumer:hpmath-board-read")
 }
