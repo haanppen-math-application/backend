@@ -5,6 +5,7 @@ import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.MemberDeletedEventPayload;
 import com.hpmath.domain.course.repository.CourseRepository;
 import com.hpmath.domain.course.repository.CourseStudentRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class MemberDeletedCourseEventHandler implements EventHandler<MemberDelet
     public void handle(Event<MemberDeletedEventPayload> event) {
         final MemberDeletedEventPayload payload = event.getPayload();
 
-        courseRepository.updateTeacherToNullIn(payload.memberIds());
-        courseStudentRepository.deleteCourseStudentsByStudentIdIn(payload.memberIds());
+        courseRepository.updateTeacherToNullIn(List.of(payload.memberId()));
+        courseStudentRepository.deleteCourseStudentsByStudentIdIn(List.of(payload.memberId()));
 
         log.debug("handled event: {}", event);
     }

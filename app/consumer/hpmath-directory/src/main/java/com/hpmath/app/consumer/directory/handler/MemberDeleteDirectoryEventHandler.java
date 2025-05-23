@@ -18,7 +18,7 @@ public class MemberDeleteDirectoryEventHandler implements EventHandler<MemberDel
     public void handle(Event<MemberDeletedEventPayload> event) {
         final MemberDeletedEventPayload payload = event.getPayload();
 
-        directoryRepository.updateOwnerInfoToNullIdsIn(payload.memberIds());
+        directoryRepository.updateOwnerInfoToNullIdsIn(payload.memberId());
     }
 
     @Override

@@ -15,8 +15,8 @@ public class MemberDeleteMediaEventHandler implements EventHandler<MemberDeleted
 
     @Override
     public void handle(Event<MemberDeletedEventPayload> event) {
-        final List<Long> deletedMemberIds = event.getPayload().memberIds();
-        mediaOwnerService.updateMemberInfos(deletedMemberIds);
+        final MemberDeletedEventPayload payload = event.getPayload();
+        mediaOwnerService.updateMemberInfos(List.of(payload.memberId()));
     }
 
     @Override

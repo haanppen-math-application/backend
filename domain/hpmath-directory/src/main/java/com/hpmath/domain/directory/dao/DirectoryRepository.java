@@ -21,6 +21,6 @@ public interface DirectoryRepository extends JpaRepository<Directory, Long> {
     Boolean existsAllByPathIn(List<String> paths);
 
     @Modifying
-    @Query("UPDATE Directory d SET d.ownerId = null WHERE d.ownerId IN :memberIds")
-    void updateOwnerInfoToNullIdsIn(@Param("memberIds") final List<Long> memberIds);
+    @Query("UPDATE Directory d SET d.ownerId = null WHERE d.ownerId = :memberIds")
+    void updateOwnerInfoToNullIdsIn(@Param("memberIds") final Long memberIds);
 }

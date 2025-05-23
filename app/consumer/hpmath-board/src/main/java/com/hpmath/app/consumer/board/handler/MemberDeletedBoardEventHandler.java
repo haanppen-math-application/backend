@@ -19,9 +19,9 @@ public class MemberDeletedBoardEventHandler implements EventHandler<MemberDelete
     @Override
     @Transactional
     public void handle(Event<MemberDeletedEventPayload> event) {
-        final List<Long> memberIds = event.getPayload().memberIds();
-        questionDeleteService.deleteMemberInfos(memberIds);
+        final MemberDeletedEventPayload payload = event.getPayload();
 
+        questionDeleteService.deleteMemberInfos(List.of(payload.memberId()));
         log.debug("handled event {}", event);
     }
 
