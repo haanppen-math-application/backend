@@ -21,7 +21,6 @@ public class CollapseAspect {
 
     @Around("@annotation(CollapseCache)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.info("CollapseAspect.around");
         final CollapseCache cacheable = getOptimizedCacheable(joinPoint);
 
         if (findReturnType(joinPoint).equals(CompletableFuture.class)) {
