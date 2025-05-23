@@ -22,8 +22,8 @@ public class QuestionQueryModelRepository {
                 .set(getKey(model.getQuestionId()), DataSerializer.serialize(model), ttl);
     }
 
-    public void delete(final QuestionQueryModel model) {
-        stringRedisTemplate.delete(getKey(model.getQuestionId()));
+    public void delete(final Long questionId) {
+        stringRedisTemplate.delete(getKey(questionId));
     }
 
     public Optional<QuestionQueryModel> get(final Long questionId) {

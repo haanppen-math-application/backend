@@ -18,7 +18,7 @@ class QuestionTotalCountManager {
         Long totalCount = totalQuestionCountRepository.getTotalCount();
         if (totalCount == null) {
             totalCount = boardQuestionClient.getCount();
-            totalQuestionCountRepository.saveCount(totalCount);
+            totalQuestionCountRepository.set(totalCount);
         }
         return CompletableFuture.completedFuture(totalCount);
     }

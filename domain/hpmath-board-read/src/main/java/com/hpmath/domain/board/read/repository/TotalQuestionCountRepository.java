@@ -16,7 +16,7 @@ public class TotalQuestionCountRepository {
         return result == null ? null : Long.parseLong(result);
     }
 
-    public void saveCount(final Long count) {
+    public void set(final Long count) {
         redisTemplate.opsForValue().set(KEY, String.valueOf(count));
     }
 }
