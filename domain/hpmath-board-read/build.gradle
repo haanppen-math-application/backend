@@ -12,7 +12,7 @@ dependencies {
     implementation project(":common:hpmath-common")
     implementation project(":common:hpmath-page-common")
     implementation project(":common:hpmath-serializer-common")
-
+    implementation project(":common:hpmath-collapse-common")
 
     implementation project(":client:hpmath-member-client")
     implementation project(":client:hpmath-board-view-client")
