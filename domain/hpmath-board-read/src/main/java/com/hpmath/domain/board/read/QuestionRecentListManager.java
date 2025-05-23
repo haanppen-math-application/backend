@@ -3,6 +3,7 @@ package com.hpmath.domain.board.read;
 import com.hpmath.client.board.question.BoardQuestionClient;
 import com.hpmath.client.board.question.BoardQuestionClient.QuestionDetailInfo;
 import com.hpmath.domain.board.read.repository.RecentQuestionRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class QuestionRecentListManager {
+public class QuestionRecentListManager {
     private final RecentQuestionRepository recentQuestionRepository;
     private final BoardQuestionClient boardQuestionClient;
 
@@ -32,6 +33,10 @@ class QuestionRecentListManager {
         log.info("Initializing recent question list manager");
         final List<Long> questionCount = getRecentQuestionIds(0, RECENT_QUESTION_CACHE_SIZE.intValue());
         log.info("Initializing recent questions count: {}", questionCount);
+    }
+
+    public void add(final Long id, final LocalDateTime registeredDateTime) {
+        this.recentQuestionRepository.add(id, registeredDateTime, RECENT_QUESTION_CACHE_SIZE);
     }
 
     private List<Long> getRecentQuestionIds(final int pageNumber, final int pageSize) {

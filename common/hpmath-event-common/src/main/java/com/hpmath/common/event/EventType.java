@@ -5,6 +5,7 @@ import com.hpmath.common.event.payload.CommentRegisteredEventPayLoad;
 import com.hpmath.common.event.payload.CommentUpdatedEventPayload;
 import com.hpmath.common.event.payload.MemberDeletedEventPayload;
 import com.hpmath.common.event.payload.NonePayload;
+import com.hpmath.common.event.payload.QuestionCreatedEventPayload;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 public enum EventType {
     NONE(NonePayload.class, Topic.HP_MATH_NONE),
     MEMBER_DELETED_EVENT(MemberDeletedEventPayload.class, Topic.HPMATH_MEMBER),
+
     COMMENT_REGISTERED_EVENT(CommentRegisteredEventPayLoad.class, Topic.HPMATH_BOARD),
     COMMENT_UPDATED_EVENT(CommentUpdatedEventPayload.class, Topic.HPMATH_BOARD),
-    COMMENT_DELETED_EVENT(CommentDeletedEventPayload.class, Topic.HPMATH_BOARD);
+    COMMENT_DELETED_EVENT(CommentDeletedEventPayload.class, Topic.HPMATH_BOARD),
+
+    QUESTION_CREATED_EVENT(QuestionCreatedEventPayload.class, Topic.HPMATH_BOARD);
 
     private final Class<? extends EventPayload> payloadClass;
     private final String topic;
