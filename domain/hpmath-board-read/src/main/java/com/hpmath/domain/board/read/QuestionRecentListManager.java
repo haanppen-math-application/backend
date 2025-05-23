@@ -4,7 +4,9 @@ import com.hpmath.client.board.question.BoardQuestionClient;
 import com.hpmath.client.board.question.BoardQuestionClient.QuestionDetailInfo;
 import com.hpmath.domain.board.read.repository.RecentQuestionRepository;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +17,8 @@ class QuestionRecentListManager {
 
     private static final Long RECENT_QUESTION_CACHE_SIZE = 1000L;
 
-    public List<Long> getPagedResultSortedByDate(final int pageNumber, final int pageSize) {
+    @Async("workers")
+    public CompletableFuture<List<Long>> getPagedResultSortedByDate(final int pageNumber, final int pageSize) {
         List<Long> questionIds = recentQuestionRepository.getRange(pageNumber * pageSize, pageSize);
         if (questionIds.size() != pageSize) {
             questionIds = boardQuestionClient.getQuestionsSortByDate(pageNumber, pageSize).stream()
@@ -23,6 +26,6 @@ class QuestionRecentListManager {
                     .map(QuestionDetailInfo::questionId)
                     .toList();
         }
-        return questionIds;
+        return CompletableFuture.completedFuture(questionIds);
     }
 }

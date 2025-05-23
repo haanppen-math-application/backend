@@ -5,7 +5,9 @@ import com.hpmath.domain.board.read.dto.MemberDetailResult;
 import com.hpmath.domain.board.read.model.MemberQueryModel;
 import com.hpmath.domain.board.read.repository.MemberQueryModelRepository;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,11 +16,12 @@ public class QusetionMemberManager {
     private final MemberQueryModelRepository memberQueryModelRepository;
     private final MemberClient memberClient;
 
-    public MemberDetailResult get(final Long memberId) {
-        return memberQueryModelRepository.get(memberId)
+    @Async("workers")
+    public CompletableFuture<MemberDetailResult> get(final Long memberId) {
+        return CompletableFuture.completedFuture(memberQueryModelRepository.get(memberId)
                 .or(() -> fetch(memberId))
                 .map(MemberDetailResult::from)
-                .orElse(null);
+                .orElse(null));
     }
 
     private Optional<MemberQueryModel> fetch(final Long memberId) {

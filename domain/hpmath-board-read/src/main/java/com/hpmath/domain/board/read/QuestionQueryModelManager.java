@@ -9,7 +9,9 @@ import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,10 +21,11 @@ class QuestionQueryModelManager {
     private final BoardCommentClient boardCommentClient;
     private final BoardQuestionClient boardQuestionClient;
 
-    public QuestionQueryModel loadQuestionQueryModel(final Long questionId) {
-        return questionQueryModelRepository.get(questionId)
+    @Async("workers")
+    public CompletableFuture<QuestionQueryModel> loadQuestionQueryModel(final Long questionId) {
+        return CompletableFuture.completedFuture(questionQueryModelRepository.get(questionId)
                 .or(() -> fetchModel(questionId))
-                .orElseThrow();
+                .orElseThrow());
     }
 
     private Optional<QuestionQueryModel> fetchModel(final Long questionId) {
