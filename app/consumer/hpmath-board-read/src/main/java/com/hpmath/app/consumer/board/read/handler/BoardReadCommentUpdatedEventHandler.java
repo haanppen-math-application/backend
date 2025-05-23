@@ -3,6 +3,7 @@ package com.hpmath.app.consumer.board.read.handler;
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.CommentUpdatedEventPayload;
+import com.hpmath.domain.board.read.QuestionQueryModelManager;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BoardReadCommentUpdatedEventHandler implements EventHandler<CommentUpdatedEventPayload> {
     private final QuestionQueryModelRepository questionQueryModelRepository;
+    private final QuestionQueryModelManager questionQueryModelManager;
 
     @Override
     public boolean supports(Event<CommentUpdatedEventPayload> event) {
@@ -35,7 +37,7 @@ public class BoardReadCommentUpdatedEventHandler implements EventHandler<Comment
                                                 commentQueryModel.setOwnerId(payload.registeredMemberId());
                                                 commentQueryModel.setContent(payload.content());},
                                             () -> log.info("comment is not cached, payload: {}", payload));
-                            questionQueryModelRepository.update(queryModel, null);
+                            questionQueryModelManager.add(queryModel);
                         },
                         () -> log.info("question is not cached, payload: {}", payload)
                 );

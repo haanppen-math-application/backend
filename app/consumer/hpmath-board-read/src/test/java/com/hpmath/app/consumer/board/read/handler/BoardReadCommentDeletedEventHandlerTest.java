@@ -3,6 +3,7 @@ package com.hpmath.app.consumer.board.read.handler;
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.CommentDeletedEventPayload;
+import com.hpmath.domain.board.read.QuestionQueryModelManager;
 import com.hpmath.domain.board.read.model.CommentQueryModel;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
@@ -25,6 +26,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 class BoardReadCommentDeletedEventHandlerTest {
     @Autowired
+    private QuestionQueryModelManager questionQueryModelManager;
+    @Autowired
     private QuestionQueryModelRepository questionQueryModelRepository;
     @Autowired
     private BoardReadCommentDeletedEventHandler commentDeletedEventHandler;
@@ -45,7 +48,7 @@ class BoardReadCommentDeletedEventHandlerTest {
         final Long targetCommentId = 5L;
         final QuestionQueryModel questionQueryModel = createQueyModel(questionId, targetCommentId);
 
-        questionQueryModelRepository.update(questionQueryModel, null);
+        questionQueryModelManager.add(questionQueryModel);
 
         commentDeletedEventHandler.handle(Event.of(12L, EventType.COMMENT_DELETED_EVENT, new CommentDeletedEventPayload(
                 questionId,
@@ -63,7 +66,7 @@ class BoardReadCommentDeletedEventHandlerTest {
         final Long targetCommentId = 5L;
         final QuestionQueryModel questionQueryModel = createQueyModel(questionId, targetCommentId);
 
-        questionQueryModelRepository.update(questionQueryModel, null);
+        questionQueryModelManager.add(questionQueryModel);
 
         commentDeletedEventHandler.handle(Event.of(12L, EventType.COMMENT_DELETED_EVENT, new CommentDeletedEventPayload(
                 // not exist in cache

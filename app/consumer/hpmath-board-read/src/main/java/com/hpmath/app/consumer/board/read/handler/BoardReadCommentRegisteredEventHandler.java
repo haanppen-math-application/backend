@@ -3,6 +3,7 @@ package com.hpmath.app.consumer.board.read.handler;
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.CommentRegisteredEventPayLoad;
+import com.hpmath.domain.board.read.QuestionQueryModelManager;
 import com.hpmath.domain.board.read.model.CommentQueryModel;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BoardReadCommentRegisteredEventHandler implements EventHandler<CommentRegisteredEventPayLoad> {
     private final QuestionQueryModelRepository questionQueryModelRepository;
+    private final QuestionQueryModelManager questionQueryModelManager;
 
     @Override
     public boolean supports(Event<CommentRegisteredEventPayLoad> event) {
@@ -41,8 +43,7 @@ public class BoardReadCommentRegisteredEventHandler implements EventHandler<Comm
                                                 payload.registeredDateTime(),
                                                 payload.registeredMemberId());
                                         question.comments().add(commentQueryModel);
-
-                                        questionQueryModelRepository.update(question, null);
+                                        questionQueryModelManager.add(question);
                                     }
                             );
                 },

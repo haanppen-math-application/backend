@@ -3,6 +3,7 @@ package com.hpmath.app.consumer.board.read.handler;
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.CommentUpdatedEventPayload;
+import com.hpmath.domain.board.read.QuestionQueryModelManager;
 import com.hpmath.domain.board.read.model.CommentQueryModel;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
@@ -24,6 +25,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 )
 @Testcontainers
 class BoardReadCommentUpdatedEventHandlerTest {
+    @Autowired
+    private QuestionQueryModelManager questionQueryModelManager;
     @Autowired
     private QuestionQueryModelRepository questionQueryModelRepository;
     @Autowired
@@ -52,7 +55,7 @@ class BoardReadCommentUpdatedEventHandlerTest {
         final String changedContent = "changedContent";
         final List<String> medias = List.of("newImage1", "newImage2");
 
-        questionQueryModelRepository.update(questionQueryModel, null);
+        questionQueryModelManager.add(questionQueryModel);
 
         boardReadCommentUpdatedEventHandler.handle(
                 Event.of(12L, EventType.COMMENT_UPDATED_EVENT, new CommentUpdatedEventPayload(
@@ -81,7 +84,7 @@ class BoardReadCommentUpdatedEventHandlerTest {
         final String changedContent = "changedContent";
         final List<String> medias = List.of("newImage1", "newImage2");
 
-        questionQueryModelRepository.update(questionQueryModel, null);
+        questionQueryModelManager.add(questionQueryModel);
 
         boardReadCommentUpdatedEventHandler.handle(
                 Event.of(12L, EventType.COMMENT_UPDATED_EVENT, new CommentUpdatedEventPayload(
@@ -102,7 +105,7 @@ class BoardReadCommentUpdatedEventHandlerTest {
         final String changedContent = "changedContent";
         final List<String> medias = List.of("newImage1", "newImage2");
 
-        questionQueryModelRepository.update(questionQueryModel, null);
+        questionQueryModelManager.add(questionQueryModel);
 
         boardReadCommentUpdatedEventHandler.handle(
                 Event.of(12L, EventType.COMMENT_UPDATED_EVENT, new CommentUpdatedEventPayload(

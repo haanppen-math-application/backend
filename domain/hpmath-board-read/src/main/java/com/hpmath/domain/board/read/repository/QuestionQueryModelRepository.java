@@ -2,6 +2,7 @@ package com.hpmath.domain.board.read.repository;
 
 import com.hpmath.common.serializer.DataSerializer;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
+import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,8 @@ public class QuestionQueryModelRepository {
 
     // board-read::question::{questionId}
     private static final String KEY_FORMAT = "board-read::question::%s";
-    private static final Duration DEFAULT_TTL = Duration.ofDays(1L);
 
-    public void update(final QuestionQueryModel model, Duration ttl) {
-        if (ttl == null) {
-            ttl = DEFAULT_TTL;
-        }
+    public void update(final QuestionQueryModel model, @NotNull final Duration ttl) {
         stringRedisTemplate.opsForValue()
                 .set(getKey(model.questionId()), DataSerializer.serialize(model), ttl);
     }

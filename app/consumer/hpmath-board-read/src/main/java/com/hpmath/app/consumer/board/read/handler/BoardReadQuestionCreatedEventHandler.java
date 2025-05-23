@@ -3,6 +3,7 @@ package com.hpmath.app.consumer.board.read.handler;
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.QuestionCreatedEventPayload;
+import com.hpmath.domain.board.read.QuestionQueryModelManager;
 import com.hpmath.domain.board.read.QuestionRecentListManager;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class BoardReadQuestionCreatedEventHandler implements EventHandler<QuestionCreatedEventPayload> {
-    private final QuestionQueryModelRepository questionQueryModelRepository;
+    private final QuestionQueryModelManager questionQueryModelManager;
     private final QuestionRecentListManager questionRecentListManager;
 
     @Override
@@ -37,7 +38,7 @@ public class BoardReadQuestionCreatedEventHandler implements EventHandler<Questi
                 questionPayload.targetMemberId()
         );
 
-        questionQueryModelRepository.update(questionQueryModel, null);
+        questionQueryModelManager.add(questionQueryModel);
         questionRecentListManager.add(questionPayload.questionId(), questionPayload.registeredDateTime());
     }
 }

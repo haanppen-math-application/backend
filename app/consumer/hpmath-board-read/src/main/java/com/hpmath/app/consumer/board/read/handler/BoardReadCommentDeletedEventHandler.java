@@ -3,6 +3,7 @@ package com.hpmath.app.consumer.board.read.handler;
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.CommentDeletedEventPayload;
+import com.hpmath.domain.board.read.QuestionQueryModelManager;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class BoardReadCommentDeletedEventHandler implements EventHandler<CommentDeletedEventPayload> {
     private final QuestionQueryModelRepository questionQueryModelRepository;
+    private final QuestionQueryModelManager questionQueryModelManager;
 
     @Override
     public boolean supports(Event<CommentDeletedEventPayload> event) {
@@ -32,6 +34,6 @@ class BoardReadCommentDeletedEventHandler implements EventHandler<CommentDeleted
 
         log.debug("cached question id {}", payload.questionId());
         model.comments().removeIf(commentQueryModel -> commentQueryModel.getCommentId().equals(payload.commentId()));
-        questionQueryModelRepository.update(model, null);
+        questionQueryModelManager.add(model, null);
     }
 }

@@ -3,6 +3,7 @@ package com.hpmath.app.consumer.board.read.handler;
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.CommentRegisteredEventPayLoad;
+import com.hpmath.domain.board.read.QuestionQueryModelManager;
 import com.hpmath.domain.board.read.model.CommentQueryModel;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
@@ -25,6 +26,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 class BoardReadCommentRegisteredEventHandlerTest {
     @Autowired
+    private QuestionQueryModelManager questionQueryModelManager;
+    @Autowired
     private QuestionQueryModelRepository questionQueryModelRepository;
     @Autowired
     private BoardReadCommentRegisteredEventHandler boardReadCommentRegisteredEventHandler;
@@ -44,7 +47,7 @@ class BoardReadCommentRegisteredEventHandlerTest {
         final Long targetCommentId = 10L;
         final QuestionQueryModel questionQueryModel = createQueyModel(questionId, 100L);
 
-        questionQueryModelRepository.update(questionQueryModel, null);
+        questionQueryModelManager.add(questionQueryModel);
 
         boardReadCommentRegisteredEventHandler.handle(Event.of(12L, EventType.COMMENT_REGISTERED_EVENT, new CommentRegisteredEventPayLoad(
                 questionId,
