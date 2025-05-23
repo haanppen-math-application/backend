@@ -1,6 +1,5 @@
 package com.hpmath.domain.board.read;
 
-import com.hpmath.client.board.view.BoardViewClient;
 import com.hpmath.domain.board.read.dto.CommentDetailResult;
 import com.hpmath.domain.board.read.dto.PagedResult;
 import com.hpmath.domain.board.read.dto.QuestionDetailResult;
@@ -8,8 +7,10 @@ import com.hpmath.domain.board.read.dto.QuestionPreviewResult;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class QusetionQueryOptimizedService {
@@ -18,7 +19,7 @@ public class QusetionQueryOptimizedService {
     private final QuestionQueryModelManager questionQueryModelManager;
     private final QusetionMemberManager qusetionMemberManager;
 
-    private final BoardViewClient boardViewClient;
+    private final BoardViewManager boardViewManager;
 
     public PagedResult<QuestionPreviewResult> getPagedResultSortedByDate(final int pageNumber, final int pageSize) {
         final List<QuestionPreviewResult> questionPreviewResults = getQuestionPreviews(pageNumber, pageSize);
@@ -40,7 +41,7 @@ public class QusetionQueryOptimizedService {
                                 comment,
                                 qusetionMemberManager.get(comment.getOwnerId())))
                         .toList(),
-                boardViewClient.increaseViewCount(questionId, requsetMemberId),
+                boardViewManager.increaseViewCount(questionId, requsetMemberId),
                 qusetionMemberManager.get(question.ownerMemberId()),
                 qusetionMemberManager.get(question.targetMemberId()));
     }
@@ -56,7 +57,7 @@ public class QusetionQueryOptimizedService {
         return QuestionPreviewResult.from(
                 model,
                 model.comments().size(),
-                boardViewClient.getViewCount(model.questionId()),
+                boardViewManager.getViewCount(model.questionId()),
                 qusetionMemberManager.get(model.ownerMemberId()),
                 qusetionMemberManager.get(model.targetMemberId()));
     }
