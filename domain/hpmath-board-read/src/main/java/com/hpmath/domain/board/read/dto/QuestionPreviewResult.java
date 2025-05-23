@@ -16,10 +16,10 @@ public record QuestionPreviewResult(
 ) {
     public static QuestionPreviewResult from(QuestionQueryModel model, Integer commentCount, Long viewCount, MemberDetailResult owner, MemberDetailResult target) {
         return new QuestionPreviewResult(
-                model.questionId(),
-                model.title(),
-                model.registeredDateTime(),
-                model.solved(),
+                model.getQuestionId(),
+                model.getTitle(),
+                model.getRegisteredDateTime(),
+                model.getSolved(),
                 commentCount,
                 viewCount,
                 owner,

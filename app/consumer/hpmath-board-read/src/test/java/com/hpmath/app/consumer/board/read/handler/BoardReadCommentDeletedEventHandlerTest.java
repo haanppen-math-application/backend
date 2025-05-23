@@ -57,7 +57,7 @@ class BoardReadCommentDeletedEventHandlerTest {
                 1L,
                 Collections.emptyList())));
 
-        Assertions.assertThat(questionQueryModelRepository.get(questionId).get().comments().size()).isEqualTo(2);
+        Assertions.assertThat(questionQueryModelRepository.get(questionId).get().getComments().size()).isEqualTo(2);
     }
 
     @Test
@@ -76,7 +76,7 @@ class BoardReadCommentDeletedEventHandlerTest {
                 1L,
                 Collections.emptyList())));
 
-        Assertions.assertThat(questionQueryModelRepository.get(questionId).get().comments().size()).isEqualTo(3);
+        Assertions.assertThat(questionQueryModelRepository.get(questionId).get().getComments().size()).isEqualTo(3);
     }
 
     private static QuestionQueryModel createQueyModel(Long questionId, Long targetCommentId) {

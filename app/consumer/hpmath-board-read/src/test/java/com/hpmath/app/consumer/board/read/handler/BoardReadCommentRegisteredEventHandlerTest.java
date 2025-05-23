@@ -58,7 +58,7 @@ class BoardReadCommentRegisteredEventHandlerTest {
                 LocalDateTime.now(),
                 Collections.emptyList())));
 
-        Assertions.assertThat(questionQueryModelRepository.get(questionId).get().comments().size()).isEqualTo(4);
+        Assertions.assertThat(questionQueryModelRepository.get(questionId).get().getComments().size()).isEqualTo(4);
     }
 
     @Test

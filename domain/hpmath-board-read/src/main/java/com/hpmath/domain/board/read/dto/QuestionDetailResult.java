@@ -24,13 +24,13 @@ public record QuestionDetailResult(
             final MemberDetailResult target
     ) {
         return new QuestionDetailResult(
-                questionQueryModel.questionId(),
-                questionQueryModel.title(),
-                questionQueryModel.content(),
-                questionQueryModel.registeredDateTime(),
-                questionQueryModel.solved(),
+                questionQueryModel.getQuestionId(),
+                questionQueryModel.getTitle(),
+                questionQueryModel.getContent(),
+                questionQueryModel.getRegisteredDateTime(),
+                questionQueryModel.getSolved(),
                 comments,
-                questionQueryModel.mediaSrcs(),
+                questionQueryModel.getMediaSrcs(),
                 viewCount,
                 owner,
                 target

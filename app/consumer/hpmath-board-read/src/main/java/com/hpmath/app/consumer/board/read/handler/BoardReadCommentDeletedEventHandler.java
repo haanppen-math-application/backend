@@ -33,7 +33,7 @@ class BoardReadCommentDeletedEventHandler implements EventHandler<CommentDeleted
         }
 
         log.debug("cached question id {}", payload.questionId());
-        model.comments().removeIf(commentQueryModel -> commentQueryModel.getCommentId().equals(payload.commentId()));
+        model.getComments().removeIf(commentQueryModel -> commentQueryModel.getCommentId().equals(payload.commentId()));
         questionQueryModelManager.add(model, null);
     }
 }

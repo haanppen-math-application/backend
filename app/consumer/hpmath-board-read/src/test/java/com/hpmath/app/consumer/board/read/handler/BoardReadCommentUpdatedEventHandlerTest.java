@@ -65,7 +65,7 @@ class BoardReadCommentUpdatedEventHandlerTest {
                         1L,
                         Collections.emptyList(),
                         medias)));
-        final CommentQueryModel comment = questionQueryModelRepository.get(questionId).get().comments().stream()
+        final CommentQueryModel comment = questionQueryModelRepository.get(questionId).get().getComments().stream()
                 .filter(commentQueryModel -> commentQueryModel.getCommentId().equals(targetCommentId)).findAny()
                 .get();
 

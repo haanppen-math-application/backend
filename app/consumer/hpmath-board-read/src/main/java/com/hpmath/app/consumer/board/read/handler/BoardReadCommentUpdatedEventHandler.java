@@ -28,7 +28,7 @@ public class BoardReadCommentUpdatedEventHandler implements EventHandler<Comment
 
         questionQueryModelRepository.get(payload.questionId())
                 .ifPresentOrElse(queryModel -> {
-                            queryModel.comments().stream()
+                            queryModel.getComments().stream()
                                     .filter(commentQueryModel -> commentQueryModel.getCommentId().equals(payload.commentId()))
                                     .findAny()
                                     .ifPresentOrElse(

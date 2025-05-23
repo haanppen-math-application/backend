@@ -29,7 +29,7 @@ public class BoardReadCommentRegisteredEventHandler implements EventHandler<Comm
 
         questionQueryModelRepository.get(payload.questionId()).ifPresentOrElse(
                 question -> {
-                    question.comments().stream()
+                    question.getComments().stream()
                             .filter(commentQueryModel -> commentQueryModel.getCommentId().equals(payload.commentId()))
                             .findAny()
                             .ifPresentOrElse(
@@ -42,7 +42,7 @@ public class BoardReadCommentRegisteredEventHandler implements EventHandler<Comm
                                                 payload.imageSrcs(),
                                                 payload.registeredDateTime(),
                                                 payload.registeredMemberId());
-                                        question.comments().add(commentQueryModel);
+                                        question.getComments().add(commentQueryModel);
                                         questionQueryModelManager.add(question);
                                     }
                             );

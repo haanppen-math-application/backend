@@ -19,11 +19,11 @@ public class QuestionQueryModelRepository {
 
     public void update(final QuestionQueryModel model, @NotNull final Duration ttl) {
         stringRedisTemplate.opsForValue()
-                .set(getKey(model.questionId()), DataSerializer.serialize(model), ttl);
+                .set(getKey(model.getQuestionId()), DataSerializer.serialize(model), ttl);
     }
 
     public void delete(final QuestionQueryModel model) {
-        stringRedisTemplate.delete(getKey(model.questionId()));
+        stringRedisTemplate.delete(getKey(model.getQuestionId()));
     }
 
     public Optional<QuestionQueryModel> get(final Long questionId) {

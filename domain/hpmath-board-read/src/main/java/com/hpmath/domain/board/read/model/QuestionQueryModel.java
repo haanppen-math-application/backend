@@ -4,18 +4,27 @@ import com.hpmath.client.board.comment.BoardCommentClient.CommentDetail;
 import com.hpmath.client.board.question.BoardQuestionClient.QuestionDetailInfo;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record QuestionQueryModel(
-        Long questionId,
-        String title,
-        String content,
-        LocalDateTime registeredDateTime,
-        List<String> mediaSrcs,
-        Boolean solved,
-        List<CommentQueryModel> comments,
-        Long ownerMemberId,
-        Long targetMemberId
-) {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class QuestionQueryModel {
+    private Long questionId;
+    private String title;
+    private String content;
+    private LocalDateTime registeredDateTime;
+    private List<String> mediaSrcs;
+    private Boolean solved;
+    private List<CommentQueryModel> comments;
+    private Long ownerMemberId;
+    private Long targetMemberId;
+
     public static QuestionQueryModel of(
             final QuestionDetailInfo questionInfo,
             final List<CommentDetail> comments,
