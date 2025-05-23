@@ -1,6 +1,9 @@
 package com.hpmath.domain.board.service.question;
 
 import com.hpmath.client.member.MemberClient;
+import com.hpmath.common.event.EventType;
+import com.hpmath.common.event.payload.QuestionDeletedEventPayload;
+import com.hpmath.common.outbox.OutboxEventPublisher;
 import com.hpmath.domain.board.dao.QuestionRepository;
 import com.hpmath.domain.board.dto.QuestionDeleteCommand;
 import com.hpmath.domain.board.entity.Question;
@@ -21,12 +24,23 @@ import org.springframework.validation.annotation.Validated;
 public class QuestionDeleteService {
     private final MemberClient memberRoleClient;
     private final QuestionRepository questionRepository;
+    private final OutboxEventPublisher outboxEventPublisher;
 
     @Transactional
     public void deleteQuestion(@Valid final QuestionDeleteCommand questionDeleteDto) {
         final Question question = findQuestion(questionDeleteDto.questionId());
         hasPermission(questionDeleteDto.requestMemberId(), question.getOwnerMemberId());
         questionRepository.delete(question);
+
+        outboxEventPublisher.publishEvent(EventType.QUESTION_DELETED_EVENT, new QuestionDeletedEventPayload(
+                question.getId(),
+                question.getTitle(),
+                question.getContent(),
+                question.getOwnerMemberId(),
+                question.getTargetMemberId(),
+                question.getRegisteredDateTime(),
+                questionRepository.count()
+        ));
     }
 
     @Transactional

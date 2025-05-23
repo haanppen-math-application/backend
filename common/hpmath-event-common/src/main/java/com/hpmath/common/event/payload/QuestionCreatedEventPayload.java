@@ -12,6 +12,7 @@ public record QuestionCreatedEventPayload(
         Long ownerMemberId,
         Long targetMemberId,
         List<String> images,
-        LocalDateTime registeredDateTime
+        LocalDateTime registeredDateTime,
+        Long questionCount
 ) implements EventPayload {
 }
