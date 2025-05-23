@@ -3,6 +3,7 @@ package com.hpmath.domain.board.read;
 import com.hpmath.client.board.view.BoardViewClient;
 import com.hpmath.common.collapse.cache.CollapseCache;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class BoardViewManager {
     private final BoardViewClient boardViewClient;
 
-    @CollapseCache(keyPrefix = "board-view::question::view::count", logicalTTLSeconds = 5)
+    @CollapseCache(keyPrefix = "board-view::question::view::count", logicalTTL = 5, physicalTTL = 10, physicalTTLUnit = TimeUnit.MINUTES)
     @Async("workers")
     public CompletableFuture<Long> getViewCount(final Long questionId) {
         log.info("Getting view count for question: {}", questionId);

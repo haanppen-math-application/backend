@@ -21,7 +21,8 @@ public class CollapseAspect {
 
     @Around("@annotation(CollapseCache)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        final CollapseCache cacheable = getOptimizedCacheable(joinPoint);
+        final CollapseCache collapseCache = getOptimizedCacheable(joinPoint);
+        final CacheTTL cacheTTL = CacheTTL.of(collapseCache.logicalTTL(), collapseCache.logicalTTLUnit(), collapseCache.physicalTTL(), collapseCache.physicalTTLUnit());
 
         if (findReturnType(joinPoint).equals(CompletableFuture.class)) {
             final ParameterizedType returnType = (ParameterizedType) findGenericReturnType(joinPoint);
@@ -29,8 +30,8 @@ public class CollapseAspect {
             final Class<?> genericReturnType = (Class<?>) returnType.getActualTypeArguments()[0];
 
             return CompletableFuture.completedFuture(optimizedCacheManager.process(
-                    cacheable.keyPrefix(),
-                    cacheable.logicalTTLSeconds(),
+                    collapseCache.keyPrefix(),
+                    cacheTTL,
                     joinPoint.getArgs(),
                     genericReturnType,
                     () -> ((CompletableFuture<?>) joinPoint.proceed()).join()
@@ -38,8 +39,8 @@ public class CollapseAspect {
 
         } else {
             return optimizedCacheManager.process(
-                    cacheable.keyPrefix(),
-                    cacheable.logicalTTLSeconds(),
+                    collapseCache.keyPrefix(),
+                    cacheTTL,
                     joinPoint.getArgs(),
                     findReturnType(joinPoint),
                     () -> joinPoint.proceed()

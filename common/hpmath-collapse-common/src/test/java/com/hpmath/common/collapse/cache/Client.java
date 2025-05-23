@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 class Client {
     private final AtomicInteger counter = new AtomicInteger(0);
 
-    @CollapseCache(keyPrefix = "test", logicalTTLSeconds = 10)
+    @CollapseCache(keyPrefix = "test", logicalTTL = 10)
     public Integer testOptimizedCache(final int values) {
         log.info("testOptimizedCache" + counter.incrementAndGet() + " : " + values);
         return 10;
