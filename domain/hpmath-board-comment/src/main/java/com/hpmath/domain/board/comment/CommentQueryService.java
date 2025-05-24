@@ -10,6 +10,7 @@ import com.hpmath.domain.board.comment.repository.CommentRepository;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class CommentQueryService {
     private final CommentRepository commentRepository;
     private final MemberClient memberClient;
 
+    @Cacheable(cacheNames = "board::question::comment::list", key = "#command.questionId()")
     public List<CommentDetailResult> commentDetailResults(@Valid final CommentQueryCommand command) {
         return commentRepository.queryCommentsWithMedias(command.questionId()).stream()
                 .map(comment -> {
@@ -27,6 +29,7 @@ public class CommentQueryService {
                 .toList();
     }
 
+    @Cacheable(cacheNames = "board::comment::detail", key = "#commentId")
     public CommentDetailResult commentDetailResult(final Long commentId) {
         return commentRepository.querySingleCommentById(commentId)
                 .map(comment -> {

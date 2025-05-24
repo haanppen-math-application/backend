@@ -7,8 +7,6 @@ import com.hpmath.common.event.payload.CommentDeletedEventPayload;
 import com.hpmath.common.event.payload.CommentRegisteredEventPayLoad;
 import com.hpmath.common.event.payload.CommentUpdatedEventPayload;
 import com.hpmath.common.outbox.OutboxEventPublisher;
-import com.hpmath.domain.board.comment.dto.CommentDetailResult;
-import com.hpmath.domain.board.comment.dto.CommentQueryCommand;
 import com.hpmath.domain.board.comment.dto.DeleteCommentCommand;
 import com.hpmath.domain.board.comment.dto.RegisterCommentCommand;
 import com.hpmath.domain.board.comment.dto.UpdateCommentCommand;
@@ -20,6 +18,7 @@ import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -30,8 +29,10 @@ import org.springframework.validation.annotation.Validated;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final OutboxEventPublisher outboxEventPublisher;
+    private final CacheEvictManager cacheEvictManager;
 
     @Transactional
+    @CacheEvict(cacheNames = "board::question::comment::list", key = "#command.questionId()")
     public Long addComment(@Valid final RegisterCommentCommand command) {
         final Comment comment = Comment.of(command.questionId(), command.requestMemberId(), command.content(), command.imageSrcs());
         validateCommentContent(comment);
@@ -82,6 +83,8 @@ public class CommentService {
                         comment.getImages().stream()
                                 .map(CommentImage::getImageSrc)
                                 .toList()));
+
+        cacheEvictManager.evictAll(comment.getId(), comment.getQuestionId());
     }
 
     @Transactional
@@ -103,6 +106,8 @@ public class CommentService {
                                 .map(CommentImage::getImageSrc)
                                 .toList()
                 ));
+
+        cacheEvictManager.evictAll(comment.getId(), comment.getQuestionId());
     }
 
     private void validateCommentContent(final Comment comment) {
