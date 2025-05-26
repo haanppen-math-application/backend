@@ -15,7 +15,7 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
 
     @Query("SELECT m FROM Memo m "
             + "JOIN FETCH m.course "
-            + "JOIN FETCH m.course.students mc "
+            + "LEFT JOIN FETCH m.course.students mc "
             + "WHERE mc.studentId = :studentId AND m.targetDate BETWEEN :startDate AND :endDate")
     List<Memo> findAllByMonthAndStudentId(@Param("startDate") final LocalDate startDate, @Param("endDate") final LocalDate endDate, @Param("studentId") final Long studentId);
 
@@ -30,7 +30,7 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
 
     @Query("SELECT m FROM Memo m "
             + "JOIN FETCH m.course "
-            + "JOIN FETCH m.memoMedias "
+            + "LEFT JOIN FETCH m.memoMedias "
             + "WHERE m.id = :memoId")
     Optional<Memo> findWithCourseAndMediasByMemoId(@Param("memoId") final Long memoId);
 }
