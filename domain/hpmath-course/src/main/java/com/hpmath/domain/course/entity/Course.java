@@ -48,13 +48,10 @@ public class Course {
     @BatchSize(size = 10)
     private final List<Memo> memos = new ArrayList<>();
 
-    public Course(final String courseName, final Long teacherId) {
-        this.courseName = courseName;
-        this.teacherId = teacherId;
-    }
-
     public static Course of(final String courseName, final Long teacherId, final List<Long> studentIds) {
-        final Course course = new Course(courseName, teacherId);
+        final Course course = new Course();
+        course.courseName = courseName;
+        course.teacherId = teacherId;
         course.setStudents(studentIds);
         return course;
     }
