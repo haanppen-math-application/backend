@@ -46,9 +46,4 @@ public class CourseStudent {
     public static CourseStudent of(final Long studentId, final Course courseEntity) {
         return new CourseStudent(studentId, courseEntity);
     }
-
-    public void delete() {
-        this.studentId = null;
-        this.courseEntity = null;
-    }
 }

@@ -38,11 +38,11 @@ public class Course {
 
     @OneToMany(mappedBy = "courseEntity", cascade = {CascadeType.PERSIST}, orphanRemoval = true)
     @BatchSize(size = 10)
-    private Set<CourseStudent> students = new HashSet<>();
+    private final Set<CourseStudent> students = new HashSet<>();
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST}, orphanRemoval = true)
     @BatchSize(size = 10)
-    private List<Memo> memos = new ArrayList<>();
+    private final List<Memo> memos = new ArrayList<>();
 
     public Course(final String courseName, final Long teacherId) {
         this.courseName = courseName;
@@ -72,9 +72,5 @@ public class Course {
 
     public void changeTeacher(final Long newTeacherId) {
         this.teacherId = newTeacherId;
-    }
-
-    public List<CourseStudent> getCourseStudents() {
-        return this.students.stream().toList();
     }
 }

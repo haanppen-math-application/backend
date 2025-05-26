@@ -50,7 +50,7 @@ public class Memo {
     private String content;
 
     @OneToMany(mappedBy = "memo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    private List<MemoMedia> memoMedias = new ArrayList<>();
+    private final List<MemoMedia> memoMedias = new ArrayList<>();
 
     public void addMedia(final String mediaSrc) {
         memoMedias.add(MemoMedia.of(this, mediaSrc, memoMedias.size()));
@@ -62,10 +62,6 @@ public class Memo {
     public void setContent(final String content) {
         this.content = content;
     }
-    public void delete() {
-        this.course = null;
-        memoMedias.stream().forEach(memoMedia -> memoMedia.setNull());
-    }
 
     public void changeSequence(final Long memoMediaId, final Integer sequence) {
         memoMedias.stream().forEach(memoMedia -> {
@@ -73,11 +69,6 @@ public class Memo {
                 memoMedia.setSequence(sequence);
             }
         });
-    }
-
-    private void validateSequences() {
-        memoMedias.stream()
-                .mapToInt(MemoMedia::getSequence);
     }
 
     public Memo(final Course course, final LocalDate targetDate, final String progressed, final String homework) {

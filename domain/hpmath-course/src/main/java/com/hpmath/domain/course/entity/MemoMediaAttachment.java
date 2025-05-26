@@ -35,9 +35,4 @@ public class MemoMediaAttachment {
     public static MemoMediaAttachment of(final MemoMedia memoMedia, final String mediaSrc) {
         return new MemoMediaAttachment(memoMedia, mediaSrc);
     }
-
-    public void setNull() {
-        this.memoMedia = null;
-        this.mediaSrc = null;
-    }
 }

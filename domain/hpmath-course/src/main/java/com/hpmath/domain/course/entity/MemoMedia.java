@@ -48,13 +48,6 @@ public class MemoMedia {
         this.sequence = sequence;
     }
 
-    public void setNull() {
-        this.mediaSrc = null;
-        this.memo = null;
-        this.memoMediaAttachments.stream()
-                .forEach(memoMediaAttachment -> memoMediaAttachment.setNull());
-    }
-
     public static MemoMedia of(final Memo memo, final String mediaSrc, final Integer sequence) {
         return new MemoMedia(memo, mediaSrc, sequence);
     }
