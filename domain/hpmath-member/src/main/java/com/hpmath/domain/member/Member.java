@@ -23,7 +23,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "member", indexes = @Index(name = "idx_phoneNumber_password", columnList = "phone_number, password"))
+@Table(name = "member", indexes = @Index(name = "idx_phoneNumber", columnList = "phone_number"))
 @Getter
 @NoArgsConstructor
 @SQLDelete(
