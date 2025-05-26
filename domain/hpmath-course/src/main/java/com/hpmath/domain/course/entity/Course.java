@@ -40,7 +40,7 @@ public class Course {
     @Column(name = "teacher")
     private Long teacherId;
 
-    @OneToMany(mappedBy = "courseEntity", cascade = {CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(mappedBy = "courseEntity", cascade = CascadeType.PERSIST, orphanRemoval = true)
     @BatchSize(size = 10)
     private final Set<CourseStudent> students = new HashSet<>();
 

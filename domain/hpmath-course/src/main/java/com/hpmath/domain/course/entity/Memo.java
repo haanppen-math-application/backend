@@ -53,7 +53,7 @@ public class Memo {
     @Column(name = "content")
     private String content;
 
-    @OneToMany(mappedBy = "memo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "memo", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private final List<MemoMedia> memoMedias = new ArrayList<>();
 
     public void addMedia(final String mediaSrc) {
