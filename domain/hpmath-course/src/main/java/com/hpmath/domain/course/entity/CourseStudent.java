@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -23,6 +24,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @ToString
 @Table(name = "course_student", indexes = {@Index(name = "idx_studentId_courseId", columnList = "student_id, course_id")})
+@EqualsAndHashCode(of = {"studentId", "courseEntity"})
 public class CourseStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
