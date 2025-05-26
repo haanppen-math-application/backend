@@ -9,6 +9,7 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -23,30 +24,33 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "memo")
+@Table(name = "memo", indexes = {
+        @Index(name = "idx_courseId_targetDate", columnList = "course_id, target_date"),
+        @Index(name = "idx_targetDate", columnList = "target_date")
+})
 @NoArgsConstructor
 @Getter
 public class Memo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MEMO_ID")
+    @Column(name = "memo_id")
     private Long id;
 
     @CreationTimestamp
-    @Column(name = "REGISTERED_DATE")
+    @Column(name = "registered_date")
     private LocalDateTime registeredDateTime;
 
-    @Column(name = "TARGET_DATE")
+    @Column(name = "target_date")
     private LocalDate targetDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "courseId", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "course_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Course course;
 
-    @Column(name = "TITLE")
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "CONTENT")
+    @Column(name = "content")
     private String content;
 
     @OneToMany(mappedBy = "memo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)

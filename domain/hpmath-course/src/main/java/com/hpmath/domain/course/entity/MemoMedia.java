@@ -7,9 +7,11 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -20,17 +22,18 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
+@Table(name = "memo_media", indexes = @Index(name = "idx_memoId", columnList = "memo_id"))
 public class MemoMedia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MEMO_MEDIA_ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "media")
+    @Column(name = "media_src")
     private String mediaSrc;
 
     @ManyToOne
-    @JoinColumn(name = "MEMO_MEMO_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "memo_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Memo memo;
 
     private Integer sequence;
