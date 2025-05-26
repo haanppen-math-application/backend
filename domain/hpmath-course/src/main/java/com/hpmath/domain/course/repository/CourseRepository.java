@@ -9,7 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
-    List<Course> findAllByTeacherId(final Long teacherId);
+    @Query("SELECT c FROM COURSE c LEFT JOIN FETCH c.students WHERE c.teacherId = :teacherId")
+    List<Course> findAllWithStudentsByTeacherId(@Param("teacherId") final Long teacherId);
+
+    @Query(value = "SELECT c FROM COURSE c LEFT JOIN FETCH c.students")
+    List<Course> findAllWithStudents();
 
     @Modifying
     @Query("UPDATE COURSE c SET c.teacherId = NULL WHERE c.teacherId IN :teacherIds")

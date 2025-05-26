@@ -25,7 +25,7 @@ public class CourseQueryService {
     private final MemberClient memberClient;
 
     public List<CoursePreviewResponse> loadAllCoursePreviews() {
-        final List<Course> courses = courseRepository.findAll();
+        final List<Course> courses = courseRepository.findAllWithStudents();
         return courses.stream()
                 .map(this::mapToCoursePreview)
                 .toList();
@@ -39,7 +39,7 @@ public class CourseQueryService {
         if (memberInfo.role() == null) {
             throw new CourseException(ErrorCode.NO_SUCH_COURSE_MEMBER);
         }
-        return courseRepository.findAllByTeacherId(memberId).stream().map(this::mapToCoursePreview).toList();
+        return courseRepository.findAllWithStudentsByTeacherId(memberId).stream().map(this::mapToCoursePreview).toList();
     }
 
     public CourseDetailResponse loadCourseDetails(final Long courseId) {
