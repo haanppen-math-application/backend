@@ -43,7 +43,7 @@ public class CourseMemoService {
         isOwner(course.getTeacherId(), command.requestMemberId());
         isDuplicated(course, command.registerTargetDate());
 
-        final Memo memo = new Memo(course, command.registerTargetDate(), command.title(), command.content());
+        final Memo memo = Memo.of(course, command.registerTargetDate(), command.title(), command.content());
         return memoRepository.save(memo).getId();
     }
 

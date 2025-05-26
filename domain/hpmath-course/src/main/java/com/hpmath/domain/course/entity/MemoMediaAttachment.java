@@ -27,12 +27,10 @@ public class MemoMediaAttachment {
     @Column(name = "media_id")
     private String mediaSrc;
 
-    private MemoMediaAttachment(MemoMedia memoMedia, String mediaSrc) {
-        this.memoMedia = memoMedia;
-        this.mediaSrc = mediaSrc;
-    }
-
     public static MemoMediaAttachment of(final MemoMedia memoMedia, final String mediaSrc) {
-        return new MemoMediaAttachment(memoMedia, mediaSrc);
+        final MemoMediaAttachment attachment = new MemoMediaAttachment();
+        attachment.memoMedia = memoMedia;
+        attachment.mediaSrc = mediaSrc;
+        return attachment;
     }
 }

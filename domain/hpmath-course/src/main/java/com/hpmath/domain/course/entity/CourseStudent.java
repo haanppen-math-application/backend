@@ -38,12 +38,11 @@ public class CourseStudent {
     @Column(name = "student_id")
     private Long studentId;
 
-    private CourseStudent(final Long studentId, final Course courseEntity) {
-        this.studentId = studentId;
-        this.courseEntity = courseEntity;
-    }
+    public static CourseStudent of(final Long studentId, final Course course) {
+        final CourseStudent courseStudent = new CourseStudent();
+        courseStudent.studentId = studentId;
+        courseStudent.courseEntity = course;
 
-    public static CourseStudent of(final Long studentId, final Course courseEntity) {
-        return new CourseStudent(studentId, courseEntity);
+        return courseStudent;
     }
 }

@@ -38,17 +38,15 @@ public class MemoMedia {
     @OneToMany(mappedBy = "memoMedia", orphanRemoval = true)
     private List<MemoMediaAttachment> memoMediaAttachments = new ArrayList<>();
 
-    private MemoMedia(final Memo memo, final String mediaSrc, final Integer sequence) {
-        this.memo = memo;
-        this.mediaSrc = mediaSrc;
-        this.sequence = sequence;
-    }
-
     public void setSequence(final Integer sequence) {
         this.sequence = sequence;
     }
 
     public static MemoMedia of(final Memo memo, final String mediaSrc, final Integer sequence) {
-        return new MemoMedia(memo, mediaSrc, sequence);
+        final MemoMedia memoMedia = new MemoMedia();
+        memoMedia.memo = memo;
+        memoMedia.mediaSrc = mediaSrc;
+        memoMedia.setSequence(sequence);
+        return memoMedia;
     }
 }
