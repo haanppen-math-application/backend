@@ -5,7 +5,6 @@ import com.hpmath.common.Role;
 import com.hpmath.domain.course.dto.DeleteAttachmentCommand;
 import com.hpmath.domain.course.dto.RegisterAttachmentCommand;
 import com.hpmath.domain.course.entity.MemoMedia;
-import com.hpmath.domain.course.entity.MemoMediaAttachment;
 import com.hpmath.domain.course.exception.CourseException;
 import com.hpmath.domain.course.exception.MemoMediaException;
 import com.hpmath.domain.course.repository.MediaAttachmentRepository;
@@ -27,8 +26,7 @@ public class CourseMemoMediaAttachmentService {
     public void register(@Valid final RegisterAttachmentCommand command) {
         final MemoMedia targetMemoMedia = memoMediaRepository.findById(command.memoMediaId())
                 .orElseThrow(() -> new MemoMediaException("해당 메모를 찾을 수 없음 : " + command.memoMediaId(), ErrorCode.MEMO_NOT_EXIST));
-        final MemoMediaAttachment memoMediaAttachment = MemoMediaAttachment.of(targetMemoMedia, command.mediaSrc());
-        mediaAttachmentRepository.save(memoMediaAttachment);
+        targetMemoMedia.addAttachment(command.mediaSrc());
     }
 
     public void delete(@Valid DeleteAttachmentCommand command) {

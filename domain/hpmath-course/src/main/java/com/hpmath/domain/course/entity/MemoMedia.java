@@ -1,5 +1,6 @@
 package com.hpmath.domain.course.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -38,12 +39,8 @@ public class MemoMedia {
 
     private Integer sequence;
 
-    @OneToMany(mappedBy = "memoMedia", orphanRemoval = true)
+    @OneToMany(mappedBy = "memoMedia", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MemoMediaAttachment> memoMediaAttachments = new ArrayList<>();
-
-    public void setSequence(final Integer sequence) {
-        this.sequence = sequence;
-    }
 
     public static MemoMedia of(final Memo memo, final String mediaSrc, final Integer sequence) {
         final MemoMedia memoMedia = new MemoMedia();
@@ -51,5 +48,14 @@ public class MemoMedia {
         memoMedia.mediaSrc = mediaSrc;
         memoMedia.setSequence(sequence);
         return memoMedia;
+    }
+
+    public void addAttachment(final String mediaSrc) {
+        final MemoMediaAttachment attachment = MemoMediaAttachment.of(this, mediaSrc);
+        memoMediaAttachments.add(attachment);
+    }
+
+    public void setSequence(final Integer sequence) {
+        this.sequence = sequence;
     }
 }

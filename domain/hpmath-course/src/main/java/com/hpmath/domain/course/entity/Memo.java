@@ -56,10 +56,18 @@ public class Memo {
     @OneToMany(mappedBy = "memo", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private final List<MemoMedia> memoMedias = new ArrayList<>();
 
+    public static Memo of(final Course course, final LocalDate targetDate, final String progressed, final String homework) {
+        final Memo memo = new Memo();
+        memo.course = course;
+        memo.targetDate = targetDate;
+        memo.title = progressed;
+        memo.content = homework;
+
+        return memo;
+    }
     public void addMedia(final String mediaSrc) {
         memoMedias.add(MemoMedia.of(this, mediaSrc, memoMedias.size()));
     }
-
     public void setTitle(final String title) {
         this.title = title;
     }
@@ -74,15 +82,5 @@ public class Memo {
                 memoMedia.setSequence(sequence);
             }
         });
-    }
-
-    public static Memo of(final Course course, final LocalDate targetDate, final String progressed, final String homework) {
-        final Memo memo = new Memo();
-        memo.course = course;
-        memo.targetDate = targetDate;
-        memo.title = progressed;
-        memo.content = homework;
-
-        return memo;
     }
 }
