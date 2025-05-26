@@ -36,15 +36,14 @@ public class CourseMemoService {
     }
 
     @Transactional
-    public Long register(@Valid final MemoRegisterCommand command) {
+    public void register(@Valid final MemoRegisterCommand command) {
         final Course course = courseRepository.findWithMemos(command.targetCourseId())
                 .orElseThrow(() -> new NoSuchCourseException("반을 찾을 수 없음", ErrorCode.NO_SUCH_COURSE));
 
         isOwner(course.getTeacherId(), command.requestMemberId());
         isDuplicated(course, command.registerTargetDate());
 
-        final Memo memo = Memo.of(course, command.registerTargetDate(), command.title(), command.content());
-        return memoRepository.save(memo).getId();
+        course.addMemo(command.registerTargetDate(), command.title(), command.title());
     }
 
     @Transactional

@@ -19,10 +19,10 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("UPDATE COURSE c SET c.teacherId = NULL WHERE c.teacherId IN :teacherIds")
     void updateTeacherToNullIn(@Param("teacherIds") final List<Long> teacherIds);
 
-    @Query("SELECT c FROM COURSE c JOIN FETCH c.students WHERE c.id = :courseId")
+    @Query("SELECT c FROM COURSE c LEFT JOIN FETCH c.students WHERE c.id = :courseId")
     Optional<Course> findWithStudents(@Param("courseId") final Long courseId);
 
-    @Query("SELECT c FROM COURSE c JOIN FETCH c.memos WHERE c.id = :courseId")
+    @Query("SELECT c FROM COURSE c LEFT JOIN FETCH c.memos WHERE c.id = :courseId")
     Optional<Course> findWithMemos(@Param("courseId") final Long courseId);
 
     @Query("SELECT c FROM COURSE c JOIN FETCH c.students cs WHERE cs.studentId = :studentId")

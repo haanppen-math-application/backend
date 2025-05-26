@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -64,6 +65,11 @@ public class Course {
         this.students.addAll(studentIds.stream()
                 .map(id -> CourseStudent.of(id, this))
                 .toList());
+    }
+
+    public void addMemo(final LocalDate registeredDate, final String progressed, final String homeWork) {
+        final Memo memo = Memo.of(this, registeredDate, progressed, homeWork);
+        this.memos.add(memo);
     }
 
     public void changeCourseName(final String newCourseName) {

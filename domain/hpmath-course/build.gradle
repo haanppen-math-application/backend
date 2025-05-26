@@ -10,7 +10,6 @@ dependencies {
 
     implementation project(":common:hpmath-common")
 
-    implementation project(":client:hpmath-sms-client")
     implementation project(":client:hpmath-member-client")
     implementation project(":client:hpmath-media-client")
 }
