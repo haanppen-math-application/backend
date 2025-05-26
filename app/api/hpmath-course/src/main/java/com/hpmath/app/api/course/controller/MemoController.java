@@ -4,11 +4,9 @@ import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
+import com.hpmath.domain.course.service.CourseMemoService;
 import com.hpmath.domain.course.dto.DeleteMemoCommand;
 import com.hpmath.domain.course.dto.ModifyMemoTextCommand;
-import com.hpmath.domain.course.service.DeleteMemoService;
-import com.hpmath.domain.course.service.MemoRegisterService;
-import com.hpmath.domain.course.service.ModifyMemoTextService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
@@ -26,9 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class MemoController {
-    private final DeleteMemoService deleteMemoUseCase;
-    private final MemoRegisterService memoRegisterUseCase;
-    private final ModifyMemoTextService modifyMemoTextUseCase;
+    private final CourseMemoService courseMemoService;
 
     @DeleteMapping("/api/courses/memos/{targetMemoId}")
     @Operation(summary = "메모 삭제 API")
@@ -39,7 +35,7 @@ public class MemoController {
             @Nonnull @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final DeleteMemoCommand command = new DeleteMemoCommand(memberPrincipal.memberId(), targetMemoId, memberPrincipal.role());
-        deleteMemoUseCase.delete(command);
+        courseMemoService.delete(command);
         return ResponseEntity.noContent().build();
     }
 
@@ -50,7 +46,7 @@ public class MemoController {
             @LoginInfo @NotNull final MemberPrincipal memberPrincipal,
             @RequestBody @Valid final Requests.RegisterMemoRequest registerMemoRequest
     ) {
-        memoRegisterUseCase.register(registerMemoRequest.toCommand(memberPrincipal.memberId()));
+        courseMemoService.register(registerMemoRequest.toCommand(memberPrincipal.memberId()));
         return ResponseEntity.ok().build();
     }
 
@@ -61,7 +57,7 @@ public class MemoController {
             @LoginInfo MemberPrincipal memberPrincipal
     ) {
         final ModifyMemoTextCommand command = memoTextModifyRequest.toCommand(memberPrincipal.memberId());
-        modifyMemoTextUseCase.modify(command);
+        courseMemoService.modify(command);
         return ResponseEntity.ok().build();
     }
 }

@@ -6,16 +6,12 @@ import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
+import com.hpmath.domain.course.service.CourseService;
 import com.hpmath.domain.course.dto.CourseRegisterCommand;
 import com.hpmath.domain.course.dto.CourseUpdateCommand;
 import com.hpmath.domain.course.dto.DeleteCourseCommand;
 import com.hpmath.domain.course.dto.RegisterStudentCommand;
 import com.hpmath.domain.course.dto.UpdateCourseStudentsCommand;
-import com.hpmath.domain.course.service.AddStudentToCourseService;
-import com.hpmath.domain.course.service.CourseRegisterService;
-import com.hpmath.domain.course.service.DeleteCourseService;
-import com.hpmath.domain.course.service.UpdateCourseService;
-import com.hpmath.domain.course.service.UpdateCourseStudentsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -36,11 +32,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping
 @RequiredArgsConstructor
 public class CourseController {
-    private final AddStudentToCourseService addStudentToCourseUseCase;
-    private final DeleteCourseService deleteCourseAdapter;
-    private final CourseRegisterService courseRegisterUseCase;
-    private final UpdateCourseService updateCourseNameUseCase;
-    private final UpdateCourseStudentsService updateCourseStudentsUseCase;
+    private final CourseService courseService;
 
     @PostMapping(value = "/api/manage/courses/students", consumes = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "jwtAuth")
@@ -54,7 +46,7 @@ public class CourseController {
                 memberPrincipal.memberId(),
                 memberPrincipal.role()
         );
-        addStudentToCourseUseCase.addStudentToCourse(registerStudentDto);
+        courseService.addStudentToCourse(registerStudentDto);
         return ResponseEntity.ok(null);
     }
 
@@ -67,7 +59,7 @@ public class CourseController {
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final DeleteCourseCommand deleteCommand = deleteCourseRequest.toCommand(memberPrincipal.role(), memberPrincipal.memberId());
-        deleteCourseAdapter.delete(deleteCommand);
+        courseService.delete(deleteCommand);
         return ResponseEntity.noContent().build();
     }
 
@@ -80,7 +72,7 @@ public class CourseController {
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
         final CourseRegisterCommand courseRegisterDto = courseRegisterRequestDto.toCommand(memberPrincipal.memberId(), memberPrincipal.role());
-        final Long createdCourseId = courseRegisterUseCase.register(courseRegisterDto);
+        final Long createdCourseId = courseService.register(courseRegisterDto);
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdCourseId)
@@ -98,7 +90,7 @@ public class CourseController {
             final @LoginInfo MemberPrincipal memberPrincipal
     ) {
         final CourseUpdateCommand courseUpdateDto = courseUpdateRequest.toCommand(courseId, memberPrincipal.memberId());
-        updateCourseNameUseCase.updateCourse(courseUpdateDto);
+        courseService.updateCourse(courseUpdateDto);
 
         return ResponseEntity.ok().build();
     }
@@ -111,7 +103,7 @@ public class CourseController {
                                             @RequestBody Requests.UpdateCourseStudentsRequest updateCourseStudentsRequest
     ) {
         final UpdateCourseStudentsCommand updateCourseStudentsDto = updateCourseStudentsRequest.toCommand(memberPrincipal.memberId(), courseId);
-        updateCourseStudentsUseCase.updateStudents(updateCourseStudentsDto);
+        courseService.updateStudents(updateCourseStudentsDto);
         return ResponseEntity.ok(null);
     }
 

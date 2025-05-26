@@ -4,12 +4,9 @@ import com.hpmath.common.Role;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
+import com.hpmath.domain.course.service.CourseQueryService;
 import com.hpmath.domain.course.dto.Responses.CourseDetailResponse;
 import com.hpmath.domain.course.dto.Responses.CoursePreviewResponse;
-import com.hpmath.domain.course.service.LoadCourseDetailsQueryService;
-import com.hpmath.domain.course.service.LoadCoursesByStudentQueryService;
-import com.hpmath.domain.course.service.QueryAllCourseService;
-import com.hpmath.domain.course.service.QueryCourseByMemberIdService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.List;
@@ -22,17 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class CourseQueryController {
-    private final QueryCourseByMemberIdService queryCourseByMemberIdUseCase;
-    private final LoadCoursesByStudentQueryService loadCoursesByStudentQuery;
-    private final LoadCourseDetailsQueryService loadCourseDetailsQuery;
-    private final QueryAllCourseService queryAllCourseUseCase;
+    private final CourseQueryService courseQueryService;
 
     @GetMapping("/api/courses")
     @Operation(summary = "전체 반을 조회하는 api 입니다", description = "로그인된 모든 사용자가 사용 가능한 API 입니다.")
     @SecurityRequirement(name = "jwtAuth")
     @Authorization(opened = true)
     public ResponseEntity<List<CoursePreviewResponse>> getAllCourses() {
-        return ResponseEntity.ok(queryAllCourseUseCase.loadAllCoursePreviews());
+        return ResponseEntity.ok(courseQueryService.loadAllCoursePreviews());
     }
 
     @GetMapping(value = "/api/courses/my")
@@ -40,7 +34,7 @@ public class CourseQueryController {
     public ResponseEntity<List<CoursePreviewResponse>> queryMyCourses(
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
-        return ResponseEntity.ok(queryCourseByMemberIdUseCase.loadCoursePreviews(memberPrincipal.memberId()));
+        return ResponseEntity.ok(courseQueryService.loadCoursePreviews(memberPrincipal.memberId()));
     }
 
     @GetMapping("/api/courses/students/{studentId}")
@@ -50,7 +44,7 @@ public class CourseQueryController {
     public ResponseEntity<List<CoursePreviewResponse>> loadCourses(
             @PathVariable final Long studentId
     ) {
-        return ResponseEntity.ok(loadCoursesByStudentQuery.loadCoursePreviews(studentId));
+        return ResponseEntity.ok(courseQueryService.loadCoursePreviews(studentId));
     }
 
     @GetMapping(value = "/api/courses/teachers/{teacherId}")
@@ -60,7 +54,7 @@ public class CourseQueryController {
     public ResponseEntity<List<CoursePreviewResponse>> getCourses(
             @PathVariable final Long teacherId
     ) {
-        return ResponseEntity.ok(queryCourseByMemberIdUseCase.loadCoursePreviews(teacherId));
+        return ResponseEntity.ok(courseQueryService.loadCoursePreviews(teacherId));
     }
 
     @GetMapping("/api/manage/courses/{courseId}")
@@ -70,6 +64,6 @@ public class CourseQueryController {
     public ResponseEntity<CourseDetailResponse> loadCourseDetails(
             @PathVariable final Long courseId
     ) {
-        return ResponseEntity.ok(loadCourseDetailsQuery.loadCourseDetails(courseId));
+        return ResponseEntity.ok(courseQueryService.loadCourseDetails(courseId));
     }
 }

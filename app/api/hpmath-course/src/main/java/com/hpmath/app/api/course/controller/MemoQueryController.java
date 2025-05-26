@@ -6,13 +6,11 @@ import com.hpmath.common.page.PagedResponse;
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
 import com.hpmath.common.web.authenticationV2.LoginInfo;
+import com.hpmath.domain.course.service.CourseMemoQueryService;
 import com.hpmath.domain.course.dto.MemoQueryByCourseIdAndDateCommand;
 import com.hpmath.domain.course.dto.MemoQueryCommand;
 import com.hpmath.domain.course.dto.Responses.MemoAppliedDayResponse;
 import com.hpmath.domain.course.dto.Responses.MemoViewResponse;
-import com.hpmath.domain.course.service.LoadMemoQueryService;
-import com.hpmath.domain.course.service.QueryCourseByMonthService;
-import com.hpmath.domain.course.service.QueryMemoByCourseIdAndDateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Nonnull;
@@ -37,9 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 @RequiredArgsConstructor
 public class MemoQueryController {
-    private final QueryMemoByCourseIdAndDateService queryMemoByCourseIdAndDateUseCase;
-    private final QueryCourseByMonthService queryCourseByMonthUseCase;
-    private final LoadMemoQueryService loadMemoQuery;
+    private final CourseMemoQueryService courseMemoQueryService;
 
     @GetMapping(value = "/api/courses/memos")
     @SecurityRequirement(name = "jwtAuth")
@@ -49,11 +45,11 @@ public class MemoQueryController {
             @ModelAttribute @Valid final QueryMemoByCourseIdAndDateRequest queryMemoByCourseIdAndDateRequest
     ) {
         final MemoQueryByCourseIdAndDateCommand command = queryMemoByCourseIdAndDateRequest.toCommand();
-        final MemoViewResponse memoView = queryMemoByCourseIdAndDateUseCase.loadSingleMemo(command);
+        final MemoViewResponse memoView = courseMemoQueryService.loadSingleMemo(command);
         if (Objects.isNull(memoView)) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(queryMemoByCourseIdAndDateUseCase.loadSingleMemo(command));
+        return ResponseEntity.ok(courseMemoQueryService.loadSingleMemo(command));
     }
 
     @GetMapping("/api/courses/{courseId}/memos")
@@ -69,7 +65,7 @@ public class MemoQueryController {
             @Nonnull @PathVariable Long courseId
     ) {
         final MemoQueryCommand command = new MemoQueryCommand(pageable, courseId);
-        final Page<MemoViewResponse> memoViews = loadMemoQuery.loadMemos(command);
+        final Page<MemoViewResponse> memoViews = courseMemoQueryService.loadMemos(command);
         return ResponseEntity.ok(
                 PagedResponse.of(
                         memoViews.getContent(),
@@ -85,6 +81,6 @@ public class MemoQueryController {
             @RequestParam(required = true) final LocalDate monthInfo,
             @LoginInfo final MemberPrincipal memberPrincipal
     ) {
-        return ResponseEntity.ok(queryCourseByMonthUseCase.query(monthInfo, memberPrincipal.memberId()));
+        return ResponseEntity.ok(courseMemoQueryService.query(monthInfo, memberPrincipal.memberId()));
     }
 }
