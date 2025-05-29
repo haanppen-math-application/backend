@@ -43,7 +43,7 @@ public class AccountLoginService {
             accountLockService.updateLoginFailedInfo(member, now);
             throw new InvalidPasswordException(ErrorCode.INVALID_PASSWORD_EXCEPTION);
         }
-        accountLockService.unlock(member, now);
+        accountLockService.unlockWhenLocked(member);
         return createJwtDto(member);
     }
 
@@ -53,12 +53,11 @@ public class AccountLoginService {
      */
     @WarnLoggable
     public JwtDto provideJwtByRefreshToken(final String refreshToken) {
-        final LocalDateTime now = timeProvider.getCurrentTime();
         final AuthInfo authInfo = jwtUtils.getAuthInfo(refreshToken);
         final Long memberId = authInfo.memberId();
 
         final Member member = loadMemberById(memberId);
-        accountLockService.unlock(member, now);
+        accountLockService.unlockWhenLocked(member);
 
         return createJwtDto(member);
     }

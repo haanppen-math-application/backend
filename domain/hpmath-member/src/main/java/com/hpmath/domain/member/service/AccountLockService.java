@@ -52,13 +52,15 @@ public class AccountLockService {
         return member.canLoginAt(currentTime, this.lockTimeMinutes);
     }
 
-    @Transactional
-    public void unlock(final Member member, final LocalDateTime currentTime) {
-        unlockMember(member, currentTime);
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void unlockWhenLocked(final Member member) {
+        if (member.getLocked()) {
+            unlock(member);
+        }
     }
 
-    private void unlockMember(final Member member, final LocalDateTime currentTime) {
+    private void unlock(final Member member) {
         member.unlock();
-        log.info("Check account {}, unlocked at {}", member.getId(), currentTime);
+        log.info("member unlocked: {}", member.getId());
     }
 }
