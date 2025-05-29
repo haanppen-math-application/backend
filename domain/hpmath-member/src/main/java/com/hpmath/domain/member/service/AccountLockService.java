@@ -30,14 +30,9 @@ public class AccountLockService {
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void updateLoginFailedInfo(final Member member, final LocalDateTime currentTime) {
-
         member.increaseLoginTryCount();
         log.info("account {}, Increase login try count to {}", member.getId(), member.getLoginTryCount());
-
-        if (member.isOverMaxLoginTryCount(this.maxTryCount)) {
-            member.lock(currentTime);
-            log.info("Lock account {}, lock started at {}", member.getId(), currentTime);
-        }
+        lock(member, currentTime);
     }
 
     /**
@@ -56,6 +51,13 @@ public class AccountLockService {
     public void unlockWhenLocked(final Member member) {
         if (member.getLocked()) {
             unlock(member);
+        }
+    }
+
+    private void lock(final Member member, final LocalDateTime currentTime) {
+        if (member.isOverMaxLoginTryCount(this.maxTryCount)) {
+            member.lock(currentTime);
+            log.info("Lock account {}, lock started at {}", member.getId(), currentTime);
         }
     }
 
