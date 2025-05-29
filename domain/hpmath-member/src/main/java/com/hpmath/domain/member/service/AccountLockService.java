@@ -28,7 +28,7 @@ public class AccountLockService {
      * @param member     로그인 하고자 하는 계정
      * @param currentTime 로그인 시도한 시간.
      */
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void updateLoginFailedInfo(final Member member, final LocalDateTime currentTime) {
 
         member.increaseLoginTryCount();

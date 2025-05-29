@@ -31,6 +31,7 @@ public class AccountLoginService {
     private final PasswordHandler passwordHandler;
 
     @WarnLoggable
+    @Transactional(noRollbackFor = InvalidPasswordException.class)
     public JwtDto provideJwtByLogin(final String phoneNumber, final Password password) {
         final Member member = loadMemberByPhoneNumber(phoneNumber);
         final LocalDateTime now = timeProvider.getCurrentTime();
