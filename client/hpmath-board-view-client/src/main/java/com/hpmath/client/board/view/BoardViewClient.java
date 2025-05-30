@@ -1,13 +1,14 @@
 package com.hpmath.client.board.view;
 
 import java.time.Duration;
+import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
 
 @Slf4j
 @Component
@@ -31,26 +32,33 @@ public class BoardViewClient {
     }
 
     public Long getViewCount(final Long boardId) {
-        return restClient.get()
+        return logExceptions(() -> restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/view-count")
                         .queryParam("boardId", boardId)
                         .build())
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, (req, res) -> log.warn("Error query view count {}", boardId))
                 .body(BoardViewCount.class)
-                .viewCount();
+                .viewCount());
     }
 
     public Long increaseViewCount(final Long boardId, final Long memberId) {
-        return restClient.post()
+        return logExceptions(() -> restClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/view-count")
                         .queryParam("boardId", boardId)
                         .queryParam("memberId", memberId)
                         .build())
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, (req, res) -> log.warn("Error increase view count {}", boardId))
                 .body(BoardViewCount.class)
-                .viewCount();
+                .viewCount());
+    }
+
+    private <T> T logExceptions(final Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (final RestClientException ex) {
+            log.error(ex.getMessage(), ex);
+            throw ex;
+        }
     }
 
     private record BoardViewCount(
