@@ -1,22 +1,20 @@
 package com.hpmath.client.member;
 
-import com.hpmath.client.common.ClientExceptionMapper;
+import com.hpmath.client.common.aspect.Client;
 import com.hpmath.common.Role;
 import java.time.Duration;
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-@Component
 @Slf4j
+@Client
+@Component
 public class MemberClient {
-    @Autowired
-    private ClientExceptionMapper exceptionMapper;
     private final RestClient restClient;
 
     public MemberClient(
@@ -37,23 +35,23 @@ public class MemberClient {
     }
 
     public boolean isMatch(final Long memberId, final Role... roles) {
-        final MemberRole body = exceptionMapper.mapException(() -> restClient.get()
+        final MemberRole body = restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/member/role")
                         .queryParam("memberId", memberId)
                         .build())
                 .retrieve()
-                .body(MemberRole.class));
+                .body(MemberRole.class);
         log.debug("role Sets: {}, target Role: {}", Arrays.toString(roles), body.role);
         return Arrays.asList(roles).contains(body.role);
     }
 
     public MemberInfo getMemberDetail(final Long memberId) {
-        final MemberInfo memberInfo = exceptionMapper.mapException(() -> restClient.get()
+        final MemberInfo memberInfo = restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/member")
                         .queryParam("memberId", memberId)
                         .build())
                 .retrieve()
-                .body(MemberInfo.class));
+                .body(MemberInfo.class);
         log.debug("memberInfo: {}", memberInfo);
         return memberInfo;
     }

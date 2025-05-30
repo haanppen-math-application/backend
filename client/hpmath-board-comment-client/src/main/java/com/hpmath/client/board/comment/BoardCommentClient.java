@@ -1,11 +1,10 @@
 package com.hpmath.client.board.comment;
 
-import com.hpmath.client.common.ClientExceptionMapper;
+import com.hpmath.client.common.aspect.Client;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -15,9 +14,8 @@ import org.springframework.web.client.RestClient;
 
 @Slf4j
 @Component
+@Client
 public class BoardCommentClient {
-    @Autowired
-    private ClientExceptionMapper exceptionMapper;
     private final RestClient restClient;
 
     public BoardCommentClient(
@@ -38,21 +36,21 @@ public class BoardCommentClient {
     }
 
     public CommentDetail getCommentDetail(final Long commentId) {
-        return exceptionMapper.mapException(() -> restClient.get()
+        return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/comments/detail")
                         .queryParam("commentId", commentId)
                         .build())
                 .retrieve()
-                .body(CommentDetail.class));
+                .body(CommentDetail.class);
     }
 
     public List<CommentDetail> getCommentDetails(final Long questionId) {
-        return exceptionMapper.mapException(() -> restClient.get()
+        return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/comments")
                         .queryParam("questionId", questionId)
                         .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<List<CommentDetail>>() {}));
+                .body(new ParameterizedTypeReference<List<CommentDetail>>() {});
     }
 
     public record CommentDetail(

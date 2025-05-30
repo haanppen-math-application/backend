@@ -1,9 +1,8 @@
 package com.hpmath.client.board.view;
 
-import com.hpmath.client.common.ClientExceptionMapper;
+import com.hpmath.client.common.aspect.Client;
 import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -11,10 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 @Slf4j
+@Client
 @Component
 public class BoardViewClient {
-    @Autowired
-    private ClientExceptionMapper exceptionMapper;
     private final RestClient restClient;
 
     public BoardViewClient(
@@ -34,24 +32,24 @@ public class BoardViewClient {
     }
 
     public Long getViewCount(final Long boardId) {
-        return exceptionMapper.mapException(() -> restClient.get()
+        return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/view-count")
                         .queryParam("boardId", boardId)
                         .build())
                 .retrieve()
                 .body(BoardViewCount.class)
-                .viewCount());
+                .viewCount();
     }
 
     public Long increaseViewCount(final Long boardId, final Long memberId) {
-        return exceptionMapper.mapException(() -> restClient.post()
+        return restClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/view-count")
                         .queryParam("boardId", boardId)
                         .queryParam("memberId", memberId)
                         .build())
                 .retrieve()
                 .body(BoardViewCount.class)
-                .viewCount());
+                .viewCount();
     }
 
     private record BoardViewCount(

@@ -1,10 +1,9 @@
 package com.hpmath.client.media;
 
-import com.hpmath.client.common.ClientExceptionMapper;
+import com.hpmath.client.common.aspect.Client;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -12,10 +11,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 @Slf4j
+@Client
 @Component
 public class MediaClient {
-    @Autowired
-    private ClientExceptionMapper exceptionMapper;
     private final RestClient restClient;
 
     public MediaClient(
@@ -36,12 +34,12 @@ public class MediaClient {
     }
 
     public MediaInfo getFileInfo(String mediaSrc) {
-        final MediaInfo mediaInfo = exceptionMapper.mapException(() -> restClient.get()
+        final MediaInfo mediaInfo = restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/media/info")
                         .queryParam("mediaSrc", mediaSrc)
                         .build())
                 .retrieve()
-                .body(MediaInfo.class));
+                .body(MediaInfo.class);
         log.debug("mediaInfo: {}", mediaInfo);
         return mediaInfo;
     }

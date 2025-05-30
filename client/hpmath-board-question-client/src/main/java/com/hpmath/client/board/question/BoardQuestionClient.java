@@ -1,11 +1,10 @@
 package com.hpmath.client.board.question;
 
-import com.hpmath.client.common.ClientExceptionMapper;
+import com.hpmath.client.common.aspect.Client;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -14,10 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 @Slf4j
+@Client
 @Component
 public class BoardQuestionClient {
-    @Autowired
-    private ClientExceptionMapper exceptionMapper;
     private final RestClient restClient;
 
     public BoardQuestionClient(
@@ -37,30 +35,30 @@ public class BoardQuestionClient {
     }
 
     public List<QuestionDetailInfo> getQuestionsSortByDate(final int pageNumber, final int pageSize) {
-        return exceptionMapper.mapException(() -> restClient.get()
+        return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/questions/paged/date-desc")
                         .queryParam("pageSize", pageSize)
                         .queryParam("pageNumber", pageNumber)
                         .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<List<QuestionDetailInfo>>() {}));
+                .body(new ParameterizedTypeReference<List<QuestionDetailInfo>>() {});
     }
 
     public QuestionDetailInfo get(final Long questionId) {
-        return exceptionMapper.mapException(() -> restClient.get()
+        return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/questions/detail")
                         .queryParam("questionId", questionId)
                         .build())
                 .retrieve()
-                .body(QuestionDetailInfo.class));
+                .body(QuestionDetailInfo.class);
     }
 
     public Long getCount() {
-        return exceptionMapper.mapException(() -> restClient.get()
+        return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/questions/count")
                         .build())
                 .retrieve()
-                .body(Long.class));
+                .body(Long.class);
     }
 
     public record QuestionDetailInfo(
