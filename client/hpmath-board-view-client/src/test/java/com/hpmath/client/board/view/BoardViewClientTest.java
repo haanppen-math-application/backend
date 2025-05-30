@@ -1,5 +1,8 @@
 package com.hpmath.client.board.view;
 
+import com.hpmath.client.common.ClientBadRequestException;
+import com.hpmath.client.common.ClientRequestTimeoutException;
+import com.hpmath.client.common.ClientServerException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -28,7 +31,7 @@ class BoardViewClientTest {
         mockResponse.setResponseCode(400);
 
         mockWebServer.enqueue(mockResponse);
-        Assertions.assertThrows(RestClientException.class, () -> boardViewClient.getViewCount(10L));
+        Assertions.assertThrows(ClientBadRequestException.class, () -> boardViewClient.getViewCount(10L));
     }
 
     @Test
@@ -37,7 +40,7 @@ class BoardViewClientTest {
         mockResponse.setResponseCode(500);
 
         mockWebServer.enqueue(mockResponse);
-        Assertions.assertThrows(RestClientException.class, () -> boardViewClient.getViewCount(10L));
+        Assertions.assertThrows(ClientServerException.class, () -> boardViewClient.getViewCount(10L));
     }
 
     @Test
@@ -46,6 +49,6 @@ class BoardViewClientTest {
         mockResponse.setHeadersDelay(10L, TimeUnit.SECONDS);
 
         mockWebServer.enqueue(mockResponse);
-        Assertions.assertThrows(RestClientException.class, () -> boardViewClient.getViewCount(10L));
+        Assertions.assertThrows(ClientRequestTimeoutException.class, () -> boardViewClient.getViewCount(10L));
     }
 }

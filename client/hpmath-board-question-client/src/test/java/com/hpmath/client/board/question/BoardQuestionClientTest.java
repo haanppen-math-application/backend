@@ -3,6 +3,9 @@ package com.hpmath.client.board.question;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hpmath.client.board.question.BoardQuestionClient.QuestionDetailInfo;
+import com.hpmath.client.common.ClientBadRequestException;
+import com.hpmath.client.common.ClientRequestTimeoutException;
+import com.hpmath.client.common.ClientServerException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +57,7 @@ class BoardQuestionClientTest {
         mockResponse.setHeadersDelay(10L, TimeUnit.SECONDS);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(ResourceAccessException.class, () -> boardQuestionClient.get(Mockito.anyLong()));
+        Assertions.assertThrows(ClientRequestTimeoutException.class, () -> boardQuestionClient.get(Mockito.anyLong()));
     }
 
     @Test
@@ -63,7 +66,7 @@ class BoardQuestionClientTest {
         mockResponse.setResponseCode(400);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(HttpStatusCodeException.class, () -> boardQuestionClient.get(Mockito.anyLong()));
+        Assertions.assertThrows(ClientBadRequestException.class, () -> boardQuestionClient.get(Mockito.anyLong()));
     }
 
     @Test
@@ -72,6 +75,6 @@ class BoardQuestionClientTest {
         mockResponse.setResponseCode(500);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(HttpStatusCodeException.class, () -> boardQuestionClient.get(Mockito.anyLong()));
+        Assertions.assertThrows(ClientServerException.class, () -> boardQuestionClient.get(Mockito.anyLong()));
     }
 }

@@ -2,6 +2,9 @@ package com.hpmath.client.board.comment;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hpmath.client.common.ClientBadRequestException;
+import com.hpmath.client.common.ClientRequestTimeoutException;
+import com.hpmath.client.common.ClientServerException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
@@ -50,7 +53,7 @@ class BoardCommentClientTest {
         mockResponse.setHeadersDelay(10L, TimeUnit.SECONDS);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(RestClientException.class, () -> boardCommentClient.getCommentDetail(Mockito.anyLong()));
+        Assertions.assertThrows(ClientRequestTimeoutException.class, () -> boardCommentClient.getCommentDetail(Mockito.anyLong()));
     }
 
     @Test
@@ -59,7 +62,7 @@ class BoardCommentClientTest {
         mockResponse.setResponseCode(400);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(RestClientException.class, () -> boardCommentClient.getCommentDetail(Mockito.anyLong()));
+        Assertions.assertThrows(ClientBadRequestException.class, () -> boardCommentClient.getCommentDetail(Mockito.anyLong()));
     }
 
     @Test
@@ -68,6 +71,6 @@ class BoardCommentClientTest {
         mockResponse.setResponseCode(500);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(RestClientException.class, () -> boardCommentClient.getCommentDetail(Mockito.anyLong()));
+        Assertions.assertThrows(ClientServerException.class, () -> boardCommentClient.getCommentDetail(Mockito.anyLong()));
     }
 }

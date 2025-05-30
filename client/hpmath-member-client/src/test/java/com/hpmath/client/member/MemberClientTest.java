@@ -2,6 +2,9 @@ package com.hpmath.client.member;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hpmath.client.common.ClientBadRequestException;
+import com.hpmath.client.common.ClientRequestTimeoutException;
+import com.hpmath.client.common.ClientServerException;
 import com.hpmath.client.member.MemberClient.MemberInfo;
 import com.hpmath.common.Role;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +54,7 @@ class MemberClientTest {
         mockResponse.setHeadersDelay(10L, TimeUnit.SECONDS);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(ResourceAccessException.class, () -> memberClient.getMemberDetail(Mockito.anyLong()));
+        Assertions.assertThrows(ClientRequestTimeoutException.class, () -> memberClient.getMemberDetail(Mockito.anyLong()));
     }
 
     @Test
@@ -60,7 +63,7 @@ class MemberClientTest {
         mockResponse.setResponseCode(400);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(HttpStatusCodeException.class, () -> memberClient.getMemberDetail(Mockito.anyLong()));
+        Assertions.assertThrows(ClientBadRequestException.class, () -> memberClient.getMemberDetail(Mockito.anyLong()));
     }
 
     @Test
@@ -69,6 +72,6 @@ class MemberClientTest {
         mockResponse.setResponseCode(500);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(HttpStatusCodeException.class, () -> memberClient.getMemberDetail(Mockito.anyLong()));
+        Assertions.assertThrows(ClientServerException.class, () -> memberClient.getMemberDetail(Mockito.anyLong()));
     }
 }

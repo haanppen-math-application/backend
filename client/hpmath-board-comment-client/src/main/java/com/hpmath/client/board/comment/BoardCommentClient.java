@@ -1,21 +1,23 @@
 package com.hpmath.client.board.comment;
 
+import com.hpmath.client.common.ClientExceptionMapper;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientException;
 
 @Slf4j
 @Component
 public class BoardCommentClient {
+    @Autowired
+    private ClientExceptionMapper exceptionMapper;
     private final RestClient restClient;
 
     public BoardCommentClient(
@@ -36,7 +38,7 @@ public class BoardCommentClient {
     }
 
     public CommentDetail getCommentDetail(final Long commentId) {
-        return logExceptions(() -> restClient.get()
+        return exceptionMapper.mapException(() -> restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/comments/detail")
                         .queryParam("commentId", commentId)
                         .build())
@@ -45,21 +47,12 @@ public class BoardCommentClient {
     }
 
     public List<CommentDetail> getCommentDetails(final Long questionId) {
-        return logExceptions(() -> restClient.get()
+        return exceptionMapper.mapException(() -> restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/comments")
                         .queryParam("questionId", questionId)
                         .build())
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<CommentDetail>>() {}));
-    }
-
-    private <T> T logExceptions(final Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (final RestClientException ex) {
-            log.error(ex.getMessage(), ex);
-            throw ex;
-        }
     }
 
     public record CommentDetail(

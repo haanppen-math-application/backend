@@ -1,18 +1,20 @@
 package com.hpmath.client.board.view;
 
+import com.hpmath.client.common.ClientExceptionMapper;
 import java.time.Duration;
-import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientException;
 
 @Slf4j
 @Component
 public class BoardViewClient {
+    @Autowired
+    private ClientExceptionMapper exceptionMapper;
     private final RestClient restClient;
 
     public BoardViewClient(
@@ -32,7 +34,7 @@ public class BoardViewClient {
     }
 
     public Long getViewCount(final Long boardId) {
-        return logExceptions(() -> restClient.get()
+        return exceptionMapper.mapException(() -> restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/view-count")
                         .queryParam("boardId", boardId)
                         .build())
@@ -42,7 +44,7 @@ public class BoardViewClient {
     }
 
     public Long increaseViewCount(final Long boardId, final Long memberId) {
-        return logExceptions(() -> restClient.post()
+        return exceptionMapper.mapException(() -> restClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/board/view-count")
                         .queryParam("boardId", boardId)
                         .queryParam("memberId", memberId)
@@ -50,15 +52,6 @@ public class BoardViewClient {
                 .retrieve()
                 .body(BoardViewCount.class)
                 .viewCount());
-    }
-
-    private <T> T logExceptions(final Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (final RestClientException ex) {
-            log.error(ex.getMessage(), ex);
-            throw ex;
-        }
     }
 
     private record BoardViewCount(

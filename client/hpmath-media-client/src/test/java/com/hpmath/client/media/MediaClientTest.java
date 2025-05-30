@@ -2,6 +2,9 @@ package com.hpmath.client.media;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hpmath.client.common.ClientBadRequestException;
+import com.hpmath.client.common.ClientRequestTimeoutException;
+import com.hpmath.client.common.ClientServerException;
 import com.hpmath.client.media.MediaClient.MediaInfo;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
@@ -50,7 +53,7 @@ class MediaClientTest {
         mockResponse.setHeadersDelay(10L, TimeUnit.SECONDS);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(RestClientException.class, () -> mediaClient.getFileInfo(Mockito.anyString()));
+        Assertions.assertThrows(ClientRequestTimeoutException.class, () -> mediaClient.getFileInfo(Mockito.anyString()));
     }
 
     @Test
@@ -59,7 +62,7 @@ class MediaClientTest {
         mockResponse.setResponseCode(400);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(RestClientException.class, () -> mediaClient.getFileInfo(Mockito.anyString()));
+        Assertions.assertThrows(ClientBadRequestException.class, () -> mediaClient.getFileInfo(Mockito.anyString()));
     }
 
     @Test
@@ -68,6 +71,6 @@ class MediaClientTest {
         mockResponse.setResponseCode(500);
         mockWebServer.enqueue(mockResponse);
 
-        Assertions.assertThrows(RestClientException.class, () -> mediaClient.getFileInfo(Mockito.anyString()));
+        Assertions.assertThrows(ClientServerException.class, () -> mediaClient.getFileInfo(Mockito.anyString()));
     }
 }
