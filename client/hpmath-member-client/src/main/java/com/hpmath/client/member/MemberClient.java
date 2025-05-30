@@ -3,6 +3,7 @@ package com.hpmath.client.member;
 import com.hpmath.common.Role;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
@@ -10,6 +11,7 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
 
 @Component
 @Slf4j
@@ -34,27 +36,34 @@ public class MemberClient {
     }
 
     public boolean isMatch(final Long memberId, final Role... roles) {
-        MemberRole body = restClient.get()
+        final MemberRole body = logExceptions(() -> restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/member/role")
                         .queryParam("memberId", memberId)
                         .build())
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, (req, rep) -> log.warn("there is no member with id {}", memberId))
-                .body(MemberRole.class);
+                .body(MemberRole.class));
         log.debug("role Sets: {}, target Role: {}", Arrays.toString(roles), body.role);
         return Arrays.asList(roles).contains(body.role);
     }
 
     public MemberInfo getMemberDetail(final Long memberId) {
-        final MemberInfo memberInfo = restClient.get()
+        final MemberInfo memberInfo = logExceptions(() -> restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/member")
                         .queryParam("memberId", memberId)
                         .build())
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, (req, rep) -> log.warn("there is no member with id {}", memberId))
-                .body(MemberInfo.class);
+                .body(MemberInfo.class));
         log.debug("memberInfo: {}", memberInfo);
         return memberInfo;
+    }
+
+    private <T> T logExceptions(final Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (final RestClientException ex) {
+            log.error(ex.getMessage(), ex);
+            throw ex;
+        }
     }
 
     public record MemberInfo(

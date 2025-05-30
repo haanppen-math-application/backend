@@ -2,6 +2,7 @@ package com.hpmath.client.media;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
@@ -9,6 +10,7 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
 
 @Slf4j
 @Component
@@ -33,16 +35,23 @@ public class MediaClient {
     }
 
     public MediaInfo getFileInfo(String mediaSrc) {
-        final MediaInfo mediaInfo = restClient.get()
+        final MediaInfo mediaInfo = logExceptions(() -> restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/inner/v1/media/info")
                         .queryParam("mediaSrc", mediaSrc)
                         .build())
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, (req, res) -> log.warn("Error getting file info {}", mediaSrc))
-                .body(MediaInfo.class);
-
+                .body(MediaInfo.class));
         log.debug("mediaInfo: {}", mediaInfo);
         return mediaInfo;
+    }
+
+    private <T> T logExceptions(final Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (final RestClientException ex) {
+            log.error(ex.getMessage(), ex);
+            throw ex;
+        }
     }
 
     public record MediaInfo(

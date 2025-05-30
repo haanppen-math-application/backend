@@ -1,7 +1,7 @@
-package com.hpmath.client.member;
+package com.hpmath;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MemberRoleClientApplication {
+public class BoardQuestionClientApplication {
 }
