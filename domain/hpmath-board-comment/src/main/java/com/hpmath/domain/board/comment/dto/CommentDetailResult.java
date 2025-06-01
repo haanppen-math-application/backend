@@ -1,6 +1,5 @@
 package com.hpmath.domain.board.comment.dto;
 
-import com.hpmath.client.member.MemberClient.MemberInfo;
 import com.hpmath.domain.board.comment.entity.Comment;
 import com.hpmath.domain.board.comment.entity.CommentImage;
 import java.time.LocalDateTime;
@@ -14,7 +13,7 @@ public record CommentDetailResult(
         LocalDateTime registeredDateTime,
         MemberDetailResult registeredMemberDetails
 ) {
-    public static CommentDetailResult from(Comment comment, MemberInfo memberInfo) {
+    public static CommentDetailResult from(Comment comment, MemberDetailResult memberInfo) {
         return new CommentDetailResult(
                 comment.getId(),
                 comment.getContent(),
@@ -24,7 +23,7 @@ public record CommentDetailResult(
                         .map(ImageUrlResult::new)
                         .toList(),
                 comment.getRegisteredDateTime(),
-                MemberDetailResult.from(memberInfo));
+                memberInfo);
     }
 }
 

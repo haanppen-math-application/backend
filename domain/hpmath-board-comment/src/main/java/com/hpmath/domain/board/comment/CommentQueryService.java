@@ -5,6 +5,7 @@ import com.hpmath.client.member.MemberClient.MemberInfo;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.domain.board.comment.dto.CommentDetailResult;
 import com.hpmath.domain.board.comment.dto.CommentQueryCommand;
+import com.hpmath.domain.board.comment.dto.MemberDetailResult;
 import com.hpmath.domain.board.comment.exception.CommentException;
 import com.hpmath.domain.board.comment.repository.CommentRepository;
 import jakarta.validation.Valid;
@@ -17,14 +18,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentQueryService {
     private final CommentRepository commentRepository;
-    private final MemberClient memberClient;
+    private final MemberInfoManager memberInfoManager;
 
     @Cacheable(cacheNames = "board::question::comment::list", key = "#command.questionId()")
     public List<CommentDetailResult> commentDetailResults(@Valid final CommentQueryCommand command) {
         return commentRepository.queryCommentsWithMedias(command.questionId()).stream()
                 .map(comment -> {
-                    final MemberInfo info = memberClient.getMemberDetail(comment.getOwnerId());
-                    return CommentDetailResult.from(comment, info);}
+                    final MemberDetailResult memberDetailResult = memberInfoManager.get(comment.getOwnerId());
+                    return CommentDetailResult.from(comment, memberDetailResult);}
                 )
                 .toList();
     }
@@ -33,8 +34,8 @@ public class CommentQueryService {
     public CommentDetailResult commentDetailResult(final Long commentId) {
         return commentRepository.querySingleCommentById(commentId)
                 .map(comment -> {
-                    final MemberInfo info = memberClient.getMemberDetail(comment.getOwnerId());
-                    return CommentDetailResult.from(comment, info);})
+                    final MemberDetailResult memberDetailResult = memberInfoManager.get(comment.getOwnerId());
+                    return CommentDetailResult.from(comment, memberDetailResult);})
                 .orElseThrow(() -> new CommentException(ErrorCode.NO_SUCH_COMMENT));
     }
 }

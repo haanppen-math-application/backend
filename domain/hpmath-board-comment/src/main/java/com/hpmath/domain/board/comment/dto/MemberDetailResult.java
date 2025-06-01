@@ -10,11 +10,18 @@ public record MemberDetailResult(
         Role role
 ) {
     public static MemberDetailResult from(final MemberInfo memberInfo) {
+        if (memberInfo == null) {
+            return null;
+        }
         return new MemberDetailResult(
-                memberInfo.memberId(),
-                memberInfo.memberName(),
-                memberInfo.memberGrade(),
-                memberInfo.role()
+        memberInfo.memberId(),
+        memberInfo.memberName(),
+        memberInfo.memberGrade(),
+        memberInfo.role()
         );
     }
+
+    public static MemberDetailResult none(final Long memberId) {
+        return new MemberDetailResult(memberId, null, null, null);
+    };
 }
