@@ -1,6 +1,7 @@
 package com.hpmath.common.cache.redis;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.hpmath.common.ProxyOrder;
 import java.time.Duration;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext.Seria
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Slf4j
-@EnableCaching
+@EnableCaching(order = ProxyOrder.CACHE)
 @Configuration
 public class RedisCacheConfig {
 

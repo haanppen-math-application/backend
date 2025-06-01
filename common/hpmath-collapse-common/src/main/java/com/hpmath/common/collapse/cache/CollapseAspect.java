@@ -1,5 +1,6 @@
 package com.hpmath.common.collapse.cache;
 
+import com.hpmath.common.ProxyOrder;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.concurrent.CompletableFuture;
@@ -10,10 +11,12 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Aspect
+@Order(ProxyOrder.REQUEST_COLLAPSE_CACHE)
 @Component
 @RequiredArgsConstructor
 public class CollapseAspect {
