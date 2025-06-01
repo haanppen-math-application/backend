@@ -6,11 +6,9 @@ import com.hpmath.client.board.question.BoardQuestionClient;
 import com.hpmath.client.board.question.BoardQuestionClient.QuestionDetailInfo;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import com.hpmath.domain.board.read.repository.QuestionQueryModelRepository;
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +28,7 @@ public class QuestionQueryModelManager {
     @Async("workers")
     public CompletableFuture<QuestionQueryModel> loadQuestionQueryModel(final Long questionId) {
         return CompletableFuture.completedFuture(questionQueryModelRepository.get(questionId)
-                .or(() -> fetchModel(questionId))
-                .orElseThrow());
+                .orElseGet(() -> fetch(questionId)));
     }
 
     public void add(final QuestionQueryModel questionQueryModel, @NotNull final Duration ttl) {
@@ -45,19 +42,18 @@ public class QuestionQueryModelManager {
         questionQueryModelRepository.update(questionQueryModel, DEFAULT_TTL);
     }
 
-    private Optional<QuestionQueryModel> fetchModel(final Long questionId) {
+    private QuestionQueryModel fetch(final Long questionId) {
         final QuestionDetailInfo questionInfo = boardQuestionClient.get(questionId);
         final List<CommentDetail> commentDetails = boardCommentClient.getCommentDetails(questionId);
 
-        return Optional.of(cacheQueryModel(QuestionQueryModel.of(
+        return cache(QuestionQueryModel.of(
                 questionInfo,
                 commentDetails,
                 questionInfo.ownerId(),
-                questionInfo.targetId()
-        )));
+                questionInfo.targetId()));
     }
 
-    private QuestionQueryModel cacheQueryModel(final QuestionQueryModel questionQueryModel) {
+    private QuestionQueryModel cache(final QuestionQueryModel questionQueryModel) {
         questionQueryModelRepository.update(questionQueryModel, DEFAULT_TTL);
         return questionQueryModel;
     }
