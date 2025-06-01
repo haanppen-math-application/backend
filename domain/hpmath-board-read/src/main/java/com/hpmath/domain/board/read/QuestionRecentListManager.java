@@ -2,8 +2,10 @@ package com.hpmath.domain.board.read;
 
 import com.hpmath.client.board.question.BoardQuestionClient;
 import com.hpmath.client.board.question.BoardQuestionClient.QuestionDetailInfo;
+import com.hpmath.client.common.ClientException;
 import com.hpmath.domain.board.read.repository.RecentQuestionRepository;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
@@ -42,12 +44,20 @@ public class QuestionRecentListManager {
     private List<Long> getRecentQuestionIds(final int pageNumber, final int pageSize) {
         List<Long> questionIds = recentQuestionRepository.getRange(pageNumber * pageSize, pageSize);
         if (questionIds.size() != pageSize) {
-            questionIds = boardQuestionClient.getQuestionsSortByDate(pageNumber, pageSize).stream()
-                    .peek(question -> recentQuestionRepository.add(question.questionId(), question.registeredDateTime(),
-                            RECENT_QUESTION_CACHE_SIZE))
-                    .map(QuestionDetailInfo::questionId)
-                    .toList();
+            questionIds = fetchAndSave(pageNumber, pageSize);
         }
         return questionIds;
+    }
+
+    private List<Long> fetchAndSave(int pageNumber, int pageSize) {
+        try {
+            return boardQuestionClient.getQuestionsSortByDate(pageNumber, pageSize).stream()
+                    .peek(question -> recentQuestionRepository.add(question.questionId(), question.registeredDateTime(), RECENT_QUESTION_CACHE_SIZE))
+                    .map(QuestionDetailInfo::questionId)
+                    .toList();
+        } catch (ClientException ex) {
+            log.error(ex.getMessage(), ex);
+            return Collections.emptyList();
+        }
     }
 }
