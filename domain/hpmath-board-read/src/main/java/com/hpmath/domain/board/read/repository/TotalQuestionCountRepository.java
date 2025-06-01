@@ -1,5 +1,6 @@
 package com.hpmath.domain.board.read.repository;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,9 +12,10 @@ public class TotalQuestionCountRepository {
 
     private static final String KEY = "board-read::question::total-count";
 
-    public Long getTotalCount() {
+    public Optional<Long> getTotalCount() {
         final String result = redisTemplate.opsForValue().get(KEY);
-        return result == null ? null : Long.parseLong(result);
+        return Optional.ofNullable(result)
+                .map(Long::valueOf);
     }
 
     public void set(final Long count) {
