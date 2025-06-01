@@ -1,5 +1,6 @@
 package com.hpmath.domain.board.read.dto;
 
+import com.hpmath.domain.board.read.model.MemberQueryModel;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,8 +21,8 @@ public record QuestionDetailResult(
             final QuestionQueryModel questionQueryModel,
             final List<CommentDetailResult> comments,
             final Long viewCount,
-            final MemberDetailResult owner,
-            final MemberDetailResult target
+            final MemberQueryModel owner,
+            final MemberQueryModel target
     ) {
         return new QuestionDetailResult(
                 questionQueryModel.getQuestionId(),
@@ -32,8 +33,8 @@ public record QuestionDetailResult(
                 comments,
                 questionQueryModel.getMediaSrcs(),
                 viewCount,
-                owner,
-                target
+                MemberDetailResult.from(owner),
+                MemberDetailResult.from(target)
         );
     }
 }

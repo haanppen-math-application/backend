@@ -25,4 +25,13 @@ public class MemberQueryModel {
                 memberInfo.role()
         );
     }
+
+    public static MemberQueryModel none(final Long memberId) {
+        return new MemberQueryModel(
+                memberId,
+                null,
+                null,
+                null
+        );
+    }
 }

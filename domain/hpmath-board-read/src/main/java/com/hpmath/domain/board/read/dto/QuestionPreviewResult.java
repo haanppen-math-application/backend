@@ -1,6 +1,7 @@
 package com.hpmath.domain.board.read.dto;
 
 import com.hpmath.client.board.question.BoardQuestionClient.QuestionDetailInfo;
+import com.hpmath.domain.board.read.model.MemberQueryModel;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ public record QuestionPreviewResult(
         MemberDetailResult owner,
         MemberDetailResult target
 ) {
-    public static QuestionPreviewResult from(QuestionQueryModel model, Integer commentCount, Long viewCount, MemberDetailResult owner, MemberDetailResult target) {
+    public static QuestionPreviewResult from(QuestionQueryModel model, Integer commentCount, Long viewCount, MemberQueryModel owner, MemberQueryModel target) {
         return new QuestionPreviewResult(
                 model.getQuestionId(),
                 model.getTitle(),
@@ -22,12 +23,12 @@ public record QuestionPreviewResult(
                 model.getSolved(),
                 commentCount,
                 viewCount,
-                owner,
-                target
+                MemberDetailResult.from(owner),
+                MemberDetailResult.from(target)
         );
     }
 
-    public static QuestionPreviewResult from(QuestionDetailInfo info, Integer commentCount, Long viewCount, MemberDetailResult owner, MemberDetailResult target) {
+    public static QuestionPreviewResult from(QuestionDetailInfo info, Integer commentCount, Long viewCount, MemberQueryModel owner, MemberQueryModel target) {
         return new QuestionPreviewResult(
                 info.questionId(),
                 info.title(),
@@ -35,8 +36,8 @@ public record QuestionPreviewResult(
                 info.solved(),
                 commentCount,
                 viewCount,
-                owner,
-                target
+                MemberDetailResult.from(owner),
+                MemberDetailResult.from(target)
         );
     }
 }

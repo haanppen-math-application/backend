@@ -1,11 +1,11 @@
 package com.hpmath.domain.board.read;
 
 import com.hpmath.domain.board.read.dto.CommentDetailResult;
-import com.hpmath.domain.board.read.dto.MemberDetailResult;
 import com.hpmath.domain.board.read.dto.PagedResult;
 import com.hpmath.domain.board.read.dto.QuestionDetailResult;
 import com.hpmath.domain.board.read.dto.QuestionPreviewResult;
 import com.hpmath.domain.board.read.model.CommentQueryModel;
+import com.hpmath.domain.board.read.model.MemberQueryModel;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -40,9 +40,9 @@ public class QusetionQueryOptimizedService {
 
     private CompletableFuture<QuestionDetailResult> getQuestionDetailResult(final Long questionId, final Long requestMemberId) {
         final CompletableFuture<QuestionQueryModel> questionFuture = questionQueryModelManager.loadQuestionQueryModel(questionId);
-        final CompletableFuture<MemberDetailResult> ownerDetail = questionFuture
+        final CompletableFuture<MemberQueryModel> ownerDetail = questionFuture
                 .thenCompose(questionModel -> qusetionMemberManager.get(questionModel.getOwnerMemberId()));
-        final CompletableFuture<MemberDetailResult> targetDetail = questionFuture
+        final CompletableFuture<MemberQueryModel> targetDetail = questionFuture
                 .thenCompose(questionModel -> qusetionMemberManager.get(questionModel.getTargetMemberId()));
         final CompletableFuture<List<CommentDetailResult>> commentFutures = questionFuture
                 .thenCompose(questionQueryModel -> {
@@ -68,7 +68,7 @@ public class QusetionQueryOptimizedService {
     }
 
     private CompletableFuture<CommentDetailResult> mapToCommentDetailResult(final CommentQueryModel commentQueryModel) {
-        final CompletableFuture<MemberDetailResult> memberDetailFuture = qusetionMemberManager.get(commentQueryModel.getOwnerId());
+        final CompletableFuture<MemberQueryModel> memberDetailFuture = qusetionMemberManager.get(commentQueryModel.getOwnerId());
 
         return memberDetailFuture
                 .thenApply(memberDetailResult -> CommentDetailResult.from(commentQueryModel, memberDetailResult));
@@ -91,8 +91,8 @@ public class QusetionQueryOptimizedService {
 
     private CompletableFuture<QuestionPreviewResult> mapToPreview(QuestionQueryModel model) {
         final CompletableFuture<Long> questionViewCountFuture = boardViewManager.getViewCount(model.getQuestionId());
-        final CompletableFuture<MemberDetailResult> ownerFuture = qusetionMemberManager.get(model.getOwnerMemberId());
-        final CompletableFuture<MemberDetailResult> targetFuture = qusetionMemberManager.get(model.getTargetMemberId());
+        final CompletableFuture<MemberQueryModel> ownerFuture = qusetionMemberManager.get(model.getOwnerMemberId());
+        final CompletableFuture<MemberQueryModel> targetFuture = qusetionMemberManager.get(model.getTargetMemberId());
 
         return CompletableFuture.allOf(questionViewCountFuture, ownerFuture, targetFuture)
                 .thenApply(v -> QuestionPreviewResult.from(
