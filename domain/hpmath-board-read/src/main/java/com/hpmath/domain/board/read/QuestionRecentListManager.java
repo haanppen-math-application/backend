@@ -53,6 +53,7 @@ public class QuestionRecentListManager {
         try {
             return boardQuestionClient.getQuestionsSortByDate(pageNumber, pageSize).stream()
                     .peek(question -> recentQuestionRepository.add(question.questionId(), question.registeredDateTime(), RECENT_QUESTION_CACHE_SIZE))
+                    .sorted((o1, o2) -> o2.registeredDateTime().compareTo(o1.registeredDateTime()))
                     .map(QuestionDetailInfo::questionId)
                     .toList();
         } catch (ClientException ex) {
