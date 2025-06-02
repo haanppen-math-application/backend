@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class UpdateCommandCreator {
     private final DirectoryPathFormResolver directoryPathFormResolver;
     private final DirectoryRepository directoryRepository;
+
     public UpdateDirectoryCommand getUpdateCommand(final UpdateDirectoryDto updateDirectoryDto) {
         final Directory directory = getDirectory(updateDirectoryDto.targetDirPath());
         return new UpdateDirectoryCommand(directory, updateDirectoryDto.newDirName(), updateDirectoryDto.requestMemberId());

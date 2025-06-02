@@ -21,7 +21,6 @@ import org.springframework.validation.annotation.Validated;
 public class DirectoryDeleteService {
     private final DirectoryPathFormResolver directoryPathFormResolver;
     private final DeleteDirectoryProcessor deleteDirectoryProcessor;
-
     private final DirectoryRepository directoryRepository;
 
     @Transactional

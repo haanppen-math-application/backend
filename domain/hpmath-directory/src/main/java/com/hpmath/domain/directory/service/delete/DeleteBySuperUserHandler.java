@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class DeleteBySuperUserHandler implements DeleteDirectoryHandler {
     private final DirectoryRepository directoryRepository;
+
     @Override
     public Integer process(DirectoryDeleteTargets directoryDeleteCommand) {
         directoryRepository.deleteAll(directoryDeleteCommand.getAllTargets());

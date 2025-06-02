@@ -88,5 +88,4 @@ class DirectoryNameUpdateHandler implements DirectoryUpdateHandler {
             this.directory.setPath(newDirPath);
         }
     }
-
 }
