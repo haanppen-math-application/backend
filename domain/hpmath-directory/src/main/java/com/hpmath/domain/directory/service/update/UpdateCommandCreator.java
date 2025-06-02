@@ -1,16 +1,16 @@
 package com.hpmath.domain.directory.service.update;
 
+import com.hpmath.common.ErrorCode;
 import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.domain.directory.dto.UpdateDirectoryCommand;
 import com.hpmath.domain.directory.dto.UpdateDirectoryDto;
 import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.domain.directory.service.form.resolver.DirectoryPathFormResolver;
-import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class UpdateCommandCreator {
     private final DirectoryPathFormResolver directoryPathFormResolver;

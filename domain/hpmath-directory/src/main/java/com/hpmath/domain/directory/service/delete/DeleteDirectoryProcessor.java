@@ -1,12 +1,12 @@
 package com.hpmath.domain.directory.service.delete;
 
-import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.common.ErrorCode;
+import com.hpmath.domain.directory.exception.DirectoryException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class DeleteDirectoryProcessor {
     private final List<DeleteDirectoryHandler> deleteDirectoryHandlers;

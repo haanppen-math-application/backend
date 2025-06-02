@@ -1,11 +1,11 @@
 package com.hpmath.domain.directory.service.delete;
 
-import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.common.Role;
+import com.hpmath.domain.directory.dao.DirectoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 class DeleteBySuperUserHandler implements DeleteDirectoryHandler {
     private final DirectoryRepository directoryRepository;

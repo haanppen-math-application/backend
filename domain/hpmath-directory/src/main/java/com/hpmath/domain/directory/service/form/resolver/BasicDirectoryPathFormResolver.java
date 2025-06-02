@@ -2,9 +2,9 @@ package com.hpmath.domain.directory.service.form.resolver;
 
 import com.hpmath.domain.directory.service.form.validate.DirectoryPathFormValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 class BasicDirectoryPathFormResolver implements DirectoryPathFormResolver {
     private final DirectoryPathFormValidator directoryPathFormValidator;

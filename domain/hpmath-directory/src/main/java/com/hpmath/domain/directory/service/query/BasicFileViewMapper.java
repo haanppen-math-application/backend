@@ -6,9 +6,9 @@ import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dto.FileView;
 import com.hpmath.domain.directory.dto.VideoView;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 class BasicFileViewMapper implements FileViewMapper {
     private final MediaClient mediaClient;

@@ -1,10 +1,10 @@
 package com.hpmath.domain.directory.service.form.validate;
 
-import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.common.ErrorCode;
-import org.springframework.stereotype.Service;
+import com.hpmath.domain.directory.exception.DirectoryException;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 class DirectoryPathFormValidatorImpl implements DirectoryPathFormValidator {
     @Override
     public void validateDirPath(String dirPath) {
