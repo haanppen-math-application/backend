@@ -9,13 +9,16 @@ import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.domain.directory.service.form.resolver.DirectoryPathFormResolver;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class DirectoryQueryService {
     private final DirectoryPathFormResolver directoryPathFormResolver;
     private final DirectoryRepository directoryRepository;
@@ -26,7 +29,7 @@ public class DirectoryQueryService {
      * 현재 디렉토리 경로에 존재하는 미디어 파일들에 대한 정보 + 내부 디렉토리들 조회
      * @return
      */
-    public List<FileView> queryDirectory(final QueryDirectory queryDirectoryDto) {
+    public List<FileView> queryDirectory(@Valid final QueryDirectory queryDirectoryDto) {
         final List<FileView> fileViews = new ArrayList<>();
         final String resolvedPath = directoryPathFormResolver.resolveToAbsolutePath(queryDirectoryDto.path());
 

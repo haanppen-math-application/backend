@@ -6,17 +6,20 @@ import com.hpmath.domain.directory.dto.SaveMediaToDirectoryCommand;
 import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Validated
 public class DirectoryMediaService {
     private final DirectoryRepository directoryRepository;
 
-    public void saveToDirectory(final SaveMediaToDirectoryCommand command) {
+    public void saveToDirectory(@Valid final SaveMediaToDirectoryCommand command) {
         final Directory directory = getDirectory(command.directoryPath());
 
         validate(directory, command.requestMemberId(), command.requestMemberRole());
