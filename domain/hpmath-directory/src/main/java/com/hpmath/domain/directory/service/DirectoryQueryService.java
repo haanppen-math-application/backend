@@ -6,7 +6,7 @@ import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.domain.directory.dto.FileView;
 import com.hpmath.domain.directory.dto.QueryDirectory;
 import com.hpmath.domain.directory.exception.DirectoryException;
-import com.hpmath.domain.directory.service.form.resolver.DirectoryPathFormResolver;
+import com.hpmath.domain.directory.service.form.DirectoryPathFormResolver;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
 import com.hpmath.domain.directory.service.query.FileViewMapper;

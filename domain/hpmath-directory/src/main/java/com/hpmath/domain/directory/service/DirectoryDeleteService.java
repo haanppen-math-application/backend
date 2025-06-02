@@ -7,7 +7,7 @@ import com.hpmath.domain.directory.dto.DeleteDirectoryCommand;
 import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.domain.directory.service.delete.DirectoryDeleteTargets;
 import com.hpmath.domain.directory.service.delete.DeleteDirectoryProcessor;
-import com.hpmath.domain.directory.service.form.resolver.DirectoryPathFormResolver;
+import com.hpmath.domain.directory.service.form.DirectoryPathFormResolver;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

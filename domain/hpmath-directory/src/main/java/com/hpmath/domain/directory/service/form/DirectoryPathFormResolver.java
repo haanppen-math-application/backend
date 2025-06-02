@@ -1,22 +1,19 @@
-package com.hpmath.domain.directory.service.form.resolver;
+package com.hpmath.domain.directory.service.form;
 
-import com.hpmath.domain.directory.service.form.validate.DirectoryPathFormValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class BasicDirectoryPathFormResolver implements DirectoryPathFormResolver {
+public class DirectoryPathFormResolver {
     private final DirectoryPathFormValidator directoryPathFormValidator;
 
-    @Override
     public String resolveToAbsolutePath(String dirPath, String dirName) {
         final String resolvedDirPath = getDirPath(dirPath) + dirName + "/";
         directoryPathFormValidator.validateDirPath(resolvedDirPath);
         return resolvedDirPath;
     }
 
-    @Override
     public String resolveToAbsolutePath(String dirPath) {
         final String resolvedDirPath = getDirPath(dirPath);
         directoryPathFormValidator.validateDirPath(resolvedDirPath);
