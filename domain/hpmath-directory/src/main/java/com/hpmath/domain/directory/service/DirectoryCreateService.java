@@ -3,7 +3,7 @@ package com.hpmath.domain.directory.service;
 import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dao.DirectoryRepository;
 import com.hpmath.domain.directory.dto.CreateDirectoryCommand;
-import com.hpmath.domain.directory.service.create.validate.DirectoryCreationValidateManager;
+import com.hpmath.domain.directory.service.create.DirectoryCreationValidateManager;
 import com.hpmath.domain.directory.service.form.resolver.DirectoryPathFormResolver;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +22,18 @@ public class DirectoryCreateService {
     @Transactional
     public void addNewDirectory(@Valid final CreateDirectoryCommand createDirectoryDto) {
         final String absoluteDirPath = getAbsoluteDirPath(createDirectoryDto);
-        final Directory directory = createDirectory(createDirectoryDto.ownerId(), absoluteDirPath, createDirectoryDto.canModifyByEveryone(), createDirectoryDto.canViewByEveryone());
 
+        final Directory directory = Directory.of(
+                createDirectoryDto.ownerId(),
+                absoluteDirPath,
+                createDirectoryDto.canModifyByEveryone(),
+                createDirectoryDto.canViewByEveryone());
         directoryCreationValidateManager.validate(directory);
         directoryRepository.save(directory);
     }
 
-    private String getAbsoluteDirPath(CreateDirectoryCommand createDirectoryDto) {
+    private String getAbsoluteDirPath(final CreateDirectoryCommand createDirectoryDto) {
         final String parentDirPath = directoryPathFormResolver.resolveToAbsolutePath(createDirectoryDto.parentDirPath());
         return directoryPathFormResolver.resolveToAbsolutePath(parentDirPath, createDirectoryDto.directoryName());
-    }
-
-    public Directory createDirectory(final Long requestMemberId, final String newDirPath,
-                                     final boolean canModifyByEveryOne, final boolean canViewByEveryOne) {
-        return new Directory(requestMemberId, newDirPath, canModifyByEveryOne, canViewByEveryOne);
     }
 }

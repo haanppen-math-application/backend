@@ -1,4 +1,4 @@
-package com.hpmath.domain.directory.service.create.validate;
+package com.hpmath.domain.directory.service.create;
 
 import com.hpmath.domain.directory.dao.Directory;
 

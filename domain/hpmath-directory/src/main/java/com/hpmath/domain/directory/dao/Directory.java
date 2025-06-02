@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -21,7 +22,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(indexes = @Index(name = "idx_path", columnList = "directory_path"))
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
 @Slf4j
@@ -49,11 +50,14 @@ public class Directory {
     @BatchSize(size = 100)
     private List<DirectoryMedia> medias = new ArrayList<>();
 
-    public Directory(Long owner, String path, Boolean canModifyByEveryone, Boolean canViewByEveryone) {
-        this.ownerId = owner;
-        this.path = path;
-        this.canAddByEveryone = canModifyByEveryone;
-        this.canViewByEveryone = canViewByEveryone;
+    public static Directory of(Long owner, String path, Boolean canModifyByEveryone, Boolean canViewByEveryone) {
+        final Directory directory = new Directory();
+        directory.ownerId = owner;
+        directory.path = path;
+        directory.canAddByEveryone = canModifyByEveryone;
+        directory.canViewByEveryone = canViewByEveryone;
+
+        return directory;
     }
 
     public void addMedia(final String media) {

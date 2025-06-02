@@ -1,4 +1,4 @@
-package com.hpmath.domain.directory.service.create.validate;
+package com.hpmath.domain.directory.service.create;
 
 import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dao.DirectoryRepository;
@@ -6,11 +6,11 @@ import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
 class DirectoryDuplicateValidator implements DirectoryCreateValidator {
-
     private final DirectoryRepository directoryRepository;
 
     @Override

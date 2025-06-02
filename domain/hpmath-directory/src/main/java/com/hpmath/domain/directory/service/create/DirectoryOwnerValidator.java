@@ -1,4 +1,4 @@
-package com.hpmath.domain.directory.service.create.validate;
+package com.hpmath.domain.directory.service.create;
 
 import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.directory.dao.Directory;
@@ -45,10 +45,7 @@ class DirectoryOwnerValidator implements DirectoryCreateValidator {
     }
 
     private boolean canAddByEveryOne(final Directory directory) {
-        if (directory.getCanAddByEveryone()) {
-            return true;
-        }
-        return false;
+        return directory.getCanAddByEveryone();
     }
 
     private boolean isOverManager(final Long requestMember) {
