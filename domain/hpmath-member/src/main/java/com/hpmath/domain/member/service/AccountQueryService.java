@@ -10,6 +10,8 @@ import com.hpmath.domain.member.exceptions.NoSuchMemberException;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
 import com.hpmath.common.page.CursorResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -21,16 +23,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @CacheConfig(cacheNames = "hpmath::member::info")
+@Validated
 public class AccountQueryService {
     private final MemberRepository memberRepository;
 
     @Cacheable(key = "#requestMemberId", sync = true)
-    public MemberInfoResult getMemberInfo(final Long requestMemberId) {
+    public MemberInfoResult getMemberInfo(@NotNull final Long requestMemberId) {
         return memberRepository.findMemberInfoById(requestMemberId)
                 .orElseThrow(() -> new NoSuchMemberException("찾을 수 없습니다.", ErrorCode.NO_SUCH_MEMBER));
     }
@@ -43,7 +47,7 @@ public class AccountQueryService {
         return memberRepository.findMembersByRole(Role.TEACHER);
     }
 
-    public Page<MemberInfoResult> loadTeachers(final TeacherPageQuery teacherPageQuery) {
+    public Page<MemberInfoResult> loadTeachers(@NotNull final TeacherPageQuery teacherPageQuery) {
         if (teacherPageQuery.name() == null || teacherPageQuery.name().isBlank()) {
             return memberRepository.findMembersByRoleAndRemovedIsFalse(Role.TEACHER, teacherPageQuery.pageable());
         }
@@ -51,7 +55,7 @@ public class AccountQueryService {
     }
 
     // 동적 쿼리 필요성 확인
-    public Page<MemberInfoResult> loadStudents(final StudentPageQuery studentPageQuery) {
+    public Page<MemberInfoResult> loadStudents(@NotNull final StudentPageQuery studentPageQuery) {
         Page<MemberInfoResult> members;
         if (Objects.isNull(studentPageQuery.name()) || studentPageQuery.name().isBlank()) {
             members = memberRepository.findMembersByRoleAndGradeBetweenAndRemovedIsFalse(Role.STUDENT, studentPageQuery.startGrade(), studentPageQuery.endGrade(), studentPageQuery.pageable());
@@ -61,7 +65,7 @@ public class AccountQueryService {
         return members;
     }
 
-    public CursorResponse<MemberInfoResult> loadTeachers(final TeacherQuery teacherQuery) {
+    public CursorResponse<MemberInfoResult> loadTeachers(@NotNull final TeacherQuery teacherQuery) {
         final Pageable pageable = Pageable.ofSize(teacherQuery.pageSize());
         List<MemberInfoResult> teacherEntities;
         if (Objects.isNull(teacherQuery.name())) {
@@ -72,7 +76,7 @@ public class AccountQueryService {
         return new CursorResponse<>(teacherEntities, getNextCursorIndex(teacherEntities));
     }
 
-    public CursorResponse<MemberInfoResult> loadStudents(final StudentQuery studentQuery) {
+    public CursorResponse<MemberInfoResult> loadStudents(@NotNull final StudentQuery studentQuery) {
         final Pageable pageable = getPageable(studentQuery.pageSize());
 
         List<MemberInfoResult> studentEntities;

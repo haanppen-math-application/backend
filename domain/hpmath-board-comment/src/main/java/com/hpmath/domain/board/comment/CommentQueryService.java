@@ -1,7 +1,5 @@
 package com.hpmath.domain.board.comment;
 
-import com.hpmath.client.member.MemberClient;
-import com.hpmath.client.member.MemberClient.MemberInfo;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.domain.board.comment.dto.CommentDetailResult;
 import com.hpmath.domain.board.comment.dto.CommentQueryCommand;
@@ -9,13 +7,16 @@ import com.hpmath.domain.board.comment.dto.MemberDetailResult;
 import com.hpmath.domain.board.comment.exception.CommentException;
 import com.hpmath.domain.board.comment.repository.CommentRepository;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class CommentQueryService {
     private final CommentRepository commentRepository;
     private final MemberInfoManager memberInfoManager;
@@ -31,7 +32,7 @@ public class CommentQueryService {
     }
 
     @Cacheable(cacheNames = "board::comment::detail", key = "#commentId")
-    public CommentDetailResult commentDetailResult(final Long commentId) {
+    public CommentDetailResult commentDetailResult(@NotNull final Long commentId) {
         return commentRepository.querySingleCommentById(commentId)
                 .map(comment -> {
                     final MemberDetailResult memberDetailResult = memberInfoManager.get(comment.getOwnerId());

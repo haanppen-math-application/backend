@@ -7,14 +7,17 @@ import com.hpmath.domain.online.dao.OnlineVideoRepository;
 import com.hpmath.domain.online.dto.RegisterOnlineVideoAttachmentCommand;
 import com.hpmath.common.BusinessException;
 import com.hpmath.common.ErrorCode;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class OnlineAttachmentRegisterService {
     private final OnlineVideoRepository onlineVideoRepository;
     private final OnlineVideoAttachmentRepository onlineVideoAttachmentRepository;
@@ -22,7 +25,7 @@ public class OnlineAttachmentRegisterService {
     private final OnlineCourseOwnerValidator onlineCourseOwnerValidator;
 
     @Transactional
-    public void register(final RegisterOnlineVideoAttachmentCommand command) {
+    public void register(@Valid final RegisterOnlineVideoAttachmentCommand command) {
         final OnlineVideo onlineVideo = loadOnlineVideoById(command.onlineVideoId());
         onlineCourseOwnerValidator.validate(command.requestMemberRole(), command.requestMemberId(), onlineVideo.getOnlineCourse().getTeacherId());
         

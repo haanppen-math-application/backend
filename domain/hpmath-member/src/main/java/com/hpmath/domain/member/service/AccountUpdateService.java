@@ -11,18 +11,20 @@ import com.hpmath.domain.member.exceptions.NoSuchMemberException;
 import com.hpmath.domain.member.service.policy.AccountPolicyManager;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.web.PasswordHandler;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.REPEATABLE_READ)
 @CacheConfig(cacheNames = "hpmath::member::info")
+@Validated
 public class AccountUpdateService {
     private final MemberRepository memberRepository;
 
@@ -30,33 +32,33 @@ public class AccountUpdateService {
     private final PasswordHandler passwordHandler;
 
     @CacheEvict(key = "#command.targetMemberId()")
-    public void updateMember(final AccountUpdateCommand command) {
+    public void updateMember(@Valid final AccountUpdateCommand command) {
         final Member member = loadMember(command.targetMemberId());
 
-        updatePhoneNumber(command.phoneNumber(), member);
-        updateName(command.name(), member);
+        member.setName(command.name());
+        member.setPhoneNumber(command.phoneNumber());
         updatePassword(command.prevPassword(), command.newPassword(), member);
 
         accountPolicyManager.checkPolicy(member);
     }
 
     @CacheEvict(key = "#command.memberId()")
-    public void updateMember(final StudentUpdateCommand command) {
+    public void updateMember(@Valid final StudentUpdateCommand command) {
         final Member member = loadMember(command.memberId());
 
-        updatePhoneNumber(command.phoneNumber(), member);
-        updateGrade(command.grade(), member);
-        updateName(command.name(), member);
+        member.setName(command.name());
+        member.setPhoneNumber(command.phoneNumber());
+        member.setName(command.name());
 
         accountPolicyManager.checkPolicy(member);
     }
 
     @CacheEvict(key = "#command.memberId()")
-    public void updateMember(final UpdateTeacherCommand command) {
+    public void updateMember(@Valid final UpdateTeacherCommand command) {
         final Member member = loadMember(command.memberId());
 
-        updatePhoneNumber(command.phoneNumber(), member);
-        updateName(command.name(), member);
+        member.setName(command.name());
+        member.setPhoneNumber(command.phoneNumber());
 
         accountPolicyManager.checkPolicy(member);
     }
@@ -74,18 +76,6 @@ public class AccountUpdateService {
             return;
         }
         throw new AccountException("잘못된 비밀번호 입니다.", ErrorCode.ACCOUNT_POLICY);
-    }
-
-    private void updateName(final String accountName, final Member targetAccount) {
-        targetAccount.setName(accountName);
-    }
-
-    private void updateGrade(final Integer accountGrade, final Member targetAccount) {
-        targetAccount.setGrade(accountGrade);
-    }
-
-    private void updatePhoneNumber(final String accountPhoneNumber, final Member targetAccount) {
-        targetAccount.setPhoneNumber(accountPhoneNumber);
     }
 
     private Member loadMember(final Long targetMemberId) {

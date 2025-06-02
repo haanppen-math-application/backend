@@ -7,15 +7,18 @@ import com.hpmath.domain.board.read.dto.QuestionPreviewResult;
 import com.hpmath.domain.board.read.model.CommentQueryModel;
 import com.hpmath.domain.board.read.model.MemberQueryModel;
 import com.hpmath.domain.board.read.model.QuestionQueryModel;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Validated
 public class QusetionQueryOptimizedService {
     private final QuestionTotalCountManager questionTotalCountManager;
     private final QuestionRecentListManager questionRecentListManager;
@@ -24,7 +27,7 @@ public class QusetionQueryOptimizedService {
 
     private final BoardViewManager boardViewManager;
 
-    public PagedResult<QuestionPreviewResult> getPagedResultSortedByDate(final int pageNumber, final int pageSize) {
+    public PagedResult<QuestionPreviewResult> getPagedResultSortedByDate(@NotNull final Integer pageNumber, @NotNull final Integer pageSize) {
         final List<QuestionPreviewResult> questionPreviewResults = getQuestionPreviews(pageNumber, pageSize).join();
 
         return PagedResult.of(
@@ -34,8 +37,8 @@ public class QusetionQueryOptimizedService {
                 pageSize);
     }
 
-    public QuestionDetailResult getDetail(final Long questionId, final Long requsetMemberId) {
-        return getQuestionDetailResult(questionId, requsetMemberId).join();
+    public QuestionDetailResult getDetail(@NotNull final Long questionId, @NotNull final Long requestMemberId) {
+        return getQuestionDetailResult(questionId, requestMemberId).join();
     }
 
     private CompletableFuture<QuestionDetailResult> getQuestionDetailResult(final Long questionId, final Long requestMemberId) {

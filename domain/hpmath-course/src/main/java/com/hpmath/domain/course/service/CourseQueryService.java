@@ -12,14 +12,17 @@ import com.hpmath.domain.course.entity.Course;
 import com.hpmath.domain.course.entity.CourseStudent;
 import com.hpmath.domain.course.exception.CourseException;
 import com.hpmath.domain.course.repository.CourseRepository;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Validated
 public class CourseQueryService {
     private final CourseRepository courseRepository;
     private final MemberClient memberClient;
@@ -31,7 +34,7 @@ public class CourseQueryService {
                 .toList();
     }
 
-    public List<CoursePreviewResponse> loadCoursePreviews(final Long memberId) {
+    public List<CoursePreviewResponse> loadCoursePreviews(@NotNull final Long memberId) {
         final MemberInfo memberInfo = memberClient.getMemberDetail(memberId);
         if (memberInfo.role() == Role.STUDENT) {
             return courseRepository.findAllByStudentId(memberId).stream().map(this::mapToCoursePreview).toList();
@@ -42,9 +45,9 @@ public class CourseQueryService {
         return courseRepository.findAllWithStudentsByTeacherId(memberId).stream().map(this::mapToCoursePreview).toList();
     }
 
-    public CourseDetailResponse loadCourseDetails(final Long courseId) {
-        final Course course = courseRepository.findWithStudents(courseId).
-                orElse(null);
+    public CourseDetailResponse loadCourseDetails(@NotNull final Long courseId) {
+        final Course course = courseRepository.findWithStudents(courseId)
+                .orElseThrow(() -> new CourseException(ErrorCode.NO_SUCH_COURSE));
 
         return new CourseDetailResponse(
                 course.getId(),

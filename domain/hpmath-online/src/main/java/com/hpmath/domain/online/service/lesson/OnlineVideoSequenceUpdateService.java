@@ -6,22 +6,25 @@ import com.hpmath.domain.online.dao.OnlineVideo;
 import com.hpmath.domain.online.dto.UpdateOnlineVideoSequenceCommand;
 import com.hpmath.common.BusinessException;
 import com.hpmath.common.ErrorCode;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class OnlineVideoSequenceUpdateService {
     private final OnlineCourseRepository onlineCourseRepository;
 
     private final OnlineCourseOwnerValidator onlineCourseOwnerValidator;
 
     @Transactional
-    public void updateSequence(final UpdateOnlineVideoSequenceCommand command) {
+    public void updateSequence(@Valid final UpdateOnlineVideoSequenceCommand command) {
         final OnlineCourse onlineCourse = loadOnlineCourse(command.targetCourseId());
         onlineCourseOwnerValidator.validate(command.requetMemberRole(), command.requestMemberId(), onlineCourse.getTeacherId());
 

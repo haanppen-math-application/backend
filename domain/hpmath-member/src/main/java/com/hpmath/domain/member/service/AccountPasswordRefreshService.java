@@ -10,15 +10,19 @@ import com.hpmath.common.ErrorCode;
 import com.hpmath.client.sms.Message;
 import com.hpmath.client.sms.MessageSender;
 import com.hpmath.common.web.PasswordHandler;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class AccountPasswordRefreshService {
     private final PasswordHandler passwordHandler;
     private int maxVerifyMessageSendCount = 3;
@@ -29,7 +33,7 @@ public class AccountPasswordRefreshService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void generateVerificationCode(final String phoneNumber) {
+    public void generateVerificationCode(@NotNull final String phoneNumber) {
         final Member member = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse(phoneNumber)
                 .orElseThrow(() -> new AccountException(ErrorCode.NO_SUCH_MEMBER));
         if (member.getVerifyMessageSendCount() > maxVerifyMessageSendCount) {
@@ -46,7 +50,7 @@ public class AccountPasswordRefreshService {
     }
 
     @Transactional
-    public ChangedPassword verifyCode(final VerifyAccountCodeCommand verifyAccountCode) {
+    public ChangedPassword verifyCode(@Valid final VerifyAccountCodeCommand verifyAccountCode) {
         final Member member = memberRepository.findMemberByPhoneNumberAndRemovedIsFalse(verifyAccountCode.phoneNumber())
                 .orElseThrow(() -> new AccountException(ErrorCode.NO_SUCH_MEMBER));
         validateCode(member, verifyAccountCode.verificationCode());

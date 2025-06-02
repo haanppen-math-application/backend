@@ -3,13 +3,16 @@ package com.hpmath.domain.online.service.lesson;
 import com.hpmath.common.BusinessException;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
-@Service
+@Component
 @Slf4j
+@Validated
 class OnlineCourseOwnerValidator {
-    void validate(final Role requestMemberRole, final Long requestMemberId, final Long ownerId) {
+    void validate(@NotNull final Role requestMemberRole, @NotNull final Long requestMemberId, @NotNull final Long ownerId) {
         if (requestMemberId.equals(ownerId)) {
             return;
         }

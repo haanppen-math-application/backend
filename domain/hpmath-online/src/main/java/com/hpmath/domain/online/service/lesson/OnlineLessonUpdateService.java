@@ -10,14 +10,17 @@ import com.hpmath.domain.online.dto.UpdateOnlineLessonInfoCommand;
 import com.hpmath.domain.online.service.lesson.update.OnlineLessonUpdateManager;
 import com.hpmath.common.BusinessException;
 import com.hpmath.common.ErrorCode;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class OnlineLessonUpdateService {
     private final OnlineCourseRepository onlineCourseRepository;
     private final OnlineVideoRepository onlineVideoRepository;
@@ -25,7 +28,7 @@ public class OnlineLessonUpdateService {
     private final OnlineCourseOwnerValidator onlineCourseOwnerValidator;
 
     @Transactional
-    public void updateLessonInfo(final UpdateOnlineLessonInfoCommand updateOnlineLessonInfoCommand) {
+    public void updateLessonInfo(@Valid final UpdateOnlineLessonInfoCommand updateOnlineLessonInfoCommand) {
         final OnlineCourse onlineCourse = loadCourseAndCategoryByCourseId(updateOnlineLessonInfoCommand.targetCourseId());
         onlineCourseOwnerValidator.validate(updateOnlineLessonInfoCommand.requestMemberRole(), updateOnlineLessonInfoCommand.requestMemberId(), onlineCourse.getTeacherId());
 
@@ -33,7 +36,7 @@ public class OnlineLessonUpdateService {
     }
 
     @Transactional
-    public void updatePreviewStauts(final OnlineVideoPreviewUpdateCommand command) {
+    public void updatePreviewStauts(@Valid final OnlineVideoPreviewUpdateCommand command) {
         final OnlineVideo onlineVideo = loadVideoAndVideosByCourseId(command.onlineVideoId());
         onlineCourseOwnerValidator.validate(command.requetMemberRole(), command.requestMemerId(), onlineVideo.getOnlineCourse().getTeacherId());
 
@@ -41,7 +44,7 @@ public class OnlineLessonUpdateService {
     }
 
     @Transactional
-    public void initializeCourse(final OnlineLessonInitializeCommand command) {
+    public void initializeCourse(@Valid final OnlineLessonInitializeCommand command) {
         final OnlineCourse onlineCourse = loadCourseAndVideos(command.onlineCourseId());
         onlineCourseOwnerValidator.validate(command.requetMemberROle(), command.requetMemberId(), onlineCourse.getTeacherId());
 

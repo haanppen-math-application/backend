@@ -12,6 +12,7 @@ import com.hpmath.domain.course.entity.MemoMedia;
 import com.hpmath.domain.course.entity.MemoMediaAttachment;
 import com.hpmath.domain.course.repository.MemoRepository;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class CourseMemoQueryService {
                 )).orElse(null);
     }
 
-    public List<MemoAppliedDayResponse> query(final LocalDate registeredDate, final Long studentId) {
+    public List<MemoAppliedDayResponse> query(@NotNull final LocalDate registeredDate, @NotNull final Long studentId) {
         final LocalDate startDate = registeredDate.withDayOfMonth(1);
         final LocalDate endDate = registeredDate.withDayOfMonth(registeredDate.lengthOfMonth());
 

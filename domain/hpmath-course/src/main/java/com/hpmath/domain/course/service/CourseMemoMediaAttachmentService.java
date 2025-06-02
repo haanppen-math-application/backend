@@ -29,7 +29,7 @@ public class CourseMemoMediaAttachmentService {
         targetMemoMedia.addAttachment(command.mediaSrc());
     }
 
-    public void delete(@Valid DeleteAttachmentCommand command) {
+    public void delete(@Valid final DeleteAttachmentCommand command) {
         validateAuthority(command);
         mediaAttachmentRepository.deleteById(command.getTargetAttachmentId());
     }

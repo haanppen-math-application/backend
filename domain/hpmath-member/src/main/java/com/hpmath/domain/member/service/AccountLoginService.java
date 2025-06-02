@@ -1,7 +1,11 @@
 package com.hpmath.domain.member.service;
 
+import com.hpmath.common.ErrorCode;
+import com.hpmath.common.Role;
+import com.hpmath.common.TimeProvider;
 import com.hpmath.common.jwt.AuthInfo;
 import com.hpmath.common.jwt.JwtUtils;
+import com.hpmath.common.web.PasswordHandler;
 import com.hpmath.domain.member.Member;
 import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.domain.member.dto.JwtDto;
@@ -9,19 +13,18 @@ import com.hpmath.domain.member.dto.Password;
 import com.hpmath.domain.member.exceptions.AccountException;
 import com.hpmath.domain.member.exceptions.InvalidPasswordException;
 import com.hpmath.domain.member.exceptions.NoSuchMemberException;
-import com.hpmath.common.ErrorCode;
-import com.hpmath.common.Role;
-import com.hpmath.common.TimeProvider;
-import com.hpmath.common.web.PasswordHandler;
-import com.hpmath.common.web.log.WarnLoggable;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Validated
 public class AccountLoginService {
     private final MemberRepository memberRepository;
 
@@ -30,9 +33,8 @@ public class AccountLoginService {
     private final AccountLockService accountLockService;
     private final PasswordHandler passwordHandler;
 
-    @WarnLoggable
     @Transactional(noRollbackFor = InvalidPasswordException.class)
-    public JwtDto provideJwtByLogin(final String phoneNumber, final Password password) {
+    public JwtDto provideJwtByLogin(@NotNull final String phoneNumber, @NotNull @Valid final Password password) {
         final Member member = loadMemberByPhoneNumber(phoneNumber);
         final LocalDateTime now = timeProvider.getCurrentTime();
 
@@ -51,8 +53,7 @@ public class AccountLoginService {
      * @param refreshToken jwtrefreshToken
      * @return refreshToken을 통한 로그인 성공 시, 계정 잠금이 해제됩니다.
      */
-    @WarnLoggable
-    public JwtDto provideJwtByRefreshToken(final String refreshToken) {
+    public JwtDto provideJwtByRefreshToken(@NotNull final String refreshToken) {
         final AuthInfo authInfo = jwtUtils.getAuthInfo(refreshToken);
         final Long memberId = authInfo.memberId();
 

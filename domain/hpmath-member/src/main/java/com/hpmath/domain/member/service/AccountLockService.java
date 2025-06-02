@@ -1,15 +1,18 @@
 package com.hpmath.domain.member.service;
 
 import com.hpmath.domain.member.Member;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @Slf4j
+@Validated
 public class AccountLockService {
     private final Integer maxTryCount;
     private final Long lockTimeMinutes;
@@ -29,7 +32,7 @@ public class AccountLockService {
      * @param currentTime 로그인 시도한 시간.
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public void updateLoginFailedInfo(final Member member, final LocalDateTime currentTime) {
+    public void updateLoginFailedInfo(@NotNull final Member member, @NotNull final LocalDateTime currentTime) {
         member.increaseLoginTryCount();
         log.info("account {}, Increase login try count to {}", member.getId(), member.getLoginTryCount());
         lock(member, currentTime);
@@ -43,12 +46,12 @@ public class AccountLockService {
      * @return 로그인을 시도할 수 있다면 true, 아니라면 false
      */
     @Transactional(propagation = Propagation.MANDATORY)
-    public boolean checkAllowedToLogin(final Member member, final LocalDateTime currentTime) {
+    public boolean checkAllowedToLogin(@NotNull final Member member, @NotNull final LocalDateTime currentTime) {
         return member.canLoginAt(currentTime, this.lockTimeMinutes);
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public void unlockWhenLocked(final Member member) {
+    public void unlockWhenLocked(@NotNull final Member member) {
         if (member.getLocked()) {
             unlock(member);
         }

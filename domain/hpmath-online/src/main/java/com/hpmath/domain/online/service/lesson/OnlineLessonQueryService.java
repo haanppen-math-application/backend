@@ -15,21 +15,24 @@ import com.hpmath.domain.online.dto.OnlineVideoDetail;
 import com.hpmath.common.BusinessException;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Validated
 public class OnlineLessonQueryService {
     private final OnlineCourseRepository onlineCourseRepository;
     private final MediaClient mediaClient;
 
-    public OnlineLessonDetail loadDetails(final OnlineLessonQueryCommand command) {
+    public OnlineLessonDetail loadDetails(@Valid final OnlineLessonQueryCommand command) {
         final OnlineCourse onlineCourses = findOnlineCourse(command);
         return mapToDetail(onlineCourses, command.requestMemberId(), command.requestMemberRole());
     }

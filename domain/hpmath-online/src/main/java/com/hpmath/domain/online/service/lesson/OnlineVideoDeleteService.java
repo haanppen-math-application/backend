@@ -7,20 +7,23 @@ import com.hpmath.domain.online.dao.OnlineVideoRepository;
 import com.hpmath.domain.online.dto.DeleteOnlineCourseVideoCommand;
 import com.hpmath.common.BusinessException;
 import com.hpmath.common.ErrorCode;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class OnlineVideoDeleteService {
     private final OnlineCourseRepository onlineCourseRepository;
     private final OnlineVideoRepository onlineVideoRepository;
     private final OnlineCourseOwnerValidator onlineCourseOwnerValidator;
 
     @Transactional
-    public void deleteOnlineVideo(final DeleteOnlineCourseVideoCommand deleteOnlineCourseVideoCommand) {
+    public void deleteOnlineVideo(@Valid final DeleteOnlineCourseVideoCommand deleteOnlineCourseVideoCommand) {
         final OnlineCourse onlineCourse = loadOnlineCourseWithVideos(deleteOnlineCourseVideoCommand.onlineCourseId());
         onlineCourseOwnerValidator.validate(deleteOnlineCourseVideoCommand.requestMemberRole(), deleteOnlineCourseVideoCommand.requestMemberId(), onlineCourse.getTeacherId());
         final OnlineVideo targetVideo = loadTargetVideo(deleteOnlineCourseVideoCommand.onlineVideoId(), onlineCourse.getVideos());

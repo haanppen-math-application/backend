@@ -5,12 +5,15 @@ import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.domain.member.dto.RegisterMemberCommand;
 import com.hpmath.domain.member.service.policy.AccountPolicyManager;
 import com.hpmath.common.web.PasswordHandler;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class AccountRegisterService {
     private final MemberRepository memberRepository;
 
@@ -18,7 +21,7 @@ public class AccountRegisterService {
     private final PasswordHandler passwordHandler;
 
     @Transactional
-    public void register(final RegisterMemberCommand registerMemberCommand) {
+    public void register(@Valid final RegisterMemberCommand registerMemberCommand) {
         final String encryptedPassword = registerMemberCommand.password().getEncryptedPassword(passwordHandler);
         final Member member = buildMember(registerMemberCommand, encryptedPassword);
 

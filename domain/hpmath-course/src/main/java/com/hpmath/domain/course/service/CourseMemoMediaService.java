@@ -25,7 +25,7 @@ public class CourseMemoMediaService {
     private final MemoRepository memoRepository;
     private final MemoMediaRepository memoMediaRepository;
 
-    public void delete(@Valid DeleteMemoMediaCommand command) {
+    public void delete(@Valid final DeleteMemoMediaCommand command) {
         final MemoMedia memoMedia = loadMemoMedia(command.memoMediaId());
         validateOwner(command.requestMemberId(), memoMedia.getMemo(), command.role());
 
