@@ -1,18 +1,17 @@
-package com.hpmath.domain.directory.service.delete.executor;
+package com.hpmath.domain.directory.service.delete;
 
 import com.hpmath.domain.directory.dao.Directory;
 import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-class DescendingSoryByDepthResolver {
+@Component
+class DescendingSortByDepthResolver {
     public List<Directory> getDecsendingList(final List<Directory> directories) {
         return directories.stream()
                 .map(directory -> new DirectoryDepth(directory, this.getDepth(directory.getPath())))
                 .sorted((directory1, directory2) -> directory2.depth() - directory1.depth())
                 .map(directoryDepth -> directoryDepth.directory)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
     private Integer getDepth(final String path) {

@@ -1,7 +1,6 @@
-package com.hpmath.domain.directory.service.delete.executor;
+package com.hpmath.domain.directory.service.delete;
 
 import com.hpmath.domain.directory.exception.DirectoryException;
-import com.hpmath.domain.directory.service.delete.DirectoryDeleteCommand;
 import com.hpmath.common.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class DeleteDirectoryProcessor {
     private final List<DeleteDirectoryHandler> deleteDirectoryHandlers;
 
-    public Integer delete(DirectoryDeleteCommand directoryDeleteCommand) {
+    public Integer delete(DirectoryDeleteTargets directoryDeleteCommand) {
         return deleteDirectoryHandlers.stream()
                 .filter(deleteDirectoryExecutor -> deleteDirectoryExecutor.applicable(directoryDeleteCommand.getRequestMemberRole()))
                 .findFirst()
