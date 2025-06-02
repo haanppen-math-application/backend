@@ -1,12 +1,15 @@
-package com.hpmath.domain.media.service.uploadV2;
+package com.hpmath.domain.media.storage.uploadfile;
 
-import com.hpmath.domain.media.storage.uploadfile.UploadFile;
 import java.io.IOException;
 import java.io.InputStream;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 @ToString
+@RequiredArgsConstructor
+@Getter
 public class ChunkUploadFileV2 implements UploadFile {
     private final String uniqueId;
     private final InputStream inputStream;

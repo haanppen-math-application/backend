@@ -1,8 +1,8 @@
-package com.hpmath.domain.media.service.uploadV2;
+package com.hpmath.domain.media.storage;
 
 import com.hpmath.common.ErrorCode;
 import com.hpmath.domain.media.exception.ChunkException;
-import com.hpmath.domain.media.storage.LocalStorage;
+import com.hpmath.domain.media.storage.uploadfile.ChunkUploadFileV2;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,22 +15,48 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class ChunkStorageV2 extends LocalStorage {
+    // chunk_uniqueId_{uniqueId}_partNumber_{partNumber}
+    private static final String FORMAT = "chunk_uniqueId_%s_partNumber_%s";
+    private static final String FORMAT_REGEX = "chunk_uniqueId_.+_partNumber_.+";
 
     public ChunkStorageV2(@Value(value = "${server.local.chunk.storage}") String storagePath) {
         super(storagePath);
     }
 
     public void save(ChunkUploadFileV2 file) {
-        super.store(file);
+        final FormattedChunkUploadFile formattedChunkUploadFile = new FormattedChunkUploadFile(
+                file.getUniqueId(),
+                file.getInputStream(),
+                file.getPartNumber(),
+                FORMAT.formatted(file.getUniqueId(), file.getPartNumber()));
+        super.store(formattedChunkUploadFile);
     }
 
-    public void removeRelated(final String uniqueId) {
-        loadPaths(uniqueId)
+    public List<String> loadAllUniqueIds() {
+        try {
+            return Files.walk(Paths.get(this.storagePath))
+                    .filter(Files::isRegularFile)
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .filter(fileName -> fileName.matches(FORMAT_REGEX))
+                    .map(fileName -> fileName.split("_")[2])
+                    .distinct()
+                    .toList();
+        } catch (IOException e) {
+            log.error("error occurred: {}", e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void removeUniqueId(final String uniqueId) {
+        loadFilesStartWith(FORMAT.formatted(uniqueId, ""))
                 .forEach(path -> {
                     try {
                         Files.deleteIfExists(path);
@@ -44,7 +70,7 @@ public class ChunkStorageV2 extends LocalStorage {
         return new BufferedInputStream(new SequenceInputStream(Collections.enumeration(loadSequentialFiles(uniqueId))));
     }
 
-    private Stream<Path> loadPaths(final String uniqueId) {
+    private Stream<Path> loadFilesStartWith(final String uniqueId) {
         try {
             return Files.walk(Paths.get(this.storagePath))
                     .filter(Files::isRegularFile)
@@ -55,7 +81,7 @@ public class ChunkStorageV2 extends LocalStorage {
     }
 
     private List<InputStream> loadSequentialFiles(final String uniqueId) {
-        return loadPaths(uniqueId)
+        return loadFilesStartWith(uniqueId)
                 .sorted((path1, path2) -> {
                     final int path1Sequence = getSequence(path1, uniqueId);
                     final int path2Sequence = getSequence(path2, uniqueId);
@@ -74,5 +100,19 @@ public class ChunkStorageV2 extends LocalStorage {
     private Integer getSequence(final Path path, final String uniqueId) {
         final String sequenceValue = String.valueOf(path.getFileName()).replace(uniqueId, "").replace("_", "");
         return Integer.parseInt(sequenceValue);
+    }
+
+    private static class FormattedChunkUploadFile extends ChunkUploadFileV2 {
+        private final String formattedFileName;
+
+        public FormattedChunkUploadFile(String uniqueId, InputStream inputStream, int partNumber, String formattedFileName) {
+            super(uniqueId, inputStream, partNumber);
+            this.formattedFileName = formattedFileName;
+        }
+
+        @Override
+        public String getUniqueFileName() {
+            return formattedFileName;
+        }
     }
 }

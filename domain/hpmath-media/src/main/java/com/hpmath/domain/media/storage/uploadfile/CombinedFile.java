@@ -1,6 +1,5 @@
-package com.hpmath.domain.media.service.uploadV2;
+package com.hpmath.domain.media.storage.uploadfile;
 
-import com.hpmath.domain.media.storage.uploadfile.UploadFile;
 import java.io.InputStream;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
