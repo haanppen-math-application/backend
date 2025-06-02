@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-class DirectoryDeleteManager {
+public class DirectoryDeleteManager {
 
     private final DirectoryDeleteValidateManager directoryDeleteValidateManager;
     private final DeleteDirectoryProcessor deleteDirectoryProcessor;

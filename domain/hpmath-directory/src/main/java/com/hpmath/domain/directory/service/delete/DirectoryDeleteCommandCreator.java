@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-class DirectoryDeleteCommandCreator {
+public class DirectoryDeleteCommandCreator {
     private final DirectoryRepository directoryRepository;
     private final DirectoryPathFormResolver directoryPathFormResolver;
 

@@ -1,4 +1,4 @@
-package com.hpmath.domain.directory.service.query;
+package com.hpmath.domain.directory.service;
 
 import com.hpmath.domain.directory.dao.Directory;
 import com.hpmath.domain.directory.dao.DirectoryMedia;
@@ -9,6 +9,7 @@ import com.hpmath.domain.directory.exception.DirectoryException;
 import com.hpmath.domain.directory.service.form.resolver.DirectoryPathFormResolver;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
+import com.hpmath.domain.directory.service.query.FileViewMapper;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;

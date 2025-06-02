@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class BasicFileViewMapper implements FileViewMapper {
+class BasicFileViewMapper implements FileViewMapper {
     private final MediaClient mediaClient;
 
     @Override

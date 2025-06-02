@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-class DirectoryUpdateManager {
+public class DirectoryUpdateManager {
     private final List<DirectoryUpdateHandler> updateHandlers;
 
     @Transactional
