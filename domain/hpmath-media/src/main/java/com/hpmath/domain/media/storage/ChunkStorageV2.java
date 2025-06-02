@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collections;
 import java.util.List;
@@ -40,19 +39,11 @@ public class ChunkStorageV2 extends LocalStorage {
     }
 
     public List<String> loadAllUniqueIds() {
-        try {
-            return Files.walk(Paths.get(this.storagePath))
-                    .filter(Files::isRegularFile)
-                    .map(Path::getFileName)
-                    .map(Path::toString)
+        return this.loadAllFileNames().stream()
                     .filter(fileName -> fileName.matches(FORMAT_REGEX))
                     .map(fileName -> fileName.split("_")[2])
                     .distinct()
                     .toList();
-        } catch (IOException e) {
-            log.error("error occurred: {}", e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
     }
 
     public void removeUniqueId(final String uniqueId) {
@@ -72,7 +63,7 @@ public class ChunkStorageV2 extends LocalStorage {
 
     private Stream<Path> loadFilesStartWith(final String uniqueId) {
         try {
-            return Files.walk(Paths.get(this.storagePath))
+            return Files.walk(resolveFilePath(this.storagePath))
                     .filter(Files::isRegularFile)
                     .filter(path -> String.valueOf(path.getFileName()).startsWith(uniqueId));
         } catch (IOException e) {
@@ -98,7 +89,7 @@ public class ChunkStorageV2 extends LocalStorage {
     }
 
     private Integer getSequence(final Path path, final String uniqueId) {
-        final String sequenceValue = String.valueOf(path.getFileName()).replace(uniqueId, "").replace("_", "");
+        final String sequenceValue = String.valueOf(path.getFileName()).split("_")[3];
         return Integer.parseInt(sequenceValue);
     }
 

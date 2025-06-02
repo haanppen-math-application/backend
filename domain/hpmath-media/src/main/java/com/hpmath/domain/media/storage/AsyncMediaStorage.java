@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class StorageAsyncDecorator {
+public class AsyncMediaStorage {
     private final MediaStorage mediaStorage;
     /**
      *
