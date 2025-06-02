@@ -15,11 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(
         name = "question",
@@ -52,7 +54,7 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST, orphanRemoval = true)
     @BatchSize(size = 100)
-    private List<QuestionImage> images = new ArrayList<>();
+    private final List<QuestionImage> images = new ArrayList<>();
 
     private Question(String title, String content, Long ownerMember, Long targetMember) {
         this.title = title;
@@ -66,18 +68,6 @@ public class Question {
         final Question question = new Question(title, content, ownerMember, targetMember);
         question.changeImages(images);
         return question;
-    }
-
-    public void changeTitle(final String title) {
-        this.title = title;
-    }
-
-    public void changeContent(final String content) {
-        this.content = content;
-    }
-
-    public void changeTargetMember(final Long targetMember) {
-        this.targetMemberId = targetMember;
     }
 
     public void changeImages(final List<String> imageSrcs) {

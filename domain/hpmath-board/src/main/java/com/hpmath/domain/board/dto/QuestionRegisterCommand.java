@@ -9,6 +9,7 @@ public record QuestionRegisterCommand(
         Long requestMemberId,
         @NotNull
         Long targetMemberId,
+        @NotNull
         Role role,
         String title,
         String content,

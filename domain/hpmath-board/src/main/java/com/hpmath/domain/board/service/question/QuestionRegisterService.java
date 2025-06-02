@@ -1,6 +1,7 @@
 package com.hpmath.domain.board.service.question;
 
-import com.hpmath.client.member.MemberClient;
+import com.hpmath.common.ErrorCode;
+import com.hpmath.common.Role;
 import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.payload.QuestionCreatedEventPayload;
 import com.hpmath.common.outbox.OutboxEventPublisher;
@@ -10,22 +11,22 @@ import com.hpmath.domain.board.entity.Question;
 import com.hpmath.domain.board.entity.QuestionImage;
 import com.hpmath.domain.board.exception.BoardException;
 import com.hpmath.domain.board.service.question.validate.QuestionValidateManager;
-import com.hpmath.common.ErrorCode;
-import com.hpmath.common.Role;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @AllArgsConstructor
+@Validated
 public class QuestionRegisterService {
-    private final MemberClient memberRoleClient;
     private final QuestionRepository questionRepository;
     private final QuestionValidateManager questionValidateManager;
     private final OutboxEventPublisher outboxEventPublisher;
 
     @Transactional
-    public Long addQuestion(final QuestionRegisterCommand questionRegisterDto) {
+    public Long addQuestion(@Valid final QuestionRegisterCommand questionRegisterDto) {
         final Question question = create(questionRegisterDto);
         questionValidateManager.validate(question);
         questionRepository.save(question);
@@ -48,7 +49,6 @@ public class QuestionRegisterService {
 
     private Question create(final QuestionRegisterCommand questionRegisterDto) {
         validateRequestMembersRole(questionRegisterDto.role());
-        validateTargetMembersRole(questionRegisterDto.targetMemberId());
 
         return Question.of(questionRegisterDto.images(), questionRegisterDto.title(), questionRegisterDto.content(),
                 questionRegisterDto.requestMemberId(), questionRegisterDto.targetMemberId());
@@ -59,11 +59,5 @@ public class QuestionRegisterService {
             return;
         }
         throw new BoardException(ErrorCode.BOARD_EXCEPTION);
-    }
-
-    private void validateTargetMembersRole(final Long requestMemberId) {
-        if (!memberRoleClient.isMatch(requestMemberId, Role.TEACHER, Role.MANAGER)) {
-            throw new BoardException(ErrorCode.BOARD_EXCEPTION);
-        }
     }
 }

@@ -29,45 +29,28 @@ public class QuestionUpdateService {
 
     @Transactional
     public Long updateQuestion(@Valid final QuestionUpdateCommand questionUpdateDto) {
-        final Question targetQuestion = findQuestion(questionUpdateDto.questionId());
-        verifyAccess(targetQuestion.getOwnerMemberId(), questionUpdateDto.requestMemberId(), questionUpdateDto.memberRole());
+        final Question target = findQuestion(questionUpdateDto.questionId());
+        verifyAccess(target.getOwnerMemberId(), questionUpdateDto.requestMemberId(), questionUpdateDto.memberRole());
 
-        updateTitle(targetQuestion, questionUpdateDto.title());
-        updateContent(targetQuestion, questionUpdateDto.content());
-        updateImages(targetQuestion, questionUpdateDto.imageSources());
-        updateTarget(targetQuestion, questionUpdateDto.targetMemberId());
-
-        questionValidateManager.validate(targetQuestion);
+        target.setTitle(questionUpdateDto.title());
+        target.setContent(questionUpdateDto.content());
+        target.changeImages(questionUpdateDto.imageSources());
+        target.setTargetMemberId(questionUpdateDto.targetMemberId());
+        questionValidateManager.validate(target);
 
         outboxEventPublisher.publishEvent(EventType.QUESTION_UPDATED_EVENT, new QuestionUpdatedEventPayload(
-                targetQuestion.getId(),
-                targetQuestion.getTitle(),
-                targetQuestion.getContent(),
-                targetQuestion.getSolved(),
-                targetQuestion.getOwnerMemberId(),
-                targetQuestion.getTargetMemberId(),
-                targetQuestion.getImages().stream()
+                target.getId(),
+                target.getTitle(),
+                target.getContent(),
+                target.getSolved(),
+                target.getOwnerMemberId(),
+                target.getTargetMemberId(),
+                target.getImages().stream()
                         .map(QuestionImage::getImageSrc)
                         .toList(),
-                targetQuestion.getRegisteredDateTime()
+                target.getRegisteredDateTime()
         ));
-        return targetQuestion.getId();
-    }
-
-    private void updateTitle(final Question question, final String title) {
-        question.changeTitle(title);
-    }
-
-    private void updateContent(final Question question, final String content) {
-        question.changeContent(content);
-    }
-
-    private void updateImages(final Question question, final List<String> imageSrcs) {
-        question.changeImages(imageSrcs);
-    }
-
-    private void updateTarget(final Question question, final Long newTargetId) {
-        question.changeTargetMember(newTargetId);
+        return target.getId();
     }
 
     private void verifyAccess(final Long ownedMemberId, final Long requestMemberId, final Role role) {

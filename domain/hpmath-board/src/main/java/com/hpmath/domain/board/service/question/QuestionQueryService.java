@@ -12,6 +12,7 @@ import com.hpmath.domain.board.dto.QuestionPreviewResult;
 import com.hpmath.domain.board.entity.Question;
 import com.hpmath.domain.board.exception.NoSuchQuestionException;
 import com.hpmath.common.ErrorCode;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -20,9 +21,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @AllArgsConstructor
+@Validated
 public class QuestionQueryService {
     private final QuestionRepository questionRepository;
 
@@ -30,7 +33,7 @@ public class QuestionQueryService {
     private final MemberClient memberClient;
     private final BoardCommentClient boardCommentClient;
 
-    public List<QuestionInfoResult> loadQuestionsSortByDate(final Long pageSize, final Long pageNumber) {
+    public List<QuestionInfoResult> loadQuestionsSortByDate(@NotNull final Long pageSize, @NotNull final Long pageNumber) {
         final List<QuestionInfo> questionInfos = questionRepository.findQuestionsSortByDate(pageSize, pageNumber * pageSize);
         final Map<Long, List<QuestionInfo>> map = questionInfos.stream()
                 .collect(Collectors.groupingBy(QuestionInfo::getQuestionId));
@@ -41,7 +44,7 @@ public class QuestionQueryService {
                 .toList();
     }
 
-    public QuestionInfoResult getSingleDetail(final Long questionId) {
+    public QuestionInfoResult getSingleDetail(@NotNull final Long questionId) {
         return QuestionInfoResult.from(questionRepository.findQuestionWithImagesByQuestionId(questionId)
                 .orElseThrow(() -> new NoSuchQuestionException(ErrorCode.NO_SUCH_QUESTION)));
     }
@@ -50,13 +53,13 @@ public class QuestionQueryService {
         return questionRepository.count();
     }
 
-    public QuestionDetailResult getSingleQuestionDetails(final Long questionId, final Long requestMemberId) {
+    public QuestionDetailResult getSingleQuestionDetails(@NotNull final Long questionId, @NotNull final Long requestMemberId) {
         final Question question = findQuestion(questionId);
         final Long viewCount = boardViewClient.increaseViewCount(questionId, requestMemberId);
         return QuestionDetailResult.from(question, memberClient, viewCount, boardCommentClient.getCommentDetails(question.getId()));
     }
 
-    public PagedResponse<QuestionPreviewResult> loadQuestionsByOffset(final Pageable pageable, final String title) {
+    public PagedResponse<QuestionPreviewResult> loadQuestionsByOffset(@NotNull final Pageable pageable, @NotNull final String title) {
         Page<Question> questions;
         if (Objects.isNull(title) || title.isBlank()) {
             questions = questionRepository.findAllBy(pageable);
@@ -74,9 +77,9 @@ public class QuestionQueryService {
     }
 
     public PagedResponse<QuestionPreviewResult> loadMyQuestionsByOffset(
-            final Long memberId,
-            final Pageable pageable,
-            final String title
+            @NotNull final Long memberId,
+            @NotNull final Pageable pageable,
+            @NotNull final String title
     ) {
         Page<Question> questions;
         if (Objects.isNull(title) || title.isBlank()) {
