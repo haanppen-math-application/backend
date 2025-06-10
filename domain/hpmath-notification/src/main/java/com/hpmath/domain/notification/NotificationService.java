@@ -35,8 +35,7 @@ public class NotificationService {
     @Transactional
     @CacheEvict(key = "#command.memberId()")
     public void markAsRead(@Valid final ReadNotificationCommand command) {
-        notificationRepository.findById(command.notificationId())
-                .ifPresent(notification -> notification.setReadAt(LocalDateTime.now()));
+        notificationRepository.updateReadAt(command.notificationId(), command.memberId(), LocalDateTime.now());
     }
 
     private boolean isPresent(final String message, final Long targetMemberId) {
