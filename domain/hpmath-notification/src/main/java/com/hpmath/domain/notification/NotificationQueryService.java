@@ -3,6 +3,7 @@ package com.hpmath.domain.notification;
 import com.hpmath.domain.notification.dto.NotificationResult;
 import com.hpmath.domain.notification.dto.QueryPagedNotificationCommand;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -20,5 +21,9 @@ public class NotificationQueryService {
                 .map(NotificationResult::from)
                 .sorted()
                 .toList();
+    }
+
+    public int queryNotReadCount(@NotNull final Long memberId) {
+        return notificationRepository.countByTargetMemberIdAndReadAtIsNull(memberId);
     }
 }

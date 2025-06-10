@@ -1,8 +1,6 @@
 package com.hpmath.domain.notification;
 
 import com.hpmath.domain.notification.dto.QueryPagedNotificationCommand;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
@@ -85,5 +83,21 @@ class NotificationQueryServiceTest {
         Assertions.assertThrows(
                 ConstraintViolationException.class,
                 () -> notificationQueryService.queryWithPaged(new QueryPagedNotificationCommand(1L, LocalDateTime.now(), 101)));
+    }
+
+    @Test
+    @Transactional
+    void 안읽은_메시지_갯수_조회() {
+        LocalDateTime now = LocalDateTime.of(2020, 1, 1, 0, 0);
+        for (int i = 0; i < 10; i++) {
+            final Notification notification = Notification.of("test", 1L, now.minusDays(i));
+            notification.setReadAt(now);
+            notificationRepository.save(notification);
+        }
+        for (int i = 0; i < 5; i++) {
+            notificationRepository.save(Notification.of("test", 1L, now));
+        }
+
+        Assertions.assertEquals(5, notificationQueryService.queryNotReadCount(1L));
     }
 }

@@ -16,4 +16,6 @@ interface NotificationRepository extends JpaRepository<Notification, Long> {
     );
 
     boolean existsByTargetMemberIdAndMessage(Long targetMemberId, String message);
+
+    int countByTargetMemberIdAndReadAtIsNull(Long targetMemberId);
 }

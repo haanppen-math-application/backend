@@ -27,20 +27,31 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Slf4j
 @Service
 @Validated
-@RequiredArgsConstructor
 public class SseService {
     private final SseConfigurationProperties properties;
     private final SseLockManager sseLockManager;
     private final NotificationQueryService notificationQueryService;
+    private final Duration ttl;
 
     private static final ConcurrentHashMap<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(5);
-    private final Duration TTL = Duration.ofMinutes(properties.getLockSeconds());
+
+    public SseService(
+            NotificationQueryService notificationQueryService,
+            SseLockManager sseLockManager,
+            SseConfigurationProperties properties
+    ) {
+        this.notificationQueryService = notificationQueryService;
+        this.sseLockManager = sseLockManager;
+        this.properties = properties;
+        ttl = Duration.ofMinutes(properties.getLockSeconds());
+    }
 
     public SseEmitter register(@NotNull final Long memberId) {
-        if (sseLockManager.lock(memberId, TTL)) {
+        if (sseLockManager.lock(memberId, ttl)) {
             final SseEmitter emitter = getEmitter(memberId);
-            registerSchedule(emitter, memberId);
+            registerNotificationListQuerySchedule(emitter, memberId);
+            registerNotReadCountQuerySchedule(emitter, memberId);
             emitters.put(memberId, emitter);
             return emitter;
         }
@@ -54,8 +65,8 @@ public class SseService {
         }
     }
 
-    private void registerSchedule(final SseEmitter emitter, final Long memberId) {
-        log.debug("WORK REGISTED IN SCHEDULER");
+    private void registerNotificationListQuerySchedule(final SseEmitter emitter, final Long memberId) {
+        log.debug("WORK REGISTERED IN SCHEDULER");
         scheduler.scheduleAtFixedRate(() -> {
             final List<NotificationResult> results = getNotificationResults(memberId);
             try {
@@ -70,8 +81,24 @@ public class SseService {
         }, properties.getInitialDelaySeconds(), properties.periodSeconds, TimeUnit.SECONDS);
     }
 
+    private void registerNotReadCountQuerySchedule(final SseEmitter emitter, final Long memberId) {
+        log.debug("WORK REGISTERED IN SCHEDULER");
+        scheduler.scheduleAtFixedRate(() -> {
+            final Integer notReadCount = notificationQueryService.queryNotReadCount(memberId);
+            try {
+                emitter.send(SseEmitter.event()
+                        .name("notification-not-read-count")
+                        .data(notReadCount, MediaType.APPLICATION_JSON)
+                        .reconnectTime(1000L)
+                        .build());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }, properties.getInitialDelaySeconds(), properties.periodSeconds, TimeUnit.SECONDS);
+    }
+
     private SseEmitter getEmitter(final Long memberId) {
-        final SseEmitter emitter = new SseEmitter(TTL.toMillis());
+        final SseEmitter emitter = new SseEmitter(ttl.toMillis());
         emitter.onTimeout(() -> {
             log.info("SseEmitter timed out: {}", memberId);
             removeEmitter(memberId);
