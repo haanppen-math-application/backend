@@ -42,6 +42,7 @@ include(
         'common:hpmath-page-common',
 
         'domain',
+        'domain:hpmath-notification',
         'domain:hpmath-board-read',
         'domain:hpmath-board-comment',
         'domain:hpmath-course',
