@@ -27,9 +27,12 @@ class NotificationQueryServiceTest {
             notification.setReadAt(now);
             notificationRepository.save(notification);
         }
-        notificationRepository.save(Notification.of("test", 1L, now));
+        for (int i = 0; i < 10; i++) {
+            notificationRepository.save(Notification.of("test", 1L, now));
+        }
 
-        Assertions.assertNull(notificationQueryService.queryWithPaged(new QueryPagedNotificationCommand(1L, now.plusDays(1), 10)).get(0).readAt());
+        Assertions.assertTrue(notificationQueryService.queryWithPaged(new QueryPagedNotificationCommand(1L, now.plusDays(1), 10)).stream()
+                .allMatch(notificationResult -> notificationResult.readAt() == null));
     }
 
     @Transactional

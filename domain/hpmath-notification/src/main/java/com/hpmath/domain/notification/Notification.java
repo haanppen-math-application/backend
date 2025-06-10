@@ -16,7 +16,7 @@ import lombok.Setter;
 @Entity
 @Table(
         name = "notification",
-        indexes = @Index(name = "idx_targetMemberId", columnList = "target_member_id asc, registered_at desc"))
+        indexes = @Index(name = "idx_targetMemberId", columnList = "target_member_id asc, read_at asc, registered_at desc"))
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
