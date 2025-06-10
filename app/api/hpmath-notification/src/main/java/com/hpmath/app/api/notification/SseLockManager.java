@@ -13,9 +13,14 @@ public class SseLockManager {
     // hpmath::app::api::notification::subscribe::{memberId}::connected
     private static final String KEY_FORMAT = "hpmath::app::api::notification::subscribe::%s::connected";
 
-    public boolean lock(final Long memberId, final Duration ttl) {
+    public boolean tryLock(final Long memberId, final Duration ttl) {
         final String key = getKey(memberId);
         return redisTemplate.opsForValue().setIfAbsent(key, "", ttl);
+    }
+
+    public void overrideLock(final Long memberId, final Duration ttl) {
+        final String key = getKey(memberId);
+        redisTemplate.opsForValue().set(key, "", ttl);
     }
 
     public boolean unlock(final Long memberId) {

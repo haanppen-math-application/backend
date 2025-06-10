@@ -14,7 +14,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -31,7 +30,9 @@ public class SseService {
     private final SseConfigurationProperties properties;
     private final SseLockManager sseLockManager;
     private final NotificationQueryService notificationQueryService;
-    private final Duration ttl;
+
+    private final Duration initialLockTTL;
+    private final Duration periodLockTTL;
 
     private static final ConcurrentHashMap<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(5);
@@ -44,11 +45,13 @@ public class SseService {
         this.notificationQueryService = notificationQueryService;
         this.sseLockManager = sseLockManager;
         this.properties = properties;
-        ttl = Duration.ofMinutes(properties.getLockSeconds());
+
+        initialLockTTL = Duration.ofMinutes(properties.getInitialDelaySeconds() + 1);
+        periodLockTTL = Duration.ofMinutes(properties.getPeriodSeconds() + 1);
     }
 
     public SseEmitter register(@NotNull final Long memberId) {
-        if (sseLockManager.lock(memberId, ttl)) {
+        if (sseLockManager.tryLock(memberId, initialLockTTL)) {
             final SseEmitter emitter = getEmitter(memberId);
             registerNotificationListQuerySchedule(emitter, memberId);
             registerNotReadCountQuerySchedule(emitter, memberId);
@@ -58,18 +61,12 @@ public class SseService {
         throw new IllegalStateException("connection already established");
     }
 
-    public void unregister(@NotNull final Long memberId) {
-        final SseEmitter emitter = emitters.get(memberId);
-        if (emitter != null) {
-            emitter.complete();
-        }
-    }
-
     private void registerNotificationListQuerySchedule(final SseEmitter emitter, final Long memberId) {
         log.debug("WORK REGISTERED IN SCHEDULER");
         scheduler.scheduleAtFixedRate(() -> {
             final List<NotificationResult> results = getNotificationResults(memberId);
             try {
+                sseLockManager.overrideLock(memberId, periodLockTTL);
                 emitter.send(SseEmitter.event()
                         .name("notification")
                         .data(results, MediaType.APPLICATION_JSON)
@@ -78,7 +75,7 @@ public class SseService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }, properties.getInitialDelaySeconds(), properties.periodSeconds, TimeUnit.SECONDS);
+        }, properties.getInitialDelaySeconds(), properties.getPeriodSeconds(), TimeUnit.SECONDS);
     }
 
     private void registerNotReadCountQuerySchedule(final SseEmitter emitter, final Long memberId) {
@@ -86,6 +83,7 @@ public class SseService {
         scheduler.scheduleAtFixedRate(() -> {
             final Integer notReadCount = notificationQueryService.queryNotReadCount(memberId);
             try {
+                sseLockManager.overrideLock(memberId, periodLockTTL);
                 emitter.send(SseEmitter.event()
                         .name("notification-not-read-count")
                         .data(notReadCount, MediaType.APPLICATION_JSON)
@@ -94,11 +92,11 @@ public class SseService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }, properties.getInitialDelaySeconds(), properties.periodSeconds, TimeUnit.SECONDS);
+        }, properties.getInitialDelaySeconds(), properties.getPeriodSeconds(), TimeUnit.SECONDS);
     }
 
     private SseEmitter getEmitter(final Long memberId) {
-        final SseEmitter emitter = new SseEmitter(ttl.toMillis());
+        final SseEmitter emitter = new SseEmitter(periodLockTTL.toMillis());
         emitter.onTimeout(() -> {
             log.info("SseEmitter timed out: {}", memberId);
             removeEmitter(memberId);
@@ -120,7 +118,7 @@ public class SseService {
 
     private List<NotificationResult> getNotificationResults(final Long memberId) {
         return notificationQueryService.queryWithPaged(
-                new QueryPagedNotificationCommand(memberId, LocalDateTime.now(), properties.getPageSize()));
+                new QueryPagedNotificationCommand(memberId, LocalDateTime.now(), properties.pageSize));
     }
 
     @Configuration
@@ -132,6 +130,5 @@ public class SseService {
         private int pageSize = 30;
         private int initialDelaySeconds = 1;
         private int periodSeconds = 10;
-        private long lockSeconds = 30;
     }
 }
