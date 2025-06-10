@@ -24,6 +24,9 @@ public record NotificationResult(
 
     @Override
     public int compareTo(NotificationResult o) {
+        if (this.readAt == null && o.readAt != null) {
+            return -1;
+        }
         return o.registeredAt.compareTo(registeredAt);
     }
 }
