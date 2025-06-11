@@ -33,7 +33,7 @@ class Outbox {
     @Column(name = "event_type")
     private EventType eventType;
 
-    @Column(name = "event_payload")
+    @Column(name = "event_payload", columnDefinition = "TEXT")
     private String payload;
 
     public static Outbox of(Event event, LocalDateTime createdAt) {
