@@ -2,8 +2,8 @@ package com.hpmath.domain.board.service.question;
 
 import com.hpmath.client.board.comment.BoardCommentClient;
 import com.hpmath.client.board.view.BoardViewClient;
-import com.hpmath.client.member.MemberClient;
 import com.hpmath.common.page.PagedResponse;
+import com.hpmath.domain.board.MemberManager;
 import com.hpmath.domain.board.dao.QuestionRepository;
 import com.hpmath.domain.board.dto.QuestionDetailResult;
 import com.hpmath.domain.board.dto.QuestionInfo;
@@ -30,7 +30,7 @@ public class QuestionQueryService {
     private final QuestionRepository questionRepository;
 
     private final BoardViewClient boardViewClient;
-    private final MemberClient memberClient;
+    private final MemberManager memberManager;
     private final BoardCommentClient boardCommentClient;
 
     public List<QuestionInfoResult> loadQuestionsSortByDate(@NotNull final Long pageSize, @NotNull final Long pageNumber) {
@@ -56,7 +56,7 @@ public class QuestionQueryService {
     public QuestionDetailResult getSingleQuestionDetails(@NotNull final Long questionId, @NotNull final Long requestMemberId) {
         final Question question = findQuestion(questionId);
         final Long viewCount = boardViewClient.increaseViewCount(questionId, requestMemberId);
-        return QuestionDetailResult.from(question, memberClient, viewCount, boardCommentClient.getCommentDetails(question.getId()));
+        return QuestionDetailResult.from(question, memberManager, viewCount, boardCommentClient.getCommentDetails(question.getId()));
     }
 
     public PagedResponse<QuestionPreviewResult> loadQuestionsByOffset(@NotNull final Pageable pageable, @NotNull final String title) {
@@ -68,7 +68,7 @@ public class QuestionQueryService {
         }
         return PagedResponse.of(
                 questions.map(question ->
-                        QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()), boardCommentClient.getCommentDetails(
+                        QuestionPreviewResult.from(question, memberManager, boardViewClient.getViewCount(question.getId()), boardCommentClient.getCommentDetails(
                                 question.getId()).size())).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),
@@ -89,7 +89,7 @@ public class QuestionQueryService {
         }
         return PagedResponse.of(
                 questions.map(question ->
-                        QuestionPreviewResult.from(question, memberClient, boardViewClient.getViewCount(question.getId()), boardCommentClient.getCommentDetails(
+                        QuestionPreviewResult.from(question, memberManager, boardViewClient.getViewCount(question.getId()), boardCommentClient.getCommentDetails(
                                 question.getId()).size())).toList(),
                 questions.getTotalElements(),
                 questions.getNumber(),

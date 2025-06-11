@@ -2,7 +2,7 @@ package com.hpmath.domain.board.dto;
 
 import com.hpmath.client.board.comment.BoardCommentClient;
 import com.hpmath.client.board.comment.BoardCommentClient.CommentDetail;
-import com.hpmath.client.member.MemberClient;
+import com.hpmath.domain.board.MemberManager;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
@@ -16,7 +16,7 @@ public record CommentDetailResult(
         LocalDateTime registeredDateTime,
         MemberDetailResult registeredMemberDetails
 ) {
-    public static CommentDetailResult from(CommentDetail comment, MemberClient memberClient) {
+    public static CommentDetailResult from(CommentDetail comment, MemberManager memberManager) {
         return new CommentDetailResult(
                 comment.commentId(),
                 comment.content(),
@@ -26,7 +26,7 @@ public record CommentDetailResult(
                         .map(ImageUrlResult::from)
                         .toList(),
                 comment.registeredDateTime(),
-                MemberDetailResult.from(memberClient.getMemberDetail(comment.ownerId()))
+                memberManager.load(comment.ownerId())
         );
     }
 }

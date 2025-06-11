@@ -1,7 +1,7 @@
 package com.hpmath.domain.board.dto;
 
 import com.hpmath.client.board.comment.BoardCommentClient.CommentDetail;
-import com.hpmath.client.member.MemberClient;
+import com.hpmath.domain.board.MemberManager;
 import com.hpmath.domain.board.entity.Question;
 import com.hpmath.domain.board.entity.QuestionImage;
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public record QuestionDetailResult(
         List<CommentDetailResult> comments,
         List<ImageUrlResult> imageUrls
 ) {
-    public static QuestionDetailResult from(Question question, MemberClient memberClient, final Long viewCount, final List<CommentDetail> commentDetails) {
+    public static QuestionDetailResult from(Question question, MemberManager memberManager, final Long viewCount, final List<CommentDetail> commentDetails) {
         return new QuestionDetailResult(
                 question.getId(),
                 question.getTitle(),
@@ -29,10 +29,10 @@ public record QuestionDetailResult(
                 question.getSolved(),
                 viewCount,
                 question.getRegisteredDateTime(),
-                MemberDetailResult.from(memberClient.getMemberDetail(question.getOwnerMemberId())),
-                MemberDetailResult.from(memberClient.getMemberDetail(question.getTargetMemberId())),
+                memberManager.load(question.getOwnerMemberId()),
+                memberManager.load(question.getTargetMemberId()),
                 commentDetails.stream()
-                        .map(comment -> CommentDetailResult.from(comment, memberClient))
+                        .map(comment -> CommentDetailResult.from(comment, memberManager))
                         .toList(),
                 question.getImages().stream()
                         .map(QuestionImage::getImageSrc)
