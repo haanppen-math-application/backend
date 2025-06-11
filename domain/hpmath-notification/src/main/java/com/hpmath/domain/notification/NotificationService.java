@@ -1,5 +1,6 @@
 package com.hpmath.domain.notification;
 
+import com.hpmath.domain.notification.port.NotificationRegisteredEvent;
 import com.hpmath.domain.notification.dto.ReadNotificationCommand;
 import com.hpmath.domain.notification.dto.RegisterNotificationCommand;
 import jakarta.validation.Valid;
@@ -8,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -20,16 +21,23 @@ import org.springframework.validation.annotation.Validated;
 @CacheConfig(cacheNames = "hpmath::domain::notification::not-read::count")
 public class NotificationService {
     private final NotificationRepository notificationRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
-    @CacheEvict(key = "#command.targetMemberId()")
+    @CacheEvict(key = "#command.targetMemberId()", condition = "#command.targetMemberId() != null")
     public void add(@Valid final RegisterNotificationCommand command) {
+        if (command.targetMemberId() == null) {
+            return;
+        }
+
         if (isPresent(command.message(), command.targetMemberId())) {
             log.warn("Notification already registered: {}", command);
             return;
         }
         final Notification notification = Notification.of(command.message(), command.targetMemberId(), LocalDateTime.now());
         notificationRepository.save(notification);
+
+        eventPublisher.publishEvent(NotificationRegisteredEvent.from(notification));
     }
 
     @Transactional
