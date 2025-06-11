@@ -43,6 +43,7 @@ public class BoardReadCommentRegisteredEventHandler implements EventHandler<Comm
                                                 payload.registeredDateTime(),
                                                 payload.registeredMemberId());
                                         question.getComments().add(commentQueryModel);
+                                        question.setSolved(true);
                                         questionQueryModelManager.add(question);
                                     }
                             );
