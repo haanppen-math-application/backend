@@ -24,7 +24,7 @@ public class BoardCommentQueryController {
     public ResponseEntity<List<CommentDetailResponse>> loadQuestionsComments(
             @RequestParam final Long questionId
     ) {
-        return ResponseEntity.ok(commentQueryService.commentDetailResults(new CommentQueryCommand(questionId)).stream()
+        return ResponseEntity.ok(commentQueryService.commentDetailResults(new CommentQueryCommand(questionId)).results().stream()
                 .map(CommentDetailResponse::from)
                 .toList());
     }
@@ -42,7 +42,7 @@ public class BoardCommentQueryController {
             Boolean selected,
             List<ImageUrlResult> images,
             LocalDateTime registeredDateTime,
-            MemberDetailResult registeredMemberDetails
+            Long ownerId
     ) {
         public static CommentDetailResponse from(final CommentDetailResult result) {
             return new CommentDetailResponse(
@@ -51,7 +51,7 @@ public class BoardCommentQueryController {
                     result.selected(),
                     result.images(),
                     result.registeredDateTime(),
-                    result.registeredMemberDetails());
+                    result.registeredMemberDetails().memberId());
         }
     }
 }

@@ -17,7 +17,7 @@ public class MemberInfoManager {
         try {
             return MemberDetailResult.from(memberClient.getMemberDetail(memberId));
         } catch (ClientException ex) {
-            log.error(ex.getMessage(), ex);
+            log.error("error occured while query id for: %s", memberId, ex);
             return MemberDetailResult.none(memberId);
         }
     }

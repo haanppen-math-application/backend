@@ -2,6 +2,7 @@ package com.hpmath.domain.board.comment;
 
 import com.hpmath.common.ErrorCode;
 import com.hpmath.domain.board.comment.dto.CommentDetailResult;
+import com.hpmath.domain.board.comment.dto.CommentDetailResults;
 import com.hpmath.domain.board.comment.dto.CommentQueryCommand;
 import com.hpmath.domain.board.comment.dto.MemberDetailResult;
 import com.hpmath.domain.board.comment.exception.CommentException;
@@ -22,13 +23,14 @@ public class CommentQueryService {
     private final MemberInfoManager memberInfoManager;
 
     @Cacheable(cacheNames = "board::question::comment::list", key = "#command.questionId()")
-    public List<CommentDetailResult> commentDetailResults(@Valid final CommentQueryCommand command) {
-        return commentRepository.queryCommentsWithMedias(command.questionId()).stream()
+    public CommentDetailResults commentDetailResults(@Valid final CommentQueryCommand command) {
+        final List<CommentDetailResult> results = commentRepository.queryCommentsWithMedias(command.questionId()).stream()
                 .map(comment -> {
                     final MemberDetailResult memberDetailResult = memberInfoManager.get(comment.getOwnerId());
                     return CommentDetailResult.from(comment, memberDetailResult);}
                 )
                 .toList();
+        return new CommentDetailResults(results);
     }
 
     @Cacheable(cacheNames = "board::comment::detail", key = "#commentId")
