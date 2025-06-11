@@ -17,21 +17,21 @@ import org.springframework.web.client.ResourceAccessException;
 public class ClientExceptionAspect {
     @AfterThrowing(value = "@within(Client)", throwing = "throwable")
     public void mapException(final Throwable throwable) {
-        log.error(throwable.getMessage(), throwable);
-
         if (throwable instanceof HttpStatusCodeException) {
             final HttpStatusCodeException httpStatusCodeException = (HttpStatusCodeException) throwable;
 
+            log.error("HTTP Status Code: {}", httpStatusCodeException.getStatusCode(), httpStatusCodeException);
             if (httpStatusCodeException.getStatusCode().is4xxClientError()) {
-                throw new ClientBadRequestException(httpStatusCodeException.getResponseBodyAsString());
+                throw new ClientBadRequestException(httpStatusCodeException.getMessage(), httpStatusCodeException.getCause());
             } else if (httpStatusCodeException.getStatusCode().is5xxServerError()) {
-                throw new ClientServerException(httpStatusCodeException.getResponseBodyAsString());
+                throw new ClientServerException(httpStatusCodeException.getMessage(), httpStatusCodeException.getCause());
             } else {
                 throw httpStatusCodeException;
             }
         }
 
         if (throwable instanceof ResourceAccessException) {
+            log.error("Resource access timeout exception: ", throwable);
             throw new ClientRequestTimeoutException(throwable.getMessage(), throwable);
         }
 
