@@ -95,11 +95,9 @@ public class AccountController {
 
     @GetMapping(value = "/my")
     public ResponseEntity<MyAccountInfoResponse> getMyAccountInfo(
-            @LoginInfo final Long userId
+            @LoginInfo final MemberPrincipal memberPrincipal
     ) {
-        return ResponseEntity.ok(
-                MyAccountInfoResponse.of(queryService.getMemberInfo(userId))
-        );
+        return ResponseEntity.ok(MyAccountInfoResponse.of(queryService.getMemberInfo(memberPrincipal.memberId())));
     }
 
     @DeleteMapping
