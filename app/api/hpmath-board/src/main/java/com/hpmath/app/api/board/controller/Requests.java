@@ -23,7 +23,6 @@ class Requests {
 
     @Schema(description = "질문 작성 API")
     record QuestionRegisterRequest(
-            @NotNull
             Long targetMemberId,
             @QuestionTitleConstraint
             String title,

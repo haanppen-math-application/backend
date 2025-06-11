@@ -7,7 +7,6 @@ import java.util.List;
 public record QuestionRegisterCommand(
         @NotNull
         Long requestMemberId,
-        @NotNull
         Long targetMemberId,
         @NotNull
         Role role,
