@@ -17,8 +17,6 @@ import java.lang.annotation.Target;
 @NotNull
 public @interface RoleConstraint {
     String message() default "Role 입력은 필수입니다.";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }

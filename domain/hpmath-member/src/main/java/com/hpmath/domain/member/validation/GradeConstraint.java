@@ -19,8 +19,6 @@ import org.hibernate.validator.constraints.Range;
 @Range(min = 0, max = 11)
 public @interface GradeConstraint {
     String message() default "0 이상 11 이하";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }

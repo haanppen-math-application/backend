@@ -21,9 +21,7 @@ import org.hibernate.validator.constraints.Length;
 @NotNull
 public @interface NameConstraint {
     String message() default "이름은 1 이상 10 이하";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }
 

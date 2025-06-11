@@ -21,8 +21,6 @@ import org.hibernate.validator.constraints.Length;
 @NotNull
 public @interface PasswordConstraint {
     String message() default "비밀번호는 4 와 20 사이입니다.";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }

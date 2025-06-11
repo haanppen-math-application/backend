@@ -20,8 +20,6 @@ import java.lang.annotation.Target;
 @NotNull
 public @interface PhoneNumberConstraint {
     String message() default "전화번호 입력 오류. 010XXXXXXXX 형식으로 입력해주세요";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }
