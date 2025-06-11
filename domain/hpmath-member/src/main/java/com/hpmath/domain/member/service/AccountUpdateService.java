@@ -1,5 +1,7 @@
 package com.hpmath.domain.member.service;
 
+import com.hpmath.common.ErrorCode;
+import com.hpmath.common.web.PasswordHandler;
 import com.hpmath.domain.member.Member;
 import com.hpmath.domain.member.MemberRepository;
 import com.hpmath.domain.member.dto.AccountUpdateCommand;
@@ -8,9 +10,6 @@ import com.hpmath.domain.member.dto.StudentUpdateCommand;
 import com.hpmath.domain.member.dto.UpdateTeacherCommand;
 import com.hpmath.domain.member.exceptions.AccountException;
 import com.hpmath.domain.member.exceptions.NoSuchMemberException;
-import com.hpmath.domain.member.service.policy.AccountPolicyManager;
-import com.hpmath.common.ErrorCode;
-import com.hpmath.common.web.PasswordHandler;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
@@ -27,40 +26,38 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class AccountUpdateService {
     private final MemberRepository memberRepository;
-
-    private final AccountPolicyManager accountPolicyManager;
     private final PasswordHandler passwordHandler;
 
     @CacheEvict(key = "#command.targetMemberId()")
     public void updateMember(@Valid final AccountUpdateCommand command) {
+        checkPhoneNumberDuplicated(command.phoneNumber(), command.targetMemberId());
+
         final Member member = loadMember(command.targetMemberId());
 
         member.setName(command.name());
         member.setPhoneNumber(command.phoneNumber());
         updatePassword(command.prevPassword(), command.newPassword(), member);
-
-        accountPolicyManager.checkPolicy(member);
     }
 
     @CacheEvict(key = "#command.memberId()")
     public void updateMember(@Valid final StudentUpdateCommand command) {
+        checkPhoneNumberDuplicated(command.phoneNumber(), command.memberId());
+
         final Member member = loadMember(command.memberId());
 
         member.setName(command.name());
         member.setPhoneNumber(command.phoneNumber());
         member.setName(command.name());
-
-        accountPolicyManager.checkPolicy(member);
     }
 
     @CacheEvict(key = "#command.memberId()")
     public void updateMember(@Valid final UpdateTeacherCommand command) {
+        checkPhoneNumberDuplicated(command.phoneNumber(), command.memberId());
+
         final Member member = loadMember(command.memberId());
 
         member.setName(command.name());
         member.setPhoneNumber(command.phoneNumber());
-
-        accountPolicyManager.checkPolicy(member);
     }
 
     /**
@@ -71,11 +68,21 @@ public class AccountUpdateService {
      * @param account      수정할 계정
      */
     private void updatePassword(final Password prevPassword, final Password newPassword, final Member account) {
+        if (prevPassword == null) {
+            return;
+        }
+
         if (prevPassword.isMatch(account.getPassword(), passwordHandler)) {
             account.setPassword(newPassword.getEncryptedPassword(passwordHandler));
             return;
         }
         throw new AccountException("잘못된 비밀번호 입니다.", ErrorCode.ACCOUNT_POLICY);
+    }
+
+    public void checkPhoneNumberDuplicated(final String phoneNumber, final Long memberId) {
+        if (memberRepository.existAlreadyWithout(phoneNumber, memberId)) {
+            throw new AccountException("이미 등록된 전화번호", ErrorCode.ACCOUNT_POLICY);
+        }
     }
 
     private Member loadMember(final Long targetMemberId) {

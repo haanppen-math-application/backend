@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
@@ -19,6 +18,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query("UPDATE Member m SET m.verifyDateTime = null, m.isVerifying = false, m.verifyMessageSendCount = 0, m.verificationCode = null")
     void resetVerificationInfos();
+
+    @Query("SELECT COUNT(*) > 0 FROM Member m WHERE m.phoneNumber = :phoneNumber AND m.id != :id")
+    boolean existAlreadyWithout(@Param("phoneNumber") final String phoneNumber, @Param("id") final Long id);
 
     boolean existsByPhoneNumberAndRemovedIsFalse(final String phoneNumber);
 
