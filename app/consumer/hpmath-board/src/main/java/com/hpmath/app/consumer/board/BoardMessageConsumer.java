@@ -15,7 +15,7 @@ public class BoardMessageConsumer {
     private final BoardEventProcessor eventProcessor;
 
     @KafkaListener(
-            topics = {Topic.HPMATH_MEMBER},
+            topics = {Topic.HPMATH_MEMBER, Topic.HPMATH_BOARD},
             groupId = "board"
     )
     public void consume(final String message) {
