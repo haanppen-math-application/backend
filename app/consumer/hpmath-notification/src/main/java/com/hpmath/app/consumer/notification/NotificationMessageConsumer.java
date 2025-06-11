@@ -2,9 +2,7 @@ package com.hpmath.app.consumer.notification;
 
 import com.hpmath.common.event.Event;
 import com.hpmath.common.event.EventPayload;
-import com.hpmath.common.event.EventType;
 import com.hpmath.common.event.EventType.Topic;
-import com.hpmath.common.event.payload.CommentDeletedEventPayload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
