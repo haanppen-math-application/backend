@@ -95,6 +95,10 @@ public class JwtUtils {
     }
 
     private Optional<Role> getMemberRole(final Claims claims) {
-        return Optional.ofNullable(Role.valueOf(claims.get(MEMBER_ROLE, String.class)));
+        final String role = claims.get(MEMBER_ROLE, String.class);
+        if (role == null) {
+            return Optional.empty();
+        }
+        return Optional.of(Role.valueOf(role));
     }
 }
