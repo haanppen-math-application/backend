@@ -31,7 +31,7 @@ public class CourseMemoQueryService {
     private final MediaClient mediaClient;
 
     public MemoViewResponse loadSingleMemo(@Valid final MemoQueryByCourseIdAndDateCommand command) {
-        return memoRepository.findAllByCourseIdAndTargetDate(command.getCourseId(), command.getLocalDate())
+        return memoRepository.findByCourseIdAndTargetDate(command.getCourseId(), command.getLocalDate())
                 .map(memo -> new MemoViewResponse(
                         memo.getId(),
                         memo.getTitle(),

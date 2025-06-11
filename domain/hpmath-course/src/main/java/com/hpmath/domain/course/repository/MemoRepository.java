@@ -4,14 +4,17 @@ import com.hpmath.domain.course.entity.Memo;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface MemoRepository extends JpaRepository<Memo, Long> {
-    Optional<Memo> findAllByCourseIdAndTargetDate(final Long courseId, final LocalDate targetDate);
+    @Query("SELECT m FROM Memo m WHERE m.course.id = :courseId AND m.targetDate = :targetDate")
+    Optional<Memo> findByCourseIdAndTargetDate(
+            @Param("courseId") final Long courseId,
+            @Param("targetDate") final LocalDate targetDate
+    );
 
     @Query("SELECT m FROM Memo m "
             + "JOIN FETCH m.course "
