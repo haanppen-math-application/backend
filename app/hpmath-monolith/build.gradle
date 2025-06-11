@@ -13,6 +13,8 @@ dependencies {
     implementation project(":app:api:hpmath-board-comment")
     implementation project(":app:api:hpmath-directory")
     implementation project(":app:api:hpmath-online")
+    implementation project(":app:api:hpmath-sse")
+    implementation project(":app:api:hpmath-notification")
     implementation project(":app:batch:hpmath-board-view")
     implementation project(":app:batch:hpmath-member")
 
@@ -20,6 +22,7 @@ dependencies {
     implementation project(":app:hpmath-redis-app")
 
     implementation project(":app:consumer:hpmath-course")
+    implementation project(":app:consumer:hpmath-notification")
     implementation project(":app:consumer:hpmath-board")
     implementation project(":app:consumer:hpmath-directory")
     implementation project(":app:consumer:hpmath-media")
