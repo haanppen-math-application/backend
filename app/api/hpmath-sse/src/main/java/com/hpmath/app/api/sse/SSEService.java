@@ -1,9 +1,11 @@
-package com.hpmath.app.api.notification;
+package com.hpmath.app.api.sse;
 
+import com.hpmath.app.api.sse.scheduled.SSEScheduledProcess;
 import com.hpmath.domain.notification.NotificationQueryService;
 import jakarta.validation.constraints.NotNull;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,24 +24,24 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Slf4j
 @Service
 @Validated
-public class SseService {
+public class SSEService {
     private final SseConfigurationProperties properties;
-    private final SseLockManager sseLockManager;
-    private final NotificationQueryService notificationQueryService;
+    private final SSELockManager sseLockManager;
+    private final List<SSEScheduledProcess> processes;
 
     private final Duration periodLockTTL;
     private final ScheduledExecutorService scheduler;
 
     private static final ConcurrentHashMap<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
 
-    public SseService(
-            NotificationQueryService notificationQueryService,
-            SseLockManager sseLockManager,
-            SseConfigurationProperties properties
+    public SSEService(
+            SSELockManager sseLockManager,
+            SseConfigurationProperties properties,
+            List<SSEScheduledProcess> processes
     ) {
-        this.notificationQueryService = notificationQueryService;
         this.sseLockManager = sseLockManager;
         this.properties = properties;
+        this.processes = processes;
 
         periodLockTTL = Duration.ofSeconds(properties.getPeriodSeconds() + 1);
         log.info("periodLockTTL = {}", periodLockTTL);
@@ -57,21 +59,28 @@ public class SseService {
         throw new IllegalStateException("connection already established");
     }
 
+    public void sendMessage(@NotNull final Long memberId, @NotNull final String message, @NotNull final String messageName) {
+        final SseEmitter emitter = emitters.get(memberId);
+        if (emitter == null) {
+            log.warn("emitter not present");
+            return;
+        }
+
+        try {
+            emitter.send(SseEmitter.event()
+                    .name(messageName)
+                    .data(message, MediaType.APPLICATION_JSON)
+                    .reconnectTime(1000L)
+                    .build());
+        } catch (IOException e) {
+            log.error("error while sending message", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     private void registerNotReadCountQuerySchedule(final SseEmitter emitter, final Long memberId) {
         log.debug("WORK REGISTERED IN SCHEDULER");
-        scheduler.scheduleWithFixedDelay(() -> {
-            final Integer notReadCount = notificationQueryService.queryNotReadCount(memberId);
-            try {
-                sseLockManager.overrideLock(memberId, periodLockTTL);
-                emitter.send(SseEmitter.event()
-                        .name("notification-not-read-count")
-                        .data(notReadCount, MediaType.APPLICATION_JSON)
-                        .reconnectTime(1000L)
-                        .build());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }, 1L, properties.getPeriodSeconds(), TimeUnit.SECONDS);
+        processes.forEach(process -> process.accept(emitter, memberId, scheduler));
     }
 
     private SseEmitter create(final Long memberId) {
@@ -100,7 +109,7 @@ public class SseService {
     @Getter
     @Setter
     @NoArgsConstructor
-    static class SseConfigurationProperties {
+    public static class SseConfigurationProperties {
         private int pageSize = 30;
         private int connectionSeconds = 600;
         private int periodSeconds = 10;

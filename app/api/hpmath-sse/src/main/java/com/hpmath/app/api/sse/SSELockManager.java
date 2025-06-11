@@ -1,4 +1,4 @@
-package com.hpmath.app.api.notification;
+package com.hpmath.app.api.sse;
 
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SseLockManager {
+public class SSELockManager {
     private final StringRedisTemplate redisTemplate;
 
-    // hpmath::app::api::notification::subscribe::{memberId}::connected
-    private static final String KEY_FORMAT = "hpmath::app::api::notification::subscribe::%s::connected";
+    // hpmath::app::api::sse::{memberId}::connected
+    private static final String KEY_FORMAT = "hpmath::app::api::sse::%s::connected";
 
     public boolean tryLock(final Long memberId, final Duration ttl) {
         final String key = getKey(memberId);

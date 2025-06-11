@@ -16,6 +16,7 @@ include(
         'app:consumer:hpmath-media',
         'app:consumer:hpmath-board-read',
 
+        'app:api:hpmath-sse',
         'app:api:hpmath-notification',
         'app:api:hpmath-board-view',
         'app:api:hpmath-board-read',

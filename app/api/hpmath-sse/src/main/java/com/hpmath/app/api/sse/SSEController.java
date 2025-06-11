@@ -1,4 +1,4 @@
-package com.hpmath.app.api.notification;
+package com.hpmath.app.api.sse;
 
 import com.hpmath.common.web.authentication.MemberPrincipal;
 import com.hpmath.common.web.authenticationV2.Authorization;
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
-@RequestMapping("/api/v1/notification")
+@RequestMapping("/api/v1/sse")
 @RequiredArgsConstructor
-public class PushSSEController {
-    private final SseService sseService;
+public class SSEController {
+    private final SSEService sseService;
 
-    @GetMapping(value = "/subscribe/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @Authorization(opened = true)
     public SseEmitter subscribe(
             @LoginInfo final MemberPrincipal memberPrincipal
