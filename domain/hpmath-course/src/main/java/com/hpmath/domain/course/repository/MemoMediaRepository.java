@@ -10,10 +10,10 @@ import org.springframework.data.repository.query.Param;
 public interface MemoMediaRepository extends JpaRepository<MemoMedia, Long> {
     @Query("SELECT mm from MemoMedia mm "
             + "JOIN FETCH mm.memo "
-            + "JOIN FETCH mm.memoMediaAttachments "
+            + "LEFT JOIN FETCH mm.memoMediaAttachments "
             + "JOIN FETCH mm.memo.course "
             + "WHERE mm.id = :memoMediaId")
-    Optional<MemoMedia> findMemoMedia(@Param(":memoMediaId") final Long memoMediaId);
+    Optional<MemoMedia> findMemoMedia(@Param("memoMediaId") final Long memoMediaId);
 
     @Modifying
     @Query("UPDATE MemoMedia mm SET mm.sequence = mm.sequence - 1 WHERE mm.memo.id = :memoId AND mm.sequence > :deletedMemoMediaSequence")
