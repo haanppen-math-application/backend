@@ -12,4 +12,11 @@ public record OnlineTeacherPreview(
                 memberInfo.memberId()
         );
     }
+
+    public static OnlineTeacherPreview none() {
+        return new OnlineTeacherPreview(
+                null,
+                null
+        );
+    }
 }

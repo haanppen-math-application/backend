@@ -1,7 +1,7 @@
 package com.hpmath.domain.online.service.course;
 
-import com.hpmath.client.member.MemberClient;
 import com.hpmath.client.member.MemberClient.MemberInfo;
+import com.hpmath.domain.online.OnlineCourseMemberManager;
 import com.hpmath.domain.online.dao.OnlineCategory;
 import com.hpmath.domain.online.dao.OnlineCourse;
 import com.hpmath.domain.online.dao.OnlineCourseRepository;
@@ -17,6 +17,7 @@ import com.hpmath.domain.online.dto.QueryOnlineCourseByTeacherIdCommand;
 import com.hpmath.domain.online.dto.QueryOnlineCourseDetailsCommand;
 import com.hpmath.common.Role;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class OnlineCourseQueryService {
     private final OnlineCourseRepository onlineCourseRepository;
-    private final MemberClient memberClient;
+    private final OnlineCourseMemberManager memberManager;
 
     public List<OnlineCoursePreview> queryAll() {
         return onlineCourseRepository.findAll().stream()
@@ -63,12 +64,15 @@ public class OnlineCourseQueryService {
     public OnlineCourseDetails queryOnlineCourseDetails(final QueryOnlineCourseDetailsCommand command
     ) {
         final OnlineCourse onlineCourse = onlineCourseRepository.findOnlineCourse(command.onlineCourseId());
-        final OnlineTeacherPreview onlineTeacherPreview = OnlineTeacherPreview.from(
-                memberClient.getMemberDetail(onlineCourse.getTeacherId()));
+        final OnlineTeacherPreview onlineTeacherPreview = memberManager.getMemberDetail(onlineCourse.getTeacherId())
+                .map(OnlineTeacherPreview::from)
+                .orElseGet(OnlineTeacherPreview::none);
         final List<OnlineStudentPreview> onlineStudentPreviews = onlineCourse.getOnlineStudents().stream()
                 .map(OnlineStudent::getMemberId)
                 .parallel()
-                .map(memberClient::getMemberDetail)
+                .map(memberManager::getMemberDetail)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .map(OnlineStudentPreview::from)
                 .toList();
         return new OnlineCourseDetails(onlineCourse.getId(), onlineCourse.getCourseName(), onlineStudentPreviews, onlineTeacherPreview);
@@ -81,10 +85,13 @@ public class OnlineCourseQueryService {
     }
 
     private OnlineCoursePreview mapToCoursePreview(final OnlineCourse onlineCourse) {
-        final MemberInfo teacherInfo = memberClient.getMemberDetail(onlineCourse.getTeacherId());
+        final OnlineTeacherPreview teacherPreview = memberManager.getMemberDetail(onlineCourse.getTeacherId())
+                .map(OnlineTeacherPreview::from)
+                .orElseGet(OnlineTeacherPreview::none);
+
         return new OnlineCoursePreview(onlineCourse.getCourseName(), onlineCourse.getId(),
                 onlineCourse.getOnlineStudents().size(),
-                OnlineTeacherPreview.from(teacherInfo),
+                teacherPreview,
                 mapToCategoryInfo(onlineCourse.getOnlineCategory()),
                 onlineCourse.getImageSrc() == null ? null : onlineCourse.getImageSrc()
         );
