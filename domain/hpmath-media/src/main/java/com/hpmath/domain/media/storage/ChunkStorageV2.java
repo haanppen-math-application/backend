@@ -63,16 +63,17 @@ public class ChunkStorageV2 extends LocalStorage {
 
     private Stream<Path> loadFilesStartWith(final String uniqueId) {
         try {
-            return Files.walk(resolveFilePath(this.storagePath))
+            return Files.walk(resolveFilePath(""))
                     .filter(Files::isRegularFile)
                     .filter(path -> String.valueOf(path.getFileName()).startsWith(uniqueId));
         } catch (IOException e) {
+            log.error(e.getMessage(), e);
             throw new ChunkException("청크파일 여는 중 예외 발생", ErrorCode.CHUNK_ACCESS_EXCEPTION);
         }
     }
 
     private List<InputStream> loadSequentialFiles(final String uniqueId) {
-        return loadFilesStartWith(uniqueId)
+        return loadFilesStartWith(FORMAT.formatted(uniqueId, ""))
                 .sorted((path1, path2) -> {
                     final int path1Sequence = getSequence(path1, uniqueId);
                     final int path2Sequence = getSequence(path2, uniqueId);
@@ -89,7 +90,7 @@ public class ChunkStorageV2 extends LocalStorage {
     }
 
     private Integer getSequence(final Path path, final String uniqueId) {
-        final String sequenceValue = String.valueOf(path.getFileName()).split("_")[3];
+        final String sequenceValue = String.valueOf(path.getFileName()).split("_")[4];
         return Integer.parseInt(sequenceValue);
     }
 
