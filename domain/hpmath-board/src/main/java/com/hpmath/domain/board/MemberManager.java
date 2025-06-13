@@ -1,5 +1,6 @@
 package com.hpmath.domain.board;
 
+import com.hpmath.client.common.ClientException;
 import com.hpmath.client.member.MemberClient;
 import com.hpmath.domain.board.dto.MemberDetailResult;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,9 @@ public class MemberManager {
     public MemberDetailResult load(final Long memberId) {
         try {
             return MemberDetailResult.from(memberClient.getMemberDetail(memberId));
-        } catch (Exception e) {
+        } catch (ClientException e) {
             log.error("not exist member: {}", memberId, e);
-            return null;
+            return MemberDetailResult.none();
         }
     }
 }

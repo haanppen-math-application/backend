@@ -1,5 +1,6 @@
 package com.hpmath.domain.board.dto;
 
+import com.hpmath.client.member.MemberClient;
 import com.hpmath.client.member.MemberClient.MemberInfo;
 import com.hpmath.common.Role;
 
@@ -16,5 +17,9 @@ public record MemberDetailResult(
                 memberInfo.memberGrade(),
                 memberInfo.role()
         );
+    }
+
+    public static MemberDetailResult none() {
+        return new MemberDetailResult(null, null, null, null);
     }
 }
