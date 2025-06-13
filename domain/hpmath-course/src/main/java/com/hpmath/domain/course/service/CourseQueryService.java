@@ -1,6 +1,5 @@
 package com.hpmath.domain.course.service;
 
-import com.hpmath.client.member.MemberClient;
 import com.hpmath.client.member.MemberClient.MemberInfo;
 import com.hpmath.common.ErrorCode;
 import com.hpmath.common.Role;
@@ -11,6 +10,7 @@ import com.hpmath.domain.course.dto.Responses.TeacherPreviewResponse;
 import com.hpmath.domain.course.entity.Course;
 import com.hpmath.domain.course.entity.CourseStudent;
 import com.hpmath.domain.course.exception.CourseException;
+import com.hpmath.domain.course.exception.NoSuchMemberException;
 import com.hpmath.domain.course.repository.CourseRepository;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class CourseQueryService {
     private final CourseRepository courseRepository;
-    private final MemberClient memberClient;
+    private final CourseMemberManager memberManager;
 
     public List<CoursePreviewResponse> loadAllCoursePreviews() {
         final List<Course> courses = courseRepository.findAllWithStudents();
@@ -35,12 +35,10 @@ public class CourseQueryService {
     }
 
     public List<CoursePreviewResponse> loadCoursePreviews(@NotNull final Long memberId) {
-        final MemberInfo memberInfo = memberClient.getMemberDetail(memberId);
+        final MemberInfo memberInfo = memberManager.getMemberDetail(memberId)
+                .orElseThrow(() -> new NoSuchMemberException(ErrorCode.NO_SUCH_MEMBER));
         if (memberInfo.role() == Role.STUDENT) {
             return courseRepository.findAllByStudentId(memberId).stream().map(this::mapToCoursePreview).toList();
-        }
-        if (memberInfo.role() == null) {
-            throw new CourseException(ErrorCode.NO_SUCH_COURSE_MEMBER);
         }
         return courseRepository.findAllWithStudentsByTeacherId(memberId).stream().map(this::mapToCoursePreview).toList();
     }
@@ -56,36 +54,27 @@ public class CourseQueryService {
                         .mapToLong(CourseStudent::getStudentId)
                         .mapToObj(this::mapToStudent)
                         .toList(),
-                this.mapToTeacher(course.getTeacherId())
+                mapToTeacherPreview(course.getTeacherId())
         );
     }
 
     private StudentPreviewResponse mapToStudent(final Long memberId) {
-        if (memberId == null) {
-            return null;
-        }
-        return StudentPreviewResponse.of(memberClient.getMemberDetail(memberId));
-    }
-
-    private TeacherPreviewResponse mapToTeacher(final Long memberId) {
-        if (memberId == null) {
-            return null;
-        }
-        return TeacherPreviewResponse.of(memberClient.getMemberDetail(memberId));
+        return memberManager.getMemberDetail(memberId)
+                .map(StudentPreviewResponse::of)
+                .orElseGet(StudentPreviewResponse::none);
     }
 
     private CoursePreviewResponse mapToCoursePreview(Course course) {
-        return new CoursePreviewResponse(
-                course.getCourseName(),
+        return CoursePreviewResponse.of(
                 course.getId(),
+                course.getCourseName(),
                 course.getStudents().size(),
                 mapToTeacherPreview(course.getTeacherId()));
     }
 
     private TeacherPreviewResponse mapToTeacherPreview(final Long teacherId) {
-        if (teacherId == null) {
-            return null;
-        }
-        return TeacherPreviewResponse.of(memberClient.getMemberDetail(teacherId));
+        return memberManager.getMemberDetail(teacherId)
+                .map(TeacherPreviewResponse::of)
+                .orElseGet(TeacherPreviewResponse::none);
     }
 }

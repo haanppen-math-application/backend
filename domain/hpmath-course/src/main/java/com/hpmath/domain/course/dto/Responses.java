@@ -3,6 +3,8 @@ package com.hpmath.domain.course.dto;
 import com.hpmath.client.member.MemberClient.MemberInfo;
 import java.time.LocalDate;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 public class Responses {
     public record StudentPreviewResponse(
@@ -13,6 +15,10 @@ public class Responses {
         public static StudentPreviewResponse of(final MemberInfo memberInfo) {
             return new StudentPreviewResponse(memberInfo.memberId(), memberInfo.memberName(), memberInfo.memberGrade());
         }
+
+        public static StudentPreviewResponse none() {
+            return new StudentPreviewResponse(null, null, null);
+        }
     }
 
     public record TeacherPreviewResponse(
@@ -21,6 +27,10 @@ public class Responses {
     ) {
         public static TeacherPreviewResponse of(final MemberInfo memberInfo) {
             return new TeacherPreviewResponse(memberInfo.memberName(), memberInfo.memberId());
+        }
+
+        public static TeacherPreviewResponse none() {
+            return new TeacherPreviewResponse(null, null);
         }
     }
 
