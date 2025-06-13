@@ -53,7 +53,7 @@ public class OnlineVideoSequenceUpdateService {
     }
 
     private OnlineCourse loadOnlineCourse(final Long onlineCourseId) {
-        return onlineCourseRepository.loadCourseAndVideosAndTeacherByCourseId(onlineCourseId)
+        return onlineCourseRepository.loadCourseAndVideosByCourseId(onlineCourseId)
                 .orElseThrow(() -> new BusinessException("해당 반을 찾을 수 없음", ErrorCode.ONLINE_COURSE_EXCEPTION));
     }
 }

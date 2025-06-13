@@ -66,7 +66,7 @@ public class OnlineLessonUpdateService {
     }
 
     private OnlineVideo loadVideoAndVideosByCourseId(final Long videoId) {
-        return onlineVideoRepository.loadSingleOnlineVideoWithCourseWithTeacherByVideoId(videoId)
+        return onlineVideoRepository.loadSingleOnlineVideoWithCourseByVideoId(videoId)
                 .orElseThrow(() -> new BusinessException(videoId + " : 등록된 영상을 찾을 수 없습니다 : ", ErrorCode.ONLINE_COURSE_EXCEPTION));
     }
 
