@@ -16,6 +16,7 @@ class ChunkTotalCountRepository {
     public void init(final String uniqueId, final Integer totalPartCount, final Duration ttl) {
         if (stringRedisTemplate.opsForValue().setIfAbsent(generateKey(uniqueId), String.valueOf(totalPartCount), ttl)) {
             log.debug("Adding unique id to map: {}", uniqueId);
+            return;
         }
         log.error("Duplicate upload id found for uniqueId: {}", uniqueId);
         throw new IllegalArgumentException("Duplicated unique id: " + uniqueId);
