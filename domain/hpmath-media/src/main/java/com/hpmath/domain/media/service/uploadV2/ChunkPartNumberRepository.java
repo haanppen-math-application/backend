@@ -16,12 +16,6 @@ class ChunkPartNumberRepository {
     // hpmath::media::partCount::uniqueId::{uniqueId}
     private static final String KEY_FORMAT = "hpmath::media::partCount::uniqueId::%s";
 
-    public void init(String uniqueId, Duration ttl) {
-        final String key = generateKey(uniqueId);
-        stringRedisTemplate.opsForSet().add(key, null);
-        stringRedisTemplate.expire(key, ttl);
-    }
-
     public void receive(String uniqueId, Integer partNumber, final Duration ttl) {
         stringRedisTemplate.opsForSet().add(generateKey(uniqueId), String.valueOf(partNumber));
         stringRedisTemplate.expire(generateKey(uniqueId), ttl);

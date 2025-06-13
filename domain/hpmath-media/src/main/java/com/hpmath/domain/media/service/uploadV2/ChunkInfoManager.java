@@ -16,7 +16,6 @@ public class ChunkInfoManager {
 
     public void init(String uniqueId, Integer totalChunkCount) {
         chunkTotalCountRepository.init(uniqueId, totalChunkCount, TTL);
-        chunkPartNumberRepository.init(uniqueId, TTL);
     }
 
     public void receiveChunk(String uniqueId, Integer partNumber) {
