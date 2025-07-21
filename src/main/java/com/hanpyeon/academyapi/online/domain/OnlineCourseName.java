@@ -5,7 +5,7 @@ import com.hanpyeon.academyapi.exception.ErrorCode;
 import java.util.Objects;
 
 public record OnlineCourseName(String name) {
-    private static final int COURSE_NAME_LENGTH = 10;
+    private static final int COURSE_NAME_LENGTH = 100;
     public OnlineCourseName {
         validate(name);
     }

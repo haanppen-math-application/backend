@@ -16,8 +16,8 @@ public interface OnlineCourseRepository extends JpaRepository<OnlineCourse, Long
     List<OnlineCourse> findAllByStudentId(@Param("studentId") final Long studentId);
 
     @Query("SELECT oc from OnlineCourse oc "
-            + "JOIN FETCH OnlineStudent os ON oc.id = os.course.id "
-            + "JOIN FETCH Member m ON os.member.id = m.id "
+            + "LEFT JOIN FETCH oc.teacher "
+            + "LEFT JOIN FETCH oc.onlineStudents "
             + "WHERE oc.id = :onlineCourseId")
     OnlineCourse findOnlineCourse(@Param("onlineCourseId") final Long onlineCourseId);
 

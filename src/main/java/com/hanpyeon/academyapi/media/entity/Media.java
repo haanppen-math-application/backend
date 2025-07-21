@@ -7,6 +7,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +16,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Table(indexes = @Index(name = "idx_media_source", columnList = "src"))
+@SQLDelete(sql = "UPDATE media SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
 public class Media {
     @Id
     @GeneratedValue
@@ -38,6 +42,8 @@ public class Media {
 
     @Column(name = "size", nullable = true)
     private Long size;
+
+    private boolean deleted = false;  // soft delete flag
 
     public Media(String mediaName, String src, Member member) {
         this.mediaName = mediaName;

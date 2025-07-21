@@ -63,7 +63,7 @@ public class OnlineCourseQueryService {
             @Validated final QueryOnlineCourseDetailsCommand queryOnlineCourseDetailsCommand
     ) {
         final OnlineCourse onlineCourse = onlineCourseRepository.findOnlineCourse(queryOnlineCourseDetailsCommand.onlineCourseId());
-        final OnlineTeacherPreview onlineTeacherPreview = new OnlineTeacherPreview(onlineCourse.getTeacher().getName(), onlineCourse.getTeacher().getId());
+        final OnlineTeacherPreview onlineTeacherPreview = OnlineTeacherPreview.from(onlineCourse.getTeacher());
         final List<OnlineStudentPreview> onlineStudentPreviews = onlineCourse.getOnlineStudents().stream()
                 .map(OnlineStudent::getMember)
                 .map(member -> new OnlineStudentPreview(member.getId(), member.getName(), member.getGrade()))

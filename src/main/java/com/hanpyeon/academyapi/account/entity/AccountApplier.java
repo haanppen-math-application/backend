@@ -25,7 +25,7 @@ public class AccountApplier {
         member.setPhoneNumber(account.getPhoneNumber().getPhoneNumber());
         member.setName(account.getAccountName().getName());
         member.setPassword(account.getPassword().getEncryptedPassword());
-        member.setGrade(account.getGrade().getGrade());
+        member.setGrade(account.getGrade() == null ? null : account.getGrade().getGrade());
     }
 
     public void save(final Account account) {

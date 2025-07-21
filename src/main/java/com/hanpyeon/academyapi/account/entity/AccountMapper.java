@@ -40,7 +40,7 @@ public class AccountMapper {
         return Member.builder()
                 .encryptedPassword(account.getPassword().getEncryptedPassword())
                 .role(account.getAccountRole().getRole())
-                .grade(account.getGrade().getGrade())
+                .grade(account.getGrade() == null ? null : account.getGrade().getGrade())
                 .name(account.getAccountName().getName())
                 .phoneNumber(account.getPhoneNumber().getPhoneNumber())
                 .build();
